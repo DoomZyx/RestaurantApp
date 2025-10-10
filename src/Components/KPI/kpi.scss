@@ -1,0 +1,361 @@
+.KPI-container {
+  min-height: 320px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .requests-displayed {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-purple) 100%);
+    border-radius: var(--radius-xl);
+    margin-bottom: 1.5rem;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-lg);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    h3 {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0;
+      opacity: 0.95;
+    }
+
+    span {
+      font-size: 3rem;
+      font-weight: 800;
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.625rem 1.75rem;
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .KPI-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+    flex: 1;
+
+    h3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 18px;
+      transition: all var(--transition-fast);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin: 0;
+
+      &:hover {
+        border-color: rgba(99, 102, 241, 0.3);
+        background: rgba(255, 255, 255, 0.5);
+        transform: translateX(4px);
+        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.05);
+      }
+
+      span {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: var(--color-accent);
+        background: rgba(99, 102, 241, 0.15);
+        padding: 0.5rem 1.25rem;
+        border-radius: 14px;
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  // États de chargement et d'erreur
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 320px;
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+
+    &::after {
+      content: "...";
+      display: inline-block;
+      animation: ellipsis 1.5s infinite;
+    }
+  }
+
+  .error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 320px;
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-danger);
+    font-size: 0.9375rem;
+    font-weight: 500;
+
+    button {
+      margin-top: 1.25rem;
+      padding: 0.875rem 1.5rem;
+      background-color: var(--color-danger);
+      color: white;
+      border: 2px solid var(--color-danger);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-md);
+
+      &:hover {
+        background-color: #dc2626;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      &:active {
+        transform: translateY(0);
+        box-shadow: var(--shadow-sm);
+      }
+    }
+  }
+}
+
+@keyframes ellipsis {
+  0% { content: ""; }
+  25% { content: "."; }
+  50% { content: ".."; }
+  75% { content: "..."; }
+}
+
+// Styles pour les commandes du jour
+.orders-today-container {
+  margin-top: 2rem;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
+
+  .orders-header {
+    margin-bottom: 1.5rem;
+    
+    h3 {
+      color: var(--color-text-primary);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+  }
+
+  .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .order-card {
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.7);
+        border-color: var(--color-accent);
+        transform: translateX(8px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      }
+
+      .order-supplier {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+
+        i {
+          color: var(--color-accent);
+          font-size: 1.1rem;
+        }
+
+        > span:first-of-type {
+          color: var(--color-text-primary);
+          font-size: 1rem;
+          font-weight: 700;
+          flex: 1;
+        }
+
+        .order-date-small {
+          color: var(--color-text-secondary);
+          font-size: 0.8rem;
+          font-weight: 500;
+          background: rgba(255, 255, 255, 0.3);
+          padding: 0.25rem 0.6rem;
+          border-radius: 8px;
+        }
+      }
+
+      .order-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+
+        .order-items {
+          color: var(--color-text-secondary);
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+
+        .order-status {
+          padding: 0.3rem 0.85rem;
+          border-radius: 12px;
+          font-size: 0.85rem;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+
+          &.status-confirmee {
+            background: rgba(40, 167, 69, 0.15);
+            border: 1px solid #28a745;
+            color: #28a745;
+          }
+
+          &.status-refusee {
+            background: rgba(220, 53, 69, 0.15);
+            border: 1px solid #dc3545;
+            color: #dc3545;
+          }
+
+          &.status-en_attente {
+            background: rgba(255, 193, 7, 0.15);
+            border: 1px solid #ffc107;
+            color: #ffc107;
+          }
+
+          &.status-appel_en_cours {
+            background: rgba(0, 123, 255, 0.15);
+            border: 1px solid #007bff;
+            color: #007bff;
+          }
+        }
+      }
+
+      .order-delivery {
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        i {
+          color: var(--color-accent);
+          font-size: 1rem;
+        }
+
+        span {
+          color: var(--color-text-secondary);
+          font-size: 0.85rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+// Responsive pour écrans moyens (1024px - 1919px)
+@media (min-width: 1024px) and (max-width: 1919px) {
+  .KPI-container {
+    min-height: 280px;
+
+    .requests-displayed {
+      padding: 1.5rem;
+      gap: 1.25rem;
+
+      h3 {
+        font-size: 2.5rem;
+      }
+
+      span {
+        font-size: 2.5rem;
+        padding: 0.5rem 1.5rem;
+      }
+    }
+
+    .KPI-layout {
+      h3 {
+        padding: 1.25rem 1.75rem;
+        font-size: 0.875rem;
+
+        span {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+// Responsive pour petits écrans
+@media (max-width: 1024px) {
+  .KPI-container {
+    min-height: 300px;
+
+    .requests-displayed {
+      padding: 1.5rem;
+      gap: 1rem;
+
+      h3 {
+        font-size: 2.5rem;
+      }
+
+      span {
+        font-size: 2.5rem;
+        padding: 0.5rem 1.5rem;
+      }
+    }
+
+    .KPI-layout {
+      h3 {
+        padding: 1.25rem 1.5rem;
+        font-size: 0.875rem;
+
+        span {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}

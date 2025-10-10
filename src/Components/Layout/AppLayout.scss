@@ -1,0 +1,140 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(to left, rgb(92, 51, 158), rgb(134, 96, 173), rgb(171, 141, 187), rgb(207, 188, 200), rgb(242, 237, 212));
+
+  .app-wallpaper {
+    display: none; // Retirer l'image de fond pour un style épuré
+  }
+
+  .main-content {
+    flex: 1;
+    margin-left: 280px;
+    color: var(--color-text-primary);
+    padding: 2.5rem;
+    position: relative;
+    z-index: 1;
+
+    .title-section {
+      margin-bottom: 2.5rem;
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin: 0 0 0.75rem 0;
+        color: var(--color-text-primary);
+        letter-spacing: -0.05em;
+        line-height: 1.2;
+      }
+
+      .subtitle {
+        font-size: 1.125rem;
+        color: var(--color-text-secondary);
+        margin: 0;
+        font-weight: 400;
+        line-height: 1.6;
+      }
+    }
+
+    .content-body {
+      animation: fadeIn 0.4s ease-out;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notification-center-fixed {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 9999;
+}
+
+// Responsive pour écrans moyens (1024px - 1919px)
+@media (min-width: 1024px) and (max-width: 1919px) {
+  .app-layout {
+    .main-content {
+      margin-left: 260px;
+      padding: 2rem;
+
+      .title-section {
+        margin-bottom: 2rem;
+
+        h1 {
+          font-size: 2.25rem;
+        }
+
+        .subtitle {
+          font-size: 1.0625rem;
+        }
+      }
+    }
+
+    .notification-center-fixed {
+      top: 1.75rem;
+      right: 1.75rem;
+    }
+  }
+}
+
+// Responsive pour petits écrans
+@media (max-width: 1024px) {
+  .app-layout {
+    .main-content {
+      margin-left: 0;
+      padding: 1.75rem;
+
+      .title-section {
+        margin-bottom: 1.75rem;
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .subtitle {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .notification-center-fixed {
+      top: 1.5rem;
+      right: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .app-layout {
+    .main-content {
+      padding: 1.5rem;
+
+      .title-section {
+        margin-bottom: 1.5rem;
+
+        h1 {
+          font-size: 1.75rem;
+        }
+
+        .subtitle {
+          font-size: 0.9375rem;
+        }
+      }
+    }
+
+    .notification-center-fixed {
+      top: 1.25rem;
+      right: 1.25rem;
+    }
+  }
+}

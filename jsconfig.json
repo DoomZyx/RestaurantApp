@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "checkJs": false,
+    "jsx": "react-jsx", // JSX sans import
+    "target": "esnext", // navigateurs modernes
+    "module": "esnext", // ES6
+    "baseUrl": "src",
+    "allowJs": true
+  }
+}
