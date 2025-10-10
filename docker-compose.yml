@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hh-backend
+    restart: unless-stopped               # relance auto si crash
+    volumes:
+      - ./:/app                           # code monté en direct pour nodemon
+      - /app/node_modules                # protège node_modules du host
+    ports:
+      - "8080:8080"                      # mapping port
+    environment:
+      - NODE_ENV=development             # ou via env_file
+    command: ["npm","run","dev"]        # nodemon en dev
+ env_file:
+   - ./.env
+ healthcheck:
+   test: ["CMD-SHELL","curl -f http://localhost:8080/health || exit 1"]
+   interval: 30s
+   timeout: 10s
+   retries: 3
