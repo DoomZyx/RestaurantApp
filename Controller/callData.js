@@ -2,6 +2,7 @@ import CallModel from "../models/callData.js";
 import Client from "../models/client.js";
 import OrderModel from "../models/order.js";
 import mongoose from "mongoose";
+import notificationService from "../Services/notificationService.js";
 
 export async function saveCallData(data) {
   try {
@@ -25,27 +26,9 @@ export async function saveCallData(data) {
       console.log("🔍 Recherche client avec téléphone:", telephone, "→", client ? "Trouvé" : "Non trouvé");
     }
 
-    // Si une commande est présente ET qu'il n'y a pas de client → créer le client automatiquement
-    if (appointment && !client && nom) {
-      console.log("👤 Création automatique d'un nouveau client pour la commande");
-      try {
-        // Générer un téléphone unique si "Non fourni" pour éviter les doublons
-        const uniquePhone = telephone === "Non fourni" 
-          ? `NF_${Date.now()}_${Math.random().toString(36).substr(2, 9)}` 
-          : telephone;
-          
-        client = await Client.create({
-          prenom: prenom || nom.split(' ')[0] || "Client",
-          nom: nom.split(' ').slice(1).join(' ') || nom,
-          telephone: uniquePhone,
-          email: null,
-          adresse: null,
-          entrepriseName: null
-        });
-        console.log("✅ Client créé:", client._id, "avec téléphone:", uniquePhone);
-      } catch (clientError) {
-        console.error("❌ Erreur création client:", clientError);
-      }
+    // Pas besoin de créer un client, on stockera le nom directement dans la commande
+    if (appointment && !client) {
+      console.log("ℹ️ Commande sans client associé - le nom sera stocké dans la commande");
     }
     
     const callData = {
@@ -63,11 +46,14 @@ export async function saveCallData(data) {
 
     const call = await CallModel.create(callData);
 
-    // Créer une commande si présente dans les données extraites
+    // Créer une commande si présente dans les données extraites (pas besoin de client)
     let createdOrder = null;
-    if (appointment && typeof appointment === 'object' && appointment.date && appointment.heure && client) {
+    if (appointment && typeof appointment === 'object' && appointment.date && appointment.heure) {
       try {
         console.log("📅 Création d'une commande depuis la transcription:", appointment);
+        if (appointment.nombrePersonnes) {
+          console.log("👥 Nombre de personnes détecté:", appointment.nombrePersonnes);
+        }
         
         // Gérer les valeurs "ASAP" pour date/heure
         let orderDate = new Date();
@@ -90,12 +76,14 @@ export async function saveCallData(data) {
         }
         
         createdOrder = await OrderModel.create({
-          client: client._id,
+          client: client?._id || null, // Client optionnel
+          nom: !client ? nom : null, // Stocker le nom si pas de client associé
           date: orderDate,
           heure: orderHeure,
           duree: appointment.duree || 60,
           type: appointment.type || "Commande à emporter",
           modalite: appointment.modalite || "Sur place",
+          nombrePersonnes: appointment.nombrePersonnes,
           description: appointment.description || description,
           statut: "confirme",
           createdBy: "system",
@@ -107,12 +95,37 @@ export async function saveCallData(data) {
         await call.save();
 
         console.log("✅ Commande créée avec succès:", createdOrder._id);
+        if (client) {
+          console.log("   - Client associé:", client._id);
+        } else {
+          console.log("   - Aucun client associé (peut être ajouté ultérieurement)");
+        }
       } catch (orderError) {
         console.error("❌ Erreur lors de la création de la commande:", orderError);
         // On continue même si la commande échoue
       }
-    } else if (appointment && !client) {
-      console.log("⚠️ Commande non créée : impossible de créer le client pour", telephone);
+    }
+
+    // Envoyer une notification WebSocket après la création de l'appel
+    try {
+      const callDataForNotification = {
+        callId: call._id.toString(), // ID de l'appel
+        orderId: createdOrder?._id?.toString(), // ID de la commande si elle existe
+        nom: client ? `${client.prenom} ${client.nom}` : nom,
+        telephone: telephone || "Non fourni",
+        type_demande,
+        services,
+        description,
+        hasOrder: !!createdOrder,
+        orderType: createdOrder?.type,
+        nombrePersonnes: createdOrder?.nombrePersonnes
+      };
+      
+      notificationService.notifyCallCompleted(callDataForNotification);
+      console.log("📢 Notification WebSocket envoyée pour le nouvel appel");
+    } catch (notifError) {
+      console.error("⚠️ Erreur envoi notification WebSocket:", notifError);
+      // On continue même si la notification échoue
     }
 
     return { call, order: createdOrder };

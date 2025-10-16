@@ -17,7 +17,7 @@ export default async function orderRoutes(fastify, options) {
     schema: {
       body: {
         type: "object",
-        required: ["client", "date", "heure", "duree", "type"],
+        required: ["client", "date", "heure", "duree", "type", "modalite"],
         properties: {
           client: { type: "string", minLength: 24, maxLength: 24 },
           date: { type: "string", format: "date" },
@@ -29,17 +29,18 @@ export default async function orderRoutes(fastify, options) {
           type: {
             type: "string",
             enum: [
-              "Consultation initiale",
-              "Présentation de devis",
-              "Maintenance/Support",
-              "Réunion projet",
-              "Livraison/Présentation",
+              "Commande à emporter",
+              "Livraison à domicile",
+              "Réservation de table",
+              "Dégustation",
+              "Événement privé"
             ],
           },
           modalite: {
             type: "string",
-            enum: ["Bureau", "Visioconférence", "Téléphonique"],
+            enum: ["Sur place", "À emporter", "Livraison"],
           },
+          nombrePersonnes: { type: "integer", minimum: 1, maximum: 100 },
           description: { type: "string", maxLength: 500 },
           notes_internes: { type: "string", maxLength: 1000 },
           related_call: { type: "string", minLength: 24, maxLength: 24 },
@@ -70,12 +71,16 @@ export default async function orderRoutes(fastify, options) {
           type: {
             type: "string",
             enum: [
-              "Consultation initiale",
-              "Présentation de devis",
-              "Maintenance/Support",
-              "Réunion projet",
-              "Livraison/Présentation",
+              "Commande à emporter",
+              "Livraison à domicile",
+              "Réservation de table",
+              "Dégustation",
+              "Événement privé"
             ],
+          },
+          modalite: {
+            type: "string",
+            enum: ["Sur place", "À emporter", "Livraison"],
           },
           page: { type: "integer", minimum: 1 },
           limit: { type: "integer", minimum: 1, maximum: 100 },
@@ -143,17 +148,18 @@ export default async function orderRoutes(fastify, options) {
           type: {
             type: "string",
             enum: [
-              "Consultation initiale",
-              "Présentation de devis",
-              "Maintenance/Support",
-              "Réunion projet",
-              "Livraison/Présentation",
+              "Commande à emporter",
+              "Livraison à domicile",
+              "Réservation de table",
+              "Dégustation",
+              "Événement privé"
             ],
           },
           modalite: {
             type: "string",
-            enum: ["Bureau", "Visioconférence", "Téléphonique"],
+            enum: ["Sur place", "À emporter", "Livraison"],
           },
+          nombrePersonnes: { type: "integer", minimum: 1, maximum: 100 },
           description: { type: "string", maxLength: 500 },
           notes_internes: { type: "string", maxLength: 1000 },
           statut: {
@@ -240,11 +246,11 @@ export default async function orderRoutes(fastify, options) {
           type: {
             type: "string",
             enum: [
-              "Consultation initiale",
-              "Présentation de devis",
-              "Maintenance/Support",
-              "Réunion projet",
-              "Livraison/Présentation",
+              "Commande à emporter",
+              "Livraison à domicile",
+              "Réservation de table",
+              "Dégustation",
+              "Événement privé"
             ],
           },
           description: { type: "string", maxLength: 500 },

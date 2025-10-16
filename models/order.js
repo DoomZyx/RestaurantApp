@@ -4,7 +4,12 @@ const orderSchema = new mongoose.Schema({
   client: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Client",
-    required: true,
+    required: false, // Optionnel : les commandes peuvent être créées sans client
+  },
+  // Nom de l'appelant (si pas de client associé)
+  nom: {
+    type: String,
+    required: false
   },
   // Informations de la commande
   date: {
@@ -46,6 +51,11 @@ const orderSchema = new mongoose.Schema({
   description: {
     type: String,
     maxlength: 500
+  },
+  nombrePersonnes: {
+    type: Number,
+    min: 1,
+    max: 100
   },
   notes_internes: {
     type: String,

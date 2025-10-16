@@ -64,6 +64,8 @@ class NotificationService {
       title: "🎉 Appel IA terminé",
       message: `Appel traité avec succès pour ${callData.nom || "Client"}`,
       details: {
+        callId: callData.callId, // ID de l'appel
+        orderId: callData.orderId, // ID de la commande si elle existe
         client: callData.nom || "Client inconnu",
         telephone: callData.telephone || "Non spécifié",
         type_demande: callData.type_demande || "Non spécifié",

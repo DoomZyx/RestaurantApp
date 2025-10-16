@@ -382,16 +382,17 @@ class TranscriptionProcessor {
         result,
       });
 
-      // Envoyer une notification de fin d'appel IA
-      try {
-        const callData = result.data || {};
-        callData.duration = `${apiDuration}ms`;
-        notificationService.notifyCallCompleted(callData);
-      } catch (notificationError) {
-        this.callLogger.error(this.streamSid, notificationError, {
-          context: "notification_send",
-        });
-      }
+      // Notification déplacée dans callData.js pour avoir les IDs complets
+      // (callId, orderId) après sauvegarde en base de données
+      // try {
+      //   const callData = result.data || {};
+      //   callData.duration = `${apiDuration}ms`;
+      //   notificationService.notifyCallCompleted(callData);
+      // } catch (notificationError) {
+      //   this.callLogger.error(this.streamSid, notificationError, {
+      //     context: "notification_send",
+      //   });
+      // }
     } else {
       this.callLogger.error(
         this.streamSid,
@@ -475,12 +476,12 @@ export function handleWebSocketConnection(connection, request) {
         console.log("   - StreamSid:", streamSid);
         console.log("   - CallSid:", data.start.callSid);
 
-        // Notifier qu'un appel est en cours
-        notificationService.notifyCallInProgress({
-          caller: data.start.callSid || "Numéro inconnu",
-          streamSid: streamSid,
-          timestamp: new Date().toISOString(),
-        });
+        // Notification d'appel entrant désactivée (on notifie uniquement à la fin)
+        // notificationService.notifyCallInProgress({
+        //   caller: data.start.callSid || "Numéro inconnu",
+        //   streamSid: streamSid,
+        //   timestamp: new Date().toISOString(),
+        // });
 
         // Initialisation des gestionnaires avec streamSid
         openAIHandler = new OpenAIMessageHandler(

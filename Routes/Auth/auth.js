@@ -2,6 +2,8 @@ import {
   loginUser,
   registerUser,
   getProfile,
+  updateProfile,
+  uploadAvatar,
   getAllUsers,
   updateUser,
   deleteUser,
@@ -47,6 +49,31 @@ export default async function authRoutes(fastify, options) {
   fastify.get("/profile", {
     preHandler: [authenticateToken],
     handler: getProfile,
+  });
+
+  // Route pour mettre à jour le profil (utilisateur connecté)
+  fastify.put("/profile", {
+    preHandler: [authenticateToken],
+    schema: {
+      body: {
+        type: "object",
+        properties: {
+          username: { type: "string", minLength: 3, maxLength: 30 },
+          email: { type: "string", format: "email" },
+          telephone: { type: "string" },
+          poste: { type: "string" },
+          departement: { type: "string" },
+          avatar: { type: "string" },
+        },
+      },
+    },
+    handler: updateProfile,
+  });
+
+  // Route pour uploader l'avatar (utilisateur connecté)
+  fastify.post("/profile/avatar", {
+    preHandler: [authenticateToken],
+    handler: uploadAvatar,
   });
 
   // Routes admin pour la gestion des utilisateurs

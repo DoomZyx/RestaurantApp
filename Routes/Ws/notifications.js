@@ -8,12 +8,12 @@ export default async function notificationRoutes(fastify, options) {
     notificationService.addConnection(connection);
 
     // Gérer les messages reçus (optionnel, pour les commandes)
-    connection.socket.on("message", (message) => {
+    connection.on("message", (message) => {
       try {
         const data = JSON.parse(message.toString());
 
         if (data.type === "ping") {
-          connection.socket.send(
+          connection.send(
             JSON.stringify({
               type: "pong",
               timestamp: new Date().toISOString(),
@@ -28,12 +28,12 @@ export default async function notificationRoutes(fastify, options) {
     });
 
     // Gérer la fermeture de connexion
-    connection.socket.on("close", () => {
+    connection.on("close", () => {
       notificationService.removeConnection(connection);
     });
 
     // Envoyer un message de confirmation
-    connection.socket.send(
+    connection.send(
       JSON.stringify({
         type: "connected",
         message: "Connexion notification établie",

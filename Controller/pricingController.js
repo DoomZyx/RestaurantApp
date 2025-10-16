@@ -1,4 +1,5 @@
 import PricingModel from "../models/pricing.js";
+import mongoose from "mongoose";
 
 // Créer ou mettre à jour la configuration des tarifs
 export async function createOrUpdatePricing(request, reply) {
@@ -11,6 +12,7 @@ export async function createOrUpdatePricing(request, reply) {
     if (pricing) {
       // Mettre à jour la configuration existante
       Object.assign(pricing, pricingData);
+      pricing.markModified('menuPricing'); // Nécessaire pour les champs Mixed
       pricing.derniereModification = new Date();
       await pricing.save();
     } else {
@@ -244,6 +246,8 @@ export async function addProduct(request, reply) {
   try {
     const { categorie, produit } = request.body;
     
+    console.log("➕ Ajout produit - Catégorie:", categorie, "Produit:", produit);
+    
     const pricing = await PricingModel.findOne();
     if (!pricing) {
       return reply.code(404).send({
@@ -251,25 +255,60 @@ export async function addProduct(request, reply) {
       });
     }
 
+    console.log("📋 Catégories disponibles:", Object.keys(pricing.menuPricing || {}));
+
+    // Si la catégorie n'existe pas, la créer automatiquement
     if (!pricing.menuPricing[categorie]) {
-      return reply.code(400).send({
-        error: "Catégorie non valide"
-      });
+      console.log(`⚠️ Catégorie "${categorie}" inexistante, création automatique...`);
+      pricing.menuPricing[categorie] = {
+        nom: categorie.charAt(0).toUpperCase() + categorie.slice(1),
+        produits: []
+      };
+      pricing.markModified('menuPricing'); // Nécessaire pour les champs Mixed
+      await pricing.save();
+      console.log(`✅ Catégorie "${categorie}" créée`);
     }
+
+    // Vérifier que le tableau produits existe
+    if (!pricing.menuPricing[categorie].produits) {
+      console.log(`⚠️ Tableau produits manquant pour "${categorie}", initialisation...`);
+      pricing.menuPricing[categorie].produits = [];
+      pricing.markModified('menuPricing');
+      await pricing.save();
+    }
+
+    // Définir les tailles valides par catégorie
+    const taillesValides = {
+      pizzas: ["Petite", "Moyenne", "Grande"],
+      boissons: ["33cl", "50cl", "1L"]
+    };
 
     // Validation et nettoyage des données du produit
     const produitNettoye = {
+      _id: new mongoose.Types.ObjectId(), // Générer un _id manuellement
       nom: produit.nom?.trim() || "",
       description: produit.description?.trim() || "",
       prixBase: parseFloat(produit.prixBase) || 0,
       disponible: Boolean(produit.disponible)
     };
 
-    // Ajouter la taille selon la catégorie avec des valeurs par défaut
+    // Ajouter la taille selon la catégorie avec validation
     if (categorie === 'pizzas') {
-      produitNettoye.taille = produit.taille || 'Moyenne';
+      const tailleProposee = produit.taille || 'Moyenne';
+      if (!taillesValides.pizzas.includes(tailleProposee)) {
+        return reply.code(400).send({
+          error: `Taille invalide pour les pizzas. Valeurs acceptées: ${taillesValides.pizzas.join(', ')}`
+        });
+      }
+      produitNettoye.taille = tailleProposee;
     } else if (categorie === 'boissons') {
-      produitNettoye.taille = produit.taille || '33cl';
+      const tailleProposee = produit.taille || '33cl';
+      if (!taillesValides.boissons.includes(tailleProposee)) {
+        return reply.code(400).send({
+          error: `Taille invalide pour les boissons. Valeurs acceptées: ${taillesValides.boissons.join(', ')}`
+        });
+      }
+      produitNettoye.taille = tailleProposee;
     }
 
     // Validation des champs obligatoires
@@ -286,6 +325,7 @@ export async function addProduct(request, reply) {
     }
 
     pricing.menuPricing[categorie].produits.push(produitNettoye);
+    pricing.markModified('menuPricing'); // Nécessaire pour les champs Mixed
     pricing.derniereModification = new Date();
     await pricing.save();
 
@@ -326,6 +366,12 @@ export async function updateProduct(request, reply) {
       });
     }
 
+    // Définir les tailles valides par catégorie
+    const taillesValides = {
+      pizzas: ["Petite", "Moyenne", "Grande"],
+      boissons: ["33cl", "50cl", "1L"]
+    };
+
     // Nettoyer et valider les données
     const donneesMisesAJour = {
       nom: produitData.nom?.trim() || produit.nom,
@@ -334,14 +380,27 @@ export async function updateProduct(request, reply) {
       disponible: Boolean(produitData.disponible)
     };
 
-    // Gérer la taille selon la catégorie
+    // Gérer la taille selon la catégorie avec validation
     if (categorie === 'pizzas') {
-      donneesMisesAJour.taille = produitData.taille || produit.taille || 'Moyenne';
+      const tailleProposee = produitData.taille || produit.taille || 'Moyenne';
+      if (!taillesValides.pizzas.includes(tailleProposee)) {
+        return reply.code(400).send({
+          error: `Taille invalide pour les pizzas. Valeurs acceptées: ${taillesValides.pizzas.join(', ')}`
+        });
+      }
+      donneesMisesAJour.taille = tailleProposee;
     } else if (categorie === 'boissons') {
-      donneesMisesAJour.taille = produitData.taille || produit.taille || '33cl';
+      const tailleProposee = produitData.taille || produit.taille || '33cl';
+      if (!taillesValides.boissons.includes(tailleProposee)) {
+        return reply.code(400).send({
+          error: `Taille invalide pour les boissons. Valeurs acceptées: ${taillesValides.boissons.join(', ')}`
+        });
+      }
+      donneesMisesAJour.taille = tailleProposee;
     }
 
     Object.assign(produit, donneesMisesAJour);
+    pricing.markModified('menuPricing'); // Nécessaire pour les champs Mixed
     pricing.derniereModification = new Date();
     await pricing.save();
 
@@ -376,16 +435,27 @@ export async function deleteProduct(request, reply) {
       });
     }
 
-    pricing.menuPricing[categorie].produits.id(produitId).remove();
+    // Vérifier que la catégorie existe
+    if (!pricing.menuPricing[categorie]) {
+      return reply.code(404).send({
+        error: `Catégorie "${categorie}" non trouvée`
+      });
+    }
+
+    // Utiliser pull() pour supprimer le produit par son _id
+    pricing.menuPricing[categorie].produits.pull(produitId);
+    pricing.markModified('menuPricing'); // Nécessaire pour les champs Mixed
     pricing.derniereModification = new Date();
     await pricing.save();
+
+    console.log(`✅ Produit ${produitId} supprimé de la catégorie ${categorie}`);
 
     return reply.send({
       success: true,
       message: "Produit supprimé avec succès"
     });
   } catch (error) {
-    console.error("Erreur lors de la suppression du produit:", error);
+    console.error("❌ Erreur lors de la suppression du produit:", error);
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,

@@ -11,9 +11,26 @@ const clientSchema = new mongoose.Schema(
   },
   {
     timestamps: true, // Ajoute createdAt et updatedAt automatiquement
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
   }
 );
 
+// Virtual pour afficher le téléphone de manière lisible
+clientSchema.virtual('telephoneDisplay').get(function() {
+  if (this.telephone && this.telephone.startsWith('NF_')) {
+    return 'Non fourni';
+  }
+  return this.telephone;
+});
+
+// Virtual pour le nom complet
+clientSchema.virtual('nomComplet').get(function() {
+  if (this.nom === '.' || !this.nom) {
+    return this.prenom;
+  }
+  return `${this.prenom} ${this.nom}`;
+});
 
 const ClientModel = mongoose.model("Client", clientSchema);
 

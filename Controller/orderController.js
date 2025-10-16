@@ -18,7 +18,7 @@ export async function createOrder(request, reply) {
     const order = await OrderModel.create(orderData);
 
     // Populer les données du client pour la réponse
-    await order.populate("client", "prenom nom telephone email");
+    await order.populate("client");
 
     return reply.code(201).send({
       success: true,
@@ -36,12 +36,13 @@ export async function createOrder(request, reply) {
 // Récupérer toutes les commandes
 export async function getOrders(request, reply) {
   try {
-    const { page = 1, limit = 10, status, type, date } = request.query;
+    const { page = 1, limit = 10, statut, type, date, modalite } = request.query;
 
     // Construire le filtre
     const filter = {};
-    if (status) filter.statut = status;
+    if (statut) filter.statut = statut;
     if (type) filter.type = type;
+    if (modalite) filter.modalite = modalite;
     if (date) {
       const startDate = new Date(date);
       const endDate = new Date(date);
@@ -54,7 +55,7 @@ export async function getOrders(request, reply) {
 
     // Récupérer les commandes avec pagination
     const orders = await OrderModel.find(filter)
-      .populate("client", "prenom nom telephone email")
+      .populate("client")
       .sort({ date: -1, heure: -1 })
       .skip(skip)
       .limit(parseInt(limit));
@@ -93,7 +94,7 @@ export async function getTodayOrders(request, reply) {
     const orders = await OrderModel.find({
       date: { $gte: today, $lt: tomorrow },
     })
-      .populate("client", "prenom nom telephone email")
+      .populate("client")
       .sort({ heure: 1 });
 
     return reply.send({
@@ -115,7 +116,7 @@ export async function getOrderById(request, reply) {
     const { id } = request.params;
 
     const order = await OrderModel.findById(id)
-      .populate("client", "prenom nom telephone email");
+      .populate("client");
 
     if (!order) {
       return reply.code(404).send({
@@ -146,7 +147,7 @@ export async function updateOrder(request, reply) {
       id,
       updateData,
       { new: true, runValidators: true }
-    ).populate("client", "prenom nom telephone email");
+    ).populate("client");
 
     if (!order) {
       return reply.code(404).send({
@@ -177,7 +178,7 @@ export async function updateOrderStatus(request, reply) {
       id,
       { statut },
       { new: true, runValidators: true }
-    ).populate("client", "prenom nom telephone email");
+    ).populate("client");
 
     if (!order) {
       return reply.code(404).send({
@@ -301,13 +302,12 @@ export async function createOrderFromAI(request, reply) {
   try {
     const orderData = request.body;
 
-    // Trouver ou créer le client
+    // Trouver le client (création automatique désactivée)
     let client = await Client.findOne({ telephone: orderData.telephone });
     if (!client) {
-      client = await Client.create({
-        prenom: orderData.prenom || "Client",
-        nom: orderData.nom || "",
-        telephone: orderData.telephone,
+      console.log("⚠️ Client non trouvé pour le téléphone:", orderData.telephone);
+      return reply.code(404).send({
+        error: "Client non trouvé. Veuillez créer le client manuellement avant d'importer la commande."
       });
     }
 
@@ -325,7 +325,7 @@ export async function createOrderFromAI(request, reply) {
     });
 
     // Populer les données du client
-    await order.populate("client", "prenom nom telephone email");
+    await order.populate("client");
 
     return reply.code(201).send({
       success: true,

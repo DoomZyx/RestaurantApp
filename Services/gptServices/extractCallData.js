@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import dotenv from "dotenv";
+import { getPricingForGPT } from "./pricingService.js";
 
 dotenv.config();
 
@@ -8,9 +9,27 @@ const openai = new OpenAI({
 });
 
 const EXTRACTION_PROMPT = `
-Tu es un assistant spécialisé dans l'extraction d'informations à partir de transcriptions d'appels téléphoniques.
+Tu es un assistant spécialisé dans l'extraction d'informations à partir de transcriptions d'appels téléphoniques pour un RESTAURANT.
 
 IMPORTANT : Tu dois répondre UNIQUEMENT avec un JSON valide, sans texte avant ou après.
+
+⚠️ CORRECTION AUTOMATIQUE DES ERREURS DE TRANSCRIPTION :
+Les transcriptions audio contiennent souvent des erreurs. Tu DOIS corriger automatiquement les mots mal transcrits en fonction du contexte RESTAURANT.
+
+EXEMPLES DE CORRECTIONS COURANTES :
+- "copoins", "copins", "coco" → "coca"
+- "pizaa", "pizza", "pizzza" → "pizza"
+- "borger", "burgeur" → "burger"
+- "frite", "frittes" → "frites"
+- "salad", "salade" → "salade"
+- "mennu", "menu" → "menu"
+- "desert", "désert" → "dessert"
+- "boisson", "boissson" → "boisson"
+- "marguerite", "margarita" → "Margherita"
+- "quatre fromage", "4 fromages" → "4 fromages"
+- "reine", "reines" → "Reine"
+
+RÈGLE : Dans la description de la commande, utilise TOUJOURS les termes corrects de restaurant, pas la transcription brute.
 
 Analyse la transcription suivante et extrait les informations importantes.
 
@@ -28,20 +47,23 @@ Informations à extraire :
      → Exemples : "c'est quoi vos horaires ?", "vous avez quoi au menu ?", "c'est combien ?"
    * Si le client COMMANDE mais ne donne pas de date/heure → utiliser "ASAP" pour les deux
 
-⚠️ RÈGLE D'OR : Si le client mentionne UN PLAT ou veut "commander" quelque chose → TOUJOURS créer un order, même sans date précise !
+⚠️ RÈGLE D'OR : Si le client mentionne UN PLAT ou veut "commander" quelque chose → TOUJOURS créer un order, même sans toutes les infos !
 
-Champs OBLIGATOIRES de l'objet order (tous requis si order != null) :
-- date : date au format YYYY-MM-DD OU "ASAP" si pas mentionnée (OBLIGATOIRE)
-- heure : heure au format HH:MM OU "ASAP" si pas mentionnée (OBLIGATOIRE)  
-- duree : 60 (défaut, OBLIGATOIRE)
-- type : (OBLIGATOIRE) valeurs possibles :
+Champs de l'objet order (REMPLIS CE QUE TU PEUX, mets "ASAP" ou null si tu n'as pas l'info) :
+- date : date au format YYYY-MM-DD OU "ASAP" si pas mentionnée (mets "ASAP" par défaut)
+- heure : heure au format HH:MM OU "ASAP" si pas mentionnée (mets "ASAP" par défaut)
+- duree : 60 pour commandes, 90 pour réservations (mets 60 par défaut)
+- type : valeurs possibles :
   "Commande à emporter", "Livraison à domicile", "Réservation de table", "Dégustation", "Événement privé"
-- modalite : (OBLIGATOIRE) valeurs possibles : "Sur place", "À emporter", "Livraison"
-- description : résumé de la commande (optionnel, max 500 caractères)
+  (mets "Commande à emporter" par défaut si pas précisé)
+- modalite : valeurs possibles : "Sur place", "À emporter", "Livraison"
+  (mets "À emporter" par défaut si pas précisé)
+- nombrePersonnes : nombre de personnes (SEULEMENT pour "Réservation de table" - mets null sinon)
+- description : résumé de la commande (mets ce que tu as compris)
 
 Format de réponse JSON EXACT attendu :
 {
-  "nom": "Nom complet du client",
+"nom": "Nom complet du client", ## SURTOUT N OUBLIES PAS LE NOM DE L'INTERLOCUTEUR !!
   "telephone": "Numéro de téléphone complet",
   "type_demande": "Type de demande client",
   "services": "Services demandés",
@@ -53,6 +75,7 @@ Format de réponse JSON EXACT attendu :
     "duree": 60,
     "type": "Commande à emporter",
     "modalite": "Sur place",
+    "nombrePersonnes": 4,
     "description": "Description de la commande"
   }
 }
@@ -86,11 +109,12 @@ RÈGLES :
 6. Utilise UNIQUEMENT les valeurs autorisées pour type_demande, services, type (commande), modalite (commande)
 7. Si aucune commande n'est mentionnée → "order": null
 
-RÈGLES STRICTES DE VALIDATION :
-⚠️ IMPORTANT : Si le NOM n'est PAS CLAIREMENT et EXPLICITEMENT fourni dans la transcription :
-   → NE PAS inventer ou extrapoler de données
-   → Retourner : {"error": "Nom du client non fourni"}
-   → N'utilise JAMAIS "Non spécifié", "Inconnu" ou des valeurs génériques
+RÈGLES DE VALIDATION ASSOUPLIES :
+⚠️ NOM DU CLIENT :
+   → Si le nom est clairement donné : extrais-le
+   → Si le nom est flou ou partiel : mets "Client" + première lettre (ex: "Client M")
+   → Si AUCUN nom du tout : mets "Client inconnu"
+   → L'important c'est de TOUJOURS créer la commande, même sans nom parfait
 
 📞 TÉLÉPHONE (OPTIONNEL) :
    → Si le client donne son numéro : extrais-le
@@ -101,12 +125,10 @@ RÈGLES STRICTES DE VALIDATION :
    - "Je m'appelle Jean Dupont" → nom: "Jean Dupont", telephone: "Non fourni"
    - "C'est Marie Dubois, mon numéro c'est le 06 12 34 56 78" → nom: "Marie Dubois", telephone: "0612345678"
    - "Bonjour, Thomas ici" → nom: "Thomas", telephone: "Non fourni"
+   - "Je veux commander une pizza" (pas de nom) → nom: "Client inconnu", telephone: "Non fourni"
+   - "M. Dupont à l'appareil" → nom: "M. Dupont", telephone: "Non fourni"
 
-❌ Exemples de données INVALIDES (retourner {"error": "..."}):
-   - Transcription avec seulement du bruit, sons incompréhensibles
-   - Nom flou, partiel, ou mal compris
-   - Bruit de voiture/rue transcrit comme des mots
-   - Absence du nom du client
+⚠️ TOUJOURS créer l'order si c'est une commande, même avec des données incomplètes !
 
 EXEMPLES D'EXTRACTION :
 
@@ -119,10 +141,20 @@ EXEMPLES D'EXTRACTION :
    → order: { date: "ASAP", heure: "ASAP", duree: 60, type: "Livraison à domicile", modalite: "Livraison", description: "Burger et frites" }
 
 3. "Je souhaite réserver une table pour mardi prochain à 19h, nous serons 4"
-   → order: { date: "2025-10-15", heure: "19:00", duree: 90, type: "Réservation de table", modalite: "Sur place", description: "Table pour 4 personnes" }
+   → order: { date: "2025-10-15", heure: "19:00", duree: 90, type: "Réservation de table", modalite: "Sur place", nombrePersonnes: 4, description: "Table pour 4 personnes" }
 
 4. "Je veux commander 3 burgers pour ce soir vers 20h"
    → order: { date: "ASAP", heure: "20:00", duree: 60, type: "Commande à emporter", modalite: "À emporter", description: "3 burgers" }
+
+🔧 EXEMPLES AVEC CORRECTIONS DE TRANSCRIPTION :
+
+5. "Je veux 3 copoins et 2 pizaas" (transcription audio avec erreurs)
+   → order: { date: "ASAP", heure: "ASAP", duree: 60, type: "Commande à emporter", modalite: "À emporter", description: "3 coca et 2 pizzas" }
+   ⚠️ NOTE : "copoins" corrigé en "coca", "pizaas" corrigé en "pizzas"
+
+6. "Je voudrais un borger et des frittes sil vous plaît"
+   → order: { date: "ASAP", heure: "ASAP", duree: 60, type: "Commande à emporter", modalite: "À emporter", description: "Burger et frites" }
+   ⚠️ NOTE : "borger" corrigé en "burger", "frittes" corrigé en "frites"
 
 ❌ CAS SANS ORDER (informations seulement) :
 
@@ -146,12 +178,44 @@ export async function extractCallData(transcription) {
       throw new Error("Transcription vide ou invalide");
     }
 
+    // Récupérer le menu configuré
+    const pricing = await getPricingForGPT();
+    let enrichedPrompt = EXTRACTION_PROMPT;
+
+    // Ajouter le menu du restaurant au prompt si disponible
+    if (pricing && pricing.menu) {
+      const menuInfo = `
+========================================
+📋 MENU DU RESTAURANT (NOM EXACT DES PRODUITS) :
+========================================
+⚠️ UTILISE CES NOMS EXACTS DANS LA DESCRIPTION DE LA COMMANDE
+
+${Object.keys(pricing.menu).map(categorie => {
+  const category = pricing.menu[categorie];
+  return `
+${category.nom.toUpperCase()} :
+${category.produits.map(produit => `- ${produit.nom}${produit.description ? ` (${produit.description})` : ''}`).join('\n')}`;
+}).join('\n')}
+
+⚠️ RÈGLE IMPORTANTE : 
+Quand le client mentionne un produit, utilise le NOM EXACT du menu ci-dessus dans la description.
+Exemples :
+- Client dit "un copoin" → Écris "Coca-Cola" ou "Coca" (selon ce qui est au menu)
+- Client dit "un borger" → Écris le nom exact du burger commandé (ex: "USA Beef Burger")
+- Client dit "une pizaa" → Écris le nom exact de la pizza (ex: "Pizza Margherita")
+
+Si le client ne précise pas le produit exact, utilise les noms génériques mais corrects.
+========================================
+`;
+      enrichedPrompt = EXTRACTION_PROMPT + menuInfo;
+    }
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
-          content: EXTRACTION_PROMPT,
+          content: enrichedPrompt,
         },
         {
           role: "user",
@@ -191,23 +255,21 @@ export async function extractCallData(transcription) {
       throw new Error(`Extraction impossible : ${extractedData.error}`);
     }
 
-    // ===== VALIDATION STRICTE DES DONNÉES =====
+    // ===== VALIDATION SOUPLE DES DONNÉES =====
     
-    // Validation du nom (minimum 2 caractères, lettres uniquement) - OBLIGATOIRE
-    const isNameValid = extractedData.nom && 
-                        extractedData.nom.length >= 2 && 
-                        extractedData.nom !== "Non spécifié" &&
-                        extractedData.nom !== "Inconnu" &&
-                        extractedData.nom !== "Non fourni" &&
-                        /[a-zA-ZÀ-ÿ]/.test(extractedData.nom);
+    // Validation du nom (accepte "Client inconnu" maintenant)
+    let nomClient = extractedData.nom || "Client inconnu";
     
-    // Si le nom n'est pas valide, rejeter l'extraction
-    if (!isNameValid) {
-      console.warn("⚠️ NOM INVALIDE DÉTECTÉ - REJET");
-      console.warn("Nom reçu:", extractedData.nom);
-      
-      throw new Error("Données client invalides : nom du client non fourni ou invalide");
+    // Nettoyer les valeurs invalides
+    if (typeof nomClient !== 'string' || 
+        nomClient.trim().length < 2 ||
+        nomClient === "Non spécifié" ||
+        nomClient === "Inconnu" ||
+        nomClient === "Non fourni") {
+      nomClient = "Client inconnu";
     }
+    
+    console.log("✅ Nom accepté:", nomClient);
     
     // Validation du téléphone (format français) - OPTIONNEL
     const phoneRegex = /^(?:(?:\+|00)33|0)[1-9](?:[0-9]{8})$/;
@@ -227,7 +289,7 @@ export async function extractCallData(transcription) {
     // Normaliser la structure
     // IMPORTANT : GPT retourne "order" pas "appointment" donc on lit "order"
     const validatedData = {
-      nom: extractedData.nom.trim(),
+      nom: nomClient.trim(),
       telephone: cleanedPhone,
       type_demande: extractedData.type_demande || "Autre",
       services: extractedData.services || "Autre",

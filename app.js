@@ -2,6 +2,10 @@ import Fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyFormBody from "@fastify/formbody";
 import fastifyWs from "@fastify/websocket";
+import fastifyStatic from "@fastify/static";
+import fastifyMultipart from "@fastify/multipart";
+import path from "path";
+import { fileURLToPath } from "url";
 import callRoutes from "./Routes/Calls/call.js";
 import wsRoutes from "./Routes/Ws/ws.js";
 import callDataRoutes from "./Routes/CallData/callData.js";
@@ -17,6 +21,9 @@ import { createDefaultAdmin } from "./Controller/authController.js";
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function connectDB() {
   try {
@@ -52,6 +59,22 @@ await fastify.register(cors, {
 });
 
 fastify.register(fastifyFormBody);
+
+// Configuration multipart pour les uploads de fichiers
+fastify.register(fastifyMultipart, {
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5 MB max
+  },
+});
+
+// Servir les fichiers statiques (avatars, uploads)
+fastify.register(fastifyStatic, {
+  root: path.join(__dirname, "uploads"),
+  prefix: "/uploads/",
+  decorateReply: false,
+});
+
+console.log("📁 Dossier uploads servi sur /uploads/");
 
 // Configuration WebSocket avec options pour maintenir les connexions actives
 fastify.register(fastifyWs, {

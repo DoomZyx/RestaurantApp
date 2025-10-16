@@ -31,6 +31,23 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  // Informations de profil supplémentaires
+  telephone: {
+    type: String,
+    trim: true,
+  },
+  poste: {
+    type: String,
+    trim: true,
+  },
+  departement: {
+    type: String,
+    trim: true,
+  },
+  avatar: {
+    type: String, // URL ou chemin vers l'image de profil
+    default: null,
+  },
   lastLogin: {
     type: Date,
   },
@@ -114,6 +131,10 @@ userSchema.methods.toPublicJSON = function () {
     email: this.email,
     role: this.role,
     isActive: this.isActive,
+    telephone: this.telephone,
+    poste: this.poste,
+    departement: this.departement,
+    avatar: this.avatar,
     lastLogin: this.lastLogin,
     createdAt: this.createdAt,
   };
