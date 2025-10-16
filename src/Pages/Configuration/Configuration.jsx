@@ -36,13 +36,41 @@ function Configuration() {
         
         // Définir les valeurs par défaut pour horaires seulement si elles n'existent pas
         const defaultHoraires = {
-          lundi: { ouvert: false, ouverture: "09:00", fermeture: "18:00" },
-          mardi: { ouvert: true, ouverture: "09:00", fermeture: "18:00" },
-          mercredi: { ouvert: true, ouverture: "09:00", fermeture: "18:00" },
-          jeudi: { ouvert: true, ouverture: "09:00", fermeture: "18:00" },
-          vendredi: { ouvert: true, ouverture: "09:00", fermeture: "18:00" },
-          samedi: { ouvert: true, ouverture: "09:00", fermeture: "18:00" },
-          dimanche: { ouvert: false, ouverture: "09:00", fermeture: "18:00" }
+          lundi: { 
+            ouvert: false, 
+            midi: { ouverture: "12:00", fermeture: "14:00" },
+            soir: { ouverture: "19:00", fermeture: "22:00" }
+          },
+          mardi: { 
+            ouvert: true, 
+            midi: { ouverture: "12:00", fermeture: "14:00" },
+            soir: { ouverture: "19:00", fermeture: "22:00" }
+          },
+          mercredi: { 
+            ouvert: true, 
+            midi: { ouverture: "12:00", fermeture: "14:00" },
+            soir: { ouverture: "19:00", fermeture: "22:00" }
+          },
+          jeudi: { 
+            ouvert: true, 
+            midi: { ouverture: "12:00", fermeture: "14:00" },
+            soir: { ouverture: "19:00", fermeture: "22:00" }
+          },
+          vendredi: { 
+            ouvert: true, 
+            midi: { ouverture: "12:00", fermeture: "14:00" },
+            soir: { ouverture: "19:00", fermeture: "22:00" }
+          },
+          samedi: { 
+            ouvert: true, 
+            midi: { ouverture: "12:00", fermeture: "14:00" },
+            soir: { ouverture: "19:00", fermeture: "22:00" }
+          },
+          dimanche: { 
+            ouvert: false, 
+            midi: { ouverture: "12:00", fermeture: "14:00" },
+            soir: { ouverture: "19:00", fermeture: "22:00" }
+          }
         };
 
         // Fusionner les horaires en conservant les données du backend
@@ -55,6 +83,7 @@ function Configuration() {
             adresse: data.restaurantInfo?.adresse || "",
             telephone: data.restaurantInfo?.telephone || "",
             email: data.restaurantInfo?.email || "",
+            nombreCouverts: data.restaurantInfo?.nombreCouverts || 0,
             horairesOuverture: horaires
           },
           menuPricing: data.menuPricing || {
@@ -131,13 +160,17 @@ function Configuration() {
   };
 
   const handleProductAdd = async (categorie) => {
+    console.log("➕ Tentative d'ajout de produit:", { categorie, newProduct });
+
     // Validation
     if (!newProduct.nom || newProduct.nom.trim() === "") {
       setError("Le nom du produit est obligatoire");
+      console.error("❌ Nom du produit manquant");
       return;
     }
     if (!newProduct.prixBase || newProduct.prixBase <= 0) {
       setError("Le prix doit être supérieur à 0");
+      console.error("❌ Prix invalide:", newProduct.prixBase);
       return;
     }
 
@@ -156,18 +189,27 @@ function Configuration() {
       productData.taille = newProduct.taille || '33cl';
     }
 
+    console.log("📦 Données du produit préparées:", productData);
+
     try {
       setSaving(true);
       setError(null);
       const response = await addProduct(categorie, productData);
+      console.log("✅ Réponse ajout produit:", response);
+      
       if (response.success) {
         await loadPricing(); // Recharger les données
-        setNewProduct({ nom: "", description: "", prixBase: 0, taille: "Moyenne", disponible: true });
+        // Réinitialiser avec la taille correcte pour cette catégorie
+        const tailleParDefaut = categorie === 'boissons' ? '33cl' : 
+                               categorie === 'pizzas' ? 'Moyenne' : '';
+        setNewProduct({ nom: "", description: "", prixBase: 0, taille: tailleParDefaut, disponible: true });
         setShowProductForm(false);
         setSuccess(true);
         setTimeout(() => setSuccess(false), 3000);
+        console.log(`✅ Produit "${productData.nom}" ajouté avec succès`);
       }
     } catch (err) {
+      console.error("❌ Erreur ajout produit:", err);
       setError(`Erreur lors de l'ajout du produit: ${err.message}`);
     } finally {
       setSaving(false);
@@ -194,28 +236,108 @@ function Configuration() {
       return;
     }
 
+    console.log("🗑️ Tentative de suppression:", { categorie, produitId });
+
+    if (!produitId) {
+      setError("Erreur: ID du produit manquant");
+      console.error("❌ ID du produit manquant:", produitId);
+      return;
+    }
+
     try {
       setSaving(true);
       setError(null);
-      await deleteProduct(categorie, produitId);
+      const response = await deleteProduct(categorie, produitId);
+      console.log("✅ Réponse suppression:", response);
       await loadPricing();
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
+      console.error("❌ Erreur suppression:", err);
       setError(`Erreur lors de la suppression: ${err.message}`);
     } finally {
       setSaving(false);
     }
   };
 
-  const handleAddCategory = () => {
+  const handleOpenProductForm = (categorie) => {
+    // Initialiser newProduct avec la bonne taille par défaut selon la catégorie
+    const tailleParDefaut = categorie === 'boissons' ? '33cl' : 
+                           categorie === 'pizzas' ? 'Moyenne' : '';
+    
+    setNewProduct({
+      nom: "",
+      description: "",
+      prixBase: 0,
+      taille: tailleParDefaut,
+      disponible: true
+    });
+    
+    setShowProductForm(categorie);
+  };
+
+  const handleAddCategory = async () => {
     const categoryName = prompt("Nom de la nouvelle catégorie:");
-    if (categoryName && categoryName.trim()) {
-      const newCategoryKey = categoryName.toLowerCase().replace(/\s+/g, '_');
-      handleInputChange(`menuPricing.${newCategoryKey}`, {
-        nom: categoryName.trim(),
-        produits: []
-      });
+    if (!categoryName || !categoryName.trim()) {
+      console.log("❌ Nom de catégorie vide, annulation");
+      return;
+    }
+
+    console.log("➕ Création de la catégorie:", categoryName);
+    const newCategoryKey = categoryName.toLowerCase().replace(/\s+/g, '_');
+    
+    // Vérifier si la catégorie existe déjà
+    if (pricing?.menuPricing?.[newCategoryKey]) {
+      setError(`La catégorie "${categoryName}" existe déjà`);
+      console.warn("⚠️ Catégorie déjà existante:", newCategoryKey);
+      return;
+    }
+    
+    // Ajouter la catégorie localement avec une structure complète
+    const updatedPricing = {
+      ...pricing,
+      menuPricing: {
+        ...(pricing?.menuPricing || {}),
+        [newCategoryKey]: {
+          nom: categoryName.trim(),
+          produits: []
+        }
+      }
+    };
+    
+    console.log("📦 Structure de pricing mise à jour:", updatedPricing);
+    setPricing(updatedPricing);
+    
+    // Sauvegarder automatiquement
+    try {
+      setSaving(true);
+      setError(null);
+      console.log("💾 Envoi de la sauvegarde au backend...");
+      console.log("📦 Données envoyées:", JSON.stringify(updatedPricing, null, 2).substring(0, 500));
+      
+      const response = await updatePricing(updatedPricing);
+      console.log("✅ Réponse backend:", response);
+      
+      if (response.success) {
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
+        
+        // Recharger depuis le backend pour avoir les données à jour
+        console.log("🔄 Rechargement des données depuis le backend...");
+        await loadPricing();
+        
+        console.log(`✅ Catégorie "${categoryName}" créée et sauvegardée avec succès`);
+        console.log("📋 Catégories après rechargement:", Object.keys(pricing?.menuPricing || {}));
+      } else {
+        setError(`Erreur: ${response.message || "Échec de la sauvegarde"}`);
+        console.error("❌ Réponse d'échec:", response);
+      }
+    } catch (err) {
+      setError(`Erreur lors de la création de la catégorie: ${err.message}`);
+      console.error("❌ Erreur création catégorie:", err);
+      console.error("Stack:", err.stack);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -240,25 +362,12 @@ function Configuration() {
   }
 
   // Les données sont déjà initialisées dans loadPricing, on les utilise directement
-  const safePricing = pricing;
+  const safePricing = pricing || {};
   const categories = Object.keys(safePricing.menuPricing || {});
 
   return (
     <AppLayout>
       <div className="configuration-page">
-        <div className="page-header">
-          <div className="header-actions">
-            {success && <div className="success-message">✅ Configuration sauvegardée !</div>}
-            <button 
-              onClick={handleSave} 
-              disabled={saving}
-              className="btn-save"
-            >
-              {saving ? "⏳ Sauvegarde..." : "💾 Sauvegarder"}
-            </button>
-          </div>
-        </div>
-
         {error && <div className="error-message">❌ {error}</div>}
 
         <div className="tabs">
@@ -330,6 +439,17 @@ function Configuration() {
                   onChange={(e) => handleInputChange("restaurantInfo.email", e.target.value)}
                 />
               </div>
+              <div className="form-group">
+                <label>Nombre de couverts disponibles</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={safePricing.restaurantInfo.nombreCouverts || 0}
+                  onChange={(e) => handleInputChange("restaurantInfo.nombreCouverts", parseInt(e.target.value) || 0)}
+                  placeholder="Ex: 50"
+                />
+                <small className="help-text">Indiquez le nombre total de places assises dans votre restaurant</small>
+              </div>
             </div>
           )}
 
@@ -337,17 +457,9 @@ function Configuration() {
             <div className="menu-pricing">
               <h3>Configuration du Menu</h3>
               <div className="categories-container">
-                <div className="categories-actions">
-                  <button onClick={handleSave} className="btn-primary">
-                    💾 Sauvegarder les catégories
-                  </button>
-                  <button onClick={handleAddCategory} className="btn-secondary">
-                    ➕ Ajouter une catégorie
-                  </button>
-                </div>
                 {categories.length === 0 ? (
                   <div className="empty-state">
-                    <p>Aucune catégorie de menu disponible. Cliquez sur "Sauvegarder" pour initialiser les catégories par défaut.</p>
+                    <p>Aucune catégorie de menu disponible. Cliquez sur "➕ Ajouter une catégorie" pour créer votre première catégorie.</p>
                   </div>
                 ) : (
                 categories.map(categorie => (
@@ -355,7 +467,7 @@ function Configuration() {
                   <div className="category-header">
                     <h4>{safePricing.menuPricing[categorie]?.nom || categorie}</h4>
                     <button 
-                      onClick={() => setShowProductForm(categorie)}
+                      onClick={() => handleOpenProductForm(categorie)}
                       className="btn-add-product"
                     >
                        Ajouter un produit
@@ -364,7 +476,7 @@ function Configuration() {
                   
                   <div className="products-list">
                     {(safePricing.menuPricing[categorie]?.produits || []).map((produit, index) => (
-                      <div key={index} className="product-item">
+                      <div key={produit._id || index} className="product-item">
                         {editingProduct?.categorie === categorie && editingProduct?.index === index ? (
                           <div className="product-edit-form">
                             <input
@@ -417,12 +529,17 @@ function Configuration() {
                               <h5>{produit.nom}</h5>
                               <p>{produit.description}</p>
                               <span className="price">{produit.prixBase}€</span>
+                              {!produit._id && <small style={{color: 'red', display: 'block', marginTop: '5px'}}>⚠️ Produit sans ID - sauvegardez la config</small>}
                             </div>
                             <div className="product-actions">
                               <button onClick={() => setEditingProduct({ categorie, index })}>
                                 ✏️ Modifier
                               </button>
-                              <button onClick={() => handleProductDelete(categorie, produit._id)}>
+                              <button 
+                                onClick={() => handleProductDelete(categorie, produit._id)}
+                                disabled={!produit._id}
+                                title={!produit._id ? "Ce produit n'a pas d'ID - sauvegardez d'abord la configuration" : "Supprimer ce produit"}
+                              >
                                 🗑️ Supprimer
                               </button>
                             </div>
@@ -434,6 +551,11 @@ function Configuration() {
                 </div>
                 ))
                 )}
+                  <div className="categories-actions">
+                  <button onClick={handleAddCategory} className="btn-addCategories">
+                    + Ajouter une catégorie
+                  </button>
+                </div>
               </div>
 
               {showProductForm && (
@@ -611,20 +733,45 @@ function Configuration() {
                       </label>
                     </div>
                     {safePricing.restaurantInfo.horairesOuverture[jour]?.ouvert && (
-                      <div className="horaires-inputs">
-                        <input
-                          type="time"
-                          value={safePricing.restaurantInfo.horairesOuverture[jour]?.ouverture || "09:00"}
-                          onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.ouverture`, e.target.value)}
-                          className="time-input"
-                        />
-                        <span className="time-separator">à</span>
-                        <input
-                          type="time"
-                          value={safePricing.restaurantInfo.horairesOuverture[jour]?.fermeture || "18:00"}
-                          onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.fermeture`, e.target.value)}
-                          className="time-input"
-                        />
+                      <div className="horaires-plages">
+                        {/* Service du midi */}
+                        <div className="plage-horaire">
+                          <span className="plage-label">Midi</span>
+                          <div className="horaires-inputs">
+                            <input
+                              type="time"
+                              value={safePricing.restaurantInfo.horairesOuverture[jour]?.midi?.ouverture || "12:00"}
+                              onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.midi.ouverture`, e.target.value)}
+                              className="time-input"
+                            />
+                            <span className="time-separator">à</span>
+                            <input
+                              type="time"
+                              value={safePricing.restaurantInfo.horairesOuverture[jour]?.midi?.fermeture || "14:00"}
+                              onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.midi.fermeture`, e.target.value)}
+                              className="time-input"
+                            />
+                          </div>
+                        </div>
+                        {/* Service du soir */}
+                        <div className="plage-horaire">
+                          <span className="plage-label">Soir</span>
+                          <div className="horaires-inputs">
+                            <input
+                              type="time"
+                              value={safePricing.restaurantInfo.horairesOuverture[jour]?.soir?.ouverture || "19:00"}
+                              onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.soir.ouverture`, e.target.value)}
+                              className="time-input"
+                            />
+                            <span className="time-separator">à</span>
+                            <input
+                              type="time"
+                              value={safePricing.restaurantInfo.horairesOuverture[jour]?.soir?.fermeture || "22:00"}
+                              onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.soir.fermeture`, e.target.value)}
+                              className="time-input"
+                            />
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -709,6 +856,18 @@ function Configuration() {
             </div>
           )}
         </div>
+        <div className="page-header">
+        <div className="header-actions">
+            {success && <div className="success-message">✅ Configuration sauvegardée !</div>}
+            <button 
+              onClick={handleSave} 
+              disabled={saving}
+              className="btn-save"
+            >
+              {saving ? "⏳ Sauvegarde..." : "💾 Sauvegarder"}
+            </button>
+          </div>
+          </div>
       </div>
     </AppLayout>
   );

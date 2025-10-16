@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { fetchCalls } from "../../API/Calls/api";
 import { useCallFilters } from "./useCallFilters";
 import { useCallModal } from "./useCallModal";
 import { usePagination } from "../Pagination/usePagination";
 import { useCallActions } from "./useCallActions";
+import { useWebSocket } from "../../Context/WebSocketContext";
 
 export function useCallList() {
  const [searchParams, setSearchParams] = useSearchParams();
@@ -19,6 +20,11 @@ export function useCallList() {
  const [calls, setCalls] = useState([]);
  const [loading, setLoading] = useState(true);
  const [error, setError] = useState(null);
+
+ // Refs pour stocker les valeurs actuelles sans causer de re-renders
+ const filtersRef = useRef(filters);
+ const paginationRef = useRef(paginationHook.currentPage);
+ const loadCallsRef = useRef(null);
 
 
  // Fonction principale de chargement des appels
@@ -79,6 +85,29 @@ export function useCallList() {
    loadCalls(page, filters);
  };
 
+ // Mettre à jour les refs
+ useEffect(() => {
+   filtersRef.current = filters;
+   paginationRef.current = paginationHook.currentPage;
+   loadCallsRef.current = loadCalls;
+ }, [filters, paginationHook.currentPage, loadCalls]);
+
+ // Callback pour rafraîchir quand un nouvel appel arrive via WebSocket
+ const handleNewCall = useCallback((notificationData) => {
+   console.log("🔄 Rafraîchissement automatique des appels...", notificationData);
+   if (loadCallsRef.current) {
+     loadCallsRef.current(paginationRef.current, filtersRef.current);
+   }
+ }, []);
+
+ // Connecter au WebSocket centralisé
+ const { isConnected, subscribe } = useWebSocket();
+ 
+ useEffect(() => {
+   const unsubscribe = subscribe("call", handleNewCall);
+   return () => unsubscribe();
+ }, [subscribe, handleNewCall]);
+
  // Wrappers pour les actions avec rechargement
  const handleDeleteCallWithReload = async (callId) => {
    await actionsHook.handleDeleteCall(callId, () => {
@@ -104,6 +133,9 @@ export function useCallList() {
   calls,
   loading,
   error,
+  
+  // WebSocket
+  isConnected,
   
   // Filtres
   filters,

@@ -1,52 +1,136 @@
-import { useState } from "react";
-import { getProfile } from "../../API/auth";
+import { useState, useEffect } from "react";
+import { getProfile, updateUserProfile, uploadAvatar as uploadAvatarAPI } from "../../API/auth";
 
 export function useProfile() {
- const [profileData, setProfileData] = useState({
-  nom: "",
-  email: "",
-  telephone: "",
-  poste: "",
-  departement: "",
-  dateCreation: "",
-  derniereConnexion: new Date().toISOString(),
-});
+  const [profileData, setProfileData] = useState({
+    nom: "",
+    email: "",
+    telephone: "",
+    poste: "",
+    departement: "",
+    avatar: null,
+    dateCreation: "",
+    derniereConnexion: new Date().toISOString(),
+  });
 
-const [editMode, setEditMode] = useState(false);
-const [tempData, setTempData] = useState({ ...profileData });
-const [saving, setSaving] = useState(false);
-const [success, setSuccess] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [tempData, setTempData] = useState({ ...profileData });
+  const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
-const [statsPersonnelles] = useState({
-  totalAppelsTraites: 147,
-  tempsResponseMoyen: 2.5,
-  satisfactionClient: 96,
-  appelsMoisCourant: 23,
-});
+  const [statsPersonnelles] = useState({
+    totalAppelsTraites: 147,
+    tempsResponseMoyen: 2.5,
+    satisfactionClient: 96,
+    appelsMoisCourant: 23,
+  });
 
-const handleEdit = () => {
-  setEditMode(true);
-  setTempData({ ...profileData });
-};
+  // Charger les données du profil au montage
+  useEffect(() => {
+    loadProfile();
+  }, []);
 
-const handleCancel = () => {
-  setEditMode(false);
-  setTempData({ ...profileData });
-};
+  const loadProfile = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await getProfile();
+      
+      console.log("📦 Réponse API getProfile:", response);
+      
+      if (response.success && response.data?.user) {
+        const user = response.data.user;
+        console.log("👤 Données utilisateur:", user);
+        console.log("🖼️ Avatar URL depuis API:", user.avatar);
+        
+        const formattedData = {
+          nom: user.username || "",
+          email: user.email || "",
+          telephone: user.telephone || "",
+          poste: user.poste || "",
+          departement: user.departement || "",
+          avatar: user.avatar || null,
+          dateCreation: user.createdAt || "",
+          derniereConnexion: user.lastLogin || new Date().toISOString(),
+        };
+        setProfileData(formattedData);
+        setTempData(formattedData);
+      }
+    } catch (err) {
+      console.error("Erreur chargement profil:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const handleSave = async () => {
-  setSaving(true);
+  const handleEdit = () => {
+    setEditMode(true);
+    setTempData({ ...profileData });
+  };
 
-  // Simulation d'un appel API
-  setTimeout(() => {
-    setProfileData({ ...tempData });
+  const handleCancel = () => {
     setEditMode(false);
-    setSaving(false);
-    setSuccess(true);
+    setTempData({ ...profileData });
+  };
 
-    setTimeout(() => setSuccess(false), 3000);
-  }, 1000);
-};
+  const handleSave = async () => {
+    try {
+      setSaving(true);
+      setError(null);
+
+      // Préparer les données à envoyer (mapper nom -> username)
+      const updateData = {
+        username: tempData.nom,
+        email: tempData.email,
+        telephone: tempData.telephone,
+        poste: tempData.poste,
+        departement: tempData.departement,
+        avatar: tempData.avatar,
+      };
+
+      const response = await updateUserProfile(updateData);
+
+      if (response.success) {
+        // Recharger le profil depuis le serveur
+        await loadProfile();
+        setEditMode(false);
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
+      }
+    } catch (err) {
+      console.error("Erreur sauvegarde profil:", err);
+      setError(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleAvatarUpload = async (file) => {
+    try {
+      setSaving(true);
+      setError(null);
+
+      console.log("📤 Upload avatar en cours...", file.name);
+      const response = await uploadAvatarAPI(file);
+      console.log("✅ Réponse upload avatar:", response);
+
+      if (response.success) {
+        console.log("🖼️ Nouvel avatar URL:", response.data?.avatar);
+        // Recharger le profil pour afficher le nouvel avatar
+        await loadProfile();
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
+      }
+    } catch (err) {
+      console.error("Erreur upload avatar:", err);
+      setError(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
 
 const handleInputChange = (field, value) => {
   setTempData((prev) => ({
@@ -72,24 +156,29 @@ const formatDateTime = (dateString) => {
     minute: "2-digit",
   });
 };
- return {
-  profileData,
-  setProfileData,
-  editMode,
-  setEditMode,
-  tempData,
-  setTempData,
-  saving,
-  setSaving,
-  success,
-  setSuccess,
-  statsPersonnelles,
-
-  handleEdit,
-  handleCancel,
-  handleSave,
-  handleInputChange,
-  formatDate,
-  formatDateTime
- }
+  return {
+    profileData,
+    setProfileData,
+    editMode,
+    setEditMode,
+    tempData,
+    setTempData,
+    saving,
+    setSaving,
+    loading,
+    error,
+    setError,
+    success,
+    setSuccess,
+    statsPersonnelles,
+    
+    loadProfile,
+    handleEdit,
+    handleCancel,
+    handleSave,
+    handleAvatarUpload,
+    handleInputChange,
+    formatDate,
+    formatDateTime
+  }
 }

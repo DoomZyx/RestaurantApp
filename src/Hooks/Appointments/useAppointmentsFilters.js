@@ -5,6 +5,7 @@ export function useAppointmentsFilters() {
     date: "",
     statut: "",
     type: "",
+    modalite: "",
   });
 
   const handleFilterChange = (key, value) => {
@@ -16,6 +17,7 @@ export function useAppointmentsFilters() {
       date: "",
       statut: "",
       type: "",
+      modalite: "",
     });
   };
 

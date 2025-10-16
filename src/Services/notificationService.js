@@ -8,6 +8,8 @@ class NotificationService {
     this.audioContext = null;
     this.notificationSound = null;
     this.isInitialized = false;
+    this.notifications = []; // Liste des notifications pour l'UI
+    this.listeners = []; // Écouteurs pour les changements de notifications
   }
 
   /**
@@ -41,6 +43,78 @@ class NotificationService {
   }
 
   /**
+   * Ajoute une notification à la liste (pour l'UI)
+   * @param {Object} notificationData - Données de la notification
+   */
+  addNotification(notificationData) {
+    const newNotification = {
+      id: Date.now() + Math.random(),
+      ...notificationData,
+      timestamp: new Date(),
+      read: false, // Marquer comme non lue
+    };
+
+    // Ajouter au début de la liste (max 20 pour garder plus d'historique)
+    this.notifications = [newNotification, ...this.notifications.slice(0, 19)];
+    
+    // Notifier les écouteurs
+    this.notifyListeners();
+
+    // Plus d'auto-suppression, les notifications restent jusqu'à ce qu'on les supprime manuellement
+
+    return newNotification;
+  }
+
+  /**
+   * Supprime une notification de la liste
+   * @param {string} id - ID de la notification à supprimer
+   */
+  removeNotification(id) {
+    this.notifications = this.notifications.filter(notif => notif.id !== id);
+    this.notifyListeners();
+  }
+
+  /**
+   * Marque une notification comme lue
+   * @param {string} id - ID de la notification à marquer comme lue
+   */
+  markAsRead(id) {
+    const notification = this.notifications.find(n => n.id === id);
+    if (notification) {
+      notification.read = true;
+      this.notifyListeners();
+    }
+  }
+
+  /**
+   * Vide toutes les notifications
+   */
+  clearAllNotifications() {
+    this.notifications = [];
+    this.notifyListeners();
+  }
+
+  /**
+   * S'abonner aux changements de notifications
+   * @param {Function} listener - Fonction appelée lors des changements
+   * @returns {Function} Fonction pour se désabonner
+   */
+  subscribe(listener) {
+    this.listeners.push(listener);
+    // Retourner une fonction pour se désabonner
+    return () => {
+      this.listeners = this.listeners.filter(l => l !== listener);
+    };
+  }
+
+  /**
+   * Notifie tous les écouteurs des changements
+   */
+  notifyListeners() {
+    this.listeners.forEach(listener => listener(this.notifications));
+  }
+
+  /**
    * Déclenche une notification système basée sur les données WebSocket
    * @param {Object} notificationData - Données de notification du WebSocket
    */
@@ -51,6 +125,9 @@ class NotificationService {
 
     try {
       const { title, message, priority, details } = notificationData;
+
+      // Ajouter la notification à la liste pour l'UI
+      this.addNotification(notificationData);
 
       // Jouer un son selon la priorité
       const soundType =

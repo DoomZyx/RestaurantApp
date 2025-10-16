@@ -1,93 +1,57 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import notificationService from "../../Services/notificationService.js";
 import "./NotificationCenter.scss";
 
 const NotificationCenter = () => {
   const [notifications, setNotifications] = useState([]);
-  const [isConnected, setIsConnected] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const wsRef = useRef(null);
-  const reconnectTimeoutRef = useRef(null);
+  const navigate = useNavigate();
+  
+  // Utiliser isConnected depuis le localStorage ou un state global si disponible
+  // Pour l'instant on suppose que c'est connecté si on a des notifications
+  const isConnected = true; // Simplifié pour l'instant
 
-  // Connexion WebSocket
-  const connectWebSocket = () => {
-    try {
-      const ws = new WebSocket("ws://localhost:8080/ws/notifications");
-      wsRef.current = ws;
-
-      ws.onopen = () => {
-        setIsConnected(true);
-
-        // Connecter le service de notification au WebSocket
-        notificationService.connectToWebSocket(ws);
-
-        // Test de connexion - envoyer un ping
-        setTimeout(() => {
-          if (ws.readyState === 1) {
-            ws.send(JSON.stringify({ type: "ping" }));
-          }
-        }, 1000);
-      };
-
-      ws.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data);
-
-          if (data.type === "notification") {
-            addNotification(data.data);
-
-            // Déclencher aussi la notification système
-            notificationService.triggerSystemNotification(data.data);
-          } else if (data.type === "connected") {
-          } else if (data.type === "pong") {
-            // Ping/pong pour maintenir la connexion
-          }
-        } catch (error) {
-          console.error("Erreur parsing notification:", error);
-        }
-      };
-
-      ws.onclose = () => {
-        setIsConnected(false);
-
-        // Reconnexion automatique
-        if (reconnectTimeoutRef.current) {
-          clearTimeout(reconnectTimeoutRef.current);
-        }
-        reconnectTimeoutRef.current = setTimeout(() => {
-          connectWebSocket();
-        }, 5000);
-      };
-
-      ws.onerror = (error) => {
-        console.error("Erreur WebSocket notification:", error);
-        setIsConnected(false);
-      };
-    } catch (error) {
-      console.error("Erreur connexion WebSocket:", error);
-      setIsConnected(false);
+  // Gérer le clic sur une notification
+  const handleNotificationClick = (notification) => {
+    // Marquer comme lue
+    notificationService.markAsRead(notification.id);
+    
+    console.log("🔔 Clic sur notification:", notification);
+    
+    // Naviguer selon le type de notification
+    if (notification.notificationType === "call_completed") {
+      // Si on a un ID de commande, aller vers les rendez-vous avec l'ID
+      if (notification.details?.orderId) {
+        navigate(`/appointments?orderid=${notification.details.orderId}`);
+        console.log("→ Navigation vers /appointments avec orderid:", notification.details.orderId);
+      } else {
+        // Sinon aller vers les appels (la route s'appelle /calls-list)
+        navigate("/calls-list");
+        console.log("→ Navigation vers /calls-list");
+      }
+    } else if (notification.notificationType === "new_order") {
+      // Aller à la page des rendez-vous avec l'ID si disponible
+      if (notification.details?.orderId) {
+        navigate(`/appointments?orderid=${notification.details.orderId}`);
+        console.log("→ Navigation vers /appointments avec orderid:", notification.details.orderId);
+      } else {
+        navigate("/appointments");
+        console.log("→ Navigation vers /appointments");
+      }
     }
-  };
-
-  // Ajouter une notification
-  const addNotification = (notificationData) => {
-    const newNotification = {
-      id: Date.now() + Math.random(),
-      ...notificationData,
-      timestamp: new Date(),
-    };
-
-    setNotifications((prev) => [newNotification, ...prev.slice(0, 9)]); // Garder max 10 notifications
-
-    // Auto-suppression après 10 secondes
-    setTimeout(() => {
-      removeNotification(newNotification.id);
-    }, 10000);
+    
+    // Fermer le panneau
+    setShowNotifications(false);
   };
 
   // Supprimer une notification
-  const removeNotification = (id) => {
-    setNotifications((prev) => prev.filter((notif) => notif.id !== id));
+  const removeNotification = (id, event) => {
+    // Empêcher la propagation pour ne pas déclencher handleNotificationClick
+    if (event) {
+      event.stopPropagation();
+    }
+    notificationService.removeNotification(id);
   };
 
   // Obtenir l'icône selon le type
@@ -133,17 +97,22 @@ const NotificationCenter = () => {
   };
 
   useEffect(() => {
-    connectWebSocket();
+    // S'abonner aux notifications du service
+    const unsubscribe = notificationService.subscribe((newNotifications) => {
+      setNotifications(newNotifications);
+    });
 
+    // Charger les notifications initiales
+    setNotifications(notificationService.notifications);
+
+    // Se désabonner au démontage
     return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-      if (reconnectTimeoutRef.current) {
-        clearTimeout(reconnectTimeoutRef.current);
-      }
+      unsubscribe();
     };
   }, []);
+
+  // Compter les notifications non lues
+  const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
     <div className="notification-center">
@@ -158,8 +127,8 @@ const NotificationCenter = () => {
         <i
           className={`bi ${isConnected ? "bi-bell-fill" : "bi-bell-slash"}`}
         ></i>
-        {notifications.length > 0 && (
-          <span className="notification-badge">{notifications.length}</span>
+        {unreadCount > 0 && (
+          <span className="notification-badge">{unreadCount}</span>
         )}
       </button>
 
@@ -188,7 +157,9 @@ const NotificationCenter = () => {
                   key={notification.id}
                   className={`notification-item ${getNotificationClass(
                     notification.priority
-                  )}`}
+                  )} ${notification.read ? 'read' : 'unread'}`}
+                  onClick={() => handleNotificationClick(notification)}
+                  style={{ cursor: 'pointer' }}
                 >
                   <div className="notification-icon">
                     <i
@@ -230,11 +201,16 @@ const NotificationCenter = () => {
                         )}
                       </div>
                     )}
+                    
+                    <small className="notification-hint">
+                      {notification.read ? '' : '👆 Cliquez pour voir les détails'}
+                    </small>
                   </div>
 
                   <button
                     className="remove-btn"
-                    onClick={() => removeNotification(notification.id)}
+                    onClick={(e) => removeNotification(notification.id, e)}
+                    title="Supprimer cette notification"
                   >
                     <i className="bi bi-x"></i>
                   </button>
@@ -247,7 +223,7 @@ const NotificationCenter = () => {
             <div className="notification-footer">
               <button
                 className="clear-all-btn"
-                onClick={() => setNotifications([])}
+                onClick={() => notificationService.clearAllNotifications()}
               >
                 Effacer tout
               </button>

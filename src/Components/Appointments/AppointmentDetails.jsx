@@ -1,4 +1,5 @@
 import React from "react";
+import { getClientFullName, getClientPhone } from "../../utils/clientUtils";
 
 export function AppointmentDetails({ 
   appointment, 
@@ -62,133 +63,104 @@ export function AppointmentDetails({
   };
 
   return (
-    <div className="appointment-details">
-      {/* En-tête avec statut */}
-      <div className="details-header">
-        <div className="appointment-info">
-          <h3>{formatDate(appointment.date)}</h3>
-          <p className="time-info">
-            🕒 {appointment.heure} - Durée: {appointment.duree} minutes
-          </p>
+    <>
+      <div className="appointment-info">
+        <div className="info-section">
+          <h3>Informations client</h3>
+          <div className="client-details">
+            <p><strong>Nom:</strong> {getClientFullName(appointment.client, appointment)}</p>
+            <p><strong>Téléphone:</strong> {getClientPhone(appointment.client)}</p>
+          </div>
         </div>
-        <span className={`status-badge ${getStatusColor(appointment.statut)}`}>
-          {getStatusLabel(appointment.statut)}
-        </span>
-      </div>
 
-      {/* Informations client */}
-      <div className="details-section">
-        <h4>👤 Client</h4>
-        <div className="client-details">
-          <p className="client-name">
-            <strong>{appointment.client?.prenom} {appointment.client?.nom}</strong>
-          </p>
-          <p className="client-contact">
-            📞 {appointment.client?.telephone}
-          </p>
-          {appointment.client?.email && (
-            <p className="client-contact">
-              ✉️ {appointment.client.email}
-            </p>
-          )}
-          {appointment.client?.entrepriseName && (
-            <p className="client-contact">
-              🏢 {appointment.client.entrepriseName}
-            </p>
+        <div className="info-section">
+          <h3>Commande</h3>
+          {appointment.description ? (
+            <p className="description">{appointment.description}</p>
+          ) : (
+            <p className="description">Aucune description disponible</p>
           )}
         </div>
-      </div>
 
-      {/* Détails du rendez-vous */}
-      <div className="details-section">
-        <h4>📋 Détails du rendez-vous</h4>
-        <div className="appointment-info-grid">
-          <div className="info-item">
-            <span className="label">Type:</span>
-            <span className="value">{appointment.type}</span>
-          </div>
-          <div className="info-item">
-            <span className="label">Modalité:</span>
-            <span className="value">
-              {getModalityIcon(appointment.modalite)} {appointment.modalite}
-            </span>
-          </div>
-          {appointment.description && (
-            <div className="info-item full-width">
-              <span className="label">Description:</span>
-              <p className="description">{appointment.description}</p>
+        <div className="info-section">
+          <h3>Horaires</h3>
+          <div className="info-grid">
+            <div className="info-item">
+              <label>Date:</label>
+              <span>{formatDate(appointment.date)}</span>
             </div>
-          )}
+            <div className="info-item">
+              <label>Heure:</label>
+              <span>{appointment.heure}</span>
+            </div>
+            {appointment.modalite && (
+              <div className="info-item">
+                <label>Modalité:</label>
+                <span>{appointment.modalite}</span>
+              </div>
+            )}
+            {appointment.nombrePersonnes && (
+              <div className="info-item">
+                <label>Nombre de personnes:</label>
+                <span>{appointment.nombrePersonnes} {appointment.nombrePersonnes > 1 ? 'personnes' : 'personne'}</span>
+              </div>
+            )}
+          </div>
         </div>
+
+        {appointment.notes && (
+          <div className="info-section">
+            <h3>Notes</h3>
+            <p className="notes">{appointment.notes}</p>
+          </div>
+        )}
       </div>
 
-      {/* Actions de changement de statut */}
-      <div className="details-section">
-        <h4>🔄 Changer le statut</h4>
+      <div className="modal-footer">
         <div className="status-actions">
           {appointment.statut === "planifie" && (
             <button
-              className="btn-action btn-confirm"
-              onClick={() => handleStatusChange("confirme")}
+              className="btn-start"
+              onClick={() => {
+                handleStatusChange("confirme");
+              }}
             >
-              ✅ Confirmer
+              Confirmer
             </button>
           )}
           
           {appointment.statut === "confirme" && (
             <button
-              className="btn-action btn-start"
-              onClick={() => handleStatusChange("en_cours")}
+              className="btn-complete"
+              onClick={() => {
+                handleStatusChange("termine");
+              }}
             >
-              🔄 Commencer
+              Marquer comme terminé
             </button>
           )}
-          
-          {appointment.statut === "en_cours" && (
-            <button
-              className="btn-action btn-complete"
-              onClick={() => handleStatusChange("termine")}
-            >
-              ✅ Terminer
-            </button>
-          )}
-          
+        </div>
+
+        <div className="main-actions">
           {(appointment.statut === "planifie" || appointment.statut === "confirme") && (
             <button
-              className="btn-action btn-cancel"
-              onClick={() => handleStatusChange("annule")}
+              className="btn-cancel"
+              onClick={() => {
+                handleStatusChange("annule");
+              }}
             >
-              ❌ Annuler
+              Annuler
             </button>
           )}
-        </div>
-      </div>
-
-      {/* Actions principales */}
-      <div className="details-actions">
-        <button
-          className="btn-secondary"
-          onClick={onClose}
-        >
-          👈 Retour
-        </button>
-        
-        <div className="action-group">
-          <button
-            className="btn-warning"
-            onClick={() => onEdit && onEdit(appointment._id, appointment)}
-          >
-            ✏️ Modifier
-          </button>
           
           <button
-            className="btn-danger"
+            className="btn-delete"
             onClick={handleDelete}
           >
-            🗑️ Supprimer
+            Supprimer
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }

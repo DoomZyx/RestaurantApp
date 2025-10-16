@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchCallsByDate } from '../../API/Calls/api.js';
-import { getAllSupplierOrders } from '../../API/SupplierOrders/api.js';
+// import { getAllSupplierOrders } from '../../API/SupplierOrders/api.js'; // Désactivé : route non implémentée
 
 export function useKpi() {
   const [kpiData, setKpiData] = useState({
@@ -21,6 +21,9 @@ export function useKpi() {
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdayStr = yesterday.toISOString().split('T')[0];
 
+    console.log("📅 Date du jour pour KPI:", today);
+    console.log("📦 Données reçues pour calcul KPI:", callsData);
+
     // Initialisation des compteurs
     const stats = {
       totalNouveau: 0,
@@ -32,25 +35,31 @@ export function useKpi() {
     };
 
     callsData.forEach(item => {
-      // Comptage total par statut
-      switch(item.statut) {
-        case 'nouveau':
-          stats.totalNouveau += item.count;
-          break;
-        case 'en_cours':
-          stats.totalEnCours += item.count;
-          break;
-        case 'termine':
-          stats.totalTermine += item.count;
-          break;
-        case 'annule':
-          stats.totalAnnule += item.count;
-          break;
-      }
-
-      // Nouvelles demandes aujourd'hui (tous statuts confondus)
+      console.log(`📊 Item: date=${item.date}, statut=${item.statut}, count=${item.count}`);
+      
+      // Comptage UNIQUEMENT pour aujourd'hui
       if (item.date === today) {
+        console.log(`✅ Match aujourd'hui ! Ajout de ${item.count} à ${item.statut}`);
+        
+        switch(item.statut) {
+          case 'nouveau':
+            stats.totalNouveau += item.count;
+            break;
+          case 'en_cours':
+            stats.totalEnCours += item.count;
+            break;
+          case 'termine':
+            stats.totalTermine += item.count;
+            break;
+          case 'annule':
+            stats.totalAnnule += item.count;
+            break;
+        }
+        
+        // Toutes les nouvelles demandes d'aujourd'hui
         stats.newToday += item.count;
+      } else {
+        console.log(`❌ Pas aujourd'hui: "${item.date}" !== "${today}"`);
       }
 
       // Demandes en cours depuis plus de 24h
@@ -59,6 +68,7 @@ export function useKpi() {
       }
     });
 
+    console.log("📈 Stats calculées:", stats);
     return stats;
   };
 
@@ -77,20 +87,24 @@ export function useKpi() {
       }
 
       // Charger les dernières commandes fournisseurs
-      try {
-        const orders = await getAllSupplierOrders({ limit: 5 });
-        
-        if (orders && Array.isArray(orders)) {
-          // Prendre directement les 5 dernières commandes (triées par date décroissante côté backend)
-          setTodayOrders(orders);
-        } else {
-          setTodayOrders([]);
-        }
-      } catch (orderErr) {
-        // Erreur silencieuse : ne pas afficher de commandes si l'API échoue
-        // (normal si le backend n'est pas démarré ou pas de commandes)
-        setTodayOrders([]);
-      }
+      // DÉSACTIVÉ : La route /api/supplier-orders n'existe pas encore côté backend
+      // try {
+      //   const orders = await getAllSupplierOrders({ limit: 5 });
+      //   
+      //   if (orders && Array.isArray(orders)) {
+      //     // Prendre directement les 5 dernières commandes (triées par date décroissante côté backend)
+      //     setTodayOrders(orders);
+      //   } else {
+      //     setTodayOrders([]);
+      //   }
+      // } catch (orderErr) {
+      //   // Erreur silencieuse : ne pas afficher de commandes si l'API échoue
+      //   // (normal si le backend n'est pas démarré ou pas de commandes)
+      //   setTodayOrders([]);
+      // }
+      
+      // En attendant l'implémentation, on met un tableau vide
+      setTodayOrders([]);
 
     } catch (err) {
       setError(err.message);

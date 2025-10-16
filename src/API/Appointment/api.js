@@ -11,6 +11,7 @@ export async function fetchAppointments(page = 1, limit = 50, filters = {}) {
  if (filters.date) params.append("date", filters.date);
  if (filters.statut) params.append("statut", filters.statut);
  if (filters.type) params.append("type", filters.type);
+ if (filters.modalite) params.append("modalite", filters.modalite);
 
  const res = await fetch(`${VITE_API_URL}api/orders?${params.toString()}`, {
    headers: {

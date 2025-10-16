@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   fetchAppointments,
   fetchTodayAppointments,
@@ -12,6 +12,7 @@ import {
 import { useAppointmentsFilters } from "./useAppointmentsFilters";
 import { useAppointmentsModal } from "./useAppointmentsModal";
 import { useAppointmentsView } from "./useAppointmentsView";
+import { useWebSocket } from "../../Context/WebSocketContext";
 
 export function useAppointments() {
   // Hooks spécialisés
@@ -32,6 +33,12 @@ export function useAppointments() {
     pages: 0,
   });
 
+  // Refs pour stocker les valeurs actuelles sans causer de re-renders
+  const paginationRef = useRef(pagination);
+  const filtersRef = useRef(filtersHook.filters);
+  const loadAppointmentsRef = useRef(null);
+  const loadTodayAppointmentsRef = useRef(null);
+
   // Récupérer tous les rendez-vous avec filtres
   const loadAppointments = useCallback(
     async (page = 1, limit = 50, filters = {}) => {
@@ -42,7 +49,23 @@ export function useAppointments() {
         const response = await fetchAppointments(page, limit, filters);
 
         if (response.success) {
-          setAppointments(response.data);
+          // Trier les rendez-vous par statut : actifs d'abord, terminés après
+          const sortedAppointments = response.data.sort((a, b) => {
+            const statusOrder = {
+              "planifie": 1,
+              "confirme": 2,
+              "en_cours": 3,
+              "termine": 4,
+              "annule": 5
+            };
+            
+            const orderA = statusOrder[a.statut] || 999;
+            const orderB = statusOrder[b.statut] || 999;
+            
+            return orderA - orderB;
+          });
+
+          setAppointments(sortedAppointments);
           setPagination(response.pagination);
         }
       } catch (err) {
@@ -248,6 +271,33 @@ export function useAppointments() {
     loadTodayAppointments();
   }, [loadTodayAppointments]);
 
+  // Mettre à jour les refs
+  useEffect(() => {
+    paginationRef.current = pagination;
+    filtersRef.current = filtersHook.filters;
+    loadAppointmentsRef.current = loadAppointments;
+    loadTodayAppointmentsRef.current = loadTodayAppointments;
+  }, [pagination, filtersHook.filters, loadAppointments, loadTodayAppointments]);
+
+  // Callback pour rafraîchir quand une nouvelle commande arrive via WebSocket
+  const handleNewOrder = useCallback((notificationData) => {
+    console.log("🔄 Rafraîchissement automatique des rendez-vous...", notificationData);
+    if (loadAppointmentsRef.current) {
+      loadAppointmentsRef.current(paginationRef.current.page, paginationRef.current.limit, filtersRef.current);
+    }
+    if (loadTodayAppointmentsRef.current) {
+      loadTodayAppointmentsRef.current();
+    }
+  }, []);
+
+  // Connecter au WebSocket centralisé
+  const { isConnected, subscribe } = useWebSocket();
+  
+  useEffect(() => {
+    const unsubscribe = subscribe("order", handleNewOrder);
+    return () => unsubscribe();
+  }, [subscribe, handleNewOrder]);
+
   // Fonctions utilitaires
   const getAppointmentsByStatus = useCallback(
     (statut) => {
@@ -281,6 +331,7 @@ export function useAppointments() {
     loading,
     error,
     pagination,
+    isConnected,
 
     // Filtres
     filters: filtersHook.filters,

@@ -5,9 +5,6 @@ import "./Base/base.scss";
 import { isAuthenticated, isAdmin } from "./API/auth";
 import Login from "./Pages/Login/Login";
 import Homepage from "./Pages/Homepage/homepage";
-import CallsList from "./Pages/CallsList/CallsList";
-import StatusManager from "./Pages/StatusManager/StatusManager";
-import Statistics from "./Pages/Statistics/Statistics";
 import Profile from "./Pages/Profile/Profile";
 import Admin from "./Pages/Admin/Admin";
 import AppointmentsPage from "./Pages/AppointmentsPage/AppointmentsPage";
@@ -47,30 +44,6 @@ function App() {
         element={
           <ProtectedRoute>
             <Homepage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/calls-list"
-        element={
-          <ProtectedRoute>
-            <CallsList />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/status-manager"
-        element={
-          <ProtectedRoute>
-            <StatusManager />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/statistics"
-        element={
-          <ProtectedRoute>
-            <Statistics />
           </ProtectedRoute>
         }
       />

@@ -32,12 +32,6 @@ function Menu() {
 
         <div className="handleCall-container">
           <div className="call-features-list">
-            <Link to="/calls-list">
-              <i className="bi bi-telephone"></i> <h3>LISTE D'APPELS</h3>
-            </Link>
-            <Link to="/status-manager">
-              <i className="bi bi-arrow-repeat"></i> <h3>STATUT DE DEMANDE</h3>
-            </Link>
             <Link to="/appointments">
               <i className="bi bi-calendar-check"></i> <h3>COMMANDES</h3>
             </Link>
@@ -50,14 +44,6 @@ function Menu() {
           </div>
         </div>
 
-        <div className="stats-container">
-          <div className="stats-list">
-            <Link to="/statistics">
-              <i className="bi bi-graph-up"></i>
-              <h3>STATISTIQUES GLOBALE</h3>
-            </Link>
-          </div>
-        </div>
 
         <div className="featLinks-container">
           <Link className="myAccount" to="/profile">

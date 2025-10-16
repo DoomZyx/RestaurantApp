@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useAppointments } from "../../Hooks/Appointments/useAppointments";
 import { fetchClients } from "../../API/Clients/api";
 import AppLayout from "../../Components/Layout/AppLayout";
@@ -10,6 +11,8 @@ import { AppointmentDetails } from "../../Components/Appointments/AppointmentDet
 import "./AppointmentsPage.scss";
 
 function AppointmentsPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  
   const {
     appointments,
     loading,
@@ -54,6 +57,24 @@ function AppointmentsPage() {
     loadAppointments(1, 50, filterParams);
   }, [loadAppointments, filters]);
 
+  // Détecter l'orderId dans l'URL et ouvrir automatiquement le détail
+  useEffect(() => {
+    const orderId = searchParams.get('orderid'); // En minuscule pour matcher l'URL
+    if (orderId && appointments.length > 0 && !showModal) {
+      console.log("🔍 Recherche de la commande:", orderId);
+      const appointment = appointments.find(a => a._id === orderId);
+      if (appointment) {
+        console.log("✅ Commande trouvée, ouverture du détail:", appointment);
+        openDetailsModal(appointment);
+        // Retirer le paramètre de l'URL pour ne pas réouvrir à chaque fois
+        setSearchParams({});
+      } else {
+        console.warn("⚠️ Commande non trouvée dans la liste");
+        console.log("📋 IDs disponibles:", appointments.map(a => a._id));
+      }
+    }
+  }, [searchParams, appointments, openDetailsModal, setSearchParams, showModal]);
+
   const handleStatusChange = async (appointmentId, newStatus) => {
     try {
       await changeAppointmentStatus(appointmentId, newStatus);
@@ -82,6 +103,7 @@ function AppointmentsPage() {
       if (filters.date) filterParams.date = filters.date;
       if (filters.statut) filterParams.statut = filters.statut;
       if (filters.type) filterParams.type = filters.type;
+      if (filters.modalite) filterParams.modalite = filters.modalite;
       loadAppointments(1, 50, filterParams);
     } catch (error) {
       console.error("Erreur lors de la création:", error);
@@ -97,6 +119,7 @@ function AppointmentsPage() {
       if (filters.date) filterParams.date = filters.date;
       if (filters.statut) filterParams.statut = filters.statut;
       if (filters.type) filterParams.type = filters.type;
+      if (filters.modalite) filterParams.modalite = filters.modalite;
       loadAppointments(1, 50, filterParams);
     } catch (error) {
       console.error("Erreur lors de la modification:", error);
@@ -235,17 +258,59 @@ function AppointmentsPage() {
               />
             </div>
           ) : (
-            <AppointmentsList
-              appointments={appointments}
-              loading={loading}
-              error={error}
-              pagination={pagination}
-              onViewDetails={handleViewDetails}
-              onStatusChange={handleStatusChange}
-              onDelete={handleDeleteAppointment}
-              formatDateTime={formatDateTime}
-              getStatusBadge={getStatusBadge}
-            />
+            <>
+              {/* Zone des commandes actives */}
+              <div className="appointments-zone active-zone">
+                <h3 className="zone-title">
+                  <span className="zone-icon">📋</span>
+                  Commandes en cours
+                  <span className="zone-count">
+                    {appointments.filter(apt => 
+                      ['planifie', 'confirme', 'en_cours'].includes(apt.statut)
+                    ).length}
+                  </span>
+                </h3>
+                <AppointmentsList
+                  appointments={appointments.filter(apt => 
+                    ['planifie', 'confirme', 'en_cours'].includes(apt.statut)
+                  )}
+                  loading={loading}
+                  error={error}
+                  pagination={pagination}
+                  onViewDetails={handleViewDetails}
+                  onStatusChange={handleStatusChange}
+                  onDelete={handleDeleteAppointment}
+                  formatDateTime={formatDateTime}
+                  getStatusBadge={getStatusBadge}
+                />
+              </div>
+
+              {/* Zone des commandes terminées */}
+              <div className="appointments-zone completed-zone">
+                <h3 className="zone-title">
+                  <span className="zone-icon">✅</span>
+                  Commandes terminées
+                  <span className="zone-count">
+                    {appointments.filter(apt => 
+                      ['termine', 'annule'].includes(apt.statut)
+                    ).length}
+                  </span>
+                </h3>
+                <AppointmentsList
+                  appointments={appointments.filter(apt => 
+                    ['termine', 'annule'].includes(apt.statut)
+                  )}
+                  loading={loading}
+                  error={error}
+                  pagination={pagination}
+                  onViewDetails={handleViewDetails}
+                  onStatusChange={handleStatusChange}
+                  onDelete={handleDeleteAppointment}
+                  formatDateTime={formatDateTime}
+                  getStatusBadge={getStatusBadge}
+                />
+              </div>
+            </>
           )}
         </div>
 
@@ -253,12 +318,9 @@ function AppointmentsPage() {
         {showCreateModal && (
           <div className="modal-overlay" onClick={closeCreateModal}>
             <div className="modal-content create-modal" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-header">
-                <h2>➕ Nouveau Rendez-vous</h2>
                 <button className="btn-close" onClick={closeCreateModal}>
                   ✕
                 </button>
-              </div>
               <div className="modal-body">
                 <CreateAppointmentForm
                   onSubmit={handleCreateAppointment}
@@ -274,12 +336,6 @@ function AppointmentsPage() {
         {showModal && selectedAppointment && (
           <div className="modal-overlay" onClick={closeDetailsModal}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-header">
-                <h2>📅 Détails du Rendez-vous</h2>
-                <button className="btn-close" onClick={closeDetailsModal}>
-                  ✕
-                </button>
-              </div>
               <div className="modal-body">
                 <AppointmentDetails
                   appointment={selectedAppointment}

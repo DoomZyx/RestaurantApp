@@ -9,6 +9,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
     duree: 60,
     type: "",
     modalite: "Sur place",
+    nombrePersonnes: "",
     description: "",
   });
 
@@ -52,6 +53,13 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
     if (!formData.heure) newErrors.heure = "Veuillez sélectionner une heure";
     if (!formData.type) newErrors.type = "Veuillez sélectionner un type";
     if (!formData.modalite) newErrors.modalite = "Veuillez sélectionner une modalité";
+    
+    // Validation du nombre de personnes pour les réservations
+    if (formData.type === "Réservation de table") {
+      if (!formData.nombrePersonnes || formData.nombrePersonnes < 1) {
+        newErrors.nombrePersonnes = "Veuillez indiquer le nombre de personnes";
+      }
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -166,12 +174,31 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
             onChange={handleChange}
             className={errors.modalite ? "error" : ""}
           >
-            <option value="Sur place">🏢 Sur place</option>
-            <option value="À emporter">📦 À emporter</option>
-            <option value="Livraison">🚚 Livraison</option>
+            <option value="Sur place">Sur place</option>
+            <option value="À emporter">À emporter</option>
+            <option value="Livraison">Livraison</option>
           </select>
           {errors.modalite && <span className="error-message">{errors.modalite}</span>}
         </div>
+
+        {/* Nombre de personnes (uniquement pour les réservations) */}
+        {formData.type === "Réservation de table" && (
+          <div className="form-group">
+            <label htmlFor="nombrePersonnes">👥 Nombre de personnes *</label>
+            <input
+              type="number"
+              id="nombrePersonnes"
+              name="nombrePersonnes"
+              value={formData.nombrePersonnes}
+              onChange={handleChange}
+              className={errors.nombrePersonnes ? "error" : ""}
+              min="1"
+              max="100"
+              placeholder="Ex: 4"
+            />
+            {errors.nombrePersonnes && <span className="error-message">{errors.nombrePersonnes}</span>}
+          </div>
+        )}
       </div>
 
       {/* Description */}

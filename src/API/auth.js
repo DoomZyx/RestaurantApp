@@ -94,6 +94,59 @@ export async function getProfile() {
   return res.json();
 }
 
+// Mettre à jour le profil utilisateur
+export async function updateUserProfile(profileData) {
+  const token = getToken();
+  if (!token) {
+    throw new Error("Non authentifié");
+  }
+
+  const res = await fetch(`${VITE_API_URL}api/auth/profile`, {
+    method: "PUT",
+    headers: {
+      "x-api-key": `${VITE_API_KEY}`,
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(profileData),
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || "Erreur lors de la mise à jour du profil");
+  }
+
+  return res.json();
+}
+
+// Uploader l'avatar utilisateur
+export async function uploadAvatar(file) {
+  const token = getToken();
+  if (!token) {
+    throw new Error("Non authentifié");
+  }
+
+  const formData = new FormData();
+  formData.append("avatar", file);
+
+  const res = await fetch(`${VITE_API_URL}api/auth/profile/avatar`, {
+    method: "POST",
+    headers: {
+      "x-api-key": `${VITE_API_KEY}`,
+      Authorization: `Bearer ${token}`,
+      // Ne pas spécifier Content-Type, le navigateur le fera automatiquement avec le boundary
+    },
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || "Erreur lors de l'upload de l'avatar");
+  }
+
+  return res.json();
+}
+
 // Créer un nouvel utilisateur (admin seulement)
 export async function createUser(userData) {
   const token = getToken();

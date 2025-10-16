@@ -1,4 +1,5 @@
 import { Pagination } from "../Common/Pagination";
+import { getClientFullName, getClientPhone } from "../../utils/clientUtils";
 
 export function CallTable({
   calls,
@@ -68,9 +69,9 @@ export function CallTable({
                     title="Cliquer pour voir les détails"
                   >
                     <td className="client-name">
-                      {call.client ? `${call.client.prenom} ${call.client.nom}` : "Aucun fournisseur associé"}
+                      {call.client ? getClientFullName(call.client) : "Aucun fournisseur associé"}
                     </td>
-                    <td className="phone-number">{call.client?.telephone || "-"}</td>
+                    <td className="phone-number">{call.client ? getClientPhone(call.client) : "-"}</td>
                     <td className="call-type">{call.type_demande}</td>
                     <td className="description">
                       {call.description

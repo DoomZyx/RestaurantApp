@@ -178,8 +178,18 @@
           }
         }
 
+        &.unread {
+          border-left: 3px solid var(--color-accent);
+          font-weight: 600;
+        }
+
+        &.read {
+          opacity: 0.7;
+        }
+
         &:hover {
           transform: translateX(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .notification-icon {
@@ -227,6 +237,14 @@
                 font-size: 0.7rem;
               }
             }
+          }
+
+          .notification-hint {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            font-weight: 600;
           }
         }
 

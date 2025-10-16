@@ -1,29 +1,66 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import AppLayout from "../../Components/Layout/AppLayout";
 import "./Profile.scss";
 import { useProfile } from "../../Hooks/Profile/useProfile";
 
 function Profile() {
+  const fileInputRef = useRef(null);
 
   const {
     profileData,
-    setProfileData,
     editMode,
-    setEditMode,
     tempData,
-    setTempData,
     saving,
-    setSaving,
+    loading,
+    error,
+    setError,
     success,
-    setSuccess,
     statsPersonnelles, 
     handleEdit,
     handleCancel,
     handleSave,
+    handleAvatarUpload,
     handleInputChange,
     formatDate,
     formatDateTime
   } = useProfile();
+
+  const handleAvatarClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Vérifier le type de fichier
+      if (!file.type.startsWith("image/")) {
+        setError("Veuillez sélectionner une image valide");
+        return;
+      }
+      // Vérifier la taille (5 MB max)
+      if (file.size > 5 * 1024 * 1024) {
+        setError("L'image ne doit pas dépasser 5 MB");
+        return;
+      }
+      await handleAvatarUpload(file);
+    }
+  };
+
+  if (loading) {
+    return (
+      <AppLayout>
+        <div className="my-profile-container">
+          <div className="loading-state">
+            <div className="spinner"></div>
+            <p>Chargement du profil...</p>
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
+
   return (
     <AppLayout>
       <div className="my-profile-container">
@@ -34,17 +71,50 @@ function Profile() {
           </div>
         )}
 
+        {error && (
+          <div className="error-message">
+            <i className="bi bi-exclamation-triangle-fill"></i>
+            {error}
+            <button onClick={() => setError(null)}>✕</button>
+          </div>
+        )}
+
         <div className="profile-content">
           {/* Informations personnelles */}
           <div className="profile-card">
             <div className="profile-info">
               <div className="avatar-section">
                 <div className="avatar">
-                  <i className="bi bi-person-fill"></i>
+                  {profileData.avatar ? (
+                    <img 
+                      src={`http://localhost:8080${profileData.avatar}`}  // TODO: Changer en VITE_API_URL pour le backend en production
+                      alt="Avatar"
+                      onError={(e) => {
+                        console.error("Erreur chargement avatar:", e.target.src);
+                        console.log("📋 Avatar URL dans DB:", profileData.avatar);
+                      }}
+                      onLoad={() => {
+                        console.log("Avatar chargé:", `http://localhost:8080${profileData.avatar}`);
+                      }}
+                    />
+                  ) : (
+                    <i className="bi bi-person-fill"></i>
+                  )}
                 </div>
-                <button className="change-avatar">
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  style={{ display: "none" }}
+                />
+                <button 
+                  className="change-avatar"
+                  onClick={handleAvatarClick}
+                  disabled={saving}
+                >
                   <i className="bi bi-camera-fill"></i>
-                  Changer la photo
+                  {saving ? "Upload en cours..." : "Changer la photo"}
                 </button>
               </div>
 
