@@ -17,7 +17,9 @@ import maintenanceRoutes from "./Routes/Auth/maintenance.js";
 import notificationRoutes from "./Routes/Ws/notifications.js";
 import orderRoutes from "./Routes/Appointments/appointments.js";
 import pricingRoutes from "./Routes/Pricing/pricing.js";
-import { createDefaultAdmin } from "./Controller/authController.js";
+import { supplierOrderPublicRoutes, supplierOrderProtectedRoutes } from "./Routes/SupplierOrders/supplierOrders.js";
+import { AuthService } from "./Business/services/AuthService.js";
+import audioCacheService from "./Services/audioCacheService.js";
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
@@ -40,7 +42,12 @@ async function connectDB() {
 await connectDB();
 
 // Créer l'utilisateur admin par défaut
-await createDefaultAdmin();
+await AuthService.createDefaultAdmin();
+
+// Initialiser le cache audio ElevenLabs
+console.log("🎵 Initialisation du cache audio ElevenLabs...");
+await audioCacheService.initialize();
+console.log("✅ Cache audio prêt");
 
 const fastify = Fastify();
 
@@ -99,6 +106,10 @@ fastify.register(orderRoutes, { prefix: "/api" });
 // Routes pricing publiques (système custom)
 fastify.register(pricingRoutes, { prefix: "/api" });
 
+// Routes publiques pour webhooks Twilio (supplier orders)
+// Les webhooks /supplier-call et /supplier-stream doivent être publics
+fastify.register(supplierOrderPublicRoutes);
+
 fastify.register(async (instance) => {
   instance.addHook("onRequest", async (request, reply) => {
     const apiKey = String(request.headers["x-api-key"] ?? "").trim();
@@ -116,6 +127,7 @@ fastify.register(async (instance) => {
   instance.register(statsRoutes, { prefix: "/api/auth" });
   instance.register(logsRoutes, { prefix: "/api/auth" });
   instance.register(maintenanceRoutes, { prefix: "/api/auth" });
+  instance.register(supplierOrderProtectedRoutes, { prefix: "/api" });
 });
 
 // Gestion globale des erreurs

@@ -1,23 +1,10 @@
-import {
-  saveCallData,
-  getCalls,
-  getCallsByDate,
-  getCallById,
-  getCallsByExactDate,
-  updateClient,
-  updateCallStatus,
-  deleteCall,
-  getClients,
-  getClientHistory,
-  createClient,
-  unifiedSearch,
-} from "../../Controller/callData.js";
+import { CallController } from "../../API/controllers/CallController.js";
 
 // Récupere les données d'un appel
 export default async function callDataRoutes(fastify, options) {
   fastify.post("/callsdata", async (request, reply) => {
     try {
-      const saved = await saveCallData(request.body);
+      const saved = await CallController.saveCallData(request.body);
       return reply.code(201).send({ success: true, data: saved });
     } catch (err) {
       console.error("Erreur sauvegarde appel:", err);
@@ -38,17 +25,17 @@ export default async function callDataRoutes(fastify, options) {
         },
       },
     },
-    handler: getCalls,
+    handler: CallController.getCalls,
   });
 
   // Liste des dates avec nombre d'appels
-  fastify.get("/calls/dates", getCallsByDate);
+  fastify.get("/calls/dates", CallController.getCallsByDate);
 
   // Liste la liste des appels pour une date précise
-  fastify.get("/calls/dates/:dates", getCallsByExactDate);
+  fastify.get("/calls/dates/:dates", CallController.getCallsByExactDate);
 
   // Récupérer tous les clients
-  fastify.get("/clients", getClients);
+  fastify.get("/clients", CallController.getClients);
 
   // Créer un nouveau client
   fastify.post("/clients", {
@@ -62,11 +49,12 @@ export default async function callDataRoutes(fastify, options) {
           email: { type: "string", format: "email" },
           adresse: { type: "string" },
           entrepriseName: { type: "string" },
+          type: { type: "string", enum: ["client", "fournisseur"] },
         },
-        required: ["prenom", "nom", "telephone"],
+        required: ["telephone"],
       },
     },
-    handler: createClient,
+    handler: CallController.createClient,
   });
 
   // Récupérer l'historique d'un client
@@ -80,11 +68,25 @@ export default async function callDataRoutes(fastify, options) {
         required: ["id"],
       },
     },
-    handler: getClientHistory,
+    handler: CallController.getClientHistory,
+  });
+
+  // Supprimer un client
+  fastify.delete("/clients/:id", {
+    schema: {
+      params: {
+        type: "object",
+        properties: {
+          id: { type: "string", minLength: 24, maxLength: 24 },
+        },
+        required: ["id"],
+      },
+    },
+    handler: CallController.deleteClient,
   });
 
   // Supprimer un appel (doit être avant les routes avec :id pour éviter les conflits)
-  fastify.delete("/calls/:id", deleteCall);
+  fastify.delete("/calls/:id", CallController.deleteCall);
 
   // Mise à jour du statut d'un appel
   fastify.patch("/calls/:id/status", {
@@ -107,7 +109,7 @@ export default async function callDataRoutes(fastify, options) {
         required: ["statut"],
       },
     },
-    handler: updateCallStatus,
+    handler: CallController.updateCallStatus,
   });
 
   // Détail d'un appel par ID (doit être en dernier)
@@ -121,7 +123,7 @@ export default async function callDataRoutes(fastify, options) {
         required: ["id"],
       },
     },
-    handler: getCallById,
+    handler: CallController.getCallById,
   });
 
   // Mettre à jour les informations d'un client via l'ID de l'appel
@@ -171,7 +173,7 @@ export default async function callDataRoutes(fastify, options) {
         },
       },
     },
-    handler: updateClient,
+    handler: CallController.updateClient,
   });
 
   // Route de recherche unifiée
@@ -185,6 +187,6 @@ export default async function callDataRoutes(fastify, options) {
         required: ["query"],
       },
     },
-    handler: unifiedSearch,
+    handler: CallController.unifiedSearch,
   });
 }

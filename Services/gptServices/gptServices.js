@@ -2,10 +2,13 @@ import WebSocket from "ws";
 import { getSystemMessage } from "../../Config/prompts.js";
 import { generateEnrichedPrompt } from "./pricingService.js";
 
-export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
+export function createOpenAiSession(apiKey, voice = "ballad", instructions, options = {}) {
+  const { useElevenLabs = false } = options;
+  
   console.log("🤖 Tentative de connexion à OpenAI Realtime...");
   console.log("   - API Key présente:", apiKey ? "✓" : "✗");
   console.log("   - Voice:", voice);
+  console.log("   - TTS:", useElevenLabs ? "ElevenLabs (audio OpenAI ignoré)" : "OpenAI natif");
   
   const ws = new WebSocket("wss://api.openai.com/v1/realtime?model=gpt-4o-mini-realtime-preview", {
     headers: {
@@ -25,16 +28,18 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
       session: {
         turn_detection: { 
           type: "server_vad",
-          threshold: 0.2,              // Réduit la sensibilité au bruit ambiant
-          prefix_padding_ms: 800,      // Capture le début complet des phrases
-          silence_duration_ms: 800     // Durée de silence pour détecter fin de parole (réactivité optimale)
+          threshold: 0.6,              // ✅ Plus sensible pour détecter les interruptions (0.5-0.6 = optimal)
+          prefix_padding_ms: 300,      // ✅ Réduit à 300ms pour réagir VITE aux interruptions
+          silence_duration_ms: 800,    // ✅ Réduit à 500ms pour une détection rapide de la fin de parole
+          create_response: true        // ✅ Permet à l'IA de répondre automatiquement
         },
         input_audio_format: "g711_ulaw",
         output_audio_format: "g711_ulaw",
-        voice,
+        voice: voice,
         instructions: enrichedInstructions,
         modalities: ["text", "audio"],
-        temperature: 0.7,
+        temperature: 0.6, // ✅ Minimum requis par gpt-4o-mini-realtime-preview
+        max_response_output_tokens: 4096, // ✅ Limite pour éviter les réponses trop longues
         input_audio_transcription: {
           model: "whisper-1",
         },
@@ -63,6 +68,10 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
             parameters: {
               type: "object",
               properties: {
+                name: {
+                  type: "string",
+                  description: "Nom complet du client",
+                },
                 clientPhone: {
                   type: "string",
                   description: "Numéro de téléphone du client",
@@ -99,7 +108,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                   description: "Description du rendez-vous",
                 },
               },
-              required: ["clientPhone", "date", "time"],
+              required: ["name", "clientPhone", "date", "time"],
             },
           },
         ],

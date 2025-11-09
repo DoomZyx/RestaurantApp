@@ -2,7 +2,7 @@
 import Fastify from "fastify";
 import wsRoutes from "./ws.js";
 
-jest.mock("../../Connection/connection.js", () => ({
+jest.mock("../../Websocket/connection.js", () => ({
   handleWebSocketConnection: jest.fn(),
 }));
 

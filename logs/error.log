@@ -14,3 +14,316 @@
 {"context":{"context":"api_call","status":500,"statusText":"Internal Server Error"},"error":"Erreur API: 500 Internal Server Error","event":"error","level":"error","message":"❌ Erreur détectée","stack":"Error: Erreur API: 500 Internal Server Error\n    at Object.<anonymous> (file:///home/doomzy/Documents/SmartCRM/Backend/Routes/CallData/processCall.js:57:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","streamSid":"unknown","timestamp":"2025-09-28 22:13:22"}
 {"context":{"context":"process_call","totalDuration":2088},"error":"Erreur API: 500 Internal Server Error","event":"error","level":"error","message":"❌ Erreur détectée","stack":"Error: Erreur API: 500 Internal Server Error\n    at Object.<anonymous> (file:///home/doomzy/Documents/SmartCRM/Backend/Routes/CallData/processCall.js:57:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","streamSid":"unknown","timestamp":"2025-09-28 22:13:22"}
 {"context":{"status":500,"statusText":"Internal Server Error"},"error":"Erreur API: 500","event":"error","level":"error","message":"❌ Erreur détectée","stack":"Error: Erreur API: 500\n    at TranscriptionProcessor.sendToProcessingAPI (file:///home/doomzy/Documents/SmartCRM/Backend/Connection/connection.js:356:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async TranscriptionProcessor.process (file:///home/doomzy/Documents/SmartCRM/Backend/Connection/connection.js:301:7)\n    at async TwilioMessageHandler.processTranscription (file:///home/doomzy/Documents/SmartCRM/Backend/Connection/connection.js:394:7)","streamSid":"MZ3b302b54220290eead8fa65b2b679ace","timestamp":"2025-09-28 22:13:22"}
+[2025-10-16 22:30:08] [ERROR] [MZ21809f...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 429 - {\"detail\":{\"status\":\"too_many_concurrent_requests\",\"message\":\"Too many concurrent requests. Your current subscription is associated with a maximum of 2 concurrent requests (running in parallel). This is done such that a single user does not overwhelm our systems and affect other users negatively. Please upgrade your subscription or contact sales if you want to increase this limit.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 429 - {\"detail\":{\"status\":\"too_many_concurrent_requests\",\"message\":\"Too many concurrent requests. Your current subscription is associated with a maximum of 2 concurrent requests (running in parallel). This is done such that a single user does not overwhelm our systems and affect other users negatively. Please upgrade your subscription or contact sales if you want to increase this limit.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:167:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:203:24)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Vous pouvez me dire ce qui vous ferait plaisir ?"
+   }
+}
+[2025-10-16 22:30:25] [ERROR] [MZ21809f...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 429 - {\"detail\":{\"status\":\"too_many_concurrent_requests\",\"message\":\"Too many concurrent requests. Your current subscription is associated with a maximum of 2 concurrent requests (running in parallel). This is done such that a single user does not overwhelm our systems and affect other users negatively. Please upgrade your subscription or contact sales if you want to increase this limit.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 429 - {\"detail\":{\"status\":\"too_many_concurrent_requests\",\"message\":\"Too many concurrent requests. Your current subscription is associated with a maximum of 2 concurrent requests (running in parallel). This is done such that a single user does not overwhelm our systems and affect other users negatively. Please upgrade your subscription or contact sales if you want to increase this limit.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:167:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:203:24)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Souhaitez-vous ajouter quelque chose à votre commande ?"
+   }
+}
+[2025-10-22 02:03:44] [ERROR] [MZ7914bd...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 72 credits remaining, while 73 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 72 credits remaining, while 73 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:236:24)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:206:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "D'accord, pour quelle date et heure souhaitez-vous faire la réservation ?"
+   }
+}
+[2025-10-22 02:03:54] [ERROR] [MZ7914bd...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 15 credits remaining, while 66 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 15 credits remaining, while 66 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:236:24)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:206:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Pouvez-vous me dire pour combien de personnes la réservation est ?"
+   }
+}
+[2025-10-22 02:04:02] [ERROR] [MZ7914bd...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 15 credits remaining, while 48 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 15 credits remaining, while 48 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:236:24)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:206:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "D'accord, pour quatre personnes, c'est bien ça ?"
+   }
+}
+[2025-10-22 02:04:03] [ERROR] [MZ7914bd...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 15 credits remaining, while 109 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 15 credits remaining, while 109 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:236:24)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:206:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "La réservation est donc pour le mercredi 24 octobre au soir pour quatre personnes, au nom de Monsieu"
+   }
+}
+[2025-10-22 02:04:11] [ERROR] [MZ7914bd...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 13 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 13 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:236:24)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:206:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Pas de souci."
+   }
+}
+[2025-10-22 02:04:11] [ERROR] [MZ7914bd...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 104 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 104 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:236:24)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:206:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Pour résumer, vous souhaitez faire une réservation pour quatre personnes le mercredi 24 octobre au s"
+   }
+}
+[2025-10-22 02:04:12] [ERROR] [MZ7914bd...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 16 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 16 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:236:24)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:206:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Est-ce correct ?"
+   }
+}
+[2025-10-22 02:04:12] [ERROR] [MZ7914bd...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 41 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 41 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:236:24)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:206:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Et c'est bien au nom de Monsieur Bridou ?"
+   }
+}
+[2025-10-22 02:20:28] [ERROR] [MZd1ed6b...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 9 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 9 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:253:26)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:207:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Bonjour !"
+   }
+}
+[2025-10-22 02:20:28] [ERROR] [MZd1ed6b...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 55 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 55 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:253:26)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:207:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Vous êtes bien au restaurant TastyFood, je vous écoute."
+   }
+}
+[2025-10-22 02:20:31] [ERROR] [MZd1ed6b...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 9 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 9 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:253:26)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:207:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Bonjour !"
+   }
+}
+[2025-10-22 02:20:31] [ERROR] [MZd1ed6b...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 41 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 41 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:253:26)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:207:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Que puis-je faire pour vous aujourd'hui ?"
+   }
+}
+[2025-10-22 02:20:37] [ERROR] [MZd1ed6b...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 58 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 58 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:253:26)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:207:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Pour continuer, puis-je avoir votre nom, s'il vous plaît ?"
+   }
+}
+[2025-10-22 02:20:48] [ERROR] [MZd1ed6b...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 64 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 64 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:253:26)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:207:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Je suis désolé, j'ai besoin de votre nom pour pouvoir continuer."
+   }
+}
+[2025-10-22 02:20:48] [ERROR] [MZd1ed6b...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 49 credits are required for this request.\"}}",
+   "stack": "Error: ElevenLabs TTS error: 401 - {\"detail\":{\"status\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 10000. You have 0 credits remaining, while 49 credits are required for this request.\"}}\n    at ElevenLabsService.textToSpeechStream (file:///home/doomzy/Documents/RestaurantApp/Backend/Services/elevenLabsService.js:166:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async OpenAIMessageHandler.generateElevenLabsAudio (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:253:26)\n    at async OpenAIMessageHandler.processAudioQueue (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:207:9)",
+   "context": {
+      "context": "elevenlabs_tts_generation",
+      "text": "Pour quel nom puis-je enregistrer votre demande ?"
+   }
+}
+[2025-11-07 19:44:44] [ERROR] [MZ49d2f6...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "OpenAI Error: Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.",
+   "stack": "Error: OpenAI Error: Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.\n    at OpenAIMessageHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:66:47)\n    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:839:23)\n    at WebSocket.emit (node:events:518:28)\n    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)\n    at Receiver.emit (node:events:518:28)\n    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7\n    at afterWrite (node:internal/streams/writable:710:5)",
+   "context": {
+      "errorType": "invalid_request_error",
+      "errorCode": "decimal_below_min_value",
+      "errorDetails": {
+         "type": "invalid_request_error",
+         "code": "decimal_below_min_value",
+         "message": "Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.",
+         "param": "session.temperature",
+         "event_id": null
+      }
+   }
+}
+[2025-11-07 19:44:51] [ERROR] [MZ49d2f6...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "OpenAI Error: Error committing input audio buffer: buffer too small. Expected at least 100ms of audio, but buffer only has 0.00ms of audio.",
+   "stack": "Error: OpenAI Error: Error committing input audio buffer: buffer too small. Expected at least 100ms of audio, but buffer only has 0.00ms of audio.\n    at OpenAIMessageHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:66:47)\n    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:839:23)\n    at WebSocket.emit (node:events:518:28)\n    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)\n    at Receiver.emit (node:events:518:28)\n    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7\n    at afterWrite (node:internal/streams/writable:710:5)",
+   "context": {
+      "errorType": "invalid_request_error",
+      "errorCode": "input_audio_buffer_commit_empty",
+      "errorDetails": {
+         "type": "invalid_request_error",
+         "code": "input_audio_buffer_commit_empty",
+         "message": "Error committing input audio buffer: buffer too small. Expected at least 100ms of audio, but buffer only has 0.00ms of audio.",
+         "param": null,
+         "event_id": null
+      }
+   }
+}
+[2025-11-07 19:45:37] [ERROR] [MZ5582df...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "OpenAI Error: Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.",
+   "stack": "Error: OpenAI Error: Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.\n    at OpenAIMessageHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:66:47)\n    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:839:23)\n    at WebSocket.emit (node:events:518:28)\n    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)\n    at Receiver.emit (node:events:518:28)\n    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7\n    at afterWrite (node:internal/streams/writable:710:5)",
+   "context": {
+      "errorType": "invalid_request_error",
+      "errorCode": "decimal_below_min_value",
+      "errorDetails": {
+         "type": "invalid_request_error",
+         "code": "decimal_below_min_value",
+         "message": "Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.",
+         "param": "session.temperature",
+         "event_id": null
+      }
+   }
+}
+[2025-11-07 19:45:44] [ERROR] [MZ5582df...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "OpenAI Error: Error committing input audio buffer: buffer too small. Expected at least 100ms of audio, but buffer only has 0.00ms of audio.",
+   "stack": "Error: OpenAI Error: Error committing input audio buffer: buffer too small. Expected at least 100ms of audio, but buffer only has 0.00ms of audio.\n    at OpenAIMessageHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:66:47)\n    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:839:23)\n    at WebSocket.emit (node:events:518:28)\n    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)\n    at Receiver.emit (node:events:518:28)\n    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7\n    at afterWrite (node:internal/streams/writable:710:5)",
+   "context": {
+      "errorType": "invalid_request_error",
+      "errorCode": "input_audio_buffer_commit_empty",
+      "errorDetails": {
+         "type": "invalid_request_error",
+         "code": "input_audio_buffer_commit_empty",
+         "message": "Error committing input audio buffer: buffer too small. Expected at least 100ms of audio, but buffer only has 0.00ms of audio.",
+         "param": null,
+         "event_id": null
+      }
+   }
+}
+[2025-11-07 19:46:21] [ERROR] [MZ868624...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "OpenAI Error: Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.",
+   "stack": "Error: OpenAI Error: Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.\n    at OpenAIMessageHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:66:47)\n    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:839:23)\n    at WebSocket.emit (node:events:518:28)\n    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)\n    at Receiver.emit (node:events:518:28)\n    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7\n    at afterWrite (node:internal/streams/writable:710:5)",
+   "context": {
+      "errorType": "invalid_request_error",
+      "errorCode": "decimal_below_min_value",
+      "errorDetails": {
+         "type": "invalid_request_error",
+         "code": "decimal_below_min_value",
+         "message": "Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.",
+         "param": "session.temperature",
+         "event_id": null
+      }
+   }
+}
+[2025-11-07 19:46:25] [ERROR] [MZ868624...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "OpenAI Error: Error committing input audio buffer: buffer too small. Expected at least 100ms of audio, but buffer only has 0.00ms of audio.",
+   "stack": "Error: OpenAI Error: Error committing input audio buffer: buffer too small. Expected at least 100ms of audio, but buffer only has 0.00ms of audio.\n    at OpenAIMessageHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:66:47)\n    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:839:23)\n    at WebSocket.emit (node:events:518:28)\n    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)\n    at Receiver.emit (node:events:518:28)\n    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7\n    at afterWrite (node:internal/streams/writable:710:5)",
+   "context": {
+      "errorType": "invalid_request_error",
+      "errorCode": "input_audio_buffer_commit_empty",
+      "errorDetails": {
+         "type": "invalid_request_error",
+         "code": "input_audio_buffer_commit_empty",
+         "message": "Error committing input audio buffer: buffer too small. Expected at least 100ms of audio, but buffer only has 0.00ms of audio.",
+         "param": null,
+         "event_id": null
+      }
+   }
+}
+[2025-11-07 19:47:27] [ERROR] [MZce6a91...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "OpenAI Error: Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.",
+   "stack": "Error: OpenAI Error: Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.\n    at OpenAIMessageHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:66:47)\n    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:839:23)\n    at WebSocket.emit (node:events:518:28)\n    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)\n    at Receiver.emit (node:events:518:28)\n    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7\n    at afterWrite (node:internal/streams/writable:710:5)",
+   "context": {
+      "errorType": "invalid_request_error",
+      "errorCode": "decimal_below_min_value",
+      "errorDetails": {
+         "type": "invalid_request_error",
+         "code": "decimal_below_min_value",
+         "message": "Invalid 'session.temperature': decimal below minimum value. Expected a value >= 0.6, but got 0.3 instead.",
+         "param": "session.temperature",
+         "event_id": null
+      }
+   }
+}
+[2025-11-08 00:20:24] [ERROR] [MZ5613e9...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "OpenAI Error: Cancellation failed: no active response found",
+   "stack": "Error: OpenAI Error: Cancellation failed: no active response found\n    at OpenAIMessageHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:66:47)\n    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:839:23)\n    at WebSocket.emit (node:events:518:28)\n    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)\n    at Receiver.emit (node:events:518:28)\n    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7\n    at afterWrite (node:internal/streams/writable:710:5)",
+   "context": {
+      "errorType": "invalid_request_error",
+      "errorCode": "response_cancel_not_active",
+      "errorDetails": {
+         "type": "invalid_request_error",
+         "code": "response_cancel_not_active",
+         "message": "Cancellation failed: no active response found",
+         "param": null,
+         "event_id": null
+      }
+   }
+}
+[2025-11-08 00:20:33] [ERROR] [MZ5613e9...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "OpenAI Error: Cancellation failed: no active response found",
+   "stack": "Error: OpenAI Error: Cancellation failed: no active response found\n    at OpenAIMessageHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:66:47)\n    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Connection/connection.js:839:23)\n    at WebSocket.emit (node:events:518:28)\n    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)\n    at Receiver.emit (node:events:518:28)\n    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7\n    at afterWrite (node:internal/streams/writable:710:5)",
+   "context": {
+      "errorType": "invalid_request_error",
+      "errorCode": "response_cancel_not_active",
+      "errorDetails": {
+         "type": "invalid_request_error",
+         "code": "response_cancel_not_active",
+         "message": "Cancellation failed: no active response found",
+         "param": null,
+         "event_id": null
+      }
+   }
+}
+[2025-11-08 17:58:43] [ERROR] [MZ9292b7...] [ERROR] ❌ Erreur détectée
+   {
+   "error": "OpenAI Error: Cancellation failed: no active response found",
+   "stack": "Error: OpenAI Error: Cancellation failed: no active response found\n    at OpenAIHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:356:43)\n    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:68:14)\n    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:138:25)\n    at WebSocket.emit (node:events:518:28)\n    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)\n    at Receiver.emit (node:events:518:28)\n    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9\n    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7",
+   "context": {
+      "errorType": "invalid_request_error",
+      "errorCode": "response_cancel_not_active",
+      "errorDetails": {
+         "type": "invalid_request_error",
+         "code": "response_cancel_not_active",
+         "message": "Cancellation failed: no active response found",
+         "param": null,
+         "event_id": null
+      }
+   }
+}

@@ -1,0 +1,211 @@
+import { createOpenAiSession } from "../Services/gptServices/gptServices.js";
+import WebSocket from "ws";
+import dotenv from "dotenv";
+import { callLogger } from "../Services/logging/logger.js";
+import { registerStream, unregisterStream } from "../Services/streamRegistry.js";
+import { OpenAIHandler } from "./handlers/OpenAIHandler.js";
+import { TwilioHandler } from "./handlers/TwilioHandler.js";
+import { TranscriptionHandler } from "./handlers/TranscriptionHandler.js";
+
+dotenv.config();
+
+/**
+ * Gestionnaire principal de la connexion WebSocket
+ * Orchestre la communication entre Twilio et OpenAI
+ * 
+ * @param {WebSocket} connection - Connexion WebSocket Twilio
+ * @param {Object} request - Requête HTTP initiale
+ */
+export async function handleWebSocketConnection(connection, request) {
+  try {
+    console.log("✅ WebSocket Twilio CONNECTÉ !");
+    console.log("   - ReadyState:", connection.readyState);
+    console.log("   - Timestamp:", new Date().toISOString());
+    
+    callLogger.callStarted(null, { event: "client_connected" });
+
+    // ==========================================
+    // INITIALISATION DES VARIABLES
+    // ==========================================
+    let streamSid = null;
+    let closeTimeout = null;
+    const callStartTime = Date.now();
+    let openAIHandler = null;
+    let twilioHandler = null;
+    let transcriptionHandler = null;
+    
+    // ElevenLabs désactivé pour éviter tout coût
+    const useElevenLabs = false;
+
+    // 🎤 Configuration TTS
+    console.log("\n========================================");
+    console.log("🔊 CONFIGURATION TTS");
+    console.log("========================================");
+    console.log("Clé ElevenLabs présente: ❌ NON (désactivé)");
+    console.log("ℹ️ ElevenLabs désactivé - utilisation d'OpenAI TTS");
+    console.log("========================================\n");
+
+    // ==========================================
+    // CRÉATION SESSION OPENAI
+    // ==========================================
+    const openAiWs = createOpenAiSession(
+      process.env.OPENAI_API_KEY, 
+      "ballad",
+      null,
+      { useElevenLabs: useElevenLabs }
+    );
+
+    // ==========================================
+    // HANDLER MESSAGES TWILIO
+    // ==========================================
+    connection.on("message", (message) => {
+      try {
+        const data = JSON.parse(message.toString());
+
+        // Événement START : Initialiser tous les gestionnaires
+        if (data.event === "start") {
+          streamSid = data.start.streamSid;
+          console.log("🎬 Événement START - StreamSid:", streamSid);
+
+          // Initialisation des gestionnaires avec streamSid
+          openAIHandler = new OpenAIHandler(
+            streamSid,
+            connection,
+            callLogger,
+            openAiWs,
+            useElevenLabs
+          );
+
+          twilioHandler = new TwilioHandler(
+            streamSid,
+            callLogger,
+            async () => {
+              if (transcriptionHandler && openAIHandler) {
+                await transcriptionHandler.process(openAIHandler.getTranscription());
+              }
+            }
+          );
+
+          transcriptionHandler = new TranscriptionHandler(
+            streamSid,
+            callLogger
+          );
+
+          // Enregistrer le stream actif
+          const callSid = data.start?.callSid || null;
+          registerStream(streamSid, connection, callSid);
+        }
+
+        // Événement MEDIA : Transférer l'audio à OpenAI
+        if (data.event === "media" && openAiWs && openAiWs.readyState === WebSocket.OPEN) {
+          openAiWs.send(
+            JSON.stringify({
+              type: "input_audio_buffer.append",
+              audio: data.media.payload,
+            })
+          );
+        } else if (twilioHandler) {
+          // Autres événements Twilio
+          twilioHandler.handleMessage(data);
+        }
+      } catch (err) {
+        callLogger.error(streamSid, err, { context: "twilio_message_parse" });
+      }
+    });
+
+    // ==========================================
+    // HEARTBEAT (KEEPALIVE)
+    // ==========================================
+    const heartbeatInterval = setInterval(() => {
+      if (connection.readyState === WebSocket.OPEN) {
+        connection.ping();
+      } else {
+        clearInterval(heartbeatInterval);
+      }
+    }, 30000); // Ping toutes les 30 secondes
+
+    connection.on("pong", () => {
+      // Heartbeat OK - connexion active
+    });
+
+    // ==========================================
+    // HANDLER MESSAGES OPENAI
+    // ==========================================
+    openAiWs.on("message", (msg) => {
+      try {
+        const data = JSON.parse(msg.toString());
+        if (openAIHandler) {
+          openAIHandler.handleMessage(data);
+        }
+      } catch (err) {
+        callLogger.error(streamSid, err, { context: "openai_message_parse" });
+      }
+    });
+
+    // ==========================================
+    // GESTION ERREURS & FERMETURE
+    // ==========================================
+    
+    connection.on("error", (error) => {
+      console.error("❌ ERREUR WebSocket Twilio:", error);
+      console.error("   - StreamSid:", streamSid);
+      console.error("   - Message:", error.message);
+      callLogger.error(streamSid, error, { context: "twilio_websocket_error" });
+    });
+
+    connection.on("close", (code, reason) => {
+      console.log("🔴 WebSocket Twilio FERMÉ");
+      console.log("   - Code:", code);
+      console.log("   - Reason:", reason?.toString());
+      console.log("   - StreamSid:", streamSid);
+      
+      // Désenregistrer le stream
+      if (streamSid) {
+        unregisterStream(streamSid);
+      }
+      
+      // Nettoyer le heartbeat
+      if (heartbeatInterval) {
+        clearInterval(heartbeatInterval);
+        console.log("💔 Heartbeat arrêté");
+      }
+      
+      const totalDuration = Date.now() - callStartTime;
+      callLogger.callCompleted(streamSid, totalDuration);
+
+      // Fermer proprement la connexion OpenAI
+      if (openAiWs.readyState === WebSocket.OPEN) {
+        closeTimeout = setTimeout(() => {
+          if (openAiWs.readyState === WebSocket.OPEN) {
+            callLogger.info(streamSid, "Timeout écoulé, fermeture WS OpenAI");
+            openAiWs.close();
+          }
+        }, 1000);
+      }
+    });
+
+    openAiWs.on("error", (err) => {
+      callLogger.error(streamSid, err, { context: "openai_websocket_error" });
+    });
+
+    openAiWs.on("close", () => {
+      console.log("🔴 OpenAI WebSocket FERMÉ");
+      callLogger.info(streamSid, "Connexion OpenAI fermée");
+    });
+    
+  } catch (error) {
+    console.error("❌ ERREUR FATALE dans handleWebSocketConnection:");
+    console.error("   - Message:", error.message);
+    console.error("   - Stack:", error.stack);
+    
+    // Fermer proprement la connexion en cas d'erreur
+    try {
+      if (connection && connection.readyState === WebSocket.OPEN) {
+        connection.close(1011, "Erreur interne du serveur");
+      }
+    } catch (closeError) {
+      console.error("   ⚠️ Impossible de fermer la connexion:", closeError.message);
+    }
+  }
+}
+

@@ -8,165 +8,373 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const EXTRACTION_PROMPT = `
-Tu es un assistant spécialisé dans l'extraction d'informations à partir de transcriptions d'appels téléphoniques pour un RESTAURANT.
+const EXTRACTION_PROMPT = `🚨 RÈGLES ABSOLUES - FORMAT JSON UNIQUEMENT 🚨
 
-IMPORTANT : Tu dois répondre UNIQUEMENT avec un JSON valide, sans texte avant ou après.
+1. Réponds UNIQUEMENT avec un JSON valide
+2. AUCUN texte avant ou après le JSON
+3. Guillemets doubles OBLIGATOIRES
+4. PAS de virgule finale dans les objets
 
-⚠️ CORRECTION AUTOMATIQUE DES ERREURS DE TRANSCRIPTION :
-Les transcriptions audio contiennent souvent des erreurs. Tu DOIS corriger automatiquement les mots mal transcrits en fonction du contexte RESTAURANT.
+========================================
+🎯 TA MISSION :
+Extraire les informations d'un appel téléphonique de RESTAURANT
+========================================
 
-EXEMPLES DE CORRECTIONS COURANTES :
-- "copoins", "copins", "coco" → "coca"
-- "pizaa", "pizza", "pizzza" → "pizza"
-- "borger", "burgeur" → "burger"
-- "frite", "frittes" → "frites"
-- "salad", "salade" → "salade"
-- "mennu", "menu" → "menu"
-- "desert", "désert" → "dessert"
-- "boisson", "boissson" → "boisson"
+🔧 CORRECTION AUTOMATIQUE DES ERREURS DE TRANSCRIPTION :
+
+Audio → Correction :
+- "copoins", "copins", "coco" → "Coca" ou "Coca-Cola"
+- "pizaa", "pizzza" → "Pizza"
+- "borger", "burgeur" → "Burger"
+- "frite", "frittes" → "Frites"
+- "salad" → "Salade"
+- "mennu" → "Menu"
+- "desert", "désert" → "Dessert"
 - "marguerite", "margarita" → "Margherita"
-- "quatre fromage", "4 fromages" → "4 fromages"
+- "quatre fromage" → "4 Fromages"
 - "reine", "reines" → "Reine"
 
-RÈGLE : Dans la description de la commande, utilise TOUJOURS les termes corrects de restaurant, pas la transcription brute.
+⚠️ Utilise les NOMS EXACTS du menu fourni ci-dessous, pas la transcription brute.
 
-Analyse la transcription suivante et extrait les informations importantes.
+========================================
+📋 STRUCTURE JSON À RETOURNER :
+========================================
 
-Informations à extraire :
-- nom : nom complet du client (string) - ex: "Jean Dupont", "Marie Dubois"
-- telephone : numéro de téléphone du client (string) - ex: "0123456789", "0987654321"
-- type_demande : type de demande client (string) - UNIQUEMENT une de ces valeurs : "Commande à emporter", "Livraison à domicile", "Réservation de table", "Information menu", "Réclamation", "Facturation", "Autre"
-- services : services demandés (string) - UNIQUEMENT une de ces valeurs : "Pizzas", "Burgers", "Salades", "Boissons", "Desserts", "Menus", "Promotions", "Autre"
-- description : description détaillée de la demande (string) - résume clairement le projet
-- statut : statut de la demande (string) - toujours "nouveau" pour un nouvel appel
-- order : objet ou null (CRITIQUE - TRÈS IMPORTANT)
-   * ✅ CRÉER UN ORDER SI : Le client veut COMMANDER ou RÉSERVER quelque chose
-     → Exemples : "je veux commander", "une pizza", "livraison", "à emporter", "réserver une table"
-   * ❌ METTRE NULL SI : Le client demande seulement des INFOS sans commander
-     → Exemples : "c'est quoi vos horaires ?", "vous avez quoi au menu ?", "c'est combien ?"
-   * Si le client COMMANDE mais ne donne pas de date/heure → utiliser "ASAP" pour les deux
-
-⚠️ RÈGLE D'OR : Si le client mentionne UN PLAT ou veut "commander" quelque chose → TOUJOURS créer un order, même sans toutes les infos !
-
-Champs de l'objet order (REMPLIS CE QUE TU PEUX, mets "ASAP" ou null si tu n'as pas l'info) :
-- date : date au format YYYY-MM-DD OU "ASAP" si pas mentionnée (mets "ASAP" par défaut)
-- heure : heure au format HH:MM OU "ASAP" si pas mentionnée (mets "ASAP" par défaut)
-- duree : 60 pour commandes, 90 pour réservations (mets 60 par défaut)
-- type : valeurs possibles :
-  "Commande à emporter", "Livraison à domicile", "Réservation de table", "Dégustation", "Événement privé"
-  (mets "Commande à emporter" par défaut si pas précisé)
-- modalite : valeurs possibles : "Sur place", "À emporter", "Livraison"
-  (mets "À emporter" par défaut si pas précisé)
-- nombrePersonnes : nombre de personnes (SEULEMENT pour "Réservation de table" - mets null sinon)
-- description : résumé de la commande (mets ce que tu as compris)
-
-Format de réponse JSON EXACT attendu :
 {
-"nom": "Nom complet du client", ## SURTOUT N OUBLIES PAS LE NOM DE L'INTERLOCUTEUR !!
-  "telephone": "Numéro de téléphone complet",
-  "type_demande": "Type de demande client",
-  "services": "Services demandés",
-  "description": "Description détaillée du projet",
+  "nom": "Nom du client",
+  "telephone": "0123456789 ou Non fourni",
+  "type_demande": "Commande à emporter",
+  "services": "Pizzas",
+  "description": "Description claire de la demande",
   "statut": "nouveau",
   "order": {
-    "date": "2025-10-05",
-    "heure": "14:30",
+    "date": "2025-10-21 ou ASAP",
+    "heure": "19:00 ou ASAP",
     "duree": 60,
     "type": "Commande à emporter",
-    "modalite": "Sur place",
-    "nombrePersonnes": 4,
-    "description": "Description de la commande"
+    "modalite": "À emporter",
+    "nombrePersonnes": null,
+    "description": "",
+    "commandes": [
+      {
+        "nom": "Pizza Margherita",
+        "categorie": "Pizzas",
+        "quantite": 2,
+        "prixUnitaire": 12.50,
+        "supplements": "+fromage"
+      }
+    ]
   }
 }
 
-MAPPING DES VALEURS :
-- Pour type_demande (demande client) :
-  * "Commande à emporter" - pour commandes à récupérer
-  * "Livraison à domicile" - pour livraisons
-  * "Réservation de table" - pour réserver une table
-  * "Information menu" - pour demandes d'infos menu
-  * "Réclamation" - pour plaintes
-  * "Facturation" - pour questions de facturation
-  * "Autre" - pour autres types
+========================================
+🚨 RÈGLE CRITIQUE : QUAND CRÉER UN ORDER ?
+========================================
 
-- Pour services (produits) :
-  * "Pizzas" - commande de pizzas
-  * "Burgers" - commande de burgers
-  * "Salades" - commande de salades
-  * "Boissons" - commande de boissons
-  * "Desserts" - commande de desserts
-  * "Menus" - commande de menus
-  * "Promotions" - demandes sur les promotions
-  * "Autre" - autres produits
+✅ CRÉER ORDER si :
+- Le client mentionne UN PLAT (pizza, burger, salade, etc.)
+- Le client dit "je veux commander"
+- Le client dit "livraison" ou "à emporter"
+- Le client dit "réserver une table"
 
-RÈGLES :
-1. Réponds UNIQUEMENT avec le JSON, pas de texte avant ou après
-2. Assure-toi que le JSON est valide
-3. Utilise des guillemets doubles pour les strings
-4. Pas de virgule finale
-5. Extrais TOUJOURS le nom et téléphone s'ils sont mentionnés
-6. Utilise UNIQUEMENT les valeurs autorisées pour type_demande, services, type (commande), modalite (commande)
-7. Si aucune commande n'est mentionnée → "order": null
+❌ ORDER = NULL si :
+- Questions d'horaires uniquement
+- Questions sur le menu/ingrédients
+- Réclamations sans commande
 
-RÈGLES DE VALIDATION ASSOUPLIES :
-⚠️ NOM DU CLIENT :
-   → Si le nom est clairement donné : extrais-le
-   → Si le nom est flou ou partiel : mets "Client" + première lettre (ex: "Client M")
-   → Si AUCUN nom du tout : mets "Client inconnu"
-   → L'important c'est de TOUJOURS créer la commande, même sans nom parfait
+⚠️ SI TU HÉSITES → CRÉER L'ORDER quand même !
 
-📞 TÉLÉPHONE (OPTIONNEL) :
-   → Si le client donne son numéro : extrais-le
-   → Si le client ne donne PAS son numéro : mets "Non fourni"
-   → Ne jamais inventer un numéro
+========================================
+📝 CHAMPS À EXTRAIRE :
+========================================
 
-✅ Exemples de données VALIDES :
-   - "Je m'appelle Jean Dupont" → nom: "Jean Dupont", telephone: "Non fourni"
-   - "C'est Marie Dubois, mon numéro c'est le 06 12 34 56 78" → nom: "Marie Dubois", telephone: "0612345678"
-   - "Bonjour, Thomas ici" → nom: "Thomas", telephone: "Non fourni"
-   - "Je veux commander une pizza" (pas de nom) → nom: "Client inconnu", telephone: "Non fourni"
-   - "M. Dupont à l'appareil" → nom: "M. Dupont", telephone: "Non fourni"
+NOM (nom) - RÈGLE CRITIQUE :
+→ CHERCHE LE NOM dans TOUTE la transcription (début, milieu, fin)
+→ Variantes possibles : "Je m'appelle X", "C'est X", "X à l'appareil", "Pour X", "Nom : X"
+→ Si prénom seul (ex: "Martin") : Accepte-le tel quel
+→ Si nom complet (ex: "Jean Dupont") : Extrais-le complet
+→ Si titre + nom (ex: "Monsieur Martin") : Garde tout
+→ Si flou/partiel : "Client" + initiale (ex: "Client M")
+→ Si totalement absent : "Client inconnu"
 
-⚠️ TOUJOURS créer l'order si c'est une commande, même avec des données incomplètes !
+⚠️ IMPORTANT : Le nom est souvent dit au MILIEU de la conversation, pas au début
+Exemple : "Je veux une pizza... oui Martin... pour 19h"
+→ Extrais : "Martin"
 
-EXEMPLES D'EXTRACTION :
+🔍 PATTERNS DE NOM À DÉTECTER :
+- "Je m'appelle [NOM]"
+- "C'est [NOM]"
+- "[NOM] à l'appareil"
+- "Monsieur/Madame [NOM]"
+- "Pour [NOM]"
+- "C'est à quel nom ?" / "À [NOM]"
+- "Nom: [NOM]" ou "Mon nom c'est [NOM]"
 
-✅ CAS AVEC ORDER (commande/réservation) :
+TÉLÉPHONE (telephone) :
+→ Si donné : Extrais-le (format : 0612345678)
+→ Si absent : "Non fourni"
+⚠️ NE JAMAIS inventer un numéro
 
-1. "Je voudrais commander 2 pizzas 4 fromages à emporter"
-   → order: { date: "ASAP", heure: "ASAP", duree: 60, type: "Commande à emporter", modalite: "À emporter", description: "2 pizzas 4 fromages" }
+TYPE_DEMANDE (type_demande) :
+Valeurs autorisées UNIQUEMENT :
+"Commande à emporter" | "Livraison à domicile" | "Réservation de table" | "Information menu" | "Réclamation" | "Facturation" | "Autre"
 
-2. "Bonjour, je voudrais une livraison ce soir avec un burger et des frites"
-   → order: { date: "ASAP", heure: "ASAP", duree: 60, type: "Livraison à domicile", modalite: "Livraison", description: "Burger et frites" }
+SERVICES (services) :
+Valeurs autorisées UNIQUEMENT :
+"Pizzas" | "Burgers" | "Salades" | "Boissons" | "Desserts" | "Menus" | "Promotions" | "Autre"
 
-3. "Je souhaite réserver une table pour mardi prochain à 19h, nous serons 4"
-   → order: { date: "2025-10-15", heure: "19:00", duree: 90, type: "Réservation de table", modalite: "Sur place", nombrePersonnes: 4, description: "Table pour 4 personnes" }
+DESCRIPTION (description) :
+→ Résumé clair de la demande du client
 
-4. "Je veux commander 3 burgers pour ce soir vers 20h"
-   → order: { date: "ASAP", heure: "20:00", duree: 60, type: "Commande à emporter", modalite: "À emporter", description: "3 burgers" }
+STATUT (statut) :
+→ Toujours "nouveau"
 
-🔧 EXEMPLES AVEC CORRECTIONS DE TRANSCRIPTION :
+========================================
+🛒 OBJET ORDER (SI COMMANDE/RÉSERVATION) :
+========================================
 
-5. "Je veux 3 copoins et 2 pizaas" (transcription audio avec erreurs)
-   → order: { date: "ASAP", heure: "ASAP", duree: 60, type: "Commande à emporter", modalite: "À emporter", description: "3 coca et 2 pizzas" }
-   ⚠️ NOTE : "copoins" corrigé en "coca", "pizaas" corrigé en "pizzas"
+DATE (date) :
+→ Si date mentionnée : Format YYYY-MM-DD
+→ Si AUCUNE date : "ASAP"
 
-6. "Je voudrais un borger et des frittes sil vous plaît"
-   → order: { date: "ASAP", heure: "ASAP", duree: 60, type: "Commande à emporter", modalite: "À emporter", description: "Burger et frites" }
-   ⚠️ NOTE : "borger" corrigé en "burger", "frittes" corrigé en "frites"
+HEURE (heure) :
+→ Si heure mentionnée : Format HH:MM (ex: 19:00)
+→ Si AUCUNE heure : "ASAP"
 
-❌ CAS SANS ORDER (informations seulement) :
+DURÉE (duree) :
+→ Commande : 60
+→ Réservation : 90
 
-1. "Vous êtes ouverts jusqu'à quelle heure ?"
-   → order: null
+TYPE (type) :
+Valeurs autorisées :
+"Commande à emporter" | "Livraison à domicile" | "Réservation de table" | "Dégustation" | "Événement privé"
+Par défaut : "Commande à emporter"
 
-2. "C'est quoi les ingrédients de la pizza 4 fromages ?"
-   → order: null
+MODALITÉ (modalite) :
+Valeurs autorisées :
+"Sur place" | "À emporter" | "Livraison"
+Par défaut : "À emporter"
 
-3. "Vous livrez dans quel périmètre ?"
-   → order: null
+NOMBRE DE PERSONNES (nombrePersonnes) :
+→ SEULEMENT pour "Réservation de table"
+→ Sinon : null
 
+COMMANDES (commandes) :
+→ Tableau d'objets pour chaque plat :
+{
+  "nom": "Nom exact du produit",
+  "categorie": "Pizzas",
+  "quantite": 2,
+  "prixUnitaire": 12.50,
+  "supplements": "+fromage, +oignons"
+}
+
+========================================
+✅ EXEMPLES CONCRETS :
+========================================
+
+Exemple 1 - Commande simple :
+Transcription : "Bonjour, je voudrais commander 2 pizzas 4 fromages à emporter"
+
+JSON :
+{
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Commande à emporter",
+  "services": "Pizzas",
+  "description": "Commande de 2 pizzas 4 fromages à emporter",
+  "statut": "nouveau",
+  "order": {
+    "date": "ASAP",
+    "heure": "ASAP",
+    "duree": 60,
+    "type": "Commande à emporter",
+    "modalite": "À emporter",
+    "nombrePersonnes": null,
+    "description": "",
+    "commandes": [
+      {
+        "nom": "Pizza 4 Fromages",
+        "categorie": "Pizzas",
+        "quantite": 2,
+        "prixUnitaire": 12.50,
+        "supplements": ""
+      }
+    ]
+  }
+}
+
+Exemple 2 - Réservation avec nom :
+Transcription : "Je m'appelle Dupont, je voudrais réserver pour 4 personnes mardi prochain à 19h"
+
+JSON :
+{
+  "nom": "Dupont",
+  "telephone": "Non fourni",
+  "type_demande": "Réservation de table",
+  "services": "Autre",
+  "description": "Réservation pour 4 personnes",
+  "statut": "nouveau",
+  "order": {
+    "date": "2025-10-28",
+    "heure": "19:00",
+    "duree": 90,
+    "type": "Réservation de table",
+    "modalite": "Sur place",
+    "nombrePersonnes": 4,
+    "description": "Table pour 4 personnes",
+    "commandes": []
+  }
+}
+
+Exemple 2B - Nom donné au milieu :
+Transcription : "Bonjour, je veux commander une pizza Margherita. C'est à quel nom ? Martin. Pour 19h s'il vous plaît."
+
+JSON :
+{
+  "nom": "Martin",
+  "telephone": "Non fourni",
+  "type_demande": "Commande à emporter",
+  "services": "Pizzas",
+  "description": "Commande d'une pizza Margherita pour 19h",
+  "statut": "nouveau",
+  "order": {
+    "date": "ASAP",
+    "heure": "19:00",
+    "duree": 60,
+    "type": "Commande à emporter",
+    "modalite": "À emporter",
+    "nombrePersonnes": null,
+    "description": "",
+    "commandes": [
+      {
+        "nom": "Pizza Margherita",
+        "categorie": "Pizzas",
+        "quantite": 1,
+        "prixUnitaire": 12.50,
+        "supplements": ""
+      }
+    ]
+  }
+}
+
+Exemple 2C - Nom avec variante :
+Transcription : "Oui bonjour, 2 pizzas 4 fromages. Pour Madame Dubois. À emporter."
+
+JSON :
+{
+  "nom": "Madame Dubois",
+  "telephone": "Non fourni",
+  "type_demande": "Commande à emporter",
+  "services": "Pizzas",
+  "description": "Commande de 2 pizzas 4 fromages à emporter",
+  "statut": "nouveau",
+  "order": {
+    "date": "ASAP",
+    "heure": "ASAP",
+    "duree": 60,
+    "type": "Commande à emporter",
+    "modalite": "À emporter",
+    "nombrePersonnes": null,
+    "description": "",
+    "commandes": [
+      {
+        "nom": "Pizza 4 Fromages",
+        "categorie": "Pizzas",
+        "quantite": 2,
+        "prixUnitaire": 12.50,
+        "supplements": ""
+      }
+    ]
+  }
+}
+
+Exemple 3 - Correction transcription :
+Transcription : "Je veux 2 copoins et un borger avec frittes"
+
+JSON :
+{
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Commande à emporter",
+  "services": "Burgers",
+  "description": "Commande de 2 Coca-Cola, 1 burger et frites",
+  "statut": "nouveau",
+  "order": {
+    "date": "ASAP",
+    "heure": "ASAP",
+    "duree": 60,
+    "type": "Commande à emporter",
+    "modalite": "À emporter",
+    "nombrePersonnes": null,
+    "description": "",
+    "commandes": [
+      {
+        "nom": "Coca-Cola",
+        "categorie": "Boissons",
+        "quantite": 2,
+        "prixUnitaire": 3.00,
+        "supplements": ""
+      },
+      {
+        "nom": "USA Beef Burger",
+        "categorie": "Burgers",
+        "quantite": 1,
+        "prixUnitaire": 10.00,
+        "supplements": ""
+      },
+      {
+        "nom": "Frites",
+        "categorie": "Accompagnements",
+        "quantite": 1,
+        "prixUnitaire": 4.00,
+        "supplements": ""
+      }
+    ]
+  }
+}
+
+Exemple 4 - Info uniquement (PAS de commande) :
+Transcription : "Vous êtes ouverts jusqu'à quelle heure ?"
+
+JSON :
+{
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Information menu",
+  "services": "Autre",
+  "description": "Demande d'informations sur les horaires",
+  "statut": "nouveau",
+  "order": null
+}
+
+========================================
+🚨 RAPPEL FINAL - RÈGLES ABSOLUES 🚨
+========================================
+
+1. JSON valide UNIQUEMENT (pas de texte)
+
+2. 🔴 NOM DU CLIENT = CHERCHE-LE PARTOUT
+   → Lis TOUTE la transcription (début, milieu, fin)
+   → Patterns : "Je m'appelle X", "C'est X", "Pour X", "Monsieur/Madame X"
+   → Même un prénom seul (ex: "Martin") = VALIDE, extrais-le
+   → Si vraiment absent = "Client inconnu"
+
+3. Créer ORDER dès qu'un plat est mentionné
+
+4. Utiliser les NOMS EXACTS du menu (fourni ci-dessous)
+
+5. TÉLÉPHONE absent = "Non fourni" (ne jamais inventer)
+
+6. Date/Heure absentes = "ASAP"
+
+7. Corriger les erreurs de transcription audio
+
+💡 ASTUCE NOM : 
+Le nom est RAREMENT dit au début. Cherche dans TOUTE la conversation.
+Exemple : "Une pizza... Martin... pour 19h" → Nom = "Martin"
+
+C'est parti ! 🚀
 `;
 
 export async function extractCallData(transcription) {

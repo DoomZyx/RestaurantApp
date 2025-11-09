@@ -6,16 +6,32 @@ export async function createOrder(request, reply) {
   try {
     const orderData = request.body;
 
-    // Vérifier que le client existe
-    const client = await Client.findById(orderData.client);
-    if (!client) {
-      return reply.code(404).send({
-        error: "Client non trouvé",
-      });
+    // Si un client est fourni, vérifier son existence. Sinon, accepter un nom libre
+    let clientId = null;
+    if (orderData.client) {
+      const client = await Client.findById(orderData.client);
+      if (!client) {
+        return reply.code(404).send({ error: "Client non trouvé" });
+      }
+      clientId = client._id;
     }
 
-    // Créer la commande
-    const order = await OrderModel.create(orderData);
+    const order = await OrderModel.create({
+      client: clientId,
+      nom: !clientId ? orderData.nom || null : null,
+      date: orderData.date,
+      heure: orderData.heure,
+      duree: orderData.duree,
+      type: orderData.type,
+      modalite: orderData.modalite,
+      nombrePersonnes: orderData.nombrePersonnes,
+      description: orderData.description,
+      notes_internes: orderData.notes_internes,
+      commandes: orderData.commandes || [], // Ajouter le champ commandes
+      statut: orderData.statut || "confirme",
+      createdBy: orderData.createdBy || "manual",
+      related_call: orderData.related_call || null,
+    });
 
     // Populer les données du client pour la réponse
     await order.populate("client");

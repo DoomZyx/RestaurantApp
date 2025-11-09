@@ -23,7 +23,7 @@ const orderSchema = new mongoose.Schema({
   },
   duree: {
     type: Number,
-    required: true,
+    required: false,
     min: 30,
     max: 180 // 3h max
   },
@@ -31,7 +31,7 @@ const orderSchema = new mongoose.Schema({
   // Type et modalité
   type: {
     type: String,
-    required: true,
+    required: false,
     enum: [
       "Commande à emporter",
       "Livraison à domicile",
@@ -42,7 +42,7 @@ const orderSchema = new mongoose.Schema({
   },
   modalite: {
     type: String,
-    required: true,
+    required: false,
     enum: ["Sur place", "À emporter", "Livraison"],
     default: "Sur place"
   },
@@ -61,6 +61,35 @@ const orderSchema = new mongoose.Schema({
     type: String,
     maxlength: 1000
   },
+
+  // Commandes (plats commandés pour les commandes à emporter)
+  commandes: [{
+    produitId: {
+      type: String,
+      required: false
+    },
+    nom: {
+      type: String,
+      required: false
+    },
+    categorie: {
+      type: String,
+      required: false
+    },
+    quantite: {
+      type: Number,
+      min: 1,
+      default: 1
+    },
+    prixUnitaire: {
+      type: Number,
+      required: false
+    },
+    supplements: {
+      type: String,
+      maxlength: 200
+    }
+  }],
 
   // Statut
   statut: {

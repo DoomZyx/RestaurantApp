@@ -33,6 +33,43 @@ export default async function processCallRoutes(fastify, options) {
       callLogger.extractionCompleted(streamSid, extractedData);
       callLogger.performance(streamSid, "gpt4_extraction", extractionDuration);
 
+      // ✅ VALIDATION SUPPLÉMENTAIRE : Vérifier si les données extraites sont exploitables
+      const isUseless = 
+        (!extractedData.order || extractedData.order === null) && // Pas de commande
+        (extractedData.nom === "Client inconnu") && // Pas de nom
+        (extractedData.telephone === "Non fourni") && // Pas de téléphone
+        (extractedData.type_demande === "Information menu" || extractedData.type_demande === "Autre"); // Juste des infos
+      
+      if (isUseless) {
+        callLogger.info(
+          streamSid,
+          "⏭️ Appel ignoré : Aucune information utile extraite (pas de nom, pas de commande, pas de téléphone)",
+          {
+            extractedData: {
+              nom: extractedData.nom,
+              telephone: extractedData.telephone,
+              type_demande: extractedData.type_demande,
+              order: extractedData.order,
+            },
+          }
+        );
+        
+        console.log(`\n⏭️  APPEL IGNORÉ APRÈS EXTRACTION (${streamSid})`);
+        console.log(`   Raison: Aucune donnée exploitable`);
+        console.log(`   - Nom: ${extractedData.nom}`);
+        console.log(`   - Téléphone: ${extractedData.telephone}`);
+        console.log(`   - Type: ${extractedData.type_demande}`);
+        console.log(`   - Commande: ${extractedData.order ? "Oui" : "Non"}\n`);
+        
+        // Ne pas sauvegarder ni notifier
+        return reply.code(200).send({
+          success: true,
+          ignored: true,
+          message: "Appel ignoré - Aucune information utile",
+          reason: "Pas de nom, pas de téléphone, pas de commande",
+        });
+      }
+
       // Appeler votre API POST /api/callsdata
       const apiStartTime = Date.now();
       const apiUrl = `http://localhost:${

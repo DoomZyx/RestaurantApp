@@ -1,19 +1,9 @@
-import {
-  createOrUpdatePricing,
-  getPricing,
-  calculateDeliveryFees,
-  getAvailableProducts,
-  checkRestaurantAvailability,
-  addProduct,
-  updateProduct,
-  deleteProduct,
-  getPricingForGPT
-} from "../../Controller/pricingController.js";
+import { PricingController } from "../../API/controllers/PricingController.js";
 
 export default async function pricingRoutes(fastify, options) {
   
   // Récupérer la configuration des tarifs
-  fastify.get("/pricing", getPricing);
+  fastify.get("/pricing", PricingController.getPricing);
 
   // Créer ou mettre à jour la configuration des tarifs
   fastify.put("/pricing", {
@@ -41,7 +31,7 @@ export default async function pricingRoutes(fastify, options) {
         }
       }
     }
-  }, createOrUpdatePricing);
+  }, PricingController.createOrUpdatePricing);
 
   // Calculer les frais de livraison
   fastify.get("/pricing/delivery/calculate", {
@@ -65,7 +55,7 @@ export default async function pricingRoutes(fastify, options) {
         }
       }
     }
-  }, calculateDeliveryFees);
+  }, PricingController.calculateDeliveryFees);
 
   // Récupérer les produits disponibles par catégorie
   fastify.get("/pricing/products/:categorie", {
@@ -89,7 +79,7 @@ export default async function pricingRoutes(fastify, options) {
         }
       }
     }
-  }, getAvailableProducts);
+  }, PricingController.getAvailableProducts);
 
   // Vérifier la disponibilité du restaurant
   fastify.get("/pricing/availability", {
@@ -106,7 +96,7 @@ export default async function pricingRoutes(fastify, options) {
         }
       }
     }
-  }, checkRestaurantAvailability);
+  }, PricingController.checkRestaurantAvailability);
 
   // Ajouter un nouveau produit
   fastify.post("/pricing/products", {
@@ -142,7 +132,7 @@ export default async function pricingRoutes(fastify, options) {
         }
       }
     }
-  }, addProduct);
+  }, PricingController.addProduct);
 
   // Mettre à jour un produit
   fastify.put("/pricing/products", {
@@ -169,7 +159,7 @@ export default async function pricingRoutes(fastify, options) {
         }
       }
     }
-  }, updateProduct);
+  }, PricingController.updateProduct);
 
   // Supprimer un produit
   fastify.delete("/pricing/products/:categorie/:produitId", {
@@ -194,8 +184,8 @@ export default async function pricingRoutes(fastify, options) {
         }
       }
     }
-  }, deleteProduct);
+  }, PricingController.deleteProduct);
 
   // Récupérer la configuration pour GPT (format simplifié)
-  fastify.get("/pricing/gpt", getPricingForGPT);
+  fastify.get("/pricing/gpt", PricingController.getPricingForGPT);
 }

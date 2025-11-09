@@ -1,15 +1,7 @@
-import {
-  loginUser,
-  registerUser,
-  getProfile,
-  updateProfile,
-  uploadAvatar,
-  getAllUsers,
-  updateUser,
-  deleteUser,
-} from "../../Controller/authController.js";
+import { AuthController } from "../../API/controllers/AuthController.js";
+import { ProfileController } from "../../API/controllers/ProfileController.js";
+import { UserController } from "../../API/controllers/UserController.js";
 import { authenticateToken, requireAdmin } from "../../middleware/auth.js";
-import User from "../../models/user.js";
 
 export default async function authRoutes(fastify, options) {
   // Route de connexion (publique)
@@ -24,7 +16,7 @@ export default async function authRoutes(fastify, options) {
         required: ["email", "password"],
       },
     },
-    handler: loginUser,
+    handler: AuthController.login,
   });
 
   // Route d'inscription (admin seulement)
@@ -42,13 +34,13 @@ export default async function authRoutes(fastify, options) {
         required: ["username", "email", "password"],
       },
     },
-    handler: registerUser,
+    handler: AuthController.register,
   });
 
   // Route pour obtenir le profil (utilisateur connecté)
   fastify.get("/profile", {
     preHandler: [authenticateToken],
-    handler: getProfile,
+    handler: ProfileController.getProfile,
   });
 
   // Route pour mettre à jour le profil (utilisateur connecté)
@@ -67,19 +59,19 @@ export default async function authRoutes(fastify, options) {
         },
       },
     },
-    handler: updateProfile,
+    handler: ProfileController.updateProfile,
   });
 
   // Route pour uploader l'avatar (utilisateur connecté)
   fastify.post("/profile/avatar", {
     preHandler: [authenticateToken],
-    handler: uploadAvatar,
+    handler: ProfileController.uploadAvatar,
   });
 
   // Routes admin pour la gestion des utilisateurs
   fastify.get("/users", {
     preHandler: [requireAdmin],
-    handler: getAllUsers,
+    handler: UserController.getAllUsers,
   });
 
   fastify.put("/users/:id", {
@@ -102,7 +94,7 @@ export default async function authRoutes(fastify, options) {
         },
       },
     },
-    handler: updateUser,
+    handler: UserController.updateUser,
   });
 
   fastify.delete("/users/:id", {
@@ -116,6 +108,6 @@ export default async function authRoutes(fastify, options) {
         required: ["id"],
       },
     },
-    handler: deleteUser,
+    handler: UserController.deleteUser,
   });
 }

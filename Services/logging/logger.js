@@ -1,67 +1,167 @@
 import winston from "winston";
 import path from "path";
 
-// Configuration des formats de log
-const logFormat = winston.format.combine(
-  winston.format.timestamp({
-    format: "YYYY-MM-DD HH:mm:ss",
-  }),
+// ========================================
+// FORMATS DE LOG
+// ========================================
+
+/**
+ * Format lisible pour les fichiers de log
+ * Affiche: [TIMESTAMP] [LEVEL] Message - Détails
+ */
+const readableFormat = winston.format.printf(({ timestamp, level, message, streamSid, event, ...meta }) => {
+  let log = `[${timestamp}] [${level.toUpperCase()}]`;
+  
+  // Ajouter le streamSid si présent
+  if (streamSid) {
+    log += ` [${streamSid.substring(0, 8)}...]`;
+  }
+  
+  // Ajouter le type d'événement si présent
+  if (event) {
+    log += ` [${event.toUpperCase()}]`;
+  }
+  
+  log += ` ${message}`;
+  
+  // Ajouter les métadonnées si présentes (sauf timestamp/event déjà affichés)
+  const filteredMeta = { ...meta };
+  delete filteredMeta.timestamp;
+  delete filteredMeta.event;
+  delete filteredMeta.streamSid;
+  
+  if (Object.keys(filteredMeta).length > 0) {
+    log += `\n   ${JSON.stringify(filteredMeta, null, 3)}`;
+  }
+  
+  return log;
+});
+
+/**
+ * Format pour les logs généraux (lisible)
+ */
+const generalLogFormat = winston.format.combine(
+  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.errors({ stack: true }),
-  winston.format.json()
+  readableFormat
 );
 
-// Configuration des transports
-const transports = [
-  // Console avec couleurs
-  new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.simple(),
-      winston.format.printf(({ timestamp, level, message, ...meta }) => {
-        const emoji = {
-          error: "❌",
-          warn: "⚠️",
-          info: "ℹ️",
-          debug: "🔍",
-          call: "📞",
-          success: "✅",
-          api: "🌐",
-        };
+/**
+ * Format pour la console (avec couleurs et emojis)
+ */
+const consoleFormat = winston.format.combine(
+  winston.format.colorize(),
+  winston.format.timestamp({ format: "HH:mm:ss" }),
+  winston.format.printf(({ timestamp, level, message, ...meta }) => {
+    const emoji = {
+      error: "❌",
+      warn: "⚠️",
+      info: "ℹ️",
+      debug: "🔍",
+    };
+    
+    return `${timestamp} ${emoji[level] || "📝"} ${message} ${
+      Object.keys(meta).length && meta.streamSid ? `[${meta.streamSid.substring(0, 8)}...]` : ""
+    }`;
+  })
+);
 
-        return `${timestamp} ${
-          emoji[level] || "📝"
-        } [${level.toUpperCase()}] ${message} ${
-          Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ""
-        }`;
-      })
-    ),
+// ========================================
+// CONFIGURATION DES TRANSPORTS
+// ========================================
+
+const transports = [
+  // Console avec couleurs et emojis
+  new winston.transports.Console({
+    format: consoleFormat,
   }),
 
-  // Fichier pour les erreurs
+  // Fichier pour TOUTES les erreurs
   new winston.transports.File({
     filename: path.join(process.cwd(), "logs", "error.log"),
     level: "error",
-    format: logFormat,
+    format: generalLogFormat,
   }),
 
-  // Fichier pour tous les logs
+  // Fichier pour TOUS les appels (call lifecycle)
   new winston.transports.File({
-    filename: path.join(process.cwd(), "logs", "combined.log"),
-    format: logFormat,
+    filename: path.join(process.cwd(), "logs", "calls.log"),
+    level: "info",
+    format: generalLogFormat,
+  }),
+
+  // Fichier pour ElevenLabs uniquement
+  new winston.transports.File({
+    filename: path.join(process.cwd(), "logs", "elevenlabs.log"),
+    level: "debug",
+    format: generalLogFormat,
+  }),
+
+  // Fichier pour OpenAI uniquement
+  new winston.transports.File({
+    filename: path.join(process.cwd(), "logs", "openai.log"),
+    level: "debug",
+    format: generalLogFormat,
   }),
 ];
 
-// Création du logger
+// ========================================
+// CRÉATION DU LOGGER PRINCIPAL
+// ========================================
+
 const logger = winston.createLogger({
   level: process.env.NODE_ENV === "production" ? "info" : "debug",
-  format: logFormat,
+  format: generalLogFormat,
   transports,
   exitOnError: false,
 });
 
-// Méthodes spécialisées pour les appels
+// ========================================
+// LOGGERS SPÉCIALISÉS PAR SERVICE
+// ========================================
+
+/**
+ * Logger spécifique pour ElevenLabs
+ * Écrit dans elevenlabs.log
+ */
+const elevenLabsLogger = winston.createLogger({
+  level: "debug",
+  format: generalLogFormat,
+  transports: [
+    new winston.transports.Console({ format: consoleFormat }),
+    new winston.transports.File({
+      filename: path.join(process.cwd(), "logs", "elevenlabs.log"),
+      format: generalLogFormat,
+    }),
+  ],
+  exitOnError: false,
+});
+
+/**
+ * Logger spécifique pour OpenAI
+ * Écrit dans openai.log
+ */
+const openAiLogger = winston.createLogger({
+  level: "debug",
+  format: generalLogFormat,
+  transports: [
+    new winston.transports.Console({ format: consoleFormat }),
+    new winston.transports.File({
+      filename: path.join(process.cwd(), "logs", "openai.log"),
+      format: generalLogFormat,
+    }),
+  ],
+  exitOnError: false,
+});
+
+// ========================================
+// MÉTHODES SPÉCIALISÉES POUR LES APPELS
+// ========================================
+
 export const callLogger = {
-  // Méthode générique info
+  /**
+   * Log d'information générique
+   */
   info: (streamSid, message, meta = {}) => {
     logger.info(message, {
       streamSid,
@@ -70,13 +170,81 @@ export const callLogger = {
     });
   },
 
-  // Méthode générique debug
+  /**
+   * Log de debug générique
+   */
   debug: (streamSid, message, meta = {}) => {
     logger.debug(message, {
       streamSid,
       ...meta,
       timestamp: new Date().toISOString(),
     });
+  },
+
+  /**
+   * Logs spécifiques pour ElevenLabs TTS
+   */
+  elevenLabs: {
+    info: (streamSid, message, meta = {}) => {
+      elevenLabsLogger.info(message, {
+        streamSid,
+        service: "elevenlabs",
+        ...meta,
+        timestamp: new Date().toISOString(),
+      });
+    },
+    debug: (streamSid, message, meta = {}) => {
+      elevenLabsLogger.debug(message, {
+        streamSid,
+        service: "elevenlabs",
+        ...meta,
+        timestamp: new Date().toISOString(),
+      });
+    },
+    error: (streamSid, error, context = {}) => {
+      elevenLabsLogger.error("❌ Erreur ElevenLabs", {
+        streamSid,
+        service: "elevenlabs",
+        error: error.message,
+        stack: error.stack,
+        context,
+        event: "elevenlabs_error",
+        timestamp: new Date().toISOString(),
+      });
+    },
+  },
+
+  /**
+   * Logs spécifiques pour OpenAI Realtime
+   */
+  openAi: {
+    info: (streamSid, message, meta = {}) => {
+      openAiLogger.info(message, {
+        streamSid,
+        service: "openai",
+        ...meta,
+        timestamp: new Date().toISOString(),
+      });
+    },
+    debug: (streamSid, message, meta = {}) => {
+      openAiLogger.debug(message, {
+        streamSid,
+        service: "openai",
+        ...meta,
+        timestamp: new Date().toISOString(),
+      });
+    },
+    error: (streamSid, error, context = {}) => {
+      openAiLogger.error("❌ Erreur OpenAI", {
+        streamSid,
+        service: "openai",
+        error: error.message,
+        stack: error.stack,
+        context,
+        event: "openai_error",
+        timestamp: new Date().toISOString(),
+      });
+    },
   },
 
   // Début d'appel

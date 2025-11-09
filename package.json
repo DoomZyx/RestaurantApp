@@ -9,7 +9,11 @@
     "monitor": "node scripts/monitor.js",
     "test-multiple": "node scripts/testMultipleCalls.js",
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "fill-demo": "node scripts/fillDemoData.js",
+    "fill-week": "node scripts/fillWeekData.js",
+    "fill-menu": "node scripts/fillMenuData.js",
+    "clean-demo": "node scripts/cleanDemoData.js"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +40,7 @@
     "multer": "^2.0.2",
     "node-fetch": "^3.3.2",
     "openai": "^5.11.0",
+    "twilio": "^5.10.3",
     "winston": "^3.17.0",
     "ws": "^8.18.3"
   },

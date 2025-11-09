@@ -2,12 +2,18 @@ import mongoose from "mongoose";
 
 const clientSchema = new mongoose.Schema(
   {
-    prenom: { type: String, required: true },
-    nom: { type: String, required: true },
+    prenom: { type: String, default: '-' },
+    nom: { type: String, default: '-' },
     telephone: { type: String, required: true, unique: true },
     email: { type: String },
     adresse: { type: String },
     entrepriseName: { type: String },
+    type: { 
+      type: String, 
+      enum: ['client', 'fournisseur'], 
+      default: 'client',
+      required: true 
+    },
   },
   {
     timestamps: true, // Ajoute createdAt et updatedAt automatiquement

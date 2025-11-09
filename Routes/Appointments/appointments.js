@@ -17,9 +17,11 @@ export default async function orderRoutes(fastify, options) {
     schema: {
       body: {
         type: "object",
-        required: ["client", "date", "heure", "duree", "type", "modalite"],
+        required: ["date", "heure", "type"],
         properties: {
+          // Client optionnel: soit client (ObjectId), soit nom (String)
           client: { type: "string", minLength: 24, maxLength: 24 },
+          nom: { type: "string", minLength: 1, maxLength: 120 },
           date: { type: "string", format: "date" },
           heure: {
             type: "string",
@@ -44,6 +46,21 @@ export default async function orderRoutes(fastify, options) {
           description: { type: "string", maxLength: 500 },
           notes_internes: { type: "string", maxLength: 1000 },
           related_call: { type: "string", minLength: 24, maxLength: 24 },
+          // Commandes (pour les commandes à emporter)
+          commandes: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                produitId: { type: "string" },
+                nom: { type: "string" },
+                categorie: { type: "string" },
+                quantite: { type: "integer", minimum: 1 },
+                prixUnitaire: { type: "number" },
+                supplements: { type: "string", maxLength: 200 }
+              }
+            }
+          }
         },
       },
     },
