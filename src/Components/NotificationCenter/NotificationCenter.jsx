@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import notificationService from "../../Services/notificationService.js";
+import EmojiText from "../Common/EmojiText";
 import "./NotificationCenter.scss";
 
 const NotificationCenter = () => {
+  const { t } = useTranslation();
   const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const navigate = useNavigate();
@@ -121,7 +124,7 @@ const NotificationCenter = () => {
         className="notification-toggle"
         onClick={() => setShowNotifications(!showNotifications)}
         title={
-          isConnected ? "Notifications actives" : "Notifications déconnectées"
+          isConnected ? t('notificationCenter.activeNotifications') : t('notificationCenter.disconnectedNotifications')
         }
       >
         <i
@@ -136,20 +139,14 @@ const NotificationCenter = () => {
       {showNotifications && (
         <div className="notification-panel">
           <div className="notification-header">
-            <h3>Notifications</h3>
-            <button
-              className="close-btn"
-              onClick={() => setShowNotifications(false)}
-            >
-              <i className="bi bi-x"></i>
-            </button>
+            <h3>{t('notifications.title')}</h3>
           </div>
 
           <div className="notification-list">
             {notifications.length === 0 ? (
               <div className="empty-notifications">
                 <i className="bi bi-bell-slash"></i>
-                <p>Aucune notification</p>
+                <p>{t('notifications.noNotifications')}</p>
               </div>
             ) : (
               notifications.map((notification) => (
@@ -203,14 +200,14 @@ const NotificationCenter = () => {
                     )}
                     
                     <small className="notification-hint">
-                      {notification.read ? '' : '👆 Cliquez pour voir les détails'}
+                      {notification.read ? '' : <><EmojiText>👆</EmojiText> {t('notificationCenter.clickToSeeDetails')}</>}
                     </small>
                   </div>
 
                   <button
                     className="remove-btn"
                     onClick={(e) => removeNotification(notification.id, e)}
-                    title="Supprimer cette notification"
+                    title={t('notificationCenter.deleteNotification')}
                   >
                     <i className="bi bi-x"></i>
                   </button>
@@ -225,7 +222,7 @@ const NotificationCenter = () => {
                 className="clear-all-btn"
                 onClick={() => notificationService.clearAllNotifications()}
               >
-                Effacer tout
+                {t('notificationCenter.clearAll')}
               </button>
             </div>
           )}

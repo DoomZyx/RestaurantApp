@@ -64,3 +64,21 @@ export async function updateClient(id, clientData) {
  return res.json();
 }
 
+// Supprimer un client/fournisseur
+export async function deleteClient(id) {
+ if (!id) throw new Error("ID manquant pour la suppression");
+
+ const res = await fetch(`${VITE_API_URL}api/clients/${id}`, {
+   method: "DELETE",
+   headers: {
+     "x-api-key": `${VITE_API_KEY}`,
+     "Content-Type": "application/json",
+   },
+ });
+ if (!res.ok) {
+   const errorData = await res.json();
+   throw new Error(errorData.error || "Erreur lors de la suppression du contact");
+ }
+ return res.json();
+}
+

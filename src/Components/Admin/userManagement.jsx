@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 
 function UserManagement({
  users,
@@ -7,7 +8,7 @@ function UserManagement({
  handleDeleteUser,
  setShowUserModal,
 }) {
-
+ const { t } = useTranslation();
 
  return (
 <div className="users-section">
@@ -15,12 +16,12 @@ function UserManagement({
   <table>
     <thead>
       <tr>
-        <th>Nom d'utilisateur</th>
-        <th>Email</th>
-        <th>Rôle</th>
-        <th>Statut</th>
-        <th>Dernière connexion</th>
-        <th>Actions</th>
+        <th>{t('admin.username')}</th>
+        <th>{t('login.email')}</th>
+        <th>{t('admin.role')}</th>
+        <th>{t('admin.status')}</th>
+        <th>{t('admin.lastLogin')}</th>
+        <th>{t('admin.actions')}</th>
       </tr>
     </thead>
     <tbody>
@@ -39,26 +40,26 @@ function UserManagement({
                 user.isActive ? "active" : "inactive"
               }`}
             >
-              {user.isActive ? "Actif" : "Inactif"}
+              {user.isActive ? t('admin.active') : t('admin.inactive')}
             </span>
           </td>
           <td>
             {user.lastLogin
               ? formatDateTime(user.lastLogin)
-              : "Jamais"}
+              : t('admin.never')}
           </td>
           <td className="actions">
             <button
               onClick={() => handleEditUser(user)}
               className="btn-edit"
-              title="Modifier"
+              title={t('common.edit')}
             >
               <i className="bi bi-pencil"></i>
             </button>
             <button
               onClick={() => handleDeleteUser(user._id)}
               className="btn-delete"
-              title="Supprimer"
+              title={t('common.delete')}
             >
               <i className="bi bi-trash"></i>
             </button>
@@ -75,7 +76,7 @@ function UserManagement({
     className="btn-primary"
   >
     <i className="bi bi-person-plus"></i>
-    Ajouter un utilisateur
+    {t('admin.addUser')}
   </button>
 </div>
 </div>

@@ -1,9 +1,23 @@
+import { useTranslation } from "react-i18next";
 import { useOrderForm } from "../../Hooks/Contacts/useOrderForm";
 
 export function ContactDetails({
   selectedClient,
   clearSelection,
+  onDelete,
 }) {
+  const { t } = useTranslation();
+
+  const handleDelete = async () => {
+    if (window.confirm(`Êtes-vous sûr de vouloir supprimer ce fournisseur : ${selectedClient.entrepriseName} ?`)) {
+      try {
+        await onDelete(selectedClient._id);
+      } catch (error) {
+        console.error("Erreur lors de la suppression:", error);
+        alert("Erreur lors de la suppression du contact");
+      }
+    }
+  };
   const {
     ingredients,
     isSubmitting,
@@ -33,9 +47,9 @@ export function ContactDetails({
       <div className="client-details-panel">
         <div className="no-selection">
           <i className="bi bi-person-circle"></i>
-          <h3>Sélectionnez un fournisseur</h3>
+          <h3>{t('contactDetails.selectSupplier')}</h3>
           <p>
-            Cliquez sur un fournisseur dans la liste pour commander des ingrédients
+            {t('contactDetails.selectSupplierDescription')}
           </p>
         </div>
       </div>
@@ -48,11 +62,18 @@ export function ContactDetails({
         <div className="client-header">
           <h2>
             <i className="bi bi-building"></i>
-            {selectedClient.entrepriseName || `${selectedClient.prenom} ${selectedClient.nom}`}
+            {selectedClient.entrepriseName}
           </h2>
-          <button className="close-btn" onClick={clearSelection}>
-            <i className="bi bi-x"></i>
-          </button>
+          {onDelete && (
+            <button 
+              className="delete-contact-btn" 
+              onClick={handleDelete}
+              title="Supprimer ce fournisseur"
+            >
+              <i className="bi bi-trash"></i>
+              Supprimer
+            </button>
+          )}
         </div>
       </div>
 

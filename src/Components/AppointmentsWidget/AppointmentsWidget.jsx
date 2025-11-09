@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { useAppointments } from "../../Hooks/Appointments/useAppointments";
 import { useNavigate } from "react-router-dom";
 import "./AppointmentsWidget.scss";
 
 function AppointmentsWidget() {
+  const { t } = useTranslation();
   const {
     todayAppointments,
     loading,
@@ -46,17 +48,17 @@ function AppointmentsWidget() {
   const getStatusLabel = (statut) => {
     switch (statut) {
       case "confirme":
-        return "Confirmé";
+        return t('appointments.statuses.confirme');
       case "en_cours":
-        return "En cours";
+        return t('appointments.statuses.en_cours');
       case "termine":
-        return "Terminé";
+        return t('appointments.statuses.termine');
       case "annule":
-        return "Annulé";
+        return t('appointments.statuses.annule');
       case "reporte":
-        return "Reporté";
+        return t('appointmentsWidget.postponed');
       default:
-        return "Planifié";
+        return t('appointments.statuses.planifie');
     }
   };
 
@@ -77,12 +79,12 @@ function AppointmentsWidget() {
     return (
       <div className="appointments-widget">
         <div className="widget-header">
-          <h3>📅 Commandes du jour</h3>
+          <h3>📅 {t('appointmentsWidget.todayOrders')}</h3>
           <span className="current-time">{currentTime}</span>
         </div>
         <div className="loading-state">
           <div className="spinner"></div>
-          <p>Chargement des commandes...</p>
+          <p>{t('appointmentsWidget.loading')}</p>
         </div>
       </div>
     );
@@ -92,11 +94,11 @@ function AppointmentsWidget() {
     return (
       <div className="appointments-widget">
         <div className="widget-header">
-          <h3>📅 Commandes du jour</h3>
+          <h3>📅 {t('appointmentsWidget.todayOrders')}</h3>
           <span className="current-time">{currentTime}</span>
         </div>
         <div className="error-state">
-          <p>❌ Erreur: {error}</p>
+          <p>❌ {t('common.error')}: {error}</p>
         </div>
       </div>
     );
@@ -105,11 +107,11 @@ function AppointmentsWidget() {
   return (
     <div className="appointments-widget">
       <div className="widget-header">
-        <h3>📅 Commandes du jour</h3>
+        <h3>📅 {t('appointmentsWidget.todayOrders')}</h3>
         <div className="header-info">
           <span className="current-time">{currentTime}</span>
           <span className="appointments-count">
-            {todayAppointments.length} RDV
+            {todayAppointments.length} {t('appointmentsWidget.orders')}
           </span>
         </div>
       </div>
@@ -118,16 +120,16 @@ function AppointmentsWidget() {
         {todayAppointments.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">📅</div>
-            <p>Aucune commandes aujourd'hui</p>
-            <small>Profitez de cette journée plus calme !</small>
+            <p>{t('appointmentsWidget.noOrdersToday')}</p>
+            <small>{t('appointmentsWidget.calmDay')}</small>
           </div>
         ) : (
           <>
-            {/* Prochains rendez-vous */}
+            {/* Prochaines commandes */}
             {upcomingAppointments.length > 0 && (
               <div className="upcoming-section">
                 <h4 className="section-title">
-                  🔜 Prochains ({upcomingAppointments.length})
+                  🔜 {t('appointmentsWidget.nextOrder')} ({upcomingAppointments.length})
                 </h4>
                 {upcomingAppointments.slice(0, 3).map((appointment) => (
                   <div
@@ -161,7 +163,7 @@ function AppointmentsWidget() {
                         onClick={() =>
                           handleStatusChange(appointment._id, "en_cours")
                         }
-                        title="Démarrer le rendez-vous"
+                        title={t('appointmentsWidget.startOrder')}
                       >
                         ▶️
                       </button>
@@ -174,7 +176,7 @@ function AppointmentsWidget() {
             {/* Tous les rendez-vous du jour */}
             <div className="all-appointments-section">
               <h4 className="section-title">
-                📋 Toutes les commandes ({todayAppointments.length})
+                📋 {t('appointmentsWidget.allOrders')} ({todayAppointments.length})
               </h4>
               <div className="appointments-list">
                 {todayAppointments.map((appointment) => (
@@ -214,7 +216,7 @@ function AppointmentsWidget() {
                           onClick={() =>
                             handleStatusChange(appointment._id, "en_cours")
                           }
-                          title="Démarrer"
+                          title={t('appointmentsWidget.start')}
                         >
                           ▶️
                         </button>
@@ -225,7 +227,7 @@ function AppointmentsWidget() {
                           onClick={() =>
                             handleStatusChange(appointment._id, "termine")
                           }
-                          title="Terminer"
+                          title={t('appointmentsWidget.complete')}
                         >
                           ✅
                         </button>
@@ -244,13 +246,13 @@ function AppointmentsWidget() {
           className="btn-view-all"
           onClick={() => navigate("/appointments")}
         >
-          Voir tous les rendez-vous
+          {t('appointmentsWidget.viewAll')}
         </button>
         <button
           className="btn-add-appointment"
           onClick={() => navigate("/appointments")}
         >
-          ➕ Nouveau RDV
+          {t('appointmentsWidget.newOrder')}
         </button>
       </div>
     </div>

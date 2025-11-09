@@ -1,0 +1,450 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "retry": "Réessayer",
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "days": {
+    "sunday": "dimanche",
+    "monday": "lundi",
+    "tuesday": "mardi",
+    "wednesday": "mercredi",
+    "thursday": "jeudi",
+    "friday": "vendredi",
+    "saturday": "samedi"
+  },
+  "months": {
+    "january": "janvier",
+    "february": "février",
+    "march": "mars",
+    "april": "avril",
+    "may": "mai",
+    "june": "juin",
+    "july": "juillet",
+    "august": "août",
+    "september": "septembre",
+    "october": "octobre",
+    "november": "novembre",
+    "december": "décembre"
+  },
+  "greeting": {
+    "good": "Bon",
+    "morning": "Bonne matinée ! ☕",
+    "afternoon": "Bon après-midi ! ☀️",
+    "evening": "Bonne soirée ! 🌙"
+  },
+  "menu": {
+    "user": "UTILISATEUR",
+    "admin": "ADMIN",
+    "dashboard": "TABLEAU DE BORD",
+    "orders": "COMMANDES",
+    "reservations": "RÉSERVATIONS",
+    "suppliers": "FOURNISSEURS",
+    "configuration": "CONFIGURATION",
+    "myAccount": "MON COMPTE",
+    "adminPanel": "ADMIN",
+    "logout": "DECONNEXION"
+  },
+  "login": {
+    "title": "AirFood AI",
+    "subtitle": "Connexion à votre espace",
+    "email": "Email",
+    "password": "Mot de passe",
+    "emailPlaceholder": "votre@email.com",
+    "passwordPlaceholder": "Votre mot de passe",
+    "loginButton": "Se connecter",
+    "loggingIn": "Connexion...",
+    "defaultAccount": "Compte par défaut :",
+    "defaultEmail": "Email: admin@handlehome.com",
+    "defaultPassword": "Mot de passe: admin123"
+  },
+  "homepage": {
+    "title": "Tableau de bord"
+  },
+  "kpi": {
+    "takeawayOrders": "COMMANDES À EMPORTER",
+    "reservations": "RÉSERVATIONS",
+    "remainingSeats": "PLACES RESTANTES",
+    "upcomingOrders": "PROCHAINES COMMANDES (15 MIN)",
+    "calledAt": "Appelé à",
+    "pickupAt": "Retrait à",
+    "now": "Maintenant !",
+    "inMinutes": "dans {{minutes}} min",
+    "persons": "pers.",
+    "noUpcomingOrders": "Aucune commande dans les 15 prochaines minutes",
+    "loadingStats": "Chargement des statistiques..."
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "personalInfo": "Informations personnelles",
+    "fullName": "Nom complet",
+    "professionalEmail": "Email professionnel",
+    "phone": "Téléphone",
+    "position": "Poste",
+    "department": "Département",
+    "memberSince": "Membre depuis",
+    "lastConnection": "Dernière connexion",
+    "changePhoto": "Changer la photo",
+    "uploadInProgress": "Upload en cours...",
+    "modify": "Modifier",
+    "save": "Sauvegarder",
+    "saving": "Sauvegarde...",
+    "cancel": "Annuler",
+    "profileUpdated": "Profil mis à jour avec succès !",
+    "loadingProfile": "Chargement du profil...",
+    "departments": {
+      "customerService": "Service Client",
+      "technicalSupport": "Support Technique",
+      "sales": "Ventes",
+      "administration": "Administration"
+    },
+    "errors": {
+      "invalidImage": "Veuillez sélectionner une image valide",
+      "imageTooLarge": "L'image ne doit pas dépasser 5 MB"
+    }
+  },
+  "appointments": {
+    "filters": {
+      "date": "Date"
+    },
+    "title": "Commandes",
+    "ordersTitle": "Commandes à emporter",
+    "filters": {
+      "date": "Date",
+      "type": "Type",
+      "status": "Statut",
+      "reset": "Réinitialiser les filtres"
+    },
+    "quickFilters": {
+      "takeaway": "À emporter",
+      "onSite": "Sur place",
+      "all": "Tous"
+    },
+    "services": {
+      "lunch": "Service Midi",
+      "dinner": "Service Soir"
+    },
+    "views": {
+      "list": "Liste",
+      "calendar": "Calendrier"
+    },
+    "newButton": "Nouveau +",
+    "waitingOrders": "Commandes en attente",
+    "inProgressOrders": "En cours de préparation",
+    "activeOrders": "Commandes en cours",
+    "completedOrders": "Commandes terminées",
+    "statuses": {
+      "planifie": "Planifié",
+      "confirme": "Confirmé",
+      "en_cours": "En cours",
+      "termine": "Terminé",
+      "annule": "Annulé"
+    },
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce rendez-vous ?",
+    "noAppointments": "Aucune commande",
+    "loading": "Chargement des commandes..."
+  },
+  "reservations": {
+    "title": "Réservations de table",
+    "newButton": "Nouvelle réservation +",
+    "waitingReservations": "Réservations en attente",
+    "inProgressReservations": "Clients présents",
+    "completedReservations": "Réservations terminées",
+    "noReservations": "Aucune réservation",
+    "loading": "Chargement des réservations..."
+  },
+  "createAppointment": {
+    "title": "Créer une nouvelle commande",
+    "editTitle": "Modifier la commande",
+    "clientSection": "Informations Client",
+    "clientInfo": "Client",
+    "selectClient": "Sélectionner un client",
+    "searchClient": "Rechercher un client...",
+    "createNewClient": "Créer un nouveau client",
+    "clientName": "Nom du client",
+    "clientPhone": "Téléphone du client",
+    "clientEmail": "Email du client (optionnel)",
+    "orderSection": "Détails de la Commande",
+    "orderType": "Type de commande",
+    "takeaway": "Commande à emporter",
+    "reservation": "Réservation de table",
+    "date": "Date",
+    "time": "Heure",
+    "persons": "Nombre de personnes",
+    "notes": "Notes / Commentaires",
+    "notesPlaceholder": "Informations supplémentaires...",
+    "menuSection": "Menu",
+    "addProduct": "Ajouter un produit",
+    "selectCategory": "Sélectionner une catégorie",
+    "selectProduct": "Sélectionner un produit",
+    "quantity": "Quantité",
+    "price": "Prix",
+    "orderSummary": "Récapitulatif",
+    "total": "Total",
+    "vat": "TVA ({{rate}}%)",
+    "totalWithVAT": "Total TTC",
+    "submit": "Créer la commande",
+    "update": "Mettre à jour",
+    "cancel": "Annuler",
+    "selectType": "Sélectionner un type",
+    "orderedDishes": "Plats commandés",
+    "selectDish": "Sélectionner un plat",
+    "qty": "Qté",
+    "supplementsPlaceholder": "Suppléments (ex: +fromage, +oignons)",
+    "addDish": "Ajouter un plat",
+    "dishesNote": "Les plats seront enregistrés dans le champ \"commandes\" de la base de données.",
+    "description": "Description",
+    "descriptionPlaceholder": "Détails du rendez-vous...",
+    "creating": "Création...",
+    "createButton": "Créer le rendez-vous",
+    "errors": {
+      "selectClient": "Veuillez sélectionner un client",
+      "enterClientName": "Veuillez saisir le nom du client",
+      "enterClientPhone": "Veuillez entrer un téléphone client",
+      "selectDate": "Veuillez sélectionner une date",
+      "selectTime": "Veuillez sélectionner une heure",
+      "selectType": "Veuillez sélectionner un type",
+      "enterPersons": "Veuillez indiquer le nombre de personnes",
+      "addProduct": "Veuillez ajouter au moins un produit"
+    }
+  },
+  "addClientModal": {
+    "title": "Ajouter un nouveau contact",
+    "personalInfo": "Informations personnelles",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "phone": "Téléphone",
+    "email": "Email",
+    "additionalInfo": "Informations complémentaires",
+    "address": "Adresse",
+    "companyName": "Nom de l'entreprise",
+    "creating": "Création...",
+    "createContact": "Créer le contact",
+    "errors": {
+      "firstNameRequired": "Le prénom est requis",
+      "lastNameRequired": "Le nom est requis",
+      "phoneRequired": "Le téléphone est requis",
+      "invalidPhone": "Format de téléphone invalide",
+      "invalidEmail": "Format d'email invalide"
+    }
+  },
+  "contactsPage": {
+    "newSupplier": "Nouveau Fournisseur",
+    "statuses": {
+      "new": "Nouveau",
+      "inProgress": "En cours",
+      "completed": "Terminé",
+      "cancelled": "Annulé"
+    }
+  },
+  "contactsList": {
+    "supplierList": "Liste des fournisseurs"
+  },
+  "contactDetails": {
+    "selectSupplier": "Sélectionnez un fournisseur",
+    "selectSupplierDescription": "Cliquez sur un fournisseur dans la liste pour commander des ingrédients"
+  },
+  "contacts": {
+    "title": "Fournisseurs",
+    "searchPlaceholder": "Rechercher un fournisseur...",
+    "addContact": "Ajouter un fournisseur",
+    "noContacts": "Aucun fournisseur trouvé",
+    "loading": "Chargement des fournisseurs...",
+    "details": {
+      "name": "Nom",
+      "company": "Entreprise",
+      "phone": "Téléphone",
+      "email": "Email",
+      "address": "Adresse",
+      "notes": "Notes"
+    }
+  },
+  "configuration": {
+    "title": "Configuration",
+    "tabs": {
+      "restaurant": "Informations Restaurant",
+      "menu": "Menu & Tarifs",
+      "hours": "Horaires",
+      "language": "Langue"
+    },
+    "loading": "Chargement de la configuration...",
+    "error": "Erreur lors du chargement de la configuration",
+    "saveSuccess": "Configuration sauvegardée !",
+    "saveButton": "Sauvegarder",
+    "saving": "Sauvegarde...",
+    "restaurant": {
+      "title": "Informations du Restaurant",
+      "name": "Nom du restaurant",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "email": "Email",
+      "seats": "Nombre de couverts disponibles",
+      "seatsHelp": "Indiquez le nombre total de places assises dans votre restaurant"
+    },
+    "menu": {
+      "title": "Configuration du Menu",
+      "addCategory": "Ajouter une catégorie",
+      "addProduct": "Ajouter un produit",
+      "noCategories": "Aucune catégorie de menu disponible. Cliquez sur \"➕ Ajouter une catégorie\" pour créer votre première catégorie.",
+      "productForm": {
+        "title": "Ajouter un nouveau produit",
+        "name": "Nom du produit",
+        "namePlaceholder": "Ex: Pizza Margherita",
+        "description": "Description",
+        "descriptionPlaceholder": "Ex: Tomate, mozzarella, basilic",
+        "price": "Prix (€)",
+        "pricePlaceholder": "Ex: 12.50",
+        "size": "Taille",
+        "available": "Produit disponible",
+        "required": "*"
+      },
+      "sizes": {
+        "small": "Petite",
+        "medium": "Moyenne",
+        "large": "Grande",
+        "cl33": "33cl",
+        "cl50": "50cl",
+        "l1": "1L"
+      },
+      "deleteConfirm": "⚠️ Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible.",
+      "noProductId": "⚠️ Produit sans ID - sauvegardez la config"
+    },
+    "hours": {
+      "title": "Horaires d'Ouverture",
+      "lunch": "Midi",
+      "dinner": "Soir",
+      "to": "à",
+      "days": {
+        "lundi": "Lundi",
+        "mardi": "Mardi",
+        "mercredi": "Mercredi",
+        "jeudi": "Jeudi",
+        "vendredi": "Vendredi",
+        "samedi": "Samedi",
+        "dimanche": "Dimanche"
+      }
+    },
+    "language": {
+      "title": "Langue de l'interface",
+      "description": "Choisissez la langue d'affichage de l'application",
+      "french": "Français",
+      "english": "Anglais",
+      "current": "Langue actuelle :",
+      "changeSuccess": "Langue changée avec succès !"
+    }
+  },
+  "appointmentsList": {
+    "noOrdersFound": "Aucune commande ou réservation trouvée",
+    "expectedPickup": "Retrait prévu",
+    "startPreparation": "Démarrer la préparation",
+    "markAsComplete": "Marquer comme terminé",
+    "startBtn": "En cours",
+    "completeBtn": "Terminé"
+  },
+  "appointmentsFilters": {
+    "modality": "Modalité",
+    "allModalities": "Toutes les modalités",
+    "onSite": "Sur place",
+    "takeaway": "À emporter"
+  },
+  "appointmentDetails": {
+    "clientInfo": "Informations client",
+    "name": "Nom",
+    "phone": "Téléphone",
+    "orderDetails": "Détails de la commande",
+    "orderedDishes": "Plats commandés",
+    "extras": "Suppléments",
+    "total": "Total",
+    "noDishSpecified": "Aucun plat spécifié",
+    "additionalNotes": "Notes supplémentaires",
+    "schedule": "Horaires",
+    "date": "Date",
+    "time": "Heure",
+    "modality": "Modalité",
+    "numberOfPersons": "Nombre de personnes",
+    "persons": "personnes",
+    "person": "personne",
+    "notes": "Notes",
+    "confirm": "Confirmer",
+    "markAsCompleted": "Marquer comme terminé"
+  },
+  "appointmentsWidget": {
+    "todayOrders": "Commandes du jour",
+    "orders": "Commandes",
+    "loading": "Chargement des commandes...",
+    "noOrdersToday": "Aucune commande aujourd'hui",
+    "calmDay": "Profitez de cette journée plus calme !",
+    "nextOrder": "Prochaine commande",
+    "allOrders": "Toutes les commandes",
+    "startOrder": "Démarrer la commande",
+    "start": "Démarrer",
+    "complete": "Terminer",
+    "viewAll": "Voir toutes les commandes",
+    "newOrder": "Nouvelle commande +",
+    "postponed": "Reporté"
+  },
+  "admin": {
+    "title": "Administration",
+    "userManagement": "Gestion des utilisateurs",
+    "user": "utilisateur",
+    "username": "Nom d'utilisateur",
+    "role": "Rôle",
+    "status": "Statut",
+    "lastLogin": "Dernière connexion",
+    "actions": "Actions",
+    "active": "Actif",
+    "inactive": "Inactif",
+    "never": "Jamais",
+    "addUser": "Ajouter un utilisateur",
+    "newPasswordOptional": "Nouveau mot de passe (optionnel)",
+    "roles": {
+      "user": "Utilisateur",
+      "admin": "Administrateur"
+    }
+  },
+  "graphs": {
+    "dailyEvolution": "Évolution Quotidienne"
+  },
+  "notificationCenter": {
+    "activeNotifications": "Notifications actives",
+    "disconnectedNotifications": "Notifications déconnectées",
+    "clickToSeeDetails": "Cliquez pour voir les détails",
+    "deleteNotification": "Supprimer cette notification",
+    "clearAll": "Effacer tout"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "noNotifications": "Aucune notification",
+    "newOrder": "Nouvelle commande",
+    "orderUpdated": "Commande mise à jour",
+    "orderCancelled": "Commande annulée"
+  },
+  "calendar": {
+    "today": "Aujourd'hui",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "month": "Mois",
+    "week": "Semaine",
+    "day": "Jour",
+    "agenda": "Agenda"
+  },
+  "errors": {
+    "genericError": "Une erreur est survenue",
+    "networkError": "Erreur de connexion au serveur",
+    "unauthorized": "Non autorisé",
+    "notFound": "Élément non trouvé",
+    "validationError": "Erreur de validation"
+  }
+}
+

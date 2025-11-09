@@ -1,39 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { fetchClients } from "../../API/Clients/api";
+import { useTranslation } from "react-i18next";
+import { fetchPricing } from "../../API/Pricing/api";
 
 export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
-    client: "",
+    nom: "",
     date: "",
     heure: "",
-    duree: 60,
     type: "",
-    modalite: "Sur place",
     nombrePersonnes: "",
     description: "",
   });
 
-  const [clients, setClients] = useState([]);
-  const [loadingClients, setLoadingClients] = useState(false);
   const [errors, setErrors] = useState({});
+  const [menuProducts, setMenuProducts] = useState([]); // produits depuis la config
+  const [selectedItems, setSelectedItems] = useState([
+    { id: Date.now(), productId: "", qty: 1, supplements: "" }
+  ]);
 
-  // Charger les clients
+  // Charger les produits depuis la configuration Pricing
   useEffect(() => {
-    const loadClients = async () => {
+    const loadProducts = async () => {
       try {
-        setLoadingClients(true);
-        const response = await fetchClients();
-        if (response.success) {
-          setClients(response.data);
-        }
-      } catch (error) {
-        console.error("Erreur lors du chargement des clients:", error);
-      } finally {
-        setLoadingClients(false);
+        const res = await fetchPricing();
+        const pricing = res?.data || res; // selon structure
+        const menu = pricing?.menuPricing || {};
+        // Aplatir {categorie: { produits: [] }} en liste unique
+        const flattened = Object.entries(menu).flatMap(([key, cat]) => {
+          const produits = Array.isArray(cat?.produits) ? cat.produits : [];
+          return produits.map((p) => ({
+            _id: p._id || `${key}-${p.nom}`,
+            nom: p.nom,
+            categorie: cat?.nom || key,
+            prixBase: p.prixBase,
+          }));
+        });
+        setMenuProducts(flattened);
+      } catch (e) {
+        console.warn("Impossible de charger la configuration des produits:", e?.message);
+        setMenuProducts([]);
       }
     };
-
-    loadClients();
+    loadProducts();
   }, []);
 
   const handleChange = (e) => {
@@ -48,16 +57,15 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.client) newErrors.client = "Veuillez sélectionner un client";
-    if (!formData.date) newErrors.date = "Veuillez sélectionner une date";
-    if (!formData.heure) newErrors.heure = "Veuillez sélectionner une heure";
-    if (!formData.type) newErrors.type = "Veuillez sélectionner un type";
-    if (!formData.modalite) newErrors.modalite = "Veuillez sélectionner une modalité";
+    if (!formData.nom.trim()) newErrors.nom = t('createAppointment.errors.enterClientName');
+    if (!formData.date) newErrors.date = t('createAppointment.errors.selectDate');
+    if (!formData.heure) newErrors.heure = t('createAppointment.errors.selectTime');
+    if (!formData.type) newErrors.type = t('createAppointment.errors.selectType');
     
     // Validation du nombre de personnes pour les réservations
     if (formData.type === "Réservation de table") {
       if (!formData.nombrePersonnes || formData.nombrePersonnes < 1) {
-        newErrors.nombrePersonnes = "Veuillez indiquer le nombre de personnes";
+        newErrors.nombrePersonnes = t('createAppointment.errors.enterPersons');
       }
     }
 
@@ -68,39 +76,63 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onSubmit(formData);
+      // Ne pas envoyer le champ client s'il est vide
+      const payload = { ...formData };
+      delete payload.client; // Supprimer le champ client pour éviter les erreurs de validation
+      
+      // Nettoyer nombrePersonnes : convertir en integer ou supprimer si vide
+      if (payload.nombrePersonnes === "" || payload.nombrePersonnes === null || payload.nombrePersonnes === undefined) {
+        delete payload.nombrePersonnes;
+      } else {
+        payload.nombrePersonnes = parseInt(payload.nombrePersonnes, 10);
+      }
+      
+      // Si commande à emporter: structurer les commandes dans un champ dédié
+      if (formData.type === "Commande à emporter") {
+        const commandes = selectedItems
+          .filter(it => it.productId)
+          .map((it) => {
+            const prod = menuProducts.find(p => p._id === it.productId);
+            return {
+              produitId: it.productId,
+              nom: prod?.nom || "Plat inconnu",
+              categorie: prod?.categorie || "",
+              quantite: it.qty && it.qty > 0 ? it.qty : 1,
+              prixUnitaire: prod?.prixBase || 0,
+              supplements: it.supplements?.trim() || ""
+            };
+          });
+        
+        if (commandes.length > 0) {
+          payload.commandes = commandes;
+        }
+      }
+      
+      onSubmit(payload);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="appointment-form">
       <div className="form-grid">
-        {/* Client */}
+        {/* Nom du client (texte) */}
         <div className="form-group">
-          <label htmlFor="client">👤 Client *</label>
-          <select
-            id="client"
-            name="client"
-            value={formData.client}
+          <label htmlFor="nom">👤 {t('createAppointment.clientName')} *</label>
+          <input
+            type="text"
+            id="nom"
+            name="nom"
+            placeholder="Ex: Axel Cella"
+            value={formData.nom}
             onChange={handleChange}
-            className={errors.client ? "error" : ""}
-            disabled={loadingClients}
-          >
-            <option value="">
-              {loadingClients ? "Chargement..." : "Sélectionner un client"}
-            </option>
-            {clients.map((client) => (
-              <option key={client._id} value={client._id}>
-                {client.prenom} {client.nom} - {client.telephone}
-              </option>
-            ))}
-          </select>
-          {errors.client && <span className="error-message">{errors.client}</span>}
+            className={errors.nom ? "error" : ""}
+          />
+          {errors.nom && <span className="error-message">{errors.nom}</span>}
         </div>
 
         {/* Date */}
         <div className="form-group">
-          <label htmlFor="date">📅 Date *</label>
+          <label htmlFor="date">📅 {t('createAppointment.date')} *</label>
           <input
             type="date"
             id="date"
@@ -115,7 +147,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
 
         {/* Heure */}
         <div className="form-group">
-          <label htmlFor="heure">🕒 Heure *</label>
+          <label htmlFor="heure">🕒 {t('createAppointment.time')} *</label>
           <input
             type="time"
             id="heure"
@@ -127,26 +159,9 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
           {errors.heure && <span className="error-message">{errors.heure}</span>}
         </div>
 
-        {/* Durée */}
-        <div className="form-group">
-          <label htmlFor="duree">⏱️ Durée (minutes)</label>
-          <select
-            id="duree"
-            name="duree"
-            value={formData.duree}
-            onChange={handleChange}
-          >
-            <option value={30}>30 minutes</option>
-            <option value={60}>1 heure</option>
-            <option value={90}>1h30</option>
-            <option value={120}>2 heures</option>
-            <option value={180}>3 heures</option>
-          </select>
-        </div>
-
         {/* Type */}
         <div className="form-group">
-          <label htmlFor="type">🏷️ Type *</label>
+          <label htmlFor="type">🏷️ {t('createAppointment.orderType')} *</label>
           <select
             id="type"
             name="type"
@@ -154,37 +169,17 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
             onChange={handleChange}
             className={errors.type ? "error" : ""}
           >
-            <option value="">Sélectionner un type</option>
-            <option value="Commande à emporter">Commande à emporter</option>
-            <option value="Livraison à domicile">Livraison à domicile</option>
-            <option value="Réservation de table">Réservation de table</option>
-            <option value="Dégustation">Dégustation</option>
-            <option value="Événement privé">Événement privé</option>
+            <option value="">{t('createAppointment.selectType')}</option>
+            <option value="Commande à emporter">{t('createAppointment.takeaway')}</option>
+            <option value="Réservation de table">{t('createAppointment.reservation')}</option>
           </select>
           {errors.type && <span className="error-message">{errors.type}</span>}
-        </div>
-
-        {/* Modalité */}
-        <div className="form-group">
-          <label htmlFor="modalite">📍 Modalité *</label>
-          <select
-            id="modalite"
-            name="modalite"
-            value={formData.modalite}
-            onChange={handleChange}
-            className={errors.modalite ? "error" : ""}
-          >
-            <option value="Sur place">Sur place</option>
-            <option value="À emporter">À emporter</option>
-            <option value="Livraison">Livraison</option>
-          </select>
-          {errors.modalite && <span className="error-message">{errors.modalite}</span>}
         </div>
 
         {/* Nombre de personnes (uniquement pour les réservations) */}
         {formData.type === "Réservation de table" && (
           <div className="form-group">
-            <label htmlFor="nombrePersonnes">👥 Nombre de personnes *</label>
+            <label htmlFor="nombrePersonnes">👥 {t('createAppointment.persons')} *</label>
             <input
               type="number"
               id="nombrePersonnes"
@@ -201,15 +196,74 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
         )}
       </div>
 
+      {/* Sélection de plats (multiples) si commande à emporter */}
+      {formData.type === "Commande à emporter" && (
+        <div className="form-group full-width" style={{ marginTop: '20px' }}>
+          <label>🍽️ {t('createAppointment.orderedDishes')}</label>
+          <div className="items-list">
+            {selectedItems.map((item, idx) => (
+              <div key={item.id} className="item-row">
+                <select
+                  value={item.productId}
+                  onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, productId: e.target.value } : it))}
+                  className="item-select"
+                >
+                  <option value="">{t('createAppointment.selectDish')}</option>
+                  {menuProducts.map((p) => (
+                    <option key={p._id} value={p._id}>
+                      {p.categorie} • {p.nom}{p.prixBase ? ` - ${p.prixBase.toFixed?.(2) || p.prixBase}€` : ''}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="number"
+                  min={1}
+                  value={item.qty}
+                  onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, qty: Math.max(1, parseInt(e.target.value || '1')) } : it))}
+                  className="item-qty"
+                  placeholder={t('createAppointment.qty')}
+                />
+                <input
+                  type="text"
+                  placeholder={t('createAppointment.supplementsPlaceholder')}
+                  value={item.supplements}
+                  onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, supplements: e.target.value } : it))}
+                  className="item-supplements"
+                />
+                {selectedItems.length > 1 && (
+                  <button 
+                    type="button" 
+                    className="btn-secondary btn-remove" 
+                    onClick={() => setSelectedItems(prev => prev.filter(it => it.id !== item.id))}
+                  >
+                    ❌ {t('common.delete')}
+                  </button>
+                )}
+              </div>
+            ))}
+            <div className="add-item-container">
+              <button 
+                type="button" 
+                className="btn-secondary btn-add-item" 
+                onClick={() => setSelectedItems(prev => [...prev, { id: Date.now() + Math.random(), productId: "", qty: 1, supplements: "" }])}
+              >
+                ➕ {t('createAppointment.addDish')}
+              </button>
+            </div>
+          </div>
+          <small>{t('createAppointment.dishesNote')}</small>
+        </div>
+      )}
+
       {/* Description */}
       <div className="form-group full-width">
-        <label htmlFor="description">📝 Description</label>
+        <label htmlFor="description">📝 {t('createAppointment.description')}</label>
         <textarea
           id="description"
           name="description"
           value={formData.description}
           onChange={handleChange}
-          placeholder="Détails du rendez-vous..."
+          placeholder={t('createAppointment.descriptionPlaceholder')}
           rows={3}
         />
       </div>
@@ -222,14 +276,14 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
           className="btn-secondary"
           disabled={loading}
         >
-          ❌ Annuler
+          ❌ {t('common.cancel')}
         </button>
         <button
           type="submit"
           className="btn-primary"
           disabled={loading}
         >
-          {loading ? "⏳ Création..." : "✅ Créer le rendez-vous"}
+          {loading ? `⏳ ${t('createAppointment.creating')}` : `✅ ${t('createAppointment.createButton')}`}
         </button>
       </div>
     </form>

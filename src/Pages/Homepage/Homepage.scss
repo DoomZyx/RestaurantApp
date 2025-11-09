@@ -84,6 +84,19 @@
     .kpi-section {
       .section-content {
         padding: 1.5rem;
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 1.5rem;
+      }
+      
+      // Le KPI doit prendre uniquement la hauteur de son contenu
+      :global(.KPI-container) {
+        flex: 0 0 auto;
+      }
+      
+      // Le DayGreeting en dessous
+      :global(.day-greeting) {
+        flex: 0 0 auto;
       }
     }
 
@@ -91,31 +104,6 @@
     .appointments-section {
       .section-content {
         padding: 1.5rem;
-      }
-    }
-
-    // Section graphiques
-    .charts-section {
-      grid-column: span 2;
-
-      @media (max-width: 1024px) {
-        grid-column: span 1;
-      }
-
-      .section-content {
-        padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(10px);
-        
-        // Style pour les graphiques
-        :global(.chart-container) {
-          background: rgba(255, 255, 255, 0.65);
-          backdrop-filter: blur(10px);
-          border-radius: 20px;
-          padding: 1.25rem;
-          border: 1px solid rgba(255, 255, 255, 0.3);
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-        }
       }
     }
 
@@ -230,10 +218,6 @@
         .section-content {
           padding: 1.5rem;
         }
-      }
-
-      .charts-section {
-        grid-column: span 1;
       }
 
       .actions-section {

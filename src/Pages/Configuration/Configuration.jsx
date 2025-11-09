@@ -1,373 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import AppLayout from "../../Components/Layout/AppLayout";
-import { fetchPricing, updatePricing, addProduct, updateProduct, deleteProduct } from "../../API/Pricing/api";
+import PhoneToggle from "../../Components/PhoneToggle/PhoneToggle";
+import { useConfiguration } from "../../Hooks/Configuration/useConfiguration";
 import "./Configuration.scss";
 
 function Configuration() {
-  const [pricing, setPricing] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const [activeTab, setActiveTab] = useState("restaurant");
-  const [editingProduct, setEditingProduct] = useState(null);
-  const [showProductForm, setShowProductForm] = useState(false);
-  const [newProduct, setNewProduct] = useState({
-    nom: "",
-    description: "",
-    prixBase: 0,
-    taille: "Moyenne", // Valeur par défaut pour les pizzas
-    disponible: true
-  });
-
-  // Charger la configuration au montage
-  useEffect(() => {
-    loadPricing();
-  }, []);
-
-  const loadPricing = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await fetchPricing();
-      
-      if (response.success) {
-        const data = response.data || {};
-        
-        // Définir les valeurs par défaut pour horaires seulement si elles n'existent pas
-        const defaultHoraires = {
-          lundi: { 
-            ouvert: false, 
-            midi: { ouverture: "12:00", fermeture: "14:00" },
-            soir: { ouverture: "19:00", fermeture: "22:00" }
-          },
-          mardi: { 
-            ouvert: true, 
-            midi: { ouverture: "12:00", fermeture: "14:00" },
-            soir: { ouverture: "19:00", fermeture: "22:00" }
-          },
-          mercredi: { 
-            ouvert: true, 
-            midi: { ouverture: "12:00", fermeture: "14:00" },
-            soir: { ouverture: "19:00", fermeture: "22:00" }
-          },
-          jeudi: { 
-            ouvert: true, 
-            midi: { ouverture: "12:00", fermeture: "14:00" },
-            soir: { ouverture: "19:00", fermeture: "22:00" }
-          },
-          vendredi: { 
-            ouvert: true, 
-            midi: { ouverture: "12:00", fermeture: "14:00" },
-            soir: { ouverture: "19:00", fermeture: "22:00" }
-          },
-          samedi: { 
-            ouvert: true, 
-            midi: { ouverture: "12:00", fermeture: "14:00" },
-            soir: { ouverture: "19:00", fermeture: "22:00" }
-          },
-          dimanche: { 
-            ouvert: false, 
-            midi: { ouverture: "12:00", fermeture: "14:00" },
-            soir: { ouverture: "19:00", fermeture: "22:00" }
-          }
-        };
-
-        // Fusionner les horaires en conservant les données du backend
-        const horaires = data.restaurantInfo?.horairesOuverture || defaultHoraires;
-        
-        // Construire l'objet final en GARDANT les données du backend
-        const initializedData = {
-          restaurantInfo: {
-            nom: data.restaurantInfo?.nom || "",
-            adresse: data.restaurantInfo?.adresse || "",
-            telephone: data.restaurantInfo?.telephone || "",
-            email: data.restaurantInfo?.email || "",
-            nombreCouverts: data.restaurantInfo?.nombreCouverts || 0,
-            horairesOuverture: horaires
-          },
-          menuPricing: data.menuPricing || {
-            pizzas: { nom: "Pizzas", produits: [] },
-            burgers: { nom: "Burgers", produits: [] },
-            salades: { nom: "Salades", produits: [] },
-            boissons: { nom: "Boissons", produits: [] },
-            desserts: { nom: "Desserts", produits: [] }
-          },
-          deliveryPricing: {
-            activerLivraison: data.deliveryPricing?.activerLivraison ?? false,
-            fraisBase: data.deliveryPricing?.fraisBase ?? 0,
-            prixParKm: data.deliveryPricing?.prixParKm ?? 0,
-            distanceMaximale: data.deliveryPricing?.distanceMaximale ?? 0,
-            montantMinimumCommande: data.deliveryPricing?.montantMinimumCommande ?? 0,
-            delaiPreparation: data.deliveryPricing?.delaiPreparation ?? 0
-          },
-          taxes: data.taxes || {
-            tva: 20,
-            serviceCharge: 0,
-            applicableServiceCharge: false
-          },
-          promotions: data.promotions || []
-        };
-        setPricing(initializedData);
-      } else {
-        console.error("❌ La réponse n'indique pas de succès");
-      }
-    } catch (err) {
-      setError(err.message);
-      console.error("❌ Erreur lors du chargement des tarifs:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSave = async () => {
-    try {
-      setSaving(true);
-      setError(null);
-      const response = await updatePricing(pricing);
-      if (response.success) {
-        setSuccess(true);
-        setEditingProduct(null); // Fermer le mode édition
-        setTimeout(() => setSuccess(false), 3000);
-        // Recharger les données pour s'assurer qu'elles sont à jour
-        await loadPricing();
-      }
-    } catch (err) {
-      setError(err.message);
-      console.error("Erreur lors de la sauvegarde:", err);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleInputChange = (path, value) => {
-    setPricing(prev => {
-      const newPricing = { ...prev };
-      const keys = path.split('.');
-      let current = newPricing;
-      
-      // S'assurer que tous les objets intermédiaires existent
-      for (let i = 0; i < keys.length - 1; i++) {
-        if (!current[keys[i]]) {
-          current[keys[i]] = {};
-        }
-        current = current[keys[i]];
-      }
-      
-      current[keys[keys.length - 1]] = value;
-      return newPricing;
-    });
-  };
-
-  const handleProductAdd = async (categorie) => {
-    console.log("➕ Tentative d'ajout de produit:", { categorie, newProduct });
-
-    // Validation
-    if (!newProduct.nom || newProduct.nom.trim() === "") {
-      setError("Le nom du produit est obligatoire");
-      console.error("❌ Nom du produit manquant");
-      return;
-    }
-    if (!newProduct.prixBase || newProduct.prixBase <= 0) {
-      setError("Le prix doit être supérieur à 0");
-      console.error("❌ Prix invalide:", newProduct.prixBase);
-      return;
-    }
-
-    // Préparer les données du produit selon la catégorie
-    const productData = {
-      nom: newProduct.nom.trim(),
-      description: newProduct.description.trim(),
-      prixBase: newProduct.prixBase,
-      disponible: newProduct.disponible
-    };
-
-    // Ajouter la taille seulement si la catégorie le nécessite
-    if (categorie === 'pizzas') {
-      productData.taille = newProduct.taille || 'Moyenne';
-    } else if (categorie === 'boissons') {
-      productData.taille = newProduct.taille || '33cl';
-    }
-
-    console.log("📦 Données du produit préparées:", productData);
-
-    try {
-      setSaving(true);
-      setError(null);
-      const response = await addProduct(categorie, productData);
-      console.log("✅ Réponse ajout produit:", response);
-      
-      if (response.success) {
-        await loadPricing(); // Recharger les données
-        // Réinitialiser avec la taille correcte pour cette catégorie
-        const tailleParDefaut = categorie === 'boissons' ? '33cl' : 
-                               categorie === 'pizzas' ? 'Moyenne' : '';
-        setNewProduct({ nom: "", description: "", prixBase: 0, taille: tailleParDefaut, disponible: true });
-        setShowProductForm(false);
-        setSuccess(true);
-        setTimeout(() => setSuccess(false), 3000);
-        console.log(`✅ Produit "${productData.nom}" ajouté avec succès`);
-      }
-    } catch (err) {
-      console.error("❌ Erreur ajout produit:", err);
-      setError(`Erreur lors de l'ajout du produit: ${err.message}`);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleProductUpdate = async (categorie, produitId, produitData) => {
-    try {
-      setSaving(true);
-      const response = await updateProduct(categorie, produitId, produitData);
-      if (response.success) {
-        await loadPricing();
-        setEditingProduct(null);
-      }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleProductDelete = async (categorie, produitId) => {
-    if (!window.confirm("⚠️ Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible.")) {
-      return;
-    }
-
-    console.log("🗑️ Tentative de suppression:", { categorie, produitId });
-
-    if (!produitId) {
-      setError("Erreur: ID du produit manquant");
-      console.error("❌ ID du produit manquant:", produitId);
-      return;
-    }
-
-    try {
-      setSaving(true);
-      setError(null);
-      const response = await deleteProduct(categorie, produitId);
-      console.log("✅ Réponse suppression:", response);
-      await loadPricing();
-      setSuccess(true);
-      setTimeout(() => setSuccess(false), 3000);
-    } catch (err) {
-      console.error("❌ Erreur suppression:", err);
-      setError(`Erreur lors de la suppression: ${err.message}`);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleOpenProductForm = (categorie) => {
-    // Initialiser newProduct avec la bonne taille par défaut selon la catégorie
-    const tailleParDefaut = categorie === 'boissons' ? '33cl' : 
-                           categorie === 'pizzas' ? 'Moyenne' : '';
+  const { t } = useTranslation();
+  
+  // Utiliser le hook qui contient toute la logique
+  const {
+    // États
+    safePricing,
+    loading,
+    saving,
+    error,
+    success,
+    activeTab,
+    editingProduct,
+    showProductForm,
+    languageSuccess,
+    newProduct,
+    categories,
     
-    setNewProduct({
-      nom: "",
-      description: "",
-      prixBase: 0,
-      taille: tailleParDefaut,
-      disponible: true
-    });
+    // Setters
+    setActiveTab,
+    setEditingProduct,
+    setShowProductForm,
+    setNewProduct,
+    setError,
     
-    setShowProductForm(categorie);
-  };
+    // Actions
+    handleSave,
+    handleInputChange,
+    handleProductAdd,
+    handleProductUpdate,
+    handleProductDelete,
+    handleOpenProductForm,
+    handleLanguageChange,
+    handleAddCategory
+  } = useConfiguration();
 
-  const handleAddCategory = async () => {
-    const categoryName = prompt("Nom de la nouvelle catégorie:");
-    if (!categoryName || !categoryName.trim()) {
-      console.log("❌ Nom de catégorie vide, annulation");
-      return;
-    }
-
-    console.log("➕ Création de la catégorie:", categoryName);
-    const newCategoryKey = categoryName.toLowerCase().replace(/\s+/g, '_');
-    
-    // Vérifier si la catégorie existe déjà
-    if (pricing?.menuPricing?.[newCategoryKey]) {
-      setError(`La catégorie "${categoryName}" existe déjà`);
-      console.warn("⚠️ Catégorie déjà existante:", newCategoryKey);
-      return;
-    }
-    
-    // Ajouter la catégorie localement avec une structure complète
-    const updatedPricing = {
-      ...pricing,
-      menuPricing: {
-        ...(pricing?.menuPricing || {}),
-        [newCategoryKey]: {
-          nom: categoryName.trim(),
-          produits: []
-        }
-      }
-    };
-    
-    console.log("📦 Structure de pricing mise à jour:", updatedPricing);
-    setPricing(updatedPricing);
-    
-    // Sauvegarder automatiquement
-    try {
-      setSaving(true);
-      setError(null);
-      console.log("💾 Envoi de la sauvegarde au backend...");
-      console.log("📦 Données envoyées:", JSON.stringify(updatedPricing, null, 2).substring(0, 500));
-      
-      const response = await updatePricing(updatedPricing);
-      console.log("✅ Réponse backend:", response);
-      
-      if (response.success) {
-        setSuccess(true);
-        setTimeout(() => setSuccess(false), 3000);
-        
-        // Recharger depuis le backend pour avoir les données à jour
-        console.log("🔄 Rechargement des données depuis le backend...");
-        await loadPricing();
-        
-        console.log(`✅ Catégorie "${categoryName}" créée et sauvegardée avec succès`);
-        console.log("📋 Catégories après rechargement:", Object.keys(pricing?.menuPricing || {}));
-      } else {
-        setError(`Erreur: ${response.message || "Échec de la sauvegarde"}`);
-        console.error("❌ Réponse d'échec:", response);
-      }
-    } catch (err) {
-      setError(`Erreur lors de la création de la catégorie: ${err.message}`);
-      console.error("❌ Erreur création catégorie:", err);
-      console.error("Stack:", err.stack);
-    } finally {
-      setSaving(false);
-    }
-  };
-
+  // Affichage du chargement
   if (loading) {
     return (
       <AppLayout>
         <div className="configuration-page">
-          <div className="loading">Chargement de la configuration...</div>
+          <div className="loading">{t('common.loading')}</div>
         </div>
       </AppLayout>
     );
   }
-
-  if (!pricing) {
-    return (
-      <AppLayout>
-        <div className="configuration-page">
-          <div className="error">Erreur lors du chargement de la configuration</div>
-        </div>
-      </AppLayout>
-    );
-  }
-
-  // Les données sont déjà initialisées dans loadPricing, on les utilise directement
-  const safePricing = pricing || {};
-  const categories = Object.keys(safePricing.menuPricing || {});
 
   return (
     <AppLayout>
       <div className="configuration-page">
+        <div className="config-toolbar">
+          <div className="toolbar-right">
+            <PhoneToggle />
+          </div>
+        </div>
+        
         {error && <div className="error-message">❌ {error}</div>}
 
         <div className="tabs">
@@ -375,152 +68,188 @@ function Configuration() {
             className={activeTab === "restaurant" ? "active" : ""}
             onClick={() => setActiveTab("restaurant")}
           >
-            🏪 Informations Restaurant
+            {t('configuration.tabs.restaurant')}
           </button>
           <button 
             className={activeTab === "menu" ? "active" : ""}
             onClick={() => setActiveTab("menu")}
           >
-            🍕 Menu & Tarifs
-          </button>
-          <button 
-            className={activeTab === "delivery" ? "active" : ""}
-            onClick={() => setActiveTab("delivery")}
-          >
-            🚚 Livraison <span className="beta-badge">BETA</span>
+            {t('configuration.tabs.menu')}
           </button>
           <button 
             className={activeTab === "horaires" ? "active" : ""}
             onClick={() => setActiveTab("horaires")}
           >
-            🕐 Horaires
+            {t('configuration.tabs.hours')}
           </button>
           <button 
-            className={activeTab === "taxes" ? "active" : ""}
-            onClick={() => setActiveTab("taxes")}
+            className={activeTab === "langue" ? "active" : ""}
+            onClick={() => setActiveTab("langue")}
           >
-            💰 Taxes & Promotions
+            {t('configuration.tabs.language')}
           </button>
         </div>
 
         <div className="tab-content">
+          {/* TAB RESTAURANT */}
           {activeTab === "restaurant" && (
             <div className="restaurant-info">
-              <h3>Informations du Restaurant</h3>
+              <h3>{t('configuration.restaurant.title')}</h3>
+              
               <div className="form-group">
-                <label>Nom du restaurant</label>
+                <label>{t('configuration.restaurant.name')}</label>
                 <input
                   type="text"
-                  value={safePricing.restaurantInfo.nom || ""}
+                  value={safePricing.restaurantInfo?.nom || ""}
                   onChange={(e) => handleInputChange("restaurantInfo.nom", e.target.value)}
                 />
               </div>
+              
               <div className="form-group">
-                <label>Adresse</label>
+                <label>{t('configuration.restaurant.address')}</label>
                 <input
                   type="text"
-                  value={safePricing.restaurantInfo.adresse || ""}
+                  value={safePricing.restaurantInfo?.adresse || ""}
                   onChange={(e) => handleInputChange("restaurantInfo.adresse", e.target.value)}
                 />
               </div>
+              
               <div className="form-group">
-                <label>Téléphone</label>
+                <label>{t('configuration.restaurant.phone')}</label>
                 <input
                   type="tel"
-                  value={safePricing.restaurantInfo.telephone || ""}
+                  value={safePricing.restaurantInfo?.telephone || ""}
                   onChange={(e) => handleInputChange("restaurantInfo.telephone", e.target.value)}
                 />
               </div>
+              
               <div className="form-group">
-                <label>Email</label>
+                <label>{t('configuration.restaurant.email')}</label>
                 <input
                   type="email"
-                  value={safePricing.restaurantInfo.email || ""}
+                  value={safePricing.restaurantInfo?.email || ""}
                   onChange={(e) => handleInputChange("restaurantInfo.email", e.target.value)}
                 />
               </div>
+              
               <div className="form-group">
-                <label>Nombre de couverts disponibles</label>
+                <label>{t('configuration.restaurant.seats')}</label>
                 <input
                   type="number"
                   min="0"
-                  value={safePricing.restaurantInfo.nombreCouverts || 0}
+                  value={safePricing.restaurantInfo?.nombreCouverts || 0}
                   onChange={(e) => handleInputChange("restaurantInfo.nombreCouverts", parseInt(e.target.value) || 0)}
                   placeholder="Ex: 50"
                 />
-                <small className="help-text">Indiquez le nombre total de places assises dans votre restaurant</small>
+                <small className="help-text">{t('configuration.restaurant.seatsHelp')}</small>
               </div>
             </div>
           )}
 
+          {/* TAB MENU */}
           {activeTab === "menu" && (
             <div className="menu-pricing">
-              <h3>Configuration du Menu</h3>
+              <h3>{t('configuration.menu.title')}</h3>
               <div className="categories-container">
                 {categories.length === 0 ? (
-                  <div className="empty-state">
-                    <p>Aucune catégorie de menu disponible. Cliquez sur "➕ Ajouter une catégorie" pour créer votre première catégorie.</p>
-                  </div>
+                    <p>{t('configuration.menu.noCategories')}</p>
                 ) : (
-                categories.map(categorie => (
+                  categories.map((categorie) => {
+                    const categorieData = safePricing.menuPricing?.[categorie] || {};
+                    const produits = categorieData.produits || [];
+
+                    return (
                 <div key={categorie} className="category-section">
                   <div className="category-header">
-                    <h4>{safePricing.menuPricing[categorie]?.nom || categorie}</h4>
+                          <h4>{categorieData.nom || categorie}</h4>
                     <button 
                       onClick={() => handleOpenProductForm(categorie)}
-                      className="btn-add-product"
+                            className="btn-addProduct"
                     >
-                       Ajouter un produit
+                            ➕ {t('configuration.menu.addProduct')}
                     </button>
                   </div>
                   
-                  <div className="products-list">
-                    {(safePricing.menuPricing[categorie]?.produits || []).map((produit, index) => (
-                      <div key={produit._id || index} className="product-item">
-                        {editingProduct?.categorie === categorie && editingProduct?.index === index ? (
-                          <div className="product-edit-form">
+                        {showProductForm === categorie && (
+                          <div className="product-form">
+                            <h5>{t('configuration.menu.newProduct')}</h5>
+                            <div className="form-row">
                             <input
                               type="text"
-                              value={produit.nom}
-                              onChange={(e) => handleInputChange(`menuPricing.${categorie}.produits.${index}.nom`, e.target.value)}
-                              placeholder="Nom du produit"
+                                placeholder={t('configuration.menu.productName')}
+                                value={newProduct.nom}
+                                onChange={(e) => setNewProduct({ ...newProduct, nom: e.target.value })}
                             />
                             <input
                               type="text"
-                              value={produit.description}
-                              onChange={(e) => handleInputChange(`menuPricing.${categorie}.produits.${index}.description`, e.target.value)}
-                              placeholder="Description"
+                                placeholder={t('configuration.menu.description')}
+                                value={newProduct.description}
+                                onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
                             />
                             <input
                               type="number"
+                                placeholder={t('configuration.menu.price')}
+                                value={newProduct.prixBase}
+                                onChange={(e) => setNewProduct({ ...newProduct, prixBase: parseFloat(e.target.value) || 0 })}
+                                min="0"
                               step="0.01"
-                              value={produit.prixBase}
-                              onChange={(e) => handleInputChange(`menuPricing.${categorie}.produits.${index}.prixBase`, parseFloat(e.target.value))}
-                              placeholder="Prix"
-                            />
-                            {(categorie === 'pizzas' || categorie === 'boissons') && (
-                              <select
-                                value={produit.taille || (categorie === 'pizzas' ? 'Moyenne' : '33cl')}
-                                onChange={(e) => handleInputChange(`menuPricing.${categorie}.produits.${index}.taille`, e.target.value)}
-                              >
-                                {categorie === 'pizzas' ? (
-                                  <>
-                                    <option value="Petite">Petite</option>
-                                    <option value="Moyenne">Moyenne</option>
-                                    <option value="Grande">Grande</option>
-                                  </>
-                                ) : (
-                                  <>
-                                    <option value="33cl">33cl</option>
-                                    <option value="50cl">50cl</option>
-                                    <option value="1L">1L</option>
-                                  </>
-                                )}
-                              </select>
-                            )}
+                              />
+                            </div>
                             <div className="form-actions">
-                              <button onClick={() => setEditingProduct(null)}>Annuler</button>
-                              <button onClick={() => handleProductUpdate(categorie, produit._id, produit)}>Sauvegarder</button>
+                              <button onClick={() => handleProductAdd(categorie)}>
+                                {t('common.add')}
+                              </button>
+                              <button onClick={() => setShowProductForm(false)}>
+                                {t('common.cancel')}
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="products-list">
+                          {produits.length === 0 ? (
+                            <p className="no-products">{t('configuration.menu.noProducts')}</p>
+                          ) : (
+                            produits.map((produit, index) => (
+                              <div key={produit._id || index} className="product-item">
+                                {editingProduct?.categorie === categorie && editingProduct?.index === index ? (
+                                  <div className="product-edit">
+                                    <input
+                                      type="text"
+                                      value={produit.nom}
+                                      onChange={(e) => {
+                                        const updated = [...produits];
+                                        updated[index] = { ...produit, nom: e.target.value };
+                                        handleInputChange(`menuPricing.${categorie}.produits`, updated);
+                                      }}
+                                    />
+                                    <input
+                                      type="text"
+                                      value={produit.description}
+                                      onChange={(e) => {
+                                        const updated = [...produits];
+                                        updated[index] = { ...produit, description: e.target.value };
+                                        handleInputChange(`menuPricing.${categorie}.produits`, updated);
+                                      }}
+                                    />
+                                    <input
+                                      type="number"
+                                      value={produit.prix || produit.prixBase}
+                                      onChange={(e) => {
+                                        const updated = [...produits];
+                                        updated[index] = { ...produit, prixBase: parseFloat(e.target.value) || 0 };
+                                        handleInputChange(`menuPricing.${categorie}.produits`, updated);
+                                      }}
+                                      min="0"
+                                      step="0.01"
+                                    />
+                                    <div className="edit-actions">
+                                      <button onClick={() => handleProductUpdate(categorie, produit._id, produit)}>
+                                        {t('common.save')}
+                                      </button>
+                                      <button onClick={() => setEditingProduct(null)}>
+                                        {t('common.cancel')}
+                                      </button>
                             </div>
                           </div>
                         ) : (
@@ -528,345 +257,148 @@ function Configuration() {
                             <div className="product-info">
                               <h5>{produit.nom}</h5>
                               <p>{produit.description}</p>
-                              <span className="price">{produit.prixBase}€</span>
-                              {!produit._id && <small style={{color: 'red', display: 'block', marginTop: '5px'}}>⚠️ Produit sans ID - sauvegardez la config</small>}
+                                      <span className="price">{produit.prix || produit.prixBase}€</span>
                             </div>
                             <div className="product-actions">
                               <button onClick={() => setEditingProduct({ categorie, index })}>
-                                ✏️ Modifier
+                                ✏️ {t('common.edit')}
                               </button>
                               <button 
                                 onClick={() => handleProductDelete(categorie, produit._id)}
                                 disabled={!produit._id}
-                                title={!produit._id ? "Ce produit n'a pas d'ID - sauvegardez d'abord la configuration" : "Supprimer ce produit"}
+                                        title={t('common.delete')}
                               >
-                                🗑️ Supprimer
+                                🗑️ {t('common.delete')}
                               </button>
                             </div>
                           </div>
                         )}
                       </div>
-                    ))}
+                            ))
+                          )}
                   </div>
                 </div>
-                ))
+                    );
+                  })
                 )}
+                
                   <div className="categories-actions">
                   <button onClick={handleAddCategory} className="btn-addCategories">
-                    + Ajouter une catégorie
+                    ➕ {t('configuration.menu.addCategory')}
                   </button>
                 </div>
               </div>
-
-              {showProductForm && (
-                <div className="product-form-modal" onClick={() => setShowProductForm(false)}>
-                  <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                    <h4>Ajouter un nouveau produit - {safePricing.menuPricing[showProductForm]?.nom || showProductForm}</h4>
-                    <div className="form-group">
-                      <label>Nom du produit <span className="required">*</span></label>
-                      <input
-                        type="text"
-                        value={newProduct.nom}
-                        onChange={(e) => setNewProduct({...newProduct, nom: e.target.value})}
-                        placeholder="Ex: Pizza Margherita"
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Description</label>
-                      <textarea
-                        value={newProduct.description}
-                        onChange={(e) => setNewProduct({...newProduct, description: e.target.value})}
-                        placeholder="Ex: Tomate, mozzarella, basilic"
-                        rows="3"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Prix (€) <span className="required">*</span></label>
-                      <input
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        value={newProduct.prixBase}
-                        onChange={(e) => setNewProduct({...newProduct, prixBase: parseFloat(e.target.value) || 0})}
-                        placeholder="Ex: 12.50"
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Taille</label>
-                      <select
-                        value={newProduct.taille}
-                        onChange={(e) => setNewProduct({...newProduct, taille: e.target.value})}
-                      >
-                        {showProductForm === 'pizzas' ? (
-                          <>
-                            <option value="Petite">Petite</option>
-                            <option value="Moyenne">Moyenne</option>
-                            <option value="Grande">Grande</option>
-                          </>
-                        ) : showProductForm === 'boissons' ? (
-                          <>
-                            <option value="33cl">33cl</option>
-                            <option value="50cl">50cl</option>
-                            <option value="1L">1L</option>
-                          </>
-                        ) : (
-                          <option value="">Non applicable</option>
-                        )}
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={newProduct.disponible}
-                          onChange={(e) => setNewProduct({...newProduct, disponible: e.target.checked})}
-                        />
-                        Produit disponible
-                      </label>
-                    </div>
-                    <div className="form-actions">
-                      <button onClick={() => setShowProductForm(false)}>Annuler</button>
-                      <button onClick={() => handleProductAdd(showProductForm)}>Ajouter</button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           )}
 
-          {activeTab === "delivery" && (
-            <div className="delivery-pricing">
-              <h3>Configuration de la Livraison</h3>
-              <div className="beta-info">
-                <span className="beta-icon">🚧</span>
-                <div className="beta-content">
-                  <strong>Fonctionnalité Beta</strong>
-                  <p>Cette fonctionnalité est en phase de test. Vous pouvez configurer vos tarifs et zones de livraison. L'intégration avec des services de livraison externes (Stuart, Deliverect) sera ajoutée prochainement.</p>
-                </div>
-              </div>
-              <div className="form-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={safePricing.deliveryPricing.activerLivraison || false}
-                    onChange={(e) => handleInputChange("deliveryPricing.activerLivraison", e.target.checked)}
-                  />
-                  Activer la livraison
-                </label>
-              </div>
-              <div className="form-group">
-                <label>Frais de base (€)</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  value={safePricing.deliveryPricing.fraisBase || 0}
-                  onChange={(e) => handleInputChange("deliveryPricing.fraisBase", parseFloat(e.target.value))}
-                />
-              </div>
-              <div className="form-group">
-                <label>Prix par kilomètre (€)</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  value={safePricing.deliveryPricing.prixParKm || 0}
-                  onChange={(e) => handleInputChange("deliveryPricing.prixParKm", parseFloat(e.target.value))}
-                />
-              </div>
-              <div className="form-group">
-                <label>Distance maximale de livraison (km)</label>
-                <input
-                  type="number"
-                  min="0"
-                  value={safePricing.deliveryPricing?.distanceMaximale || 0}
-                  onChange={(e) => handleInputChange("deliveryPricing.distanceMaximale", parseInt(e.target.value) || 0)}
-                  placeholder="Ex: 10"
-                />
-              </div>
-              <div className="form-group">
-                <label>Montant minimum de commande (€)</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={safePricing.deliveryPricing?.montantMinimumCommande || 0}
-                  onChange={(e) => handleInputChange("deliveryPricing.montantMinimumCommande", parseFloat(e.target.value) || 0)}
-                  placeholder="Ex: 15.00"
-                />
-              </div>
-              <div className="form-group">
-                <label>Délai de préparation moyen (minutes)</label>
-                <input
-                  type="number"
-                  min="0"
-                  value={safePricing.deliveryPricing?.delaiPreparation || 0}
-                  onChange={(e) => handleInputChange("deliveryPricing.delaiPreparation", parseInt(e.target.value) || 0)}
-                  placeholder="Ex: 30"
-                />
-              </div>
-              
-              <div className="delivery-info">
-                <h4>📍 Zones de livraison</h4>
-                <p className="info-text">Gérez les zones de livraison avec des frais supplémentaires par code postal</p>
-                <button className="btn-secondary" onClick={() => alert("Fonctionnalité à venir")}>
-                  ➕ Ajouter une zone
-                </button>
-              </div>
-            </div>
-          )}
-
+          {/* TAB HORAIRES */}
           {activeTab === "horaires" && (
-            <div className="horaires-config">
-              <h3>Horaires d'Ouverture</h3>
-              <div className="horaires-grid">
-                {Object.keys(safePricing.restaurantInfo.horairesOuverture || {}).map(jour => (
-                  <div key={jour} className="horaire-jour">
-                    <div className="jour-header">
-                      <label className="jour-label">
+            <div className="opening-hours">
+              <h3>{t('configuration.hours.title')}</h3>
+              <div className="hours-grid">
+                {Object.keys(safePricing.restaurantInfo?.horairesOuverture || {}).map((jour) => {
+                  const horaire = safePricing.restaurantInfo.horairesOuverture[jour];
+                  return (
+                    <div key={jour} className="day-hours">
+                      <div className="day-header">
+                        <label className="day-name">
                         <input
                           type="checkbox"
-                          checked={safePricing.restaurantInfo.horairesOuverture[jour]?.ouvert || false}
-                          onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.ouvert`, e.target.checked)}
-                        />
-                        <span className="jour-name">{jour.charAt(0).toUpperCase() + jour.slice(1)}</span>
+                            checked={horaire?.ouvert || false}
+                            onChange={(e) => 
+                              handleInputChange(`restaurantInfo.horairesOuverture.${jour}.ouvert`, e.target.checked)
+                            }
+                          />
+                          {t(`configuration.hours.days.${jour}`)}
                       </label>
                     </div>
-                    {safePricing.restaurantInfo.horairesOuverture[jour]?.ouvert && (
-                      <div className="horaires-plages">
-                        {/* Service du midi */}
-                        <div className="plage-horaire">
-                          <span className="plage-label">Midi</span>
-                          <div className="horaires-inputs">
+                      
+                      {horaire?.ouvert && (
+                        <>
+                          <div className="time-slot">
+                            <span>{t('configuration.hours.lunch')}</span>
                             <input
                               type="time"
-                              value={safePricing.restaurantInfo.horairesOuverture[jour]?.midi?.ouverture || "12:00"}
-                              onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.midi.ouverture`, e.target.value)}
-                              className="time-input"
+                              value={horaire.midi?.ouverture || ""}
+                              onChange={(e) => 
+                                handleInputChange(`restaurantInfo.horairesOuverture.${jour}.midi.ouverture`, e.target.value)
+                              }
                             />
-                            <span className="time-separator">à</span>
+                            <span>{t('configuration.hours.to')}</span>
                             <input
                               type="time"
-                              value={safePricing.restaurantInfo.horairesOuverture[jour]?.midi?.fermeture || "14:00"}
-                              onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.midi.fermeture`, e.target.value)}
-                              className="time-input"
-                            />
-                          </div>
-                        </div>
-                        {/* Service du soir */}
-                        <div className="plage-horaire">
-                          <span className="plage-label">Soir</span>
-                          <div className="horaires-inputs">
-                            <input
-                              type="time"
-                              value={safePricing.restaurantInfo.horairesOuverture[jour]?.soir?.ouverture || "19:00"}
-                              onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.soir.ouverture`, e.target.value)}
-                              className="time-input"
-                            />
-                            <span className="time-separator">à</span>
-                            <input
-                              type="time"
-                              value={safePricing.restaurantInfo.horairesOuverture[jour]?.soir?.fermeture || "22:00"}
-                              onChange={(e) => handleInputChange(`restaurantInfo.horairesOuverture.${jour}.soir.fermeture`, e.target.value)}
-                              className="time-input"
+                              value={horaire.midi?.fermeture || ""}
+                              onChange={(e) => 
+                                handleInputChange(`restaurantInfo.horairesOuverture.${jour}.midi.fermeture`, e.target.value)
+                              }
                             />
                           </div>
-                        </div>
-                      </div>
+                          
+                          <div className="time-slot">
+                            <span>{t('configuration.hours.dinner')}</span>
+                            <input
+                              type="time"
+                              value={horaire.soir?.ouverture || ""}
+                              onChange={(e) => 
+                                handleInputChange(`restaurantInfo.horairesOuverture.${jour}.soir.ouverture`, e.target.value)
+                              }
+                            />
+                            <span>{t('configuration.hours.to')}</span>
+                            <input
+                              type="time"
+                              value={horaire.soir?.fermeture || ""}
+                              onChange={(e) => 
+                                handleInputChange(`restaurantInfo.horairesOuverture.${jour}.soir.fermeture`, e.target.value)
+                              }
+                            />
+                          </div>
+                        </>
                     )}
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
 
-          {activeTab === "taxes" && (
-            <div className="taxes-config">
-              <h3>Configuration des Taxes</h3>
-              <div className="form-group">
-                <label>TVA (%)</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  max="100"
-                  value={safePricing.taxes?.tva || 20}
-                  onChange={(e) => handleInputChange("taxes.tva", parseFloat(e.target.value) || 0)}
-                  placeholder="Ex: 20"
-                />
-              </div>
-              <div className="form-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={safePricing.taxes?.applicableServiceCharge || false}
-                    onChange={(e) => handleInputChange("taxes.applicableServiceCharge", e.target.checked)}
-                  />
-                  Appliquer des frais de service
-                </label>
-              </div>
-              {safePricing.taxes?.applicableServiceCharge && (
-                <div className="form-group">
-                  <label>Frais de service (%)</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    max="100"
-                    value={safePricing.taxes?.serviceCharge || 0}
-                    onChange={(e) => handleInputChange("taxes.serviceCharge", parseFloat(e.target.value) || 0)}
-                    placeholder="Ex: 5"
-                  />
-                </div>
+          {/* TAB LANGUE */}
+          {activeTab === "langue" && (
+            <div className="language-settings">
+              <h3>{t('configuration.language.title')}</h3>
+              <p>{t('configuration.language.description')}</p>
+              
+              {languageSuccess && (
+                <div className="success-message">✅ {t('configuration.language.changeSuccess')}</div>
               )}
-
-              <hr style={{ margin: "30px 0", border: "1px solid #ddd" }} />
-
-              <h3>Promotions</h3>
-              <p className="info-text">
-                Gérez vos promotions et offres spéciales. Vous pouvez créer des réductions par pourcentage, 
-                montant fixe ou offrir des produits gratuits.
-              </p>
-              <div className="promotions-list">
-                {(safePricing.promotions || []).length === 0 ? (
-                  <div className="empty-state">
-                    <p>Aucune promotion active pour le moment</p>
-                  </div>
-                ) : (
-                  safePricing.promotions.map((promo, index) => (
-                    <div key={index} className="promotion-item">
-                      <div className="promo-header">
-                        <h4>{promo.nom}</h4>
-                        <span className={`promo-badge ${promo.active ? 'active' : 'inactive'}`}>
-                          {promo.active ? '✅ Active' : '❌ Inactive'}
-                        </span>
-                      </div>
-                      <p>{promo.description}</p>
-                      <div className="promo-details">
-                        <span>Type: {promo.type}</span>
-                        <span>Valeur: {promo.valeur}{promo.type === 'pourcentage' ? '%' : '€'}</span>
-                      </div>
-                    </div>
-                  ))
-                )}
+              
+              <div className="language-options">
+                  <button
+                    onClick={() => handleLanguageChange('fr')}
+                  className="language-btn"
+                  >
+                  🇫🇷 {t('configuration.language.french')}
+                  </button>
+                  <button
+                    onClick={() => handleLanguageChange('en')}
+                  className="language-btn"
+                  >
+                  🇬🇧 {t('configuration.language.english')}
+                  </button>
               </div>
-              <button className="btn-secondary" onClick={() => alert("Fonctionnalité de création de promotions à venir")}>
-                ➕ Créer une promotion
-              </button>
             </div>
           )}
         </div>
-        <div className="page-header">
-        <div className="header-actions">
-            {success && <div className="success-message">✅ Configuration sauvegardée !</div>}
+
+        {/* Bouton de sauvegarde global */}
+        <div className="save-section">
             <button 
               onClick={handleSave} 
               disabled={saving}
-              className="btn-save"
+            className="save-btn"
             >
-              {saving ? "⏳ Sauvegarde..." : "💾 Sauvegarder"}
+            {saving ? t('common.loading') : t('common.save')}
             </button>
-          </div>
+          {success && <span className="success-indicator">✅ {t('common.success')}</span>}
           </div>
       </div>
     </AppLayout>
@@ -874,3 +406,4 @@ function Configuration() {
 }
 
 export default Configuration;
+

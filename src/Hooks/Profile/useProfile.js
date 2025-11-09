@@ -96,6 +96,19 @@ export function useProfile() {
       if (response.success) {
         // Recharger le profil depuis le serveur
         await loadProfile();
+        
+        // Mettre à jour le localStorage pour synchroniser le menu
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+        if (currentUser) {
+          currentUser.username = updateData.username;
+          currentUser.email = updateData.email;
+          currentUser.telephone = updateData.telephone;
+          currentUser.poste = updateData.poste;
+          currentUser.departement = updateData.departement;
+          localStorage.setItem("user", JSON.stringify(currentUser));
+          console.log("🔄 localStorage mis à jour avec les nouvelles données utilisateur");
+        }
+        
         setEditMode(false);
         setSuccess(true);
         setTimeout(() => setSuccess(false), 3000);
@@ -121,6 +134,15 @@ export function useProfile() {
         console.log("🖼️ Nouvel avatar URL:", response.data?.avatar);
         // Recharger le profil pour afficher le nouvel avatar
         await loadProfile();
+        
+        // Mettre à jour le localStorage pour synchroniser le menu
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+        if (currentUser && response.data?.avatar) {
+          currentUser.avatar = response.data.avatar;
+          localStorage.setItem("user", JSON.stringify(currentUser));
+          console.log("🔄 localStorage mis à jour avec le nouvel avatar");
+        }
+        
         setSuccess(true);
         setTimeout(() => setSuccess(false), 3000);
       }

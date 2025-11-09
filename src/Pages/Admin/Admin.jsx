@@ -1,9 +1,11 @@
+import { useTranslation } from "react-i18next";
 import AppLayout from "../../Components/Layout/AppLayout";
 import "./Admin.scss";
 import UserManagement from "../../Components/Admin/userManagement";
 import { useAdmin } from "../../Hooks/Admin/useAdmin";
 
 function Admin() {
+  const { t } = useTranslation();
   const {
     // État
     users,
@@ -78,19 +80,13 @@ function Admin() {
               <div className="modal-header">
                 <h3>
                   <i className="bi bi-person-gear"></i>
-                  {editingUser ? "Modifier" : "Ajouter"} un utilisateur
+                  {editingUser ? t('common.edit') : t('common.add')} {t('admin.user')}
                 </h3>
-                <button
-                  onClick={() => setShowUserModal(false)}
-                  className="close-btn"
-                >
-                  ×
-                </button>
               </div>
 
               <form onSubmit={handleUserSubmit} className="user-form">
                 <div className="form-group">
-                  <label htmlFor="username">Nom d'utilisateur</label>
+                  <label htmlFor="username">{t('admin.username')}</label>
                   <input
                     type="text"
                     id="username"
@@ -103,7 +99,7 @@ function Admin() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">{t('login.email')}</label>
                   <input
                     type="email"
                     id="email"
@@ -117,7 +113,7 @@ function Admin() {
 
                 <div className="form-group">
                   <label htmlFor="password">
-                    {editingUser ? "Nouveau mot de passe (optionnel)" : "Mot de passe"}
+                    {editingUser ? t('admin.newPasswordOptional') : t('login.password')}
                   </label>
                   <input
                     type="password"
@@ -131,7 +127,7 @@ function Admin() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="role">Rôle</label>
+                  <label htmlFor="role">{t('admin.role')}</label>
                   <select
                     id="role"
                     value={newUserForm.role}
@@ -140,8 +136,8 @@ function Admin() {
                     }
                     required
                   >
-                    <option value="user">Utilisateur</option>
-                    <option value="admin">Administrateur</option>
+                    <option value="user">{t('admin.roles.user')}</option>
+                    <option value="admin">{t('admin.roles.admin')}</option>
                   </select>
                 </div>
 
@@ -151,10 +147,10 @@ function Admin() {
                     onClick={() => setShowUserModal(false)}
                     className="btn-cancel"
                   >
-                    Annuler
+                    {t('common.cancel')}
                   </button>
                   <button type="submit" className="btn-primary">
-                    {editingUser ? "Modifier" : "Créer"}
+                    {editingUser ? t('common.edit') : t('common.add')}
                   </button>
                 </div>
               </form>

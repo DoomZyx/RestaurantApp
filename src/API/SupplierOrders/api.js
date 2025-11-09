@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/";
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 /**
@@ -6,7 +6,7 @@ const API_KEY = import.meta.env.VITE_API_KEY;
  */
 export async function createSupplierOrder(orderData) {
   try {
-    const response = await fetch(`${API_URL}/api/supplier-orders`, {
+    const response = await fetch(`${API_URL}api/supplier-orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export async function createSupplierOrder(orderData) {
 export async function getSupplierOrders(fournisseurId) {
   try {
     const response = await fetch(
-      `${API_URL}/api/supplier-orders/fournisseur/${fournisseurId}`,
+      `${API_URL}api/supplier-orders/fournisseur/${fournisseurId}`,
       {
         headers: {
           "x-api-key": API_KEY,
@@ -59,7 +59,7 @@ export async function getSupplierOrders(fournisseurId) {
 export async function getSupplierOrder(orderId) {
   try {
     const response = await fetch(
-      `${API_URL}/api/supplier-orders/${orderId}`,
+      `${API_URL}api/supplier-orders/${orderId}`,
       {
         headers: {
           "x-api-key": API_KEY,
@@ -86,7 +86,7 @@ export async function getAllSupplierOrders(filters = {}) {
   try {
     const params = new URLSearchParams(filters);
     const response = await fetch(
-      `${API_URL}/api/supplier-orders?${params}`,
+      `${API_URL}api/supplier-orders?${params}`,
       {
         headers: {
           "x-api-key": API_KEY,
@@ -110,7 +110,7 @@ export async function getAllSupplierOrders(filters = {}) {
  * Polling pour vérifier le statut d'une commande
  * Utile pour mettre à jour l'UI quand l'appel est terminé
  */
-export async function pollOrderStatus(orderId, onUpdate, maxAttempts = 60) {
+export async function pollOrderStatus(orderId, onUpdate, maxAttempts = 180) {
   let attempts = 0;
   
   const poll = async () => {

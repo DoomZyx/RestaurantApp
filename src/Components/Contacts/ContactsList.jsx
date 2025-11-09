@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 export function ContactsList({
   clients,
   isLoading,
@@ -7,12 +9,14 @@ export function ContactsList({
   selectClient,
   openModal,
 }) {
+  const { t } = useTranslation();
+  
   if (isLoading) {
     return (
       <div className="clients-panel">
         <div className="loading">
           <i className="bi bi-arrow-clockwise spin"></i>
-          <span>Chargement des fournisseurs...</span>
+          <span>{t('contacts.loading')}</span>
         </div>
       </div>
     );
@@ -21,12 +25,12 @@ export function ContactsList({
   return (
     <div className="clients-panel">
       <div className="panel-header">
-        <h2>Liste des fournisseurs ({clients.length})</h2>
+        <h2>{t('contactsList.supplierList')} ({clients.length})</h2>
         <div className="search-container">
           <i className="bi bi-search"></i>
           <input
             type="text"
-            placeholder="Rechercher un fournisseur..."
+            placeholder={t('contacts.searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -37,7 +41,7 @@ export function ContactsList({
         {clients.length === 0 ? (
           <div className="empty-state">
             <i className="bi bi-person-x"></i>
-            <p>Aucun fournisseur trouvé</p>
+            <p>{t('contacts.noContacts')}</p>
           </div>
         ) : (
           clients.map((client) => (
@@ -51,7 +55,7 @@ export function ContactsList({
               <div className="client-info">
                 <h3>
                   <i className="bi bi-building"></i>
-                  {client.entrepriseName || `${client.prenom} ${client.nom}`}
+                  {client.entrepriseName}
                 </h3>
                 <div className="client-details">
                   <span className="phone">

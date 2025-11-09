@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { useLogin } from "../../Hooks/Login/useLogin";
 import fd from "../../assets/fd.jpg";
 import "./Login.scss";
 
 function Login() {
+  const { t } = useTranslation();
   const {
     formData,
     setFormData,
@@ -20,8 +22,8 @@ function Login() {
       <img className="login-wallpaper" src={fd} alt="" />
       <div className="login-card">
         <div className="login-header">
-          <h1>AirFood AI </h1>
-          <p>Connexion à votre espace</p>
+          <h1>{t('login.title')}</h1>
+          <p>{t('login.subtitle')}</p>
         </div>
 
         {error && (
@@ -33,27 +35,27 @@ function Login() {
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">{t('login.email')}</label>
             <input
               type="email"
               id="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              placeholder="votre@email.com"
+              placeholder={t('login.emailPlaceholder')}
               required
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Mot de passe</label>
+            <label htmlFor="password">{t('login.password')}</label>
             <input
               type="password"
               id="password"
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              placeholder="Votre mot de passe"
+              placeholder={t('login.passwordPlaceholder')}
               required
             />
           </div>
@@ -62,12 +64,12 @@ function Login() {
             {loading ? (
               <>
                 <i className="bi bi-arrow-repeat spinning"></i>
-                Connexion...
+                {t('login.loggingIn')}
               </>
             ) : (
               <>
                 <i className="bi bi-box-arrow-in-right"></i>
-                Se connecter
+                {t('login.loginButton')}
               </>
             )}
           </button>
@@ -75,10 +77,10 @@ function Login() {
 
         <div className="login-footer">
           <p>
-            <strong>Compte par défaut :</strong>
+            <strong>{t('login.defaultAccount')}</strong>
           </p>
-          <p>Email: admin@handlehome.com</p>
-          <p>Mot de passe: admin123</p>
+          <p>{t('login.defaultEmail')}</p>
+          <p>{t('login.defaultPassword')}</p>
         </div>
       </div>
     </div>

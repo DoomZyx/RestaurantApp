@@ -1,0 +1,49 @@
+.contact-details-modal {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  width: 95%;
+  max-width: 1100px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
+  scrollbar-width: none;
+}
+
+.client-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .delete-contact-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
+
+    i {
+      font-size: 16px;
+    }
+
+    &:hover {
+      background: linear-gradient(135deg, #ff0000 0%, #aa0000 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 68, 68, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}

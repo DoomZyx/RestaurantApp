@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   fetchAppointments,
   fetchTodayAppointments,
@@ -15,6 +16,8 @@ import { useAppointmentsView } from "./useAppointmentsView";
 import { useWebSocket } from "../../Context/WebSocketContext";
 
 export function useAppointments() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  
   // Hooks spécialisés
   const filtersHook = useAppointmentsFilters();
   const modalHook = useAppointmentsModal();
@@ -323,6 +326,128 @@ export function useAppointments() {
     });
   }, [todayAppointments]);
 
+  // Charger les rendez-vous au montage et quand les filtres changent
+  useEffect(() => {
+    const filterParams = {};
+    if (filtersHook.filters.date) filterParams.date = filtersHook.filters.date;
+    if (filtersHook.filters.type) filterParams.type = filtersHook.filters.type;
+    if (filtersHook.filters.modalite) filterParams.modalite = filtersHook.filters.modalite;
+    
+    loadAppointments(1, 50, filterParams);
+  }, [loadAppointments, filtersHook.filters]);
+
+  // Détecter l'orderId dans l'URL et ouvrir automatiquement le détail
+  useEffect(() => {
+    const orderId = searchParams.get('orderid');
+    if (orderId && appointments.length > 0 && !modalHook.showModal) {
+      console.log("Recherche de la commande:", orderId);
+      const appointment = appointments.find(a => a._id === orderId);
+      if (appointment) {
+        console.log("Commande trouvée, ouverture du détail:", appointment);
+        modalHook.openDetailsModal(appointment);
+        setSearchParams({});
+      } else {
+        console.warn("Commande non trouvée dans la liste");
+        console.log("📋 IDs disponibles:", appointments.map(a => a._id));
+      }
+    }
+  }, [searchParams, appointments, modalHook, setSearchParams]);
+
+  // Wrappers pour les actions avec confirmation
+  const handleStatusChange = useCallback(async (appointmentId, newStatus) => {
+    try {
+      await changeAppointmentStatus(appointmentId, newStatus);
+    } catch (error) {
+      console.error("Erreur lors du changement de statut:", error);
+    }
+  }, [changeAppointmentStatus]);
+
+  const handleDeleteAppointment = useCallback(async (appointmentId, t) => {
+    if (window.confirm(t ? t('appointments.confirmDelete') : 'Confirmer la suppression ?')) {
+      try {
+        await removeAppointment(appointmentId);
+        modalHook.closeDetailsModal();
+      } catch (error) {
+        console.error("Erreur lors de la suppression:", error);
+      }
+    }
+  }, [removeAppointment, modalHook]);
+
+  const handleCreateAppointment = useCallback(async (appointmentData) => {
+    try {
+      await addAppointment(appointmentData);
+      modalHook.closeCreateModal();
+      // Recharger les rendez-vous
+      const filterParams = {};
+      if (filtersHook.filters.date) filterParams.date = filtersHook.filters.date;
+      if (filtersHook.filters.type) filterParams.type = filtersHook.filters.type;
+      if (filtersHook.filters.modalite) filterParams.modalite = filtersHook.filters.modalite;
+      loadAppointments(1, 50, filterParams);
+    } catch (error) {
+      console.error("Erreur lors de la création:", error);
+    }
+  }, [addAppointment, modalHook, filtersHook.filters, loadAppointments]);
+
+  const handleEditAppointment = useCallback(async (appointmentId, appointmentData) => {
+    try {
+      await editAppointment(appointmentId, appointmentData);
+      modalHook.closeDetailsModal();
+      // Recharger les rendez-vous
+      const filterParams = {};
+      if (filtersHook.filters.date) filterParams.date = filtersHook.filters.date;
+      if (filtersHook.filters.type) filterParams.type = filtersHook.filters.type;
+      if (filtersHook.filters.modalite) filterParams.modalite = filtersHook.filters.modalite;
+      loadAppointments(1, 50, filterParams);
+    } catch (error) {
+      console.error("Erreur lors de la modification:", error);
+    }
+  }, [editAppointment, modalHook, filtersHook.filters, loadAppointments]);
+
+  // Utilitaires de formatage
+  const formatDateTime = useCallback((dateString, type = "full") => {
+    const date = new Date(dateString);
+    if (type === "date") {
+      return date.toLocaleDateString("fr-FR");
+    }
+    return date.toLocaleDateString("fr-FR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }, []);
+
+  const getStatusBadge = useCallback((statut, t) => {
+    const statusConfig = {
+      planifie: { label: t ? t('appointments.statuses.planifie') : 'Planifié', class: "status-planifie" },
+      confirme: { label: t ? t('appointments.statuses.confirme') : 'Confirmé', class: "status-confirme" },
+      en_cours: { label: t ? t('appointments.statuses.en_cours') : 'En cours', class: "status-en-cours" },
+      termine: { label: t ? t('appointments.statuses.termine') : 'Terminé', class: "status-termine" },
+      annule: { label: t ? t('appointments.statuses.annule') : 'Annulé', class: "status-annule" },
+    };
+
+    const config = statusConfig[statut] || {
+      label: statut,
+      class: "status-default",
+    };
+
+    return {
+      label: config.label,
+      className: config.class
+    };
+  }, []);
+
+  // Gestion du calendrier
+  const handleCalendarSelectAppointment = useCallback((appointment) => {
+    modalHook.openDetailsModal(appointment);
+  }, [modalHook]);
+
+  const handleCalendarSelectSlot = useCallback((slotInfo) => {
+    modalHook.openCreateModal();
+    // TODO: pré-remplir les champs date/heure dans le modal
+  }, [modalHook]);
+
   return {
     // États principaux
     appointments,
@@ -372,6 +497,16 @@ export function useAppointments() {
     getAppointmentsByStatus,
     getTodayAppointmentsByStatus,
     getUpcomingAppointments,
+    formatDateTime,
+    getStatusBadge,
+
+    // Wrappers d'actions
+    handleStatusChange,
+    handleDeleteAppointment,
+    handleCreateAppointment,
+    handleEditAppointment,
+    handleCalendarSelectAppointment,
+    handleCalendarSelectSlot,
 
     // Reset
     clearError: () => setError(null),

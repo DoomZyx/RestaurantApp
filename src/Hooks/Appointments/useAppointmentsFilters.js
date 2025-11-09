@@ -1,9 +1,17 @@
 import { useState } from "react";
 
+// Fonction pour obtenir la date du jour au format YYYY-MM-DD
+const getTodayDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export function useAppointmentsFilters() {
   const [filters, setFilters] = useState({
-    date: "",
-    statut: "",
+    date: getTodayDate(),
     type: "",
     modalite: "",
   });
@@ -14,8 +22,7 @@ export function useAppointmentsFilters() {
 
   const resetFilters = () => {
     setFilters({
-      date: "",
-      statut: "",
+      date: getTodayDate(),
       type: "",
       modalite: "",
     });

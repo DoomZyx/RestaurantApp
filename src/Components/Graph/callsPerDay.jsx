@@ -44,7 +44,7 @@ export default function CallsPerDay() {
 
         setCallsData(filteredToday);
       } catch (error) {
-        console.error("Erreur API appels:", error);
+        console.error("API Error:", error);
       }
     }
 

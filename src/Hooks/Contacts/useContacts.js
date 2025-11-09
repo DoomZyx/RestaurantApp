@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchClients, createClient } from "../../API/Clients/api";
+import { fetchClients, createClient, deleteClient } from "../../API/Clients/api";
 import { useContactsSearch } from "./useContactsSearch";
 import { useContactsModal } from "./useContactsModal";
 import { useContactsSelection } from "./useContactsSelection";
@@ -51,8 +51,65 @@ export function useContacts() {
     }
   };
 
+  // Wrapper pour la suppression de client avec rechargement
+  const handleDeleteClient = async (clientId) => {
+    try {
+      setError(null);
+      await deleteClient(clientId);
+
+      // Retirer le client de la liste locale
+      setClients((prev) => prev.filter((c) => c._id !== clientId));
+
+      // Fermer les détails si c'est le client sélectionné
+      if (selectionHook.selectedClient?._id === clientId) {
+        selectionHook.clearSelection();
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Erreur lors de la suppression du client:", error);
+      setError(error.message);
+      throw error;
+    }
+  };
+
   // Appliquer les filtres de recherche
   const filteredClients = searchHook.filterClients(clients);
+
+  /**
+   * Formater une date en format français
+   */
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("fr-FR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  /**
+   * Obtenir le badge de statut avec style
+   */
+  const getStatusBadge = (status, t) => {
+    const statusConfig = {
+      nouveau: { label: t('contactsPage.statuses.new'), class: "status-nouveau" },
+      en_cours: { label: t('contactsPage.statuses.inProgress'), class: "status-en-cours" },
+      termine: { label: t('contactsPage.statuses.completed'), class: "status-termine" },
+      annule: { label: t('contactsPage.statuses.cancelled'), class: "status-annule" },
+    };
+
+    const config = statusConfig[status] || {
+      label: status,
+      class: "status-default",
+    };
+    
+    return {
+      label: config.label,
+      className: config.class
+    };
+  };
 
   return {
     // États principaux
@@ -80,6 +137,11 @@ export function useContacts() {
     // Actions
     addClient: handleAddClient,
     handleAddClient: (clientData) => modalHook.handleAddClient(handleAddClient, clientData),
+    handleDeleteClient,
     refreshClients: loadClients,
+    
+    // Utilitaires
+    formatDate,
+    getStatusBadge,
   };
 }

@@ -1,9 +1,12 @@
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import AppLayout from "../../Components/Layout/AppLayout";
+import EmojiText from "../../Components/Common/EmojiText";
 import "./Profile.scss";
 import { useProfile } from "../../Hooks/Profile/useProfile";
 
 function Profile() {
+  const { t } = useTranslation();
   const fileInputRef = useRef(null);
 
   const {
@@ -36,12 +39,12 @@ function Profile() {
     if (file) {
       // Vérifier le type de fichier
       if (!file.type.startsWith("image/")) {
-        setError("Veuillez sélectionner une image valide");
+        setError(t('profile.errors.invalidImage'));
         return;
       }
       // Vérifier la taille (5 MB max)
       if (file.size > 5 * 1024 * 1024) {
-        setError("L'image ne doit pas dépasser 5 MB");
+        setError(t('profile.errors.imageTooLarge'));
         return;
       }
       await handleAvatarUpload(file);
@@ -54,7 +57,7 @@ function Profile() {
         <div className="my-profile-container">
           <div className="loading-state">
             <div className="spinner"></div>
-            <p>Chargement du profil...</p>
+            <p>{t('profile.loadingProfile')}</p>
           </div>
         </div>
       </AppLayout>
@@ -67,7 +70,7 @@ function Profile() {
         {success && (
           <div className="success-message">
             <i className="bi bi-check-circle-fill"></i>
-            Profil mis à jour avec succès !
+            {t('profile.profileUpdated')}
           </div>
         )}
 
@@ -75,7 +78,7 @@ function Profile() {
           <div className="error-message">
             <i className="bi bi-exclamation-triangle-fill"></i>
             {error}
-            <button onClick={() => setError(null)}>✕</button>
+            <button onClick={() => setError(null)}><EmojiText>✕</EmojiText></button>
           </div>
         )}
 
@@ -114,19 +117,19 @@ function Profile() {
                   disabled={saving}
                 >
                   <i className="bi bi-camera-fill"></i>
-                  {saving ? "Upload en cours..." : "Changer la photo"}
+                  {saving ? t('profile.uploadInProgress') : t('profile.changePhoto')}
                 </button>
               </div>
 
               <div className="info-grid">
                 <div className="info-item">
-                  <label>Nom complet</label>
+                  <label>{t('profile.fullName')}</label>
                   {editMode ? (
                     <input
                       type="text"
                       value={tempData.nom}
                       onChange={(e) => handleInputChange("nom", e.target.value)}
-                      placeholder="Votre nom complet"
+                      placeholder={t('profile.fullName')}
                     />
                   ) : (
                     <span>{profileData.nom}</span>
@@ -134,7 +137,7 @@ function Profile() {
                 </div>
 
                 <div className="info-item">
-                  <label>Email professionnel</label>
+                  <label>{t('profile.professionalEmail')}</label>
                   {editMode ? (
                     <input
                       type="email"
@@ -150,7 +153,7 @@ function Profile() {
                 </div>
 
                 <div className="info-item">
-                  <label>Téléphone</label>
+                  <label>{t('profile.phone')}</label>
                   {editMode ? (
                     <input
                       type="tel"
@@ -166,7 +169,7 @@ function Profile() {
                 </div>
 
                 <div className="info-item">
-                  <label>Poste</label>
+                  <label>{t('profile.position')}</label>
                   {editMode ? (
                     <input
                       type="text"
@@ -174,7 +177,7 @@ function Profile() {
                       onChange={(e) =>
                         handleInputChange("poste", e.target.value)
                       }
-                      placeholder="Votre poste"
+                      placeholder={t('profile.position')}
                     />
                   ) : (
                     <span>{profileData.poste}</span>
@@ -182,7 +185,7 @@ function Profile() {
                 </div>
 
                 <div className="info-item">
-                  <label>Département</label>
+                  <label>{t('profile.department')}</label>
                   {editMode ? (
                     <select
                       value={tempData.departement}
@@ -190,12 +193,12 @@ function Profile() {
                         handleInputChange("departement", e.target.value)
                       }
                     >
-                      <option value="Service Client">Service Client</option>
+                      <option value="Service Client">{t('profile.departments.customerService')}</option>
                       <option value="Support Technique">
-                        Support Technique
+                        {t('profile.departments.technicalSupport')}
                       </option>
-                      <option value="Ventes">Ventes</option>
-                      <option value="Administration">Administration</option>
+                      <option value="Ventes">{t('profile.departments.sales')}</option>
+                      <option value="Administration">{t('profile.departments.administration')}</option>
                     </select>
                   ) : (
                     <span>{profileData.departement}</span>
@@ -203,12 +206,12 @@ function Profile() {
                 </div>
 
                 <div className="info-item">
-                  <label>Membre depuis</label>
+                  <label>{t('profile.memberSince')}</label>
                   <span>{formatDate(profileData.dateCreation)}</span>
                 </div>
 
                 <div className="info-item">
-                  <label>Dernière connexion</label>
+                  <label>{t('profile.lastConnection')}</label>
                   <span>{formatDateTime(profileData.derniereConnexion)}</span>
                 </div>
               </div>
@@ -219,13 +222,13 @@ function Profile() {
               {!editMode ? (
                 <button onClick={handleEdit} className="edit-btn">
                   <i className="bi bi-pencil-square"></i>
-                  Modifier
+                  {t('profile.modify')}
                 </button>
               ) : (
                 <div className="edit-actions">
                   <button onClick={handleCancel} className="cancel-btn">
                     <i className="bi bi-x-circle"></i>
-                    Annuler
+                    {t('profile.cancel')}
                   </button>
                   <button
                     onClick={handleSave}
@@ -235,12 +238,12 @@ function Profile() {
                     {saving ? (
                       <>
                         <i className="bi bi-arrow-repeat spinning"></i>
-                        Sauvegarde...
+                        {t('profile.saving')}
                       </>
                     ) : (
                       <>
                         <i className="bi bi-check-circle"></i>
-                        Sauvegarder
+                        {t('profile.save')}
                       </>
                     )}
                   </button>

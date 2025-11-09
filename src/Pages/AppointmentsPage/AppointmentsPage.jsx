@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useState, useMemo } from "react";
 import { useAppointments } from "../../Hooks/Appointments/useAppointments";
-import { fetchClients } from "../../API/Clients/api";
 import AppLayout from "../../Components/Layout/AppLayout";
 import AppointmentsCalendar from "../../Components/Calendar/AppointmentsCalendar";
 import { AppointmentsFilters } from "../../Components/Appointments/AppointmentsFilters";
@@ -11,14 +10,15 @@ import { AppointmentDetails } from "../../Components/Appointments/AppointmentDet
 import "./AppointmentsPage.scss";
 
 function AppointmentsPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { t } = useTranslation();
+  const [activeService, setActiveService] = useState("midi"); // "midi" ou "soir"
   
+  // Utiliser le hook qui contient toute la logique
   const {
     appointments,
     loading,
     error,
     pagination,
-    currentAppointment,
     filters,
     handleFilterChange,
     resetFilters,
@@ -26,9 +26,8 @@ function AppointmentsPage() {
     showModal,
     showCreateModal,
     selectedAppointment,
-    openDetailsModal,
-    closeDetailsModal,
     openCreateModal,
+    closeDetailsModal,
     closeCreateModal,
     handleViewDetails,
     viewMode,
@@ -36,142 +35,38 @@ function AppointmentsPage() {
     switchToCalendar,
     isListView,
     isCalendarView,
-    loadAppointments,
-    loadAppointment,
-    addAppointment,
-    editAppointment,
-    changeAppointmentStatus,
-    removeAppointment,
-    clearCurrentAppointment,
     clearError,
+    formatDateTime,
+    getStatusBadge,
+    handleStatusChange,
+    handleDeleteAppointment,
+    handleCreateAppointment,
+    handleEditAppointment,
+    handleCalendarSelectAppointment,
+    handleCalendarSelectSlot,
   } = useAppointments();
 
-  // Charger les rendez-vous au montage et quand les filtres changent
-  useEffect(() => {
-    const filterParams = {};
-    if (filters.date) filterParams.date = filters.date;
-    if (filters.statut) filterParams.statut = filters.statut;
-    if (filters.type) filterParams.type = filters.type;
-    if (filters.modalite) filterParams.modalite = filters.modalite;
-    
-    loadAppointments(1, 50, filterParams);
-  }, [loadAppointments, filters]);
-
-  // Détecter l'orderId dans l'URL et ouvrir automatiquement le détail
-  useEffect(() => {
-    const orderId = searchParams.get('orderid'); // En minuscule pour matcher l'URL
-    if (orderId && appointments.length > 0 && !showModal) {
-      console.log("🔍 Recherche de la commande:", orderId);
-      const appointment = appointments.find(a => a._id === orderId);
-      if (appointment) {
-        console.log("✅ Commande trouvée, ouverture du détail:", appointment);
-        openDetailsModal(appointment);
-        // Retirer le paramètre de l'URL pour ne pas réouvrir à chaque fois
-        setSearchParams({});
-      } else {
-        console.warn("⚠️ Commande non trouvée dans la liste");
-        console.log("📋 IDs disponibles:", appointments.map(a => a._id));
-      }
-    }
-  }, [searchParams, appointments, openDetailsModal, setSearchParams, showModal]);
-
-  const handleStatusChange = async (appointmentId, newStatus) => {
-    try {
-      await changeAppointmentStatus(appointmentId, newStatus);
-    } catch (error) {
-      console.error("Erreur lors du changement de statut:", error);
-    }
+  // Fonction pour déterminer si une heure appartient au service midi ou soir
+  const getServiceFromTime = (time) => {
+    if (!time) return null;
+    const hour = parseInt(time.split(':')[0]);
+    // Midi: 11h00 - 15h00, Soir: 18h00 - 23h00
+    if (hour >= 11 && hour < 15) return "midi";
+    if (hour >= 18 && hour < 24) return "soir";
+    return null;
   };
 
-  const handleDeleteAppointment = async (appointmentId) => {
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce rendez-vous ?")) {
-      try {
-        await removeAppointment(appointmentId);
-        closeDetailsModal(); // Fermer la modal après suppression
-      } catch (error) {
-        console.error("Erreur lors de la suppression:", error);
-      }
-    }
-  };
-
-  const handleCreateAppointment = async (appointmentData) => {
-    try {
-      await addAppointment(appointmentData);
-      closeCreateModal();
-      // Recharger les rendez-vous
-      const filterParams = {};
-      if (filters.date) filterParams.date = filters.date;
-      if (filters.statut) filterParams.statut = filters.statut;
-      if (filters.type) filterParams.type = filters.type;
-      if (filters.modalite) filterParams.modalite = filters.modalite;
-      loadAppointments(1, 50, filterParams);
-    } catch (error) {
-      console.error("Erreur lors de la création:", error);
-    }
-  };
-
-  const handleEditAppointment = async (appointmentId, appointmentData) => {
-    try {
-      await editAppointment(appointmentId, appointmentData);
-      closeDetailsModal();
-      // Recharger les rendez-vous
-      const filterParams = {};
-      if (filters.date) filterParams.date = filters.date;
-      if (filters.statut) filterParams.statut = filters.statut;
-      if (filters.type) filterParams.type = filters.type;
-      if (filters.modalite) filterParams.modalite = filters.modalite;
-      loadAppointments(1, 50, filterParams);
-    } catch (error) {
-      console.error("Erreur lors de la modification:", error);
-    }
-  };
-
-  // Fonctions utilitaires
-  const formatDateTime = (dateString, type = "full") => {
-    const date = new Date(dateString);
-    if (type === "date") {
-      return date.toLocaleDateString("fr-FR");
-    }
-    return date.toLocaleDateString("fr-FR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+  // Filtrer les appointments pour n'afficher que les commandes à emporter du service sélectionné
+  const filteredAppointments = useMemo(() => {
+    return appointments.filter(apt => {
+      // Filtrer uniquement les commandes à emporter
+      if (apt.modalite !== "À emporter") return false;
+      
+      // Filtrer par service (midi ou soir)
+      const service = getServiceFromTime(apt.heure);
+      return service === activeService;
     });
-  };
-
-  const getStatusBadge = (statut) => {
-    const statusConfig = {
-      planifie: { label: "Planifié", class: "status-planifie" },
-      confirme: { label: "Confirmé", class: "status-confirme" },
-      en_cours: { label: "En cours", class: "status-en-cours" },
-      termine: { label: "Terminé", class: "status-termine" },
-      annule: { label: "Annulé", class: "status-annule" },
-    };
-
-    const config = statusConfig[statut] || {
-      label: statut,
-      class: "status-default",
-    };
-
-    return (
-      <span className={`status-badge ${config.class}`}>
-        {config.label}
-      </span>
-    );
-  };
-
-  // Gestion du calendrier
-  const handleCalendarSelectAppointment = (appointment) => {
-    openDetailsModal(appointment);
-  };
-
-  const handleCalendarSelectSlot = (slotInfo) => {
-    // Pré-remplir le formulaire de création avec la date/heure sélectionnée
-    openCreateModal();
-    // TODO: pré-remplir les champs date/heure dans le modal
-  };
+  }, [appointments, activeService]);
 
   return (
     <AppLayout>
@@ -183,33 +78,21 @@ function AppointmentsPage() {
           hasActiveFilters={hasActiveFilters}
         />
 
-        {/* Boutons de filtrage rapide */}
-        <div className="quick-filters">
-          <h4>Filtres rapides :</h4>
-          <div className="quick-filter-buttons">
+        {/* Onglets de service Midi/Soir */}
+        <div className="service-tabs">
+          <h2 className="page-title">{t('appointments.ordersTitle')}</h2>
+          <div className="tabs-container">
             <button
-              className={`quick-filter-btn ${filters.modalite === "À emporter" ? "active" : ""}`}
-              onClick={() => handleFilterChange("modalite", filters.modalite === "À emporter" ? "" : "À emporter")}
+              className={`service-tab ${activeService === "midi" ? "active" : ""}`}
+              onClick={() => setActiveService("midi")}
             >
-              📦 À emporter
+              {t('appointments.services.lunch')}
             </button>
             <button
-              className={`quick-filter-btn ${filters.modalite === "Sur place" ? "active" : ""}`}
-              onClick={() => handleFilterChange("modalite", filters.modalite === "Sur place" ? "" : "Sur place")}
+              className={`service-tab ${activeService === "soir" ? "active" : ""}`}
+              onClick={() => setActiveService("soir")}
             >
-              🏢 Sur place
-            </button>
-            <button
-              className={`quick-filter-btn ${filters.modalite === "Livraison" ? "active" : ""}`}
-              onClick={() => handleFilterChange("modalite", filters.modalite === "Livraison" ? "" : "Livraison")}
-            >
-              🚚 Livraison
-            </button>
-            <button
-              className="quick-filter-btn clear"
-              onClick={() => handleFilterChange("modalite", "")}
-            >
-              🔄 Tous
+              {t('appointments.services.dinner')}
             </button>
           </div>
         </div>
@@ -221,28 +104,28 @@ function AppointmentsPage() {
                 className={`btn-toggle ${isListView ? "active" : ""}`}
                 onClick={switchToList}
               >
-                📋 Liste
+                📋 {t('appointments.views.list')}
               </button>
               <button
                 className={`btn-toggle ${isCalendarView ? "active" : ""}`}
                 onClick={switchToCalendar}
               >
-                📅 Calendrier
+                📅 {t('appointments.views.calendar')}
               </button>
             </div>
             <button
               className="btn-primary"
               onClick={openCreateModal}
             >
-              +   Nouvelle réservation
+              {t('appointments.newButton')}
             </button>
           </div>
         </div>
 
-        {/* Messages d'erreur */}
+        {/* Messages d'erreur */} 
         {error && (
           <div className="error-message">
-            <span>❌ {error}</span>
+            <span>{error}</span>
             <button onClick={clearError}>✕</button>
           </div>
         )}
@@ -252,52 +135,80 @@ function AppointmentsPage() {
           {isCalendarView ? (
             <div className="calendar-view">
               <AppointmentsCalendar
-                appointments={appointments}
+                appointments={filteredAppointments}
                 onSelectAppointment={handleCalendarSelectAppointment}
                 onSelectSlot={handleCalendarSelectSlot}
               />
             </div>
           ) : (
             <>
-              {/* Zone des commandes actives */}
-              <div className="appointments-zone active-zone">
+              {/* Zone des commandes en attente */}
+              <div className="appointments-zone waiting-zone">
                 <h3 className="zone-title">
-                  <span className="zone-icon">📋</span>
-                  Commandes en cours
+                  <span className="zone-icon"></span>
+                  {t('appointments.waitingOrders')}
                   <span className="zone-count">
-                    {appointments.filter(apt => 
-                      ['planifie', 'confirme', 'en_cours'].includes(apt.statut)
+                    {filteredAppointments.filter(apt => 
+                      ['planifie', 'confirme'].includes(apt.statut)
                     ).length}
                   </span>
                 </h3>
                 <AppointmentsList
-                  appointments={appointments.filter(apt => 
-                    ['planifie', 'confirme', 'en_cours'].includes(apt.statut)
+                  appointments={filteredAppointments.filter(apt => 
+                    ['planifie', 'confirme'].includes(apt.statut)
                   )}
                   loading={loading}
                   error={error}
                   pagination={pagination}
                   onViewDetails={handleViewDetails}
                   onStatusChange={handleStatusChange}
-                  onDelete={handleDeleteAppointment}
+                  onDelete={(id) => handleDeleteAppointment(id, t)}
                   formatDateTime={formatDateTime}
-                  getStatusBadge={getStatusBadge}
+                  getStatusBadge={(statut) => {
+                    const badge = getStatusBadge(statut, t);
+                    return <span className={`status-badge ${badge.className}`}>{badge.label}</span>;
+                  }}
+                />
+              </div>
+
+              {/* Zone des commandes en cours de préparation */}
+              <div className="appointments-zone in-progress-zone">
+                <h3 className="zone-title">
+                  <span className="zone-icon"></span>
+                  {t('appointments.inProgressOrders')}
+                  <span className="zone-count">
+                    {filteredAppointments.filter(apt => apt.statut === 'en_cours').length}
+                  </span>
+                </h3>
+                <AppointmentsList
+                  appointments={filteredAppointments.filter(apt => apt.statut === 'en_cours')}
+                  loading={loading}
+                  error={error}
+                  pagination={pagination}
+                  onViewDetails={handleViewDetails}
+                  onStatusChange={handleStatusChange}
+                  onDelete={(id) => handleDeleteAppointment(id, t)}
+                  formatDateTime={formatDateTime}
+                  getStatusBadge={(statut) => {
+                    const badge = getStatusBadge(statut, t);
+                    return <span className={`status-badge ${badge.className}`}>{badge.label}</span>;
+                  }}
                 />
               </div>
 
               {/* Zone des commandes terminées */}
               <div className="appointments-zone completed-zone">
                 <h3 className="zone-title">
-                  <span className="zone-icon">✅</span>
-                  Commandes terminées
+                  <span className="zone-icon"></span>
+                  {t('appointments.completedOrders')}
                   <span className="zone-count">
-                    {appointments.filter(apt => 
+                    {filteredAppointments.filter(apt => 
                       ['termine', 'annule'].includes(apt.statut)
                     ).length}
                   </span>
                 </h3>
                 <AppointmentsList
-                  appointments={appointments.filter(apt => 
+                  appointments={filteredAppointments.filter(apt => 
                     ['termine', 'annule'].includes(apt.statut)
                   )}
                   loading={loading}
@@ -305,9 +216,12 @@ function AppointmentsPage() {
                   pagination={pagination}
                   onViewDetails={handleViewDetails}
                   onStatusChange={handleStatusChange}
-                  onDelete={handleDeleteAppointment}
+                  onDelete={(id) => handleDeleteAppointment(id, t)}
                   formatDateTime={formatDateTime}
-                  getStatusBadge={getStatusBadge}
+                  getStatusBadge={(statut) => {
+                    const badge = getStatusBadge(statut, t);
+                    return <span className={`status-badge ${badge.className}`}>{badge.label}</span>;
+                  }}
                 />
               </div>
             </>
@@ -318,9 +232,6 @@ function AppointmentsPage() {
         {showCreateModal && (
           <div className="modal-overlay" onClick={closeCreateModal}>
             <div className="modal-content create-modal" onClick={(e) => e.stopPropagation()}>
-                <button className="btn-close" onClick={closeCreateModal}>
-                  ✕
-                </button>
               <div className="modal-body">
                 <CreateAppointmentForm
                   onSubmit={handleCreateAppointment}
@@ -341,7 +252,7 @@ function AppointmentsPage() {
                   appointment={selectedAppointment}
                   onEdit={handleEditAppointment}
                   onStatusChange={handleStatusChange}
-                  onDelete={handleDeleteAppointment}
+                  onDelete={(id) => handleDeleteAppointment(id, t)}
                   onClose={closeDetailsModal}
                 />
               </div>
@@ -354,3 +265,4 @@ function AppointmentsPage() {
 }
 
 export default AppointmentsPage;
+

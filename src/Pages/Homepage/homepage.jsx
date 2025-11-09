@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import AppLayout from "../../Components/Layout/AppLayout";
-import Graphs from "../../Components/Graph/Layout/layoutGraph";
-import SearchBar from "../../Components/SearchBar/searchBar";
 import AppointmentsWidget from "../../Components/AppointmentsWidget/AppointmentsWidget";
 import KPI from "../../Components/KPI/kpi";
 import Clock from "../../Features/hours";
+import DayGreeting from "../../Components/DayGreeting/DayGreeting";
 import "./Homepage.scss";
 
 function Homepage() {
@@ -15,7 +14,6 @@ function Homepage() {
         <header className="dashboard-header">
           <div className="original-header">
             <Clock />
-            <SearchBar />
           </div>
         </header>
 
@@ -25,6 +23,7 @@ function Homepage() {
           <div className="dashboard-section kpi-section">
             <div className="section-content">
               <KPI />
+              <DayGreeting />
             </div>
           </div>
 
@@ -32,13 +31,6 @@ function Homepage() {
           <div className="dashboard-section appointments-section">
             <div className="section-content">
               <AppointmentsWidget />
-            </div>
-          </div>
-
-          {/* Section Graphiques */}
-          <div className="dashboard-section charts-section">
-            <div className="section-content">
-              <Graphs />
             </div>
           </div>
         </div>

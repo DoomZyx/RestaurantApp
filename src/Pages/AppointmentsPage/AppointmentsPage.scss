@@ -2,6 +2,63 @@
   padding: 2rem;
   min-height: 100vh;
 
+  .service-tabs {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    .page-title {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      letter-spacing: -0.025em;
+    }
+
+    .tabs-container {
+      display: flex;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(10px);
+      border-radius: 14px;
+      padding: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+
+      .service-tab {
+        padding: 0.75rem 1.75rem;
+        background: transparent;
+        border: none;
+        border-radius: 10px;
+        color: var(--color-text-secondary);
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        white-space: nowrap;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.3);
+          color: var(--color-text-primary);
+        }
+
+        &.active {
+          background: var(--color-accent);
+          color: white;
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+      }
+    }
+  }
+
   .quick-filters {
     margin-bottom: 2rem;
     padding: 1.5rem;
@@ -369,6 +426,26 @@
         }
       }
 
+      &.waiting-zone {
+        .zone-title {
+          border-left: 4px solid #6366f1;
+          
+          .zone-count {
+            background: #6366f1;
+          }
+        }
+      }
+
+      &.in-progress-zone {
+        .zone-title {
+          border-left: 4px solid #f59e0b;
+          
+          .zone-count {
+            background: #f59e0b;
+          }
+        }
+      }
+
       &.active-zone {
         .zone-title {
           border-left: 4px solid #10b981;
@@ -655,7 +732,6 @@
         border-radius: 16px;
         border: 1px solid rgba(255, 255, 255, 0.3);
         padding: 1rem;
-        cursor: pointer;
         transition: all var(--transition-base);
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.01);
         position: relative;
@@ -663,6 +739,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        gap: 0.75rem;
 
         &:hover {
           transform: translateY(-2px);
@@ -672,6 +749,7 @@
 
         .card-compact-content {
           flex: 1;
+          cursor: pointer;
 
           .client-name-compact {
             font-size: 1.1rem;
@@ -681,6 +759,30 @@
           }
 
           .order-time-compact {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+
+            .time-label {
+              font-weight: 600;
+              color: black;
+            }
+
+            .time-value {
+              background: var(--color-accent);
+              color: white;
+              padding: 0.25rem 0.75rem;
+              border-radius: 8px;
+              font-weight: 700;
+              font-size: 0.85rem;
+            }
+          }
+
+          .order-info {
             font-size: 0.9rem;
             color: var(--color-text-secondary);
             font-weight: 500;
@@ -697,6 +799,52 @@
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.5px;
+        }
+
+        .card-quick-actions {
+          display: flex;
+          gap: 0.5rem;
+          padding-top: 0.5rem;
+          border-top: 1px solid rgba(0, 0, 0, 0.06);
+
+          .btn-quick-action {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+
+            &.btn-start {
+              background: var(--color-success);
+              color: white;
+              box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+
+              &:hover {
+                background: #059669;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+              }
+            }
+
+            &.btn-complete {
+              background: var(--color-accent);
+              color: white;
+              box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+
+              &:hover {
+                background: var(--color-accent-hover);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+              }
+            }
+          }
         }
 
         &.status-confirmed {
@@ -829,6 +977,7 @@
       max-height: 90vh;
       overflow-y: auto;
       box-shadow: none;
+      scrollbar-width: none;
 
       .modal-header {
         padding: 1.5rem;
@@ -935,6 +1084,141 @@
             line-height: 1.6;
             margin: 0;
             font-weight: 500;
+          }
+
+          // Styles pour la liste des plats commandés
+          .commandes-list {
+            h4 {
+              margin: 0 0 1rem 0;
+              color: var(--color-text-primary);
+              font-size: 1rem;
+              font-weight: 700;
+            }
+
+            .items-list {
+              list-style: none;
+              padding: 0;
+              margin: 0 0 1rem 0;
+              display: flex;
+              flex-direction: column;
+              gap: 0.75rem;
+
+              .commande-item {
+                background: rgba(255, 255, 255, 0.5);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                padding: 1rem;
+                border-radius: 12px;
+                transition: all 0.3s ease;
+
+                &:hover {
+                  background: rgba(255, 255, 255, 0.7);
+                  transform: translateY(-2px);
+                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                }
+
+                .item-header {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 0.5rem;
+                  gap: 1rem;
+
+                  .item-name {
+                    font-weight: 700;
+                    color: var(--color-text-primary);
+                    font-size: 1rem;
+                  }
+
+                  .item-quantity {
+                    background: var(--color-accent);
+                    color: white;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                  }
+
+                  .item-price {
+                    color: var(--color-success);
+                    font-weight: 700;
+                    font-size: 1rem;
+                  }
+                }
+
+                .item-category {
+                  display: inline-block;
+                  background: rgba(99, 102, 241, 0.1);
+                  color: var(--color-accent);
+                  padding: 0.25rem 0.75rem;
+                  border-radius: 6px;
+                  font-size: 0.8rem;
+                  font-weight: 600;
+                  margin-bottom: 0.5rem;
+                }
+
+                .item-supplements {
+                  display: block;
+                  color: var(--color-text-secondary);
+                  font-size: 0.85rem;
+                  font-style: italic;
+                  margin-top: 0.5rem;
+                }
+              }
+            }
+
+            .commande-total {
+              padding: 1rem;
+              background: rgba(16, 185, 129, 0.1);
+              border: 1px solid rgba(16, 185, 129, 0.3);
+              border-radius: 12px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              strong {
+                color: var(--color-text-primary);
+                font-size: 1.1rem;
+              }
+
+              span {
+                color: var(--color-success);
+                font-size: 1.3rem;
+                font-weight: 800;
+              }
+            }
+          }
+
+          .no-items {
+            color: var(--color-text-tertiary);
+            font-style: italic;
+            padding: 1rem;
+            text-align: center;
+          }
+
+          .commande-description {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+
+            h4 {
+              margin: 0 0 0.75rem 0;
+              color: var(--color-text-primary);
+              font-size: 1rem;
+              font-weight: 700;
+            }
+
+            p {
+              background: rgba(255, 255, 255, 0.35);
+              backdrop-filter: blur(20px);
+              border: 1px solid rgba(255, 255, 255, 0.3);
+              padding: 1rem;
+              border-radius: 12px;
+              color: var(--color-text-secondary);
+              line-height: 1.6;
+              margin: 0;
+              font-weight: 500;
+            }
           }
 
           .related-call {
@@ -1361,6 +1645,55 @@
         color: var(--color-danger);
         font-size: 0.8rem;
         margin-top: 0.25rem;
+      }
+    }
+
+    // Styles pour la liste des plats commandés
+    .items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+
+      .item-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .item-select {
+          flex: 2;
+          min-width: 250px;
+        }
+
+        .item-qty {
+          width: 90px;
+          flex-shrink: 0;
+        }
+
+        .item-supplements {
+          flex: 2;
+          min-width: 200px;
+        }
+
+        .btn-remove {
+          white-space: nowrap;
+          padding: 10px 16px !important;
+          font-size: 0.85rem !important;
+          border-radius: 14px !important;
+          border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        }
+      }
+
+      .add-item-container {
+        margin-top: 8px;
+
+        .btn-add-item {
+          padding: 10px 20px !important;
+          font-size: 0.9rem !important;
+          border-radius: 14px !important;
+          border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        }
       }
     }
 

@@ -1,5 +1,7 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { getClientFullName, getClientPhone } from "../../utils/clientUtils";
+import EmojiText from "../Common/EmojiText";
 
 export function AppointmentDetails({ 
   appointment, 
@@ -8,6 +10,7 @@ export function AppointmentDetails({
   onDelete, 
   onClose 
 }) {
+  const { t } = useTranslation();
   if (!appointment) return null;
 
   const formatDate = (dateString) => {
@@ -32,27 +35,21 @@ export function AppointmentDetails({
 
   const getStatusLabel = (statut) => {
     const labels = {
-      planifie: "📅 Planifié",
-      confirme: "✅ Confirmé",
-      en_cours: "🔄 En cours", 
-      termine: "✅ Terminé",
-      annule: "❌ Annulé",
+      planifie: <>Planifié</>,
+      confirme: <>Confirmé</>,
+      en_cours: <>En cours</>, 
+      termine: <>Terminé</>,
+      annule: <>Annulé</>,
     };
     return labels[statut] || statut;
   };
-
-  const getModalityIcon = (modalite) => {
-    const icons = {
-      "Bureau": "🏢",
-      "Visioconférence": "💻", 
-      "Téléphonique": "📞",
-    };
-    return icons[modalite] || "📅";
-  };
-
   const handleStatusChange = (newStatus) => {
     if (onStatusChange) {
       onStatusChange(appointment._id, newStatus);
+      // Fermer la modale après avoir changé le statut en terminé ou annulé
+      if ((newStatus === "termine" || newStatus === "annule") && onClose) {
+        setTimeout(() => onClose(), 300); // Petit délai pour permettre la mise à jour
+      }
     }
   };
 
@@ -66,43 +63,86 @@ export function AppointmentDetails({
     <>
       <div className="appointment-info">
         <div className="info-section">
-          <h3>Informations client</h3>
+          <h3>{t('appointmentDetails.clientInfo')}</h3>
           <div className="client-details">
-            <p><strong>Nom:</strong> {getClientFullName(appointment.client, appointment)}</p>
-            <p><strong>Téléphone:</strong> {getClientPhone(appointment.client)}</p>
+            <p><strong>{t('appointmentDetails.name')}:</strong> {getClientFullName(appointment.client, appointment)}</p>
+            <p><strong>{t('appointmentDetails.phone')}:</strong> {getClientPhone(appointment.client)}</p>
           </div>
         </div>
 
         <div className="info-section">
-          <h3>Commande</h3>
-          {appointment.description ? (
-            <p className="description">{appointment.description}</p>
-          ) : (
-            <p className="description">Aucune description disponible</p>
+          <h3>{t('appointmentDetails.orderDetails')}</h3>
+          
+          {/* Affichage des plats commandés */}
+          {appointment.commandes && appointment.commandes.length > 0 ? (
+            <div className="commandes-list">
+              <h4>🍽️ {t('appointmentDetails.orderedDishes')} :</h4>
+              <ul className="items-list">
+                {appointment.commandes.map((item, index) => (
+                  <li key={index} className="commande-item">
+                    <div className="item-header">
+                      <span className="item-name">{item.nom}</span>
+                      <span className="item-quantity">x{item.quantite}</span>
+                      {item.prixUnitaire && (
+                        <span className="item-price">{(item.prixUnitaire * item.quantite).toFixed(2)}€</span>
+                      )}
+                    </div>
+                    {item.categorie && (
+                      <span className="item-category">{item.categorie}</span>
+                    )}
+                    {item.supplements && (
+                      <span className="item-supplements">{t('appointmentDetails.extras')}: {item.supplements}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              
+              {/* Total de la commande */}
+              {appointment.commandes.some(item => item.prixUnitaire) && (
+                <div className="commande-total">
+                  <strong>{t('appointmentDetails.total')}: </strong>
+                  <span>
+                    {appointment.commandes
+                      .reduce((sum, item) => sum + (item.prixUnitaire || 0) * item.quantite, 0)
+                      .toFixed(2)}€
+                  </span>
+                </div>
+              )}
+            </div>
+          ) : appointment.type === "Commande à emporter" || appointment.type === "Livraison à domicile" ? (
+            <p className="no-items">{t('appointmentDetails.noDishSpecified')}</p>
+          ) : null}
+
+          {/* Description (notes supplémentaires) */}
+          {appointment.description && (
+            <div className="commande-description">
+              <h4>{t('appointmentDetails.additionalNotes')} :</h4>
+              <p>{appointment.description}</p>
+            </div>
           )}
         </div>
 
         <div className="info-section">
-          <h3>Horaires</h3>
+          <h3>{t('appointmentDetails.schedule')}</h3>
           <div className="info-grid">
             <div className="info-item">
-              <label>Date:</label>
+              <label>{t('appointmentDetails.date')}:</label>
               <span>{formatDate(appointment.date)}</span>
             </div>
             <div className="info-item">
-              <label>Heure:</label>
+              <label>{t('appointmentDetails.time')}:</label>
               <span>{appointment.heure}</span>
             </div>
             {appointment.modalite && (
               <div className="info-item">
-                <label>Modalité:</label>
+                <label>{t('appointmentDetails.modality')}:</label>
                 <span>{appointment.modalite}</span>
               </div>
             )}
             {appointment.nombrePersonnes && (
               <div className="info-item">
-                <label>Nombre de personnes:</label>
-                <span>{appointment.nombrePersonnes} {appointment.nombrePersonnes > 1 ? 'personnes' : 'personne'}</span>
+                <label>{t('appointmentDetails.numberOfPersons')}:</label>
+                <span>{appointment.nombrePersonnes} {appointment.nombrePersonnes > 1 ? t('appointmentDetails.persons') : t('appointmentDetails.person')}</span>
               </div>
             )}
           </div>
@@ -110,7 +150,7 @@ export function AppointmentDetails({
 
         {appointment.notes && (
           <div className="info-section">
-            <h3>Notes</h3>
+            <h3>{t('appointmentDetails.notes')}</h3>
             <p className="notes">{appointment.notes}</p>
           </div>
         )}
@@ -125,7 +165,7 @@ export function AppointmentDetails({
                 handleStatusChange("confirme");
               }}
             >
-              Confirmer
+              {t('appointmentDetails.confirm')}
             </button>
           )}
           
@@ -136,7 +176,7 @@ export function AppointmentDetails({
                 handleStatusChange("termine");
               }}
             >
-              Marquer comme terminé
+              {t('appointmentDetails.markAsCompleted')}
             </button>
           )}
         </div>
@@ -149,7 +189,7 @@ export function AppointmentDetails({
                 handleStatusChange("annule");
               }}
             >
-              Annuler
+              {t('common.cancel')}
             </button>
           )}
           
@@ -157,7 +197,7 @@ export function AppointmentDetails({
             className="btn-delete"
             onClick={handleDelete}
           >
-            Supprimer
+            {t('common.delete')}
           </button>
         </div>
       </div>

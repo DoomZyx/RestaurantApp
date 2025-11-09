@@ -1,0 +1,23 @@
+// Style pour les emojis Twemoji
+.emoji-icon {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: -0.2em;
+  margin: 0 0.1em;
+}
+
+// Pour les boutons avec emojis
+button .emoji-icon {
+  margin-right: 0.3em;
+}
+
+// Pour les titres avec emojis
+h1 .emoji-icon,
+h2 .emoji-icon,
+h3 .emoji-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+}
+

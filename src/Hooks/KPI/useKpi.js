@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchCallsByDate } from '../../API/Calls/api.js';
+import { fetchTodayAppointments } from '../../API/Appointment/api.js';
+import { fetchPricing } from '../../API/Pricing/api.js';
 // import { getAllSupplierOrders } from '../../API/SupplierOrders/api.js'; // Désactivé : route non implémentée
 
 export function useKpi() {
@@ -9,9 +11,13 @@ export function useKpi() {
     totalTermine: 0,
     totalAnnule: 0,
     newToday: 0,
-    pendingOld: 0
+    pendingOld: 0,
+    takeAwayCount: 0,
+    reservationCount: 0,
+    remainingSeats: null
   });
   const [todayOrders, setTodayOrders] = useState([]);
+  const [upcomingOrders, setUpcomingOrders] = useState([]); // Commandes dans les 15 prochaines minutes
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -79,32 +85,98 @@ export function useKpi() {
       
       // Charger les données d'appels
       const response = await fetchCallsByDate();
+      let calculatedKpi = {};
       if (response.success) {
-        const calculatedKpi = calculateKpiFromData(response.data);
-        setKpiData(calculatedKpi);
+        calculatedKpi = calculateKpiFromData(response.data);
       } else {
         throw new Error('Erreur lors du chargement des données');
       }
 
-      // Charger les dernières commandes fournisseurs
-      // DÉSACTIVÉ : La route /api/supplier-orders n'existe pas encore côté backend
-      // try {
-      //   const orders = await getAllSupplierOrders({ limit: 5 });
-      //   
-      //   if (orders && Array.isArray(orders)) {
-      //     // Prendre directement les 5 dernières commandes (triées par date décroissante côté backend)
-      //     setTodayOrders(orders);
-      //   } else {
-      //     setTodayOrders([]);
-      //   }
-      // } catch (orderErr) {
-      //   // Erreur silencieuse : ne pas afficher de commandes si l'API échoue
-      //   // (normal si le backend n'est pas démarré ou pas de commandes)
-      //   setTodayOrders([]);
-      // }
-      
-      // En attendant l'implémentation, on met un tableau vide
-      setTodayOrders([]);
+      // Charger les commandes d'aujourd'hui + la capacité du restaurant en parallèle
+      try {
+        const [ordersRes, pricingRes] = await Promise.allSettled([
+          fetchTodayAppointments(),
+          fetchPricing()
+        ]);
+
+        // Commandes d'aujourd'hui
+        let orders = [];
+        if (ordersRes.status === 'fulfilled' && ordersRes.value?.success) {
+          orders = Array.isArray(ordersRes.value.data) ? ordersRes.value.data : [];
+        }
+        setTodayOrders(orders);
+
+        // Capacité totale (nombre de couverts)
+        let capacity = null;
+        if (pricingRes.status === 'fulfilled' && pricingRes.value?.success) {
+          capacity = pricingRes.value.data?.restaurantInfo?.nombreCouverts ?? null;
+        }
+
+       // Calculer les métriques du jour
+       const takeAwayCount = orders.filter(o => o.type === 'Commande à emporter').length;
+       const reservationOrders = orders.filter(o => 
+         o.type === 'Réservation de table' && 
+         o.statut !== 'annule' && 
+         o.statut !== 'termine'
+       );
+       const reservationCount = reservationOrders.length;
+       const reservedSeats = reservationOrders
+         .map(o => Number(o.nombrePersonnes) || 0)
+         .reduce((a, b) => a + b, 0);
+       const remainingSeats = capacity == null ? null : Math.max(capacity - reservedSeats, 0);
+
+        // Calculer les commandes dans les 15 prochaines minutes
+        const now = new Date();
+        const in15Minutes = new Date(now.getTime() + 15 * 60 * 1000);
+        
+        const upcoming = orders
+          .filter(order => {
+            // Seulement les commandes confirmées ou en cours
+            if (order.statut === 'annule' || order.statut === 'termine') return false;
+            
+            // Construire la date/heure de la commande
+            const orderDateTime = new Date(order.date);
+            const [hours, minutes] = order.heure.split(':').map(Number);
+            orderDateTime.setHours(hours, minutes, 0, 0);
+            
+            // Vérifier si la commande est dans les 15 prochaines minutes
+            return orderDateTime >= now && orderDateTime <= in15Minutes;
+          })
+          .sort((a, b) => {
+            // Trier par heure
+            const timeA = new Date(a.date);
+            const [hoursA, minutesA] = a.heure.split(':').map(Number);
+            timeA.setHours(hoursA, minutesA, 0, 0);
+            
+            const timeB = new Date(b.date);
+            const [hoursB, minutesB] = b.heure.split(':').map(Number);
+            timeB.setHours(hoursB, minutesB, 0, 0);
+            
+            return timeA - timeB;
+          })
+          .slice(0, 5); // Limiter à 5 commandes max
+        
+        setUpcomingOrders(upcoming);
+
+        // Fusionner les métriques dans kpiData
+        setKpiData(prev => ({
+          ...calculatedKpi,
+          takeAwayCount,
+          reservationCount,
+          remainingSeats
+        }));
+      } catch (ordersErr) {
+        // Ne pas faire échouer tout le KPI si cette partie échoue
+        console.warn('KPI: impossible de charger les commandes/pricing du jour:', ordersErr);
+        setTodayOrders([]);
+        setUpcomingOrders([]);
+        setKpiData(prev => ({
+          ...calculatedKpi,
+          takeAwayCount: 0,
+          reservationCount: 0,
+          remainingSeats: null
+        }));
+      }
 
     } catch (err) {
       setError(err.message);
@@ -126,6 +198,7 @@ export function useKpi() {
   return {
     kpiData,
     todayOrders,
+    upcomingOrders,
     loading,
     error,
     refreshKpiData

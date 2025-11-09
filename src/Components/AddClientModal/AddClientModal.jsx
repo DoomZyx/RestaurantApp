@@ -1,12 +1,11 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./AddClientModal.scss";
 
 function AddClientModal({ isOpen, onClose, onSubmit }) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
-    prenom: "",
-    nom: "",
     telephone: "",
-    email: "",
     adresse: "",
     entrepriseName: "",
   });
@@ -32,22 +31,14 @@ function AddClientModal({ isOpen, onClose, onSubmit }) {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.prenom.trim()) {
-      newErrors.prenom = "Le prénom est requis";
-    }
-    
-    if (!formData.nom.trim()) {
-      newErrors.nom = "Le nom est requis";
+    if (!formData.entrepriseName.trim()) {
+      newErrors.entrepriseName = "Le nom de l'entreprise est requis";
     }
     
     if (!formData.telephone.trim()) {
-      newErrors.telephone = "Le téléphone est requis";
+      newErrors.telephone = t('addClientModal.errors.phoneRequired');
     } else if (!/^[\d\s\-\+\(\)]+$/.test(formData.telephone)) {
-      newErrors.telephone = "Format de téléphone invalide";
-    }
-    
-    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Format d'email invalide";
+      newErrors.telephone = t('addClientModal.errors.invalidPhone');
     }
     
     setErrors(newErrors);
@@ -73,10 +64,7 @@ function AddClientModal({ isOpen, onClose, onSubmit }) {
 
   const handleClose = () => {
     setFormData({
-      prenom: "",
-      nom: "",
       telephone: "",
-      email: "",
       adresse: "",
       entrepriseName: "",
     });
@@ -90,55 +78,30 @@ function AddClientModal({ isOpen, onClose, onSubmit }) {
   return (
     <div className="modal-overlay" onClick={handleClose}>
       <div className="add-client-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h2>
-            <i className="bi bi-person-plus"></i>
-            Ajouter un nouveau contact
-          </h2>
-          <button className="close-btn" onClick={handleClose} type="button">
-            <i className="bi bi-x"></i>
-          </button>
-        </div>
 
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-section">
             <h3>
-              <i className="bi bi-person"></i>
-              Informations personnelles
+              <i className="bi bi-building"></i>
+              Informations du fournisseur
             </h3>
             
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="prenom">Prénom *</label>
-                <input
-                  type="text"
-                  id="prenom"
-                  name="prenom"
-                  value={formData.prenom}
-                  onChange={handleChange}
-                  className={errors.prenom ? "error" : ""}
-                  placeholder="Ex: Jean"
-                />
-                {errors.prenom && <span className="error-message">{errors.prenom}</span>}
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="nom">Nom *</label>
-                <input
-                  type="text"
-                  id="nom"
-                  name="nom"
-                  value={formData.nom}
-                  onChange={handleChange}
-                  className={errors.nom ? "error" : ""}
-                  placeholder="Ex: Dupont"
-                />
-                {errors.nom && <span className="error-message">{errors.nom}</span>}
-              </div>
+            <div className="form-group">
+              <label htmlFor="entrepriseName">{t('addClientModal.companyName')} *</label>
+              <input
+                type="text"
+                id="entrepriseName"
+                name="entrepriseName"
+                value={formData.entrepriseName}
+                onChange={handleChange}
+                className={errors.entrepriseName ? "error" : ""}
+                placeholder="Ex: Boucherie Martin, Fromagerie Dupont..."
+              />
+              {errors.entrepriseName && <span className="error-message">{errors.entrepriseName}</span>}
             </div>
 
             <div className="form-group">
-              <label htmlFor="telephone">Téléphone *</label>
+              <label htmlFor="telephone">{t('addClientModal.phone')} *</label>
               <input
                 type="tel"
                 id="telephone"
@@ -152,28 +115,7 @@ function AddClientModal({ isOpen, onClose, onSubmit }) {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className={errors.email ? "error" : ""}
-                placeholder="Ex: jean.dupont@email.com"
-              />
-              {errors.email && <span className="error-message">{errors.email}</span>}
-            </div>
-          </div>
-
-          <div className="form-section">
-            <h3>
-              <i className="bi bi-geo-alt"></i>
-              Informations complémentaires
-            </h3>
-            
-            <div className="form-group">
-              <label htmlFor="adresse">Adresse</label>
+              <label htmlFor="adresse">{t('addClientModal.address')}</label>
               <textarea
                 id="adresse"
                 name="adresse"
@@ -181,18 +123,6 @@ function AddClientModal({ isOpen, onClose, onSubmit }) {
                 onChange={handleChange}
                 placeholder="Ex: 123 Rue de la Paix, 75001 Paris"
                 rows="3"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="entrepriseName">Nom de l'entreprise</label>
-              <input
-                type="text"
-                id="entrepriseName"
-                name="entrepriseName"
-                value={formData.entrepriseName}
-                onChange={handleChange}
-                placeholder="Ex: SARL Dupont & Associés"
               />
             </div>
           </div>
@@ -204,7 +134,7 @@ function AddClientModal({ isOpen, onClose, onSubmit }) {
               onClick={handleClose}
               disabled={isSubmitting}
             >
-              Annuler
+              {t('common.cancel')}
             </button>
             <button
               type="submit"
@@ -214,12 +144,12 @@ function AddClientModal({ isOpen, onClose, onSubmit }) {
               {isSubmitting ? (
                 <>
                   <i className="bi bi-arrow-clockwise spin"></i>
-                  Création...
+                  {t('addClientModal.creating')}
                 </>
               ) : (
                 <>
                   <i className="bi bi-check"></i>
-                  Créer le contact
+                  {t('addClientModal.createContact')}
                 </>
               )}
             </button>

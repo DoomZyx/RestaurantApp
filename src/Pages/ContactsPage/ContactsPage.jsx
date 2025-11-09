@@ -1,11 +1,13 @@
+import { useTranslation } from "react-i18next";
 import { useContacts } from "../../Hooks/Contacts/useContacts";
 import AppLayout from "../../Components/Layout/AppLayout";
 import AddClientModal from "../../Components/AddClientModal/AddClientModal";
 import { ContactsList } from "../../Components/Contacts/ContactsList";
-import { ContactDetails } from "../../Components/Contacts/ContactDetails";
+import ContactDetailsModal from "../../Components/Contacts/ContactDetailsModal";
 import "./ContactsPage.scss";
 
 function ContactsPage() {
+  const { t } = useTranslation();
   const {
     clients,
     selectedClient,
@@ -22,35 +24,10 @@ function ContactsPage() {
     openModal,
     closeModal,
     handleAddClient,
+    handleDeleteClient,
+    formatDate,
+    getStatusBadge,
   } = useContacts();
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("fr-FR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
-
-  const getStatusBadge = (status) => {
-    const statusConfig = {
-      nouveau: { label: "Nouveau", class: "status-nouveau" },
-      en_cours: { label: "En cours", class: "status-en-cours" },
-      termine: { label: "Terminé", class: "status-termine" },
-      annule: { label: "Annulé", class: "status-annule" },
-    };
-
-    const config = statusConfig[status] || {
-      label: status,
-      class: "status-default",
-    };
-    return (
-      <span className={`status-badge ${config.class}`}>{config.label}</span>
-    );
-  };
 
   if (error) {
     return (
@@ -75,7 +52,7 @@ function ContactsPage() {
               onClick={openModal}
             >
               <i className="bi bi-person-plus"></i>
-              Nouveau Fournisseur
+              {t('contactsPage.newSupplier')}
             </button>
           </div>
 
@@ -97,12 +74,12 @@ function ContactsPage() {
             selectClient={selectClient}
             openModal={openModal}
           />
-
-          <ContactDetails
-            selectedClient={selectedClient}
-            clearSelection={clearSelection}
-          />
         </div>
+        <ContactDetailsModal
+          selectedClient={selectedClient}
+          onClose={clearSelection}
+          onDelete={handleDeleteClient}
+        />
         
         <AddClientModal
           isOpen={isModalOpen}
