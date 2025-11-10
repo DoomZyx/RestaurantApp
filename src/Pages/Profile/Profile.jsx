@@ -90,7 +90,7 @@ function Profile() {
                 <div className="avatar">
                   {profileData.avatar ? (
                     <img 
-                      src={`http://localhost:8080${profileData.avatar}`}  // TODO: Changer en VITE_API_URL pour le backend en production
+                      src={`${import.meta.env.VITE_API_URL}${profileData.avatar}`}  
                       alt="Avatar"
                       onError={(e) => {
                         console.error("Erreur chargement avatar:", e.target.src);
