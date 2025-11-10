@@ -90,14 +90,14 @@ function Profile() {
                 <div className="avatar">
                   {profileData.avatar ? (
                     <img 
-                      src={`${import.meta.env.VITE_API_URL}${profileData.avatar}`}  
+                      src={profileData.avatar.startsWith('http') ? profileData.avatar : `${import.meta.env.VITE_API_URL}${profileData.avatar}`}
                       alt="Avatar"
                       onError={(e) => {
                         console.error("Erreur chargement avatar:", e.target.src);
                         console.log("📋 Avatar URL dans DB:", profileData.avatar);
                       }}
                       onLoad={() => {
-                        console.log("Avatar chargé:", `http://localhost:8080${profileData.avatar}`);
+                        console.log("✅ Avatar chargé:", profileData.avatar);
                       }}
                     />
                   ) : (

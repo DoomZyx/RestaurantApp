@@ -15,9 +15,9 @@ function Menu() {
     navigate("/login");
   };
 
-  // Construire l'URL de l'avatar
+  // Construire l'URL de l'avatar (Cloudinary renvoie des URLs complètes)
   const avatarUrl = currentUser?.avatar 
-    ? `https://restaurantapp-qi00.onrender.com${currentUser.avatar}` 
+    ? (currentUser.avatar.startsWith('http') ? currentUser.avatar : `${import.meta.env.VITE_API_URL}${currentUser.avatar}`)
     : leon;
 
   return (
