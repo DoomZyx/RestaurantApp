@@ -4,9 +4,9 @@
  */
 
 export const restaurantConfig = {
-  nom: "Restaurant Handle Home",
+  nom: "TastyFood",
   telephone: process.env.RESTAURANT_PHONE || "+33123456789",
-  email: process.env.RESTAURANT_EMAIL || "contact@handlehome.com",
+  email: process.env.RESTAURANT_EMAIL || "contact@tastyfood.com",
   adresse: {
     rue: "123 Rue de la Gastronomie",
     ville: "Paris",
