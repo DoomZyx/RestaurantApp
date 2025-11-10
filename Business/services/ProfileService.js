@@ -1,11 +1,6 @@
 import User from "../../models/user.js";
 import { UserValidator } from "../validators/UserValidator.js";
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { uploadToCloudinary, deleteFromCloudinary, extractPublicIdFromUrl } from "../../Config/cloudinary.js";
 
 /**
  * Service de gestion du profil utilisateur
@@ -81,7 +76,7 @@ export class ProfileService {
   }
 
   /**
-   * Upload un avatar pour l'utilisateur
+   * Upload un avatar pour l'utilisateur vers Cloudinary
    * @param {string} userId - ID de l'utilisateur
    * @param {Object} file - Fichier uploadé
    * @returns {Promise<Object>} { avatarUrl, user }
@@ -102,38 +97,40 @@ export class ProfileService {
       throw new Error("Utilisateur non trouvé");
     }
 
-    // Générer un nom de fichier unique
-    const ext = file.filename.split('.').pop();
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const filename = `avatar_${userId}_${uniqueSuffix}.${ext}`;
-    const filepath = `uploads/avatars/${filename}`;
-
-    // Créer le dossier s'il n'existe pas
-    const uploadDir = path.join(__dirname, '..', '..', 'uploads', 'avatars');
-    
-    try {
-      await fs.access(uploadDir);
-    } catch {
-      await fs.mkdir(uploadDir, { recursive: true });
+    // Supprimer l'ancien avatar de Cloudinary si présent
+    if (user.avatar) {
+      const oldPublicId = extractPublicIdFromUrl(user.avatar);
+      if (oldPublicId) {
+        try {
+          await deleteFromCloudinary(oldPublicId);
+          console.log("🗑️ Ancien avatar supprimé de Cloudinary");
+        } catch (error) {
+          console.warn("⚠️ Impossible de supprimer l'ancien avatar:", error.message);
+        }
+      }
     }
 
-    // Sauvegarder le fichier
-    const fullPath = path.join(__dirname, '..', '..', filepath);
+    // Convertir le fichier en buffer
     const buffer = await file.toBuffer();
-    await fs.writeFile(fullPath, buffer);
 
-    // Construire l'URL de l'avatar
-    const avatarUrl = filepath;
+    // Upload vers Cloudinary avec nom unique
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const result = await uploadToCloudinary(buffer, {
+      folder: 'restaurant-app/avatars',
+      public_id: `avatar_${userId}_${uniqueSuffix}`,
+    });
 
-    console.log("Fichier sauvegardé:", fullPath);
-    console.log("Avatar URL:", avatarUrl);
+    // Récupérer l'URL sécurisée de Cloudinary
+    const avatarUrl = result.secure_url;
+
+    console.log("✅ Avatar uploadé sur Cloudinary:", avatarUrl);
 
     // Mettre à jour l'avatar dans la base de données
     user.avatar = avatarUrl;
     user.updatedAt = new Date();
     await user.save();
 
-    console.log("Avatar mis à jour pour user:", userId);
+    console.log("✅ Avatar mis à jour pour user:", userId);
 
     return {
       avatarUrl,
@@ -142,7 +139,7 @@ export class ProfileService {
   }
 
   /**
-   * Supprime l'avatar d'un utilisateur
+   * Supprime l'avatar d'un utilisateur de Cloudinary et de la DB
    * @param {string} userId - ID de l'utilisateur
    * @returns {Promise<Object>} Utilisateur mis à jour
    */
@@ -153,14 +150,16 @@ export class ProfileService {
       throw new Error("Utilisateur non trouvé");
     }
 
-    // Supprimer le fichier si présent
+    // Supprimer l'avatar de Cloudinary si présent
     if (user.avatar) {
-      try {
-        const avatarPath = path.join(__dirname, '..', '..', user.avatar.substring(1));
-        await fs.unlink(avatarPath);
-        console.log("Fichier avatar supprimé:", avatarPath);
-      } catch (error) {
-        console.warn("Impossible de supprimer le fichier avatar:", error.message);
+      const publicId = extractPublicIdFromUrl(user.avatar);
+      if (publicId) {
+        try {
+          await deleteFromCloudinary(publicId);
+          console.log("🗑️ Avatar supprimé de Cloudinary");
+        } catch (error) {
+          console.warn("⚠️ Impossible de supprimer l'avatar de Cloudinary:", error.message);
+        }
       }
     }
 
@@ -169,7 +168,7 @@ export class ProfileService {
     user.updatedAt = new Date();
     await user.save();
 
-    console.log("Avatar supprimé pour user:", userId);
+    console.log("✅ Avatar supprimé pour user:", userId);
 
     return user;
   }
