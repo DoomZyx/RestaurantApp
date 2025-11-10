@@ -75,7 +75,7 @@ export class ProfileService {
     user.updatedAt = new Date();
     await user.save();
 
-    console.log("✅ Profil mis à jour:", userId);
+    console.log("Profil mis à jour:", userId);
 
     return user;
   }
@@ -123,17 +123,17 @@ export class ProfileService {
     await fs.writeFile(fullPath, buffer);
 
     // Construire l'URL de l'avatar
-    const avatarUrl = `/${filepath}`;
+    const avatarUrl = filepath;
 
-    console.log("📁 Fichier sauvegardé:", fullPath);
-    console.log("🔗 Avatar URL:", avatarUrl);
+    console.log("Fichier sauvegardé:", fullPath);
+    console.log("Avatar URL:", avatarUrl);
 
     // Mettre à jour l'avatar dans la base de données
     user.avatar = avatarUrl;
     user.updatedAt = new Date();
     await user.save();
 
-    console.log("✅ Avatar mis à jour pour user:", userId);
+    console.log("Avatar mis à jour pour user:", userId);
 
     return {
       avatarUrl,
@@ -158,9 +158,9 @@ export class ProfileService {
       try {
         const avatarPath = path.join(__dirname, '..', '..', user.avatar.substring(1));
         await fs.unlink(avatarPath);
-        console.log("🗑️ Fichier avatar supprimé:", avatarPath);
+        console.log("Fichier avatar supprimé:", avatarPath);
       } catch (error) {
-        console.warn("⚠️ Impossible de supprimer le fichier avatar:", error.message);
+        console.warn("Impossible de supprimer le fichier avatar:", error.message);
       }
     }
 
@@ -169,7 +169,7 @@ export class ProfileService {
     user.updatedAt = new Date();
     await user.save();
 
-    console.log("✅ Avatar supprimé pour user:", userId);
+    console.log("Avatar supprimé pour user:", userId);
 
     return user;
   }
