@@ -14095,3 +14095,131 @@
    "clientIp": "127.0.0.1",
    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
 }
+[2025-11-09 23:21:29] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 2,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:21:29] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-09 23:24:31] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 1,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:24:31] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-09 23:24:32] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 2,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:24:32] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-09 23:24:39] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 1,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:24:39] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-09 23:24:40] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 2,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:24:40] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-09 23:24:57] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 1,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:24:57] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-09 23:24:58] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 2,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:24:58] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-09 23:25:07] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 1,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:25:07] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-09 23:25:08] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 2,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:25:08] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-09 23:25:25] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 1,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:25:25] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-09 23:25:26] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 2,
+   "connectionId": "unknown"
+}
+[2025-11-09 23:25:26] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}
+[2025-11-10 00:26:52] [INFO] Connexion notification supprimée
+   {
+   "totalConnections": 1
+}
+[2025-11-10 00:26:52] [INFO] Connexion notification supprimée
+   {
+   "totalConnections": 0
+}
+[2025-11-10 00:26:53] [INFO] Nouvelle connexion notification ajoutée
+   {
+   "totalConnections": 1,
+   "connectionId": "unknown"
+}
+[2025-11-10 00:26:53] [INFO] Connexion notification WebSocket établie
+   {
+   "clientIp": "127.0.0.1",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+}

@@ -17,6 +17,7 @@ import maintenanceRoutes from "./Routes/Auth/maintenance.js";
 import notificationRoutes from "./Routes/Ws/notifications.js";
 import orderRoutes from "./Routes/Appointments/appointments.js";
 import pricingRoutes from "./Routes/Pricing/pricing.js";
+import pingRoutes from "./Routes/Ping/ping.js";
 import { supplierOrderPublicRoutes, supplierOrderProtectedRoutes } from "./Routes/SupplierOrders/supplierOrders.js";
 import { AuthService } from "./Business/services/AuthService.js";
 import audioCacheService from "./Services/audioCacheService.js";
@@ -99,6 +100,9 @@ fastify.register(fastifyWs, {
 fastify.register(callRoutes);
 fastify.register(wsRoutes);
 fastify.register(notificationRoutes);
+
+// Routes ping publiques (pour maintenir le backend actif)
+fastify.register(pingRoutes, { prefix: "/api" });
 
 // Routes orders publiques (système custom)
 fastify.register(orderRoutes, { prefix: "/api" });

@@ -48,7 +48,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
             type: "function",
             name: "check_availability",
             description:
-              "Vérifier les créneaux disponibles pour une date donnée",
+              "Vérifier les créneaux disponibles pour une date donnée. IMPORTANT: Il existe 2 services - SERVICE MIDI (11h-15h) et SERVICE SOIR (18h-00h). Chaque commande/réservation appartient à UN seul service.",
             parameters: {
               type: "object",
               properties: {
@@ -64,7 +64,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
           {
             type: "function",
             name: "create_appointment",
-            description: "Créer un rendez-vous pour un client",
+            description: "Créer un rendez-vous pour un client. IMPORTANT: Il existe 2 services - SERVICE MIDI (11h-15h) et SERVICE SOIR (18h-00h). Choisis l'heure en fonction du service demandé par le client.",
             parameters: {
               type: "object",
               properties: {
@@ -84,7 +84,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
                 time: {
                   type: "string",
                   pattern: "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$",
-                  description: "Heure du rendez-vous au format HH:MM",
+                  description: "Heure du rendez-vous au format HH:MM. SERVICE MIDI: 11h00-14h59, SERVICE SOIR: 18h00-23h59. Exemple: 12h30 pour midi, 19h00 pour soir.",
                 },
                 duration: {
                   type: "integer",
