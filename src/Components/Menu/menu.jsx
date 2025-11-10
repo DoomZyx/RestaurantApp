@@ -17,7 +17,7 @@ function Menu() {
 
   // Construire l'URL de l'avatar
   const avatarUrl = currentUser?.avatar 
-    ? `http://localhost:8080${currentUser.avatar}` 
+    ? `${import.meta.env.VITE_API_URL}${currentUser.avatar}` 
     : leon;
 
   return (
