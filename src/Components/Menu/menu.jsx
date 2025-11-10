@@ -17,7 +17,7 @@ function Menu() {
 
   // Construire l'URL de l'avatar
   const avatarUrl = currentUser?.avatar 
-    ? `${import.meta.env.VITE_API_URL}${currentUser.avatar}` 
+    ? `https://restaurantapp-qi00.onrender.com${currentUser.avatar}` 
     : leon;
 
   return (
