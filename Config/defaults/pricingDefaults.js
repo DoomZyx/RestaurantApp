@@ -22,112 +22,27 @@ export const DEFAULT_RESTAURANT_INFO = {
 export const DEFAULT_MENU = {
   pizzas: {
     nom: "Pizzas",
-    produits: [
-      { 
-        nom: "Margherita", 
-        description: "Tomate, mozzarella, basilic", 
-        prixBase: 12.50, 
-        taille: "Moyenne", 
-        disponible: true 
-      },
-      { 
-        nom: "Pepperoni", 
-        description: "Tomate, mozzarella, pepperoni", 
-        prixBase: 14.50, 
-        taille: "Moyenne", 
-        disponible: true 
-      },
-      { 
-        nom: "Quatre Fromages", 
-        description: "Mozzarella, gorgonzola, parmesan, chèvre", 
-        prixBase: 16.50, 
-        taille: "Moyenne", 
-        disponible: true 
-      }
-    ]
+    produits: []
   },
   burgers: {
     nom: "Burgers",
-    produits: [
-      { 
-        nom: "Cheeseburger", 
-        description: "Steak, cheddar, salade, tomate", 
-        prixBase: 11.50, 
-        disponible: true 
-      },
-      { 
-        nom: "Bacon Burger", 
-        description: "Steak, bacon, cheddar, oignons", 
-        prixBase: 13.50, 
-        disponible: true 
-      },
-      { 
-        nom: "Chicken Burger", 
-        description: "Poulet pané, salade, tomate", 
-        prixBase: 12.50, 
-        disponible: true 
-      }
-    ]
+    produits: []
   },
   salades: {
     nom: "Salades",
-    produits: [
-      { 
-        nom: "Salade César", 
-        description: "Salade, poulet, parmesan, croûtons", 
-        prixBase: 9.50, 
-        disponible: true 
-      },
-      { 
-        nom: "Salade Grecque", 
-        description: "Salade, tomates, olives, feta", 
-        prixBase: 8.50, 
-        disponible: true 
-      }
-    ]
+    produits: []
   },
   boissons: {
     nom: "Boissons",
-    produits: [
-      { 
-        nom: "Coca-Cola", 
-        description: "Boisson gazeuse", 
-        prixBase: 2.50, 
-        taille: "33cl", 
-        disponible: true 
-      },
-      { 
-        nom: "Eau", 
-        description: "Eau plate", 
-        prixBase: 2.00, 
-        taille: "33cl", 
-        disponible: true 
-      },
-      { 
-        nom: "Jus d'orange", 
-        description: "Jus de fruits", 
-        prixBase: 3.00, 
-        taille: "33cl", 
-        disponible: true 
-      }
-    ]
+    produits: []
   },
   desserts: {
     nom: "Desserts",
-    produits: [
-      { 
-        nom: "Tiramisu", 
-        description: "Dessert italien", 
-        prixBase: 4.50, 
-        disponible: true 
-      },
-      { 
-        nom: "Tarte aux pommes", 
-        description: "Tarte traditionnelle", 
-        prixBase: 3.50, 
-        disponible: true 
-      }
-    ]
+    produits: []
+  },
+  tacos: {
+    nom: "Tacos",
+    produits: []
   }
 };
 

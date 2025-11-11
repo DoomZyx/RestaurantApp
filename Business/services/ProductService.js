@@ -60,6 +60,15 @@ export class ProductService {
       produitNettoye.taille = productData.taille || '33cl';
     }
 
+    // Ajouter les champs spécifiques aux tacos
+    if (category === 'tacos') {
+      produitNettoye.personnalisable = Boolean(productData.personnalisable);
+      produitNettoye.maxViandes = parseInt(productData.maxViandes) || 1;
+      produitNettoye.ingredientsInclus = productData.ingredientsInclus || {};
+      produitNettoye.ingredientsDisponibles = productData.ingredientsDisponibles || {};
+      produitNettoye.options = productData.options || {};
+    }
+
     pricing.menuPricing[category].produits.push(produitNettoye);
     pricing.markModified('menuPricing');
     pricing.derniereModification = new Date();
@@ -67,9 +76,8 @@ export class ProductService {
 
     console.log(`✅ Produit "${produitNettoye.nom}" ajouté à la catégorie "${category}"`);
 
-    // Recharger et retourner
-    const updated = await PricingModel.findOne();
-    return updated.toObject().menuPricing[category];
+    // Retourner le produit créé avec son _id
+    return produitNettoye;
   }
 
   /**
@@ -80,6 +88,8 @@ export class ProductService {
    * @returns {Promise<Object>} Produit mis à jour
    */
   static async updateProduct(category, productId, productData) {
+    console.log('🔍 ProductService.updateProduct appelé avec:', { category, productId, productData });
+    
     const pricing = await PricingModel.findOne();
     if (!pricing) {
       throw new Error("Configuration des tarifs non trouvée");
@@ -94,10 +104,17 @@ export class ProductService {
       throw new Error("Produit non trouvé");
     }
 
+    console.log('📝 Produit trouvé:', produit);
+
     // Validation
     const mergedData = { ...produit, ...productData };
+    console.log('🔍 Données fusionnées pour validation:', mergedData);
+    
     const validation = PricingValidator.validateProduct(mergedData, category);
+    console.log('✅ Résultat de validation:', validation);
+    
     if (!validation.isValid) {
+      console.error('❌ Validation échouée:', validation.errors);
       throw new Error(validation.errors.join(', '));
     }
 
@@ -114,6 +131,25 @@ export class ProductService {
       donneesMisesAJour.taille = productData.taille || produit.taille || 'Moyenne';
     } else if (category === 'boissons') {
       donneesMisesAJour.taille = productData.taille || produit.taille || '33cl';
+    }
+
+    // Gérer les champs spécifiques aux tacos (personnalisables)
+    if (category === 'tacos') {
+      if (productData.personnalisable !== undefined) {
+        donneesMisesAJour.personnalisable = Boolean(productData.personnalisable);
+      }
+      if (productData.maxViandes !== undefined) {
+        donneesMisesAJour.maxViandes = parseInt(productData.maxViandes);
+      }
+      if (productData.ingredientsInclus) {
+        donneesMisesAJour.ingredientsInclus = productData.ingredientsInclus;
+      }
+      if (productData.ingredientsDisponibles) {
+        donneesMisesAJour.ingredientsDisponibles = productData.ingredientsDisponibles;
+      }
+      if (productData.options !== undefined) {
+        donneesMisesAJour.options = productData.options;
+      }
     }
 
     Object.assign(produit, donneesMisesAJour);
