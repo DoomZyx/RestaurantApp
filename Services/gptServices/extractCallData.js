@@ -615,13 +615,6 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       : null
     };
 
-    // Logs pour debugging
-      client: `${validatedData.nom} - ${validatedData.telephone}`,
-      type_demande: validatedData.type_demande,
-      services: validatedData.services,
-      appointment: validatedData.appointment ? "✅ Présent" : "❌ Absent"
-    });
-
     if (validatedData.appointment) {
     }
 
