@@ -124,9 +124,10 @@ function AppointmentsPage() {
 
         {/* Messages d'erreur */} 
         {error && (
-          <div className="error-message">
-            <span>{error}</span>
-            <button onClick={clearError}>✕</button>
+          <div className="notification-toast error-message">
+            <i className="bi bi-exclamation-triangle-fill"></i>
+            <span className="message-content">{error}</span>
+            <button className="close-btn" onClick={clearError}>✕</button>
           </div>
         )}
 

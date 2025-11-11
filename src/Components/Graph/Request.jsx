@@ -18,7 +18,6 @@ export default function RequestStatus() {
     async function fetchDemandes() {
       try {
         const json = await fetchCalls();
-        console.log("données: ", json);
 
         const nouveau = json.data.filter(
           (demande) => demande.statut === "nouveau"
@@ -37,7 +36,6 @@ export default function RequestStatus() {
           { name: "En cours", value: enCours.length },
         ]);
       } catch (error) {
-        console.error("Erreur API demandes:", error);
       }
     }
 

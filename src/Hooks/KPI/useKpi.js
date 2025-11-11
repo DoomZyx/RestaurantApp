@@ -27,8 +27,6 @@ export function useKpi() {
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdayStr = yesterday.toISOString().split('T')[0];
 
-    console.log("📅 Date du jour pour KPI:", today);
-    console.log("📦 Données reçues pour calcul KPI:", callsData);
 
     // Initialisation des compteurs
     const stats = {
@@ -41,11 +39,9 @@ export function useKpi() {
     };
 
     callsData.forEach(item => {
-      console.log(`📊 Item: date=${item.date}, statut=${item.statut}, count=${item.count}`);
       
       // Comptage UNIQUEMENT pour aujourd'hui
       if (item.date === today) {
-        console.log(`✅ Match aujourd'hui ! Ajout de ${item.count} à ${item.statut}`);
         
         switch(item.statut) {
           case 'nouveau':
@@ -65,7 +61,6 @@ export function useKpi() {
         // Toutes les nouvelles demandes d'aujourd'hui
         stats.newToday += item.count;
       } else {
-        console.log(`❌ Pas aujourd'hui: "${item.date}" !== "${today}"`);
       }
 
       // Demandes en cours depuis plus de 24h
@@ -74,7 +69,6 @@ export function useKpi() {
       }
     });
 
-    console.log("📈 Stats calculées:", stats);
     return stats;
   };
 
@@ -167,7 +161,6 @@ export function useKpi() {
         }));
       } catch (ordersErr) {
         // Ne pas faire échouer tout le KPI si cette partie échoue
-        console.warn('KPI: impossible de charger les commandes/pricing du jour:', ordersErr);
         setTodayOrders([]);
         setUpcomingOrders([]);
         setKpiData(prev => ({
@@ -180,7 +173,6 @@ export function useKpi() {
 
     } catch (err) {
       setError(err.message);
-      console.error('Erreur KPI:', err);
     } finally {
       setLoading(false);
     }

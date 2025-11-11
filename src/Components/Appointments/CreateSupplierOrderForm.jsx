@@ -27,7 +27,6 @@ export function CreateSupplierOrderForm({ onSubmit, onCancel, loading }) {
           setClients(response.data);
         }
       } catch (error) {
-        console.error("Erreur lors du chargement des clients:", error);
       } finally {
         setLoadingClients(false);
       }

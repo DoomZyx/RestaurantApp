@@ -21,7 +21,6 @@ export function useNotifications() {
     try {
       await notificationService.notifyNewCall(callData, defaultSettings);
     } catch (error) {
-      console.error('❌ Erreur notification nouvel appel:', error);
     }
   }, []);
 
@@ -32,7 +31,6 @@ export function useNotifications() {
     try {
       await notificationService.notifyStatusChange(callData, oldStatus, newStatus, defaultSettings);
     } catch (error) {
-      console.error('❌ Erreur notification changement statut:', error);
     }
   }, []);
 
@@ -49,7 +47,6 @@ export function useNotifications() {
         );
       }
     } catch (err) {
-      console.error('❌ Erreur notification erreur:', err);
     }
   }, []);
 
@@ -70,7 +67,6 @@ export function useNotifications() {
         );
       }
     } catch (error) {
-      console.error('❌ Erreur notification succès:', error);
     }
   }, []);
 
@@ -83,7 +79,6 @@ export function useNotifications() {
         await notificationService.initialize();
       }
     } catch (error) {
-      console.error('❌ Erreur initialisation notifications:', error);
     }
   }, []);
 

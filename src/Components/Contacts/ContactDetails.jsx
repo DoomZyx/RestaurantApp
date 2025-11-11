@@ -13,7 +13,6 @@ export function ContactDetails({
       try {
         await onDelete(selectedClient._id);
       } catch (error) {
-        console.error("Erreur lors de la suppression:", error);
         alert("Erreur lors de la suppression du contact");
       }
     }
@@ -94,7 +93,7 @@ export function ContactDetails({
         )}
 
         {submitSuccess && currentOrder && (
-          <div className="success-message">
+          <div className="notification-toast success-message">
             <i className="bi bi-check-circle"></i>
             <div className="success-content">
               <span className="success-title">Commande confirmée par le fournisseur !</span>

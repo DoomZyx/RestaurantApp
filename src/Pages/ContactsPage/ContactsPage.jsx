@@ -33,9 +33,9 @@ function ContactsPage() {
     return (
       <AppLayout>
         <div className="contacts-page">
-          <div className="error-message">
+          <div className="notification-toast error-message">
             <i className="bi bi-exclamation-triangle"></i>
-            <p>{error}</p>
+            <span className="message-content">{error}</span>
           </div>
         </div>
       </AppLayout>
@@ -57,9 +57,9 @@ function ContactsPage() {
           </div>
 
           {successMessage && (
-            <div className="success-message">
+            <div className="notification-toast success-message">
               <i className="bi bi-check-circle"></i>
-              <span>{successMessage}</span>
+              <span className="message-content">{successMessage}</span>
             </div>
           )}
         </header>

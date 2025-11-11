@@ -24,7 +24,6 @@ function AppointmentsWidget() {
     try {
       await changeAppointmentStatus(appointmentId, newStatus);
     } catch (error) {
-      console.error("Erreur lors du changement de statut:", error);
     }
   };
 

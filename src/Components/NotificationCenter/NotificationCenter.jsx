@@ -20,27 +20,22 @@ const NotificationCenter = () => {
     // Marquer comme lue
     notificationService.markAsRead(notification.id);
     
-    console.log("🔔 Clic sur notification:", notification);
     
     // Naviguer selon le type de notification
     if (notification.notificationType === "call_completed") {
       // Si on a un ID de commande, aller vers les rendez-vous avec l'ID
       if (notification.details?.orderId) {
         navigate(`/appointments?orderid=${notification.details.orderId}`);
-        console.log("→ Navigation vers /appointments avec orderid:", notification.details.orderId);
       } else {
         // Sinon aller vers les appels (la route s'appelle /calls-list)
         navigate("/calls-list");
-        console.log("→ Navigation vers /calls-list");
       }
     } else if (notification.notificationType === "new_order") {
       // Aller à la page des rendez-vous avec l'ID si disponible
       if (notification.details?.orderId) {
         navigate(`/appointments?orderid=${notification.details.orderId}`);
-        console.log("→ Navigation vers /appointments avec orderid:", notification.details.orderId);
       } else {
         navigate("/appointments");
-        console.log("→ Navigation vers /appointments");
       }
     }
     

@@ -27,9 +27,9 @@ function Login() {
         </div>
 
         {error && (
-          <div className="error-message">
+          <div className="notification-toast error-message">
             <i className="bi bi-exclamation-triangle"></i>
-            {error}
+            <span className="message-content">{error}</span>
           </div>
         )}
 

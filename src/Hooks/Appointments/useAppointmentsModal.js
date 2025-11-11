@@ -40,7 +40,6 @@ export function useAppointmentsModal() {
         openDetailsModal(appointment);
       }
     } catch (error) {
-      console.error("Erreur lors du chargement du rendez-vous:", error);
     }
   };
 

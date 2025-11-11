@@ -30,7 +30,6 @@ class NotificationService {
 
       this.isInitialized = true;
     } catch (error) {
-      console.error("❌ Erreur initialisation notifications:", error);
     }
   }
 
@@ -145,9 +144,7 @@ class NotificationService {
         data: details,
       });
 
-      console.log("🔔 Notification système déclenchée:", title);
     } catch (error) {
-      console.error("❌ Erreur notification système:", error);
     }
   }
 
@@ -192,7 +189,6 @@ class NotificationService {
         oscillator.stop(this.audioContext.currentTime + i * 0.2 + 0.3);
       }
     } catch (error) {
-      console.error("❌ Erreur lecture son notification:", error);
     }
   }
 
@@ -231,7 +227,6 @@ class NotificationService {
         return notification;
       }
     } catch (error) {
-      console.error("❌ Erreur notification desktop:", error);
     }
   }
 
@@ -244,7 +239,6 @@ class NotificationService {
   async sendEmailNotification(to, subject, message) {
     try {
       // Simulation d'envoi d'email
-      console.log("📧 Envoi email notification:", { to, subject, message });
 
       // Ici vous pourriez appeler votre API backend pour envoyer l'email
       const response = await fetch("/api/notifications/email", {
@@ -262,7 +256,6 @@ class NotificationService {
 
       return await response.json();
     } catch (error) {
-      console.error("❌ Erreur envoi email notification:", error);
       throw error;
     }
   }
@@ -311,9 +304,7 @@ class NotificationService {
         );
       }
 
-      console.log("✅ Notification nouvel appel envoyée");
     } catch (error) {
-      console.error("❌ Erreur notification nouvel appel:", error);
     }
   }
 
@@ -344,9 +335,7 @@ class NotificationService {
         });
       }
 
-      console.log("✅ Notification changement statut envoyée");
     } catch (error) {
-      console.error("❌ Erreur notification changement statut:", error);
     }
   }
 

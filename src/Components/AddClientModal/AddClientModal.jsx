@@ -56,7 +56,6 @@ function AddClientModal({ isOpen, onClose, onSubmit }) {
       await onSubmit(formData);
       handleClose();
     } catch (error) {
-      console.error("Erreur lors de la soumission:", error);
     } finally {
       setIsSubmitting(false);
     }

@@ -1685,6 +1685,83 @@
         }
       }
 
+      // Container pour un item avec ses options
+      .item-row-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      // Options personnalisables
+      .item-options {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+
+        .option-group {
+          .option-label {
+            display: block;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+
+            .required {
+              color: #dc3545;
+              margin-left: 4px;
+            }
+          }
+
+          .option-choices {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            .choice-label {
+              display: inline-flex;
+              align-items: center;
+              gap: 6px;
+              padding: 8px 14px;
+              background: rgba(255, 255, 255, 0.6);
+              border: 2px solid rgba(0, 0, 0, 0.1);
+              border-radius: 8px;
+              cursor: pointer;
+              transition: all 0.2s;
+              font-size: 0.9rem;
+              color: var(--color-text-primary);
+              font-weight: 500;
+
+              input[type="checkbox"],
+              input[type="radio"] {
+                cursor: pointer;
+                width: 16px;
+                height: 16px;
+              }
+
+              &:hover {
+                background: rgba(255, 255, 255, 0.9);
+                border-color: var(--color-accent);
+              }
+
+              input:checked + & {
+                background: var(--color-accent);
+                color: white;
+                border-color: var(--color-accent);
+              }
+            }
+          }
+        }
+      }
+
       .add-item-container {
         margin-top: 8px;
 

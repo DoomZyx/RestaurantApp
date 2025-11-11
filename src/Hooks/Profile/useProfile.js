@@ -38,12 +38,9 @@ export function useProfile() {
       setError(null);
       const response = await getProfile();
       
-      console.log("📦 Réponse API getProfile:", response);
       
       if (response.success && response.data?.user) {
         const user = response.data.user;
-        console.log("👤 Données utilisateur:", user);
-        console.log("🖼️ Avatar URL depuis API:", user.avatar);
         
         const formattedData = {
           nom: user.username || "",
@@ -59,7 +56,6 @@ export function useProfile() {
         setTempData(formattedData);
       }
     } catch (err) {
-      console.error("Erreur chargement profil:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -106,7 +102,6 @@ export function useProfile() {
           currentUser.poste = updateData.poste;
           currentUser.departement = updateData.departement;
           localStorage.setItem("user", JSON.stringify(currentUser));
-          console.log("🔄 localStorage mis à jour avec les nouvelles données utilisateur");
         }
         
         setEditMode(false);
@@ -114,7 +109,6 @@ export function useProfile() {
         setTimeout(() => setSuccess(false), 3000);
       }
     } catch (err) {
-      console.error("Erreur sauvegarde profil:", err);
       setError(err.message);
     } finally {
       setSaving(false);
@@ -126,12 +120,9 @@ export function useProfile() {
       setSaving(true);
       setError(null);
 
-      console.log("📤 Upload avatar en cours...", file.name);
       const response = await uploadAvatarAPI(file);
-      console.log("✅ Réponse upload avatar:", response);
 
       if (response.success) {
-        console.log("🖼️ Nouvel avatar URL:", response.data?.avatar);
         // Recharger le profil pour afficher le nouvel avatar
         await loadProfile();
         
@@ -140,14 +131,12 @@ export function useProfile() {
         if (currentUser && response.data?.avatar) {
           currentUser.avatar = response.data.avatar;
           localStorage.setItem("user", JSON.stringify(currentUser));
-          console.log("🔄 localStorage mis à jour avec le nouvel avatar");
         }
         
         setSuccess(true);
         setTimeout(() => setSuccess(false), 3000);
       }
     } catch (err) {
-      console.error("Erreur upload avatar:", err);
       setError(err.message);
     } finally {
       setSaving(false);

@@ -40,7 +40,6 @@ export function useSearch() {
     } catch (err) {
       setError(err.message);
       setSearchResults([]);
-      console.error("Erreur de recherche:", err);
     } finally {
       setLoading(false);
     }

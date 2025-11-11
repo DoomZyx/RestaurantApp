@@ -29,7 +29,6 @@ export function useOrderForm(selectedClient) {
       const orders = await getSupplierOrders(selectedClient._id);
       setOrderHistory(orders);
     } catch (error) {
-      console.error("Erreur chargement historique:", error);
       setOrderHistory([]);
     }
   };
@@ -136,7 +135,6 @@ export function useOrderForm(selectedClient) {
       }, 5000);
 
     } catch (error) {
-      console.error("Erreur lors de la soumission:", error);
       alert(`Erreur: ${error.message}`);
       setCallStatus(null);
     } finally {

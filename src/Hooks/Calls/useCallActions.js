@@ -143,7 +143,6 @@ export function useCallActions() {
       notifySuccess("Export réalisé avec succès");
     } catch (err) {
       notifyError("Erreur lors de l'export");
-      console.error("Erreur export:", err);
     }
   };
 

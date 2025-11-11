@@ -115,7 +115,6 @@ export function useConfiguration() {
         setError(response.error || "Erreur lors du chargement");
       }
     } catch (err) {
-      console.error("Erreur:", err);
       setError("Impossible de charger la configuration");
     } finally {
       setLoading(false);
@@ -214,7 +213,6 @@ export function useConfiguration() {
         setError(response.error || "Erreur lors de l'ajout du produit");
       }
     } catch (err) {
-      console.error("Erreur:", err);
       setError("Erreur lors de l'ajout du produit");
     }
   };

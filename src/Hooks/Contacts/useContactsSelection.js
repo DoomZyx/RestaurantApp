@@ -14,7 +14,6 @@ export function useContactsSelection() {
       const response = await fetchClientHistory(clientId);
       setClientHistory(response.data);
     } catch (error) {
-      console.error("Erreur lors du chargement de l'historique:", error);
       setError("Erreur lors du chargement de l'historique");
     } finally {
       setIsLoadingHistory(false);

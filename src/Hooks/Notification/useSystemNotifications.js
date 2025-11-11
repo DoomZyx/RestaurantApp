@@ -12,7 +12,6 @@ export function useSystemNotifications() {
       try {
         await notificationService.initialize();
       } catch (error) {
-        console.error("❌ Erreur initialisation notifications système:", error);
       }
     };
 

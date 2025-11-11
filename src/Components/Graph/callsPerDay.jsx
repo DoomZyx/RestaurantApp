@@ -44,7 +44,6 @@ export default function CallsPerDay() {
 
         setCallsData(filteredToday);
       } catch (error) {
-        console.error("API Error:", error);
       }
     }
 
@@ -56,7 +55,6 @@ export default function CallsPerDay() {
     // Retourne juste la même barre sans changer le fill ou ajouter un fond
     return <rect x={x} y={y} width={width} height={height} fill={fill} />;
   };
-  console.log("callsData used by BarChart:", callsData);
 
   return (
     <div className="chart-container"

@@ -73,7 +73,6 @@ export function useAppointments() {
         }
       } catch (err) {
         setError(err.message);
-        console.error("Erreur lors du chargement des rendez-vous:", err);
       } finally {
         setLoading(false);
       }
@@ -92,7 +91,6 @@ export function useAppointments() {
       }
     } catch (err) {
       setError(err.message);
-      console.error("Erreur lors du chargement des rendez-vous du jour:", err);
     }
   }, []);
 
@@ -110,7 +108,6 @@ export function useAppointments() {
       }
     } catch (err) {
       setError(err.message);
-      console.error("Erreur lors du chargement du rendez-vous:", err);
       return null;
     } finally {
       setLoading(false);
@@ -134,7 +131,6 @@ export function useAppointments() {
         }
       } catch (err) {
         setError(err.message);
-        console.error("Erreur lors de la création du rendez-vous:", err);
         throw err;
       } finally {
         setLoading(false);
@@ -172,7 +168,6 @@ export function useAppointments() {
         }
       } catch (err) {
         setError(err.message);
-        console.error("Erreur lors de la mise à jour du rendez-vous:", err);
         throw err;
       } finally {
         setLoading(false);
@@ -209,7 +204,6 @@ export function useAppointments() {
         }
       } catch (err) {
         setError(err.message);
-        console.error("Erreur lors de la mise à jour du statut:", err);
         throw err;
       }
     },
@@ -239,7 +233,6 @@ export function useAppointments() {
         }
       } catch (err) {
         setError(err.message);
-        console.error("Erreur lors de la suppression du rendez-vous:", err);
         throw err;
       } finally {
         setLoading(false);
@@ -264,7 +257,6 @@ export function useAppointments() {
       return { available: false, conflicts: 0 };
     } catch (err) {
       setError(err.message);
-      console.error("Erreur lors de la vérification de disponibilité:", err);
       return { available: false, conflicts: 0 };
     }
   }, []);
@@ -284,7 +276,6 @@ export function useAppointments() {
 
   // Callback pour rafraîchir quand une nouvelle commande arrive via WebSocket
   const handleNewOrder = useCallback((notificationData) => {
-    console.log("🔄 Rafraîchissement automatique des rendez-vous...", notificationData);
     if (loadAppointmentsRef.current) {
       loadAppointmentsRef.current(paginationRef.current.page, paginationRef.current.limit, filtersRef.current);
     }
@@ -340,15 +331,11 @@ export function useAppointments() {
   useEffect(() => {
     const orderId = searchParams.get('orderid');
     if (orderId && appointments.length > 0 && !modalHook.showModal) {
-      console.log("Recherche de la commande:", orderId);
       const appointment = appointments.find(a => a._id === orderId);
       if (appointment) {
-        console.log("Commande trouvée, ouverture du détail:", appointment);
         modalHook.openDetailsModal(appointment);
         setSearchParams({});
       } else {
-        console.warn("Commande non trouvée dans la liste");
-        console.log("📋 IDs disponibles:", appointments.map(a => a._id));
       }
     }
   }, [searchParams, appointments, modalHook, setSearchParams]);
@@ -358,7 +345,6 @@ export function useAppointments() {
     try {
       await changeAppointmentStatus(appointmentId, newStatus);
     } catch (error) {
-      console.error("Erreur lors du changement de statut:", error);
     }
   }, [changeAppointmentStatus]);
 
@@ -368,7 +354,6 @@ export function useAppointments() {
         await removeAppointment(appointmentId);
         modalHook.closeDetailsModal();
       } catch (error) {
-        console.error("Erreur lors de la suppression:", error);
       }
     }
   }, [removeAppointment, modalHook]);
@@ -384,7 +369,6 @@ export function useAppointments() {
       if (filtersHook.filters.modalite) filterParams.modalite = filtersHook.filters.modalite;
       loadAppointments(1, 50, filterParams);
     } catch (error) {
-      console.error("Erreur lors de la création:", error);
     }
   }, [addAppointment, modalHook, filtersHook.filters, loadAppointments]);
 
@@ -399,7 +383,6 @@ export function useAppointments() {
       if (filtersHook.filters.modalite) filterParams.modalite = filtersHook.filters.modalite;
       loadAppointments(1, 50, filterParams);
     } catch (error) {
-      console.error("Erreur lors de la modification:", error);
     }
   }, [editAppointment, modalHook, filtersHook.filters, loadAppointments]);
 

@@ -40,9 +40,9 @@ function Admin() {
     <AppLayout>
       <div className="admin-container">
         {error && (
-          <div className="error-message">
+          <div className="notification-toast error-message">
             <i className="bi bi-exclamation-triangle"></i>
-            {error}
+            <span className="message-content">{error}</span>
             <button onClick={() => setError(null)} className="close-btn">
               ×
             </button>
@@ -50,9 +50,9 @@ function Admin() {
         )}
 
         {successMessage && (
-          <div className="success-message">
+          <div className="notification-toast success-message">
             <i className="bi bi-check-circle"></i>
-            {successMessage}
+            <span className="message-content">{successMessage}</span>
           </div>
         )}
         <div className="tab-content">

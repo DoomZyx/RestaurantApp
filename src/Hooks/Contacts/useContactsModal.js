@@ -28,7 +28,6 @@ export function useContactsModal() {
       closeModal();
     } catch (error) {
       // L'erreur est déjà gérée dans le hook principal
-      console.error("Erreur lors de l'ajout du client:", error);
     }
   };
 

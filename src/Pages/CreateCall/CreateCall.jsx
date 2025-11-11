@@ -20,14 +20,16 @@ function CreateCall() {
     <AppLayout>
       <div className="create-call-container">
         {success && (
-          <div className="success-message">
-            ✅ Appel créé avec succès !
+          <div className="notification-toast success-message">
+            <i className="bi bi-check-circle-fill"></i>
+            <span className="message-content">Appel créé avec succès !</span>
           </div>
         )}
 
         {error && (
-          <div className="error-message">
-            ❌ {error}
+          <div className="notification-toast error-message">
+            <i className="bi bi-exclamation-triangle-fill"></i>
+            <span className="message-content">{error}</span>
           </div>
         )}
 

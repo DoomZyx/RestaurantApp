@@ -73,7 +73,6 @@ export async function updateCallStatus(id, status) {
  const url = `${VITE_API_URL}api/calls/${id}/status`;
  const body = JSON.stringify({ statut: status });
 
- console.log("Tentative de mise à jour du statut:", { url, id, status, body });
 
  const res = await fetch(url, {
    method: "PATCH",
@@ -84,11 +83,9 @@ export async function updateCallStatus(id, status) {
    body: body,
  });
 
- console.log("Réponse mise à jour statut:", res.status, res.statusText);
 
  if (!res.ok) {
    const errorText = await res.text();
-   console.error("Erreur détaillée mise à jour statut:", errorText);
    throw new Error(
      `Erreur lors de la mise à jour du statut: ${res.status} ${res.statusText}`
    );
@@ -102,7 +99,6 @@ export async function deleteCall(id) {
  if (!id) throw new Error("ID manquant pour la suppression");
 
  const url = `${VITE_API_URL}api/calls/${id}`;
- console.log("Tentative de suppression:", url);
 
  const res = await fetch(url, {
    method: "DELETE",
@@ -110,11 +106,9 @@ export async function deleteCall(id) {
      "x-api-key": `${VITE_API_KEY}`,
    },
  });
- console.log("Réponse suppression:", res.status, res.statusText);
 
  if (!res.ok) {
    const errorText = await res.text();
-   console.error("Erreur détaillée:", errorText);
    throw new Error(
      `Erreur lors de la suppression: ${res.status} ${res.statusText}`
    );

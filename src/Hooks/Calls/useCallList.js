@@ -52,7 +52,6 @@ export function useCallList() {
      }
    } catch (err) {
      setError(err.message);
-     console.error("Erreur:", err);
    } finally {
      setLoading(false);
    }
@@ -94,7 +93,6 @@ export function useCallList() {
 
  // Callback pour rafraîchir quand un nouvel appel arrive via WebSocket
  const handleNewCall = useCallback((notificationData) => {
-   console.log("🔄 Rafraîchissement automatique des appels...", notificationData);
    if (loadCallsRef.current) {
      loadCallsRef.current(paginationRef.current, filtersRef.current);
    }

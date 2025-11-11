@@ -39,7 +39,6 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
         });
         setMenuProducts(flattened);
       } catch (e) {
-        console.warn("Impossible de charger la configuration des produits:", e?.message);
         setMenuProducts([]);
       }
     };

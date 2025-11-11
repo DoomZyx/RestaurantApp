@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Twemoji from "react-twemoji";
 import "./Base/base.scss";
+import "./Styles/notifications.scss";
 import "./Components/Common/EmojiText.scss";
 import { isAuthenticated, isAdmin } from "./API/auth";
 import Login from "./Pages/Login/Login";

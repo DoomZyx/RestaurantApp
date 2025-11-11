@@ -68,17 +68,17 @@ function Profile() {
     <AppLayout>
       <div className="my-profile-container">
         {success && (
-          <div className="success-message">
+          <div className="notification-toast success-message">
             <i className="bi bi-check-circle-fill"></i>
-            {t('profile.profileUpdated')}
+            <span className="message-content">{t('profile.profileUpdated')}</span>
           </div>
         )}
 
         {error && (
-          <div className="error-message">
+          <div className="notification-toast error-message">
             <i className="bi bi-exclamation-triangle-fill"></i>
-            {error}
-            <button onClick={() => setError(null)}><EmojiText>✕</EmojiText></button>
+            <span className="message-content">{error}</span>
+            <button className="close-btn" onClick={() => setError(null)}><EmojiText>✕</EmojiText></button>
           </div>
         )}
 
@@ -93,11 +93,8 @@ function Profile() {
                       src={profileData.avatar.startsWith('http') ? profileData.avatar : `${import.meta.env.VITE_API_URL}${profileData.avatar}`}
                       alt="Avatar"
                       onError={(e) => {
-                        console.error("Erreur chargement avatar:", e.target.src);
-                        console.log("📋 Avatar URL dans DB:", profileData.avatar);
                       }}
                       onLoad={() => {
-                        console.log("✅ Avatar chargé:", profileData.avatar);
                       }}
                     />
                   ) : (

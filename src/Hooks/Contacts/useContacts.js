@@ -27,7 +27,6 @@ export function useContacts() {
       const response = await fetchClients();
       setClients(response.data || []);
     } catch (error) {
-      console.error("Erreur lors du chargement des clients:", error);
       setError("Erreur lors du chargement des clients");
     } finally {
       setIsLoading(false);
@@ -45,7 +44,6 @@ export function useContacts() {
 
       return response.data;
     } catch (error) {
-      console.error("Erreur lors de la création du client:", error);
       setError(error.message);
       throw error;
     }
@@ -67,7 +65,6 @@ export function useContacts() {
 
       return true;
     } catch (error) {
-      console.error("Erreur lors de la suppression du client:", error);
       setError(error.message);
       throw error;
     }

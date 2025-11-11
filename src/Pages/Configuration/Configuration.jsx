@@ -444,16 +444,11 @@ function Configuration() {
                                         const updatedProduits = safePricing.menuPricing[categorie]?.produits || [];
                                         const updatedProduit = updatedProduits[index];
                                         
-                                        console.log('🔍 Debug - Produit récupéré:', updatedProduit);
-                                        console.log('🔍 Debug - ID du produit:', updatedProduit?._id);
-                                        console.log('🔍 Debug - Produit original (produit):', produit);
-                                        
                                         if (updatedProduit) {
                                           // Utiliser l'_id du produit original si celui de updatedProduit est undefined
                                           const productId = updatedProduit._id || produit._id;
                                           
                                           if (!productId) {
-                                            console.error('❌ Impossible de trouver l\'ID du produit');
                                             setError('Erreur: ID du produit manquant');
                                             return;
                                           }
@@ -470,12 +465,6 @@ function Configuration() {
                                             ...(cleanData.taille && { taille: cleanData.taille }),
                                             ...(cleanData.options && { options: cleanData.options })
                                           };
-                                          
-                                          console.log('📤 Données envoyées au backend:', {
-                                            categorie,
-                                            produitId: productId,
-                                            produitData: produitToSave
-                                          });
                                           
                                           handleProductUpdate(categorie, productId, produitToSave);
                                         }
@@ -501,7 +490,6 @@ function Configuration() {
                               <button 
                                 onClick={() => {
                                   if (!produit._id) {
-                                    console.error('❌ Produit sans _id:', produit);
                                     setError('Impossible de supprimer: produit sans ID. Veuillez recharger la page.');
                                     return;
                                   }
@@ -528,7 +516,7 @@ function Configuration() {
                 
                   <div className="categories-actions">
                   <button onClick={handleAddCategory} className="btn-addCategories">
-                    ➕ {t('configuration.menu.addCategory')}
+                    {t('configuration.menu.addCategory')}
                   </button>
                 </div>
               </div>

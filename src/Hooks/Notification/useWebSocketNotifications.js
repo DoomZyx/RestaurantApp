@@ -17,14 +17,11 @@ export function useWebSocketNotifications(onNewCall, onNewOrder) {
       // URL du WebSocket depuis les variables d'environnement
       const wsUrl = import.meta.env.VITE_WS_URL || "ws://localhost:8080/ws/notifications";
       
-      console.log("🔌 Tentative de connexion au WebSocket:", wsUrl);
-      console.log("📋 Variables d'environnement:", import.meta.env);
       
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 
       ws.onopen = () => {
-        console.log("✅ WebSocket connecté");
         reconnectAttemptsRef.current = 0;
         
         // Connexion au service de notification
@@ -34,7 +31,6 @@ export function useWebSocketNotifications(onNewCall, onNewOrder) {
       ws.onmessage = async (event) => {
         try {
           const data = JSON.parse(event.data);
-          console.log("📨 Message WebSocket reçu:", data);
 
           if (data.type === "notification") {
             const { notificationType, data: notificationData } = data;
@@ -45,7 +41,6 @@ export function useWebSocketNotifications(onNewCall, onNewOrder) {
             // Appeler les callbacks selon le type de notification
             switch (notificationType) {
               case "call_completed":
-                console.log("📞 Nouvel appel détecté, rafraîchissement...");
                 if (onNewCall) {
                   onNewCall(notificationData);
                 }
@@ -55,52 +50,43 @@ export function useWebSocketNotifications(onNewCall, onNewOrder) {
                 break;
 
               case "status_update":
-                console.log("🔄 Statut mis à jour, rafraîchissement...");
                 if (onNewCall) {
                   onNewCall(notificationData);
                 }
                 break;
 
               case "new_client":
-                console.log("👤 Nouveau client détecté");
                 break;
 
               default:
-                console.log("🔔 Notification reçue:", notificationType);
             }
           }
 
           if (data.type === "connected") {
-            console.log("✅ Confirmation connexion WebSocket");
           }
 
           if (data.type === "pong") {
             // Réponse au ping (heartbeat)
           }
         } catch (error) {
-          console.error("❌ Erreur traitement message WebSocket:", error);
         }
       };
 
       ws.onerror = (error) => {
-        console.error("❌ Erreur WebSocket:", error);
       };
 
       ws.onclose = () => {
-        console.log("🔌 WebSocket déconnecté");
         wsRef.current = null;
 
         // Tentative de reconnexion
         if (reconnectAttemptsRef.current < maxReconnectAttempts) {
           const delay = Math.min(1000 * Math.pow(2, reconnectAttemptsRef.current), 30000);
-          console.log(`🔄 Reconnexion dans ${delay}ms... (tentative ${reconnectAttemptsRef.current + 1}/${maxReconnectAttempts})`);
           
           reconnectTimeoutRef.current = setTimeout(() => {
             reconnectAttemptsRef.current++;
             connectWebSocket();
           }, delay);
         } else {
-          console.error("❌ Nombre maximum de tentatives de reconnexion atteint");
         }
       };
 
@@ -115,7 +101,6 @@ export function useWebSocketNotifications(onNewCall, onNewOrder) {
       ws.pingInterval = pingInterval;
 
     } catch (error) {
-      console.error("❌ Erreur connexion WebSocket:", error);
     }
   }, [onNewCall, onNewOrder]);
 

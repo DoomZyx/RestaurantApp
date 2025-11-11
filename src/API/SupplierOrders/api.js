@@ -22,7 +22,6 @@ export async function createSupplierOrder(orderData) {
 
     return await response.json();
   } catch (error) {
-    console.error("Erreur API createSupplierOrder:", error);
     throw error;
   }
 }
@@ -48,7 +47,6 @@ export async function getSupplierOrders(fournisseurId) {
     const data = await response.json();
     return data.orders || [];
   } catch (error) {
-    console.error("Erreur API getSupplierOrders:", error);
     throw error;
   }
 }
@@ -74,7 +72,6 @@ export async function getSupplierOrder(orderId) {
     const data = await response.json();
     return data.order;
   } catch (error) {
-    console.error("Erreur API getSupplierOrder:", error);
     throw error;
   }
 }
@@ -101,7 +98,6 @@ export async function getAllSupplierOrders(filters = {}) {
     const data = await response.json();
     return data.orders || [];
   } catch (error) {
-    console.error("Erreur API getAllSupplierOrders:", error);
     throw error;
   }
 }
@@ -138,7 +134,6 @@ export async function pollOrderStatus(orderId, onUpdate, maxAttempts = 180) {
       return await poll();
       
     } catch (error) {
-      console.error("Erreur polling:", error);
       throw error;
     }
   };

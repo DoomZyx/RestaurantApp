@@ -18,13 +18,11 @@ export function WebSocketProvider({ children }) {
   const connectWebSocket = () => {
     // Éviter les connexions multiples simultanées
     if (isConnectingRef.current) {
-      console.log("⚠️ Connexion déjà en cours, abandon");
       return;
     }
 
     // Vérifier si une connexion existe déjà
     if (wsRef.current && (wsRef.current.readyState === WebSocket.CONNECTING || wsRef.current.readyState === WebSocket.OPEN)) {
-      console.log("⚠️ WebSocket déjà connecté ou en cours de connexion");
       return;
     }
 
@@ -32,13 +30,11 @@ export function WebSocketProvider({ children }) {
       isConnectingRef.current = true;
       const wsUrl = import.meta.env.VITE_WS_URL || "ws://localhost:8080/ws/notifications";
       
-      console.log("🔌 Connexion au WebSocket centralisé:", wsUrl);
       
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 
       ws.onopen = () => {
-        console.log("✅ WebSocket connecté (centralisé)");
         setIsConnected(true);
         reconnectAttemptsRef.current = 0;
         isConnectingRef.current = false;
@@ -48,7 +44,6 @@ export function WebSocketProvider({ children }) {
       ws.onmessage = async (event) => {
         try {
           const data = JSON.parse(event.data);
-          console.log("📨 Message WebSocket reçu (centralisé):", data);
 
           if (data.type === "notification") {
             const { notificationType, data: notificationData } = data;
@@ -65,7 +60,6 @@ export function WebSocketProvider({ children }) {
             // Appeler les callbacks enregistrés
             switch (notificationType) {
               case "call_completed":
-                console.log("📞 Nouvel appel détecté");
                 callbacksRef.current.onNewCall.forEach(cb => cb(notificationData));
                 if (notificationData.hasOrder) {
                   callbacksRef.current.onNewOrder.forEach(cb => cb(notificationData));
@@ -73,45 +67,36 @@ export function WebSocketProvider({ children }) {
                 break;
 
               case "new_order":
-                console.log("📋 Nouvelle commande détectée");
                 callbacksRef.current.onNewOrder.forEach(cb => cb(notificationData));
                 break;
 
               default:
-                console.log("🔔 Notification reçue:", notificationType);
             }
           }
 
           if (data.type === "connected") {
-            console.log("✅ Confirmation connexion WebSocket");
           }
         } catch (error) {
-          console.error("❌ Erreur traitement message WebSocket:", error);
         }
       };
 
       ws.onerror = (error) => {
-        console.error("❌ Erreur WebSocket:", error);
         setIsConnected(false);
         isConnectingRef.current = false;
       };
 
       ws.onclose = (event) => {
-        console.log("🔌 WebSocket déconnecté:", event.code, event.reason);
         setIsConnected(false);
         isConnectingRef.current = false;
         
         if (reconnectAttemptsRef.current < maxReconnectAttempts) {
           reconnectAttemptsRef.current++;
           const delay = Math.min(1000 * Math.pow(2, reconnectAttemptsRef.current), 30000);
-          console.log(`🔄 Reconnexion dans ${delay / 1000}s... (${reconnectAttemptsRef.current}/${maxReconnectAttempts})`);
           reconnectTimeoutRef.current = setTimeout(connectWebSocket, delay);
         } else {
-          console.error("❌ Nombre maximal de tentatives de reconnexion atteint");
         }
       };
     } catch (error) {
-      console.error("❌ Erreur connexion WebSocket:", error);
       setIsConnected(false);
       isConnectingRef.current = false;
     }

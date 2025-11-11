@@ -29,7 +29,6 @@ class SecurityService {
     this.setupCSRFProtection();
     this.setupXSSProtection();
     this.setupPasswordValidation();
-    console.log('🔒 Service de sécurité initialisé');
   }
 
   /**
@@ -208,7 +207,6 @@ class SecurityService {
    * Gère l'expiration de session
    */
   handleSessionTimeout() {
-    console.log('🔒 Session expirée - déconnexion automatique');
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('csrf_token');
@@ -272,7 +270,6 @@ class SecurityService {
         const text = node.textContent;
         dangerousPatterns.forEach(pattern => {
           if (pattern.test(text)) {
-            console.warn('🔒 Contenu suspect détecté:', text);
             // Supprimer le contenu dangereux
             node.textContent = this.sanitizeInput(text);
           }
@@ -284,7 +281,6 @@ class SecurityService {
         const dangerousAttrs = ['onclick', 'onload', 'onerror', 'onmouseover'];
         dangerousAttrs.forEach(attr => {
           if (node.hasAttribute(attr)) {
-            console.warn('🔒 Attribut dangereux détecté:', attr);
             node.removeAttribute(attr);
           }
         });
@@ -396,7 +392,6 @@ class SecurityService {
     // Nettoyer les tokens sensibles
     localStorage.removeItem('csrf_token');
     localStorage.removeItem('login_attempts');
-    console.log('🔒 Service de sécurité nettoyé');
   }
 }
 

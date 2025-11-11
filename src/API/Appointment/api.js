@@ -60,12 +60,6 @@ export async function createAppointment(appointmentData) {
  });
  if (!res.ok) {
    const errorData = await res.json().catch(() => ({}));
-   console.error("❌ Erreur création commande:", {
-     status: res.status,
-     statusText: res.statusText,
-     error: errorData,
-     payload: appointmentData
-   });
    throw new Error(`Erreur ${res.status}: ${errorData.message || errorData.error || res.statusText}`);
  }
  return res.json();
