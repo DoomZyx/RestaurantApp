@@ -13,7 +13,8 @@
     "fill-demo": "node scripts/fillDemoData.js",
     "fill-week": "node scripts/fillWeekData.js",
     "fill-menu": "node scripts/fillMenuData.js",
-    "clean-demo": "node scripts/cleanDemoData.js"
+    "clean-demo": "node scripts/cleanDemoData.js",
+    "add-tacos": "node scripts/addTacos.js"
   },
   "keywords": [],
   "author": "",

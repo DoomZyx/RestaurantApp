@@ -166,8 +166,27 @@ COMMANDES (commandes) :
   "categorie": "Pizzas",
   "quantite": 2,
   "prixUnitaire": 12.50,
-  "supplements": "+fromage, +oignons"
+  "supplements": "+fromage, +oignons",
+  "personnalisation": null  // Pour les tacos personnalisés (voir ci-dessous)
 }
+
+🌮 PERSONNALISATION TACOS :
+Si le client commande un TACOS et précise ses choix :
+{
+  "nom": "Tacos Double",
+  "categorie": "Tacos",
+  "quantite": 1,
+  "prixUnitaire": 9.50,
+  "supplements": "",
+  "personnalisation": {
+    "viandes": ["Poulet", "Merguez"],
+    "sauce": "Algérienne",
+    "sansIngredients": ["oignons"],  // Si le client dit "sans X"
+    "extras": []  // "Supplément viande", "Supplément fromage", "XL"
+  }
+}
+
+⚠️ Si pas de personnalisation ou produit non-tacos → personnalisation: null
 
 ========================================
 ✅ EXEMPLES CONCRETS :
@@ -334,7 +353,44 @@ JSON :
   }
 }
 
-Exemple 4 - Info uniquement (PAS de commande) :
+Exemple 4 - Tacos personnalisé :
+Transcription : "Je veux un tacos double. Poulet et merguez. Sauce algérienne. Sans oignons s'il vous plaît. C'est pour Martin."
+
+JSON :
+{
+  "nom": "Martin",
+  "telephone": "Non fourni",
+  "type_demande": "Commande à emporter",
+  "services": "Tacos",
+  "description": "Commande d'un tacos double poulet-merguez sauce algérienne sans oignons",
+  "statut": "nouveau",
+  "order": {
+    "date": "ASAP",
+    "heure": "ASAP",
+    "duree": 60,
+    "type": "Commande à emporter",
+    "modalite": "À emporter",
+    "nombrePersonnes": null,
+    "description": "",
+    "commandes": [
+      {
+        "nom": "Tacos Double (2 viandes)",
+        "categorie": "Tacos",
+        "quantite": 1,
+        "prixUnitaire": 9.50,
+        "supplements": "",
+        "personnalisation": {
+          "viandes": ["Poulet", "Merguez"],
+          "sauce": "Algérienne",
+          "sansIngredients": ["oignons"],
+          "extras": []
+        }
+      }
+    ]
+  }
+}
+
+Exemple 5 - Info uniquement (PAS de commande) :
 Transcription : "Vous êtes ouverts jusqu'à quelle heure ?"
 
 JSON :
