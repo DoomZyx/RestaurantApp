@@ -11,6 +11,9 @@ function Configuration() {
   // État local pour gérer l'ouverture/fermeture des catégories
   const [collapsedCategories, setCollapsedCategories] = React.useState({});
   
+  // État pour le filtre de recherche des produits dans les menus
+  const [searchFilter, setSearchFilter] = React.useState("");
+  
   // Fonction pour toggle une catégorie
   const toggleCategory = (categorie) => {
     setCollapsedCategories(prev => ({
@@ -49,7 +52,8 @@ function Configuration() {
     handleProductDelete,
     handleOpenProductForm,
     handleLanguageChange,
-    handleAddCategory
+    handleAddCategory,
+    generateMenuDescription
   } = useConfiguration();
 
   // Affichage du chargement
@@ -185,13 +189,13 @@ function Configuration() {
                       >
                         <i className={`bi bi-chevron-${collapsedCategories[categorie] ? 'right' : 'down'}`}></i>
                       </button>
-                      <h4>{categorieData.nom || categorie}</h4>
+                          <h4>{categorieData.nom || categorie}</h4>
                     </div>
                     <button 
                       onClick={() => handleOpenProductForm(categorie)}
-                      className="btn-addProduct"
+                            className="btn-addProduct"
                     >
-                      {t('configuration.menu.addProduct')}
+                            {t('configuration.menu.addProduct')}
                     </button>
                   </div>
                   
@@ -201,7 +205,7 @@ function Configuration() {
                         {showProductForm === categorie && (
                           <div className="product-form">
                             <div className="form-header">
-                              <h5>{t('configuration.menu.newProduct')}</h5>
+                            <h5>{t('configuration.menu.newProduct')}</h5>
                               <button 
                                 type="button"
                                 className="close-form-btn"
@@ -295,6 +299,65 @@ function Configuration() {
                                   </div>
                                 </div>
                               ))}
+                            </div>
+                            )}
+
+                            {/* Composition de menu - uniquement pour les Menus */}
+                            {categorie.toLowerCase() === 'menus' && (
+                            <div className="menu-composition-wrapper">
+                              <div className="options-header">
+                                <h6>{t('configuration.menu.menuComposition')}</h6>
+                                <p>Sélectionnez le plat principal. Les frites et la boisson sont automatiquement incluses.</p>
+                              </div>
+
+                              {/* Input de recherche */}
+                              <div className="search-filter">
+                                <input
+                                  type="text"
+                                  placeholder={t('common.search') + "..."}
+                                  value={searchFilter}
+                                  onChange={(e) => setSearchFilter(e.target.value)}
+                                />
+                              </div>
+                              
+                              {/* Plat principal */}
+                              <div className="composition-section">
+                                <label>{t('configuration.menu.mainDish')}</label>
+                                <div className="product-cards">
+                                  {Object.keys(safePricing.menuPricing || {})
+                                    .filter(cat => !['boissons', 'menus', 'desserts', 'accompagnements'].includes(cat.toLowerCase()))
+                                    .map(cat => {
+                                      const category = safePricing.menuPricing[cat];
+                                      return category.produits?.filter(p => p.disponible && p.nom.toLowerCase().includes(searchFilter.toLowerCase())).map(produit => (
+                                        <div 
+                                          key={produit._id}
+                                          className={`product-card ${newProduct.composition?.platPrincipal?.produitId === produit._id ? 'selected' : ''}`}
+                                          onClick={() => {
+                                            setNewProduct({
+                                              ...newProduct,
+                                              composition: {
+                                                platPrincipal: { categorie: cat, produitId: produit._id }
+                                              },
+                                              description: generateMenuDescription({
+                                                platPrincipal: { categorie: cat, produitId: produit._id }
+                                              })
+                                            });
+                                          }}
+                                        >
+                                          <div className="card-name">{produit.nom}</div>
+                                          <div className="card-price">{produit.prixBase}€</div>
+                                        </div>
+                                      ));
+                                    })}
+                                </div>
+                              </div>
+
+                              {/* Description générée */}
+                              {newProduct.description && (
+                                <div className="auto-description">
+                                  <strong>{t('configuration.menu.autoDescription')} :</strong> {newProduct.description}
+                                </div>
+                              )}
                             </div>
                             )}
                             

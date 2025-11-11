@@ -21,7 +21,11 @@ export function useConfiguration() {
     prixBase: 0,
     taille: "Moyenne",
     disponible: true,
-    options: {} // Options personnalisables (viandes, sauces, etc.)
+    options: {}, // Options personnalisables (viandes, sauces, etc.)
+    composition: { // Pour les menus
+      platPrincipal: null // { categorie, produitId }
+      // Frites et boisson toujours incluses automatiquement
+    }
   });
 
   // Valeurs par défaut pour les horaires
@@ -179,41 +183,28 @@ export function useConfiguration() {
       const response = await addProduct(categorie, newProduct);
       
       if (response.success) {
-        setPricing(prev => {
-          const updated = { ...prev };
-          if (!updated.menuPricing[categorie]) {
-            updated.menuPricing[categorie] = { 
-              nom: categorie.charAt(0).toUpperCase() + categorie.slice(1), 
-              produits: [] 
-            };
-          }
-          if (!updated.menuPricing[categorie].produits) {
-            updated.menuPricing[categorie].produits = [];
-          }
-          
-          const productWithId = {
-            ...newProduct,
-            _id: response.data.product._id
-          };
-          
-          updated.menuPricing[categorie].produits.push(productWithId);
-          return updated;
-        });
-
+        // Recharger les données depuis le serveur pour avoir les IDs corrects
+        await loadPricing();
+        
         setNewProduct({
           nom: "",
           description: "",
           prixBase: 0,
           taille: "Moyenne",
           disponible: true,
-          options: {}
+          options: {},
+          composition: {
+            platPrincipal: null
+          }
         });
         setShowProductForm(false);
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
       } else {
         setError(response.error || "Erreur lors de l'ajout du produit");
       }
     } catch (err) {
-      setError("Erreur lors de l'ajout du produit");
+      setError(err.message || "Erreur lors de l'ajout du produit");
     }
   };
 
@@ -297,9 +288,37 @@ export function useConfiguration() {
       prixBase: 0,
       taille: "Moyenne",
       disponible: true,
-      options: defaultOptions
+      options: defaultOptions,
+      composition: {
+        platPrincipal: null
+      }
     });
     setShowProductForm(categorie);
+  };
+
+  /**
+   * Générer automatiquement la description d'un menu
+   */
+  const generateMenuDescription = (composition) => {
+    if (!pricing || !composition) return "";
+    
+    const parts = [];
+    
+    // Ajouter le plat principal
+    if (composition.platPrincipal) {
+      const { categorie, produitId } = composition.platPrincipal;
+      const produits = pricing.menuPricing[categorie]?.produits || [];
+      const produit = produits.find(p => p._id === produitId);
+      if (produit) {
+        parts.push(produit.nom);
+      }
+    }
+    
+    // Les frites et la boisson sont toujours incluses
+    parts.push("Frites");
+    parts.push("Boisson au choix");
+    
+    return parts.join(" + ");
   };
 
   /**
@@ -369,7 +388,8 @@ export function useConfiguration() {
     handleProductDelete,
     handleOpenProductForm,
     handleLanguageChange,
-    handleAddCategory
+    handleAddCategory,
+    generateMenuDescription
   };
 }
 

@@ -1713,6 +1713,112 @@
   }
 }
 
+// Styles pour la composition de menus
+.menu-composition-wrapper {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+
+  .search-filter {
+    margin-bottom: 20px;
+
+    input {
+      width: 100%;
+      padding: 10px 15px;
+      border: 2px solid #dee2e6;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+      }
+
+      &::placeholder {
+        color: #adb5bd;
+      }
+    }
+  }
+
+  .composition-section {
+    margin-bottom: 30px;
+
+    > label {
+      display: block;
+      font-weight: 600;
+      color: #495057;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+
+      input[type="checkbox"] {
+        margin-right: 8px;
+      }
+    }
+
+    .product-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+
+      .product-card {
+        background: white;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: center;
+
+        &:hover {
+          border-color: #007bff;
+          box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+        }
+
+        &.selected {
+          border-color: #007bff;
+          background: #e7f3ff;
+          box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+
+          .card-name {
+            color: #007bff;
+            font-weight: 600;
+          }
+        }
+
+        .card-name {
+          font-size: 0.9rem;
+          color: #495057;
+          margin-bottom: 8px;
+        }
+
+        .card-price {
+          font-size: 1rem;
+          font-weight: 700;
+          color: #28a745;
+        }
+      }
+    }
+  }
+
+  .auto-description {
+    background: #e7f3ff;
+    border-left: 4px solid #007bff;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #495057;
+
+    strong {
+      color: #007bff;
+    }
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
