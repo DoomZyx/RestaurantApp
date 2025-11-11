@@ -456,7 +456,22 @@ ${Object.keys(pricing.menu).map(categorie => {
   const category = pricing.menu[categorie];
   return `
 ${category.nom.toUpperCase()} :
-${category.produits.map(produit => `- ${produit.nom}${produit.description ? ` (${produit.description})` : ''}`).join('\n')}`;
+${category.produits.map(produit => {
+  let produitStr = `- ${produit.nom}${produit.description ? ` (${produit.description})` : ''} - ${produit.prix}€`;
+  
+  // Si le produit a des options (tacos), les afficher
+  if (produit.options) {
+    produitStr += '\n  Options personnalisables :';
+    Object.keys(produit.options).forEach(optKey => {
+      const option = produit.options[optKey];
+      if (option.choix && option.choix.length > 0) {
+        produitStr += `\n    ${option.nom}: ${option.choix.join(', ')}`;
+      }
+    });
+  }
+  
+  return produitStr;
+}).join('\n')}`;
 }).join('\n')}
 
 ⚠️ RÈGLE IMPORTANTE : 
@@ -465,6 +480,13 @@ Exemples :
 - Client dit "un copoin" → Écris "Coca-Cola" ou "Coca" (selon ce qui est au menu)
 - Client dit "un borger" → Écris le nom exact du burger commandé (ex: "USA Beef Burger")
 - Client dit "une pizaa" → Écris le nom exact de la pizza (ex: "Pizza Margherita")
+
+🌮 POUR LES TACOS :
+- Utilise les OPTIONS EXACTES affichées ci-dessus
+- Si le client précise viandes/sauces/crudités, remplis l'objet "personnalisation"
+- Exemples de viandes valides : celles listées dans "Viandes"
+- Exemples de sauces valides : celles listées dans "Sauces"
+- Exemples de crudités valides : celles listées dans "Crudités"
 
 Si le client ne précise pas le produit exact, utilise les noms génériques mais corrects.
 ========================================

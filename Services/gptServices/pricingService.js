@@ -22,11 +22,20 @@ export async function getPricingForGPT() {
         nom: pricing.menuPricing[categorie].nom,
         produits: pricing.menuPricing[categorie].produits
           .filter(p => p.disponible)
-          .map(p => ({
-            nom: p.nom,
-            description: p.description,
-            prix: p.prixBase
-          }))
+          .map(p => {
+            const produitData = {
+              nom: p.nom,
+              description: p.description,
+              prix: p.prixBase
+            };
+            
+            // Ajouter les options pour les tacos
+            if (p.options && Object.keys(p.options).length > 0) {
+              produitData.options = p.options;
+            }
+            
+            return produitData;
+          })
       };
     });
 
