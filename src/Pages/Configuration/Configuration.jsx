@@ -8,6 +8,17 @@ import "./Configuration.scss";
 function Configuration() {
   const { t } = useTranslation();
   
+  // État local pour gérer l'ouverture/fermeture des catégories
+  const [collapsedCategories, setCollapsedCategories] = React.useState({});
+  
+  // Fonction pour toggle une catégorie
+  const toggleCategory = (categorie) => {
+    setCollapsedCategories(prev => ({
+      ...prev,
+      [categorie]: !prev[categorie]
+    }));
+  };
+  
   // Utiliser le hook qui contient toute la logique
   const {
     // États
@@ -61,7 +72,12 @@ function Configuration() {
           </div>
         </div>
         
-        {error && <div className="error-message">❌ {error}</div>}
+        {error && (
+          <div className="notification-toast error-message">
+            <i className="bi bi-exclamation-triangle-fill"></i>
+            <span className="message-content">{error}</span>
+          </div>
+        )}
 
         <div className="tabs">
           <button 
@@ -159,20 +175,42 @@ function Configuration() {
                     const produits = categorieData.produits || [];
 
                     return (
-                <div key={categorie} className="category-section">
+                <div key={categorie} className={`category-section ${collapsedCategories[categorie] ? 'collapsed' : ''}`}>
                   <div className="category-header">
-                          <h4>{categorieData.nom || categorie}</h4>
+                    <div className="category-header-left">
+                      <button 
+                        onClick={() => toggleCategory(categorie)}
+                        className="btn-collapse"
+                        aria-label={collapsedCategories[categorie] ? 'Ouvrir' : 'Fermer'}
+                      >
+                        <i className={`bi bi-chevron-${collapsedCategories[categorie] ? 'right' : 'down'}`}></i>
+                      </button>
+                      <h4>{categorieData.nom || categorie}</h4>
+                    </div>
                     <button 
                       onClick={() => handleOpenProductForm(categorie)}
-                            className="btn-addProduct"
+                      className="btn-addProduct"
                     >
-                            ➕ {t('configuration.menu.addProduct')}
+                      {t('configuration.menu.addProduct')}
                     </button>
                   </div>
                   
+                  {!collapsedCategories[categorie] && (
+                    <div className="category-content">
+                  
                         {showProductForm === categorie && (
                           <div className="product-form">
-                            <h5>{t('configuration.menu.newProduct')}</h5>
+                            <div className="form-header">
+                              <h5>{t('configuration.menu.newProduct')}</h5>
+                              <button 
+                                type="button"
+                                className="close-form-btn"
+                                onClick={() => setShowProductForm(false)}
+                                title="Fermer"
+                              >
+                                ✕
+                              </button>
+                            </div>
                             <div className="form-row">
                             <input
                               type="text"
@@ -195,6 +233,71 @@ function Configuration() {
                               step="0.01"
                               />
                             </div>
+                            
+                            {/* Options personnalisables - uniquement pour les Tacos */}
+                            {categorie.toLowerCase() === 'tacos' && (
+                            <div className="custom-options-wrapper">
+                              <div className="options-header">
+                                <h6>{t('configuration.menu.customOptions')}</h6>
+                                <p>{t('configuration.menu.customOptionsHelp')}</p>
+                              </div>
+                              
+                              {Object.entries(newProduct.options || {}).map(([optionKey, optionData]) => (
+                                <div key={optionKey} className="option-box">
+                                  <div className="option-top">
+                                    <div className="option-name">
+                                      <strong>{optionData.nom}</strong>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="option-choices">
+                                    <label className="choices-label">Choix disponibles :</label>
+                                    <div className="tags-list">
+                                      {(optionData.choix || []).map((choix, idx) => (
+                                        <span key={idx} className="choice-badge">
+                                          {choix}
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              const newOptions = { ...newProduct.options };
+                                              newOptions[optionKey].choix = newOptions[optionKey].choix.filter((_, i) => i !== idx);
+                                              setNewProduct({ ...newProduct, options: newOptions });
+                                            }}
+                                          >
+                                            ×
+                                          </button>
+                                        </span>
+                                      ))}
+                                    </div>
+                                    <input
+                                      type="text"
+                                      className="choice-input"
+                                      placeholder="Ajouter un choix (appuyez sur Entrée)"
+                                      onKeyPress={(e) => {
+                                        if (e.key === 'Enter') {
+                                          e.preventDefault();
+                                          const value = e.target.value.trim();
+                                          if (value) {
+                                            const newOptions = { ...newProduct.options };
+                                            if (!newOptions[optionKey].choix) {
+                                              newOptions[optionKey].choix = [];
+                                            }
+                                            newOptions[optionKey] = {
+                                              ...newOptions[optionKey],
+                                              choix: [...newOptions[optionKey].choix, value]
+                                            };
+                                            setNewProduct({ ...newProduct, options: newOptions });
+                                            e.target.value = '';
+                                          }
+                                        }
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                            )}
+                            
                             <div className="form-actions">
                               <button onClick={() => handleProductAdd(categorie)}>
                                 {t('common.add')}
@@ -216,6 +319,7 @@ function Configuration() {
                                   <div className="product-edit">
                                     <input
                                       type="text"
+                                      placeholder={t('configuration.menu.productName')}
                                       value={produit.nom}
                                       onChange={(e) => {
                                         const updated = [...produits];
@@ -225,6 +329,7 @@ function Configuration() {
                                     />
                                     <input
                                       type="text"
+                                      placeholder={t('configuration.menu.description')}
                                       value={produit.description}
                                       onChange={(e) => {
                                         const updated = [...produits];
@@ -234,6 +339,7 @@ function Configuration() {
                                     />
                                     <input
                                       type="number"
+                                      placeholder={t('configuration.menu.price')}
                                       value={produit.prix || produit.prixBase}
                                       onChange={(e) => {
                                         const updated = [...produits];
@@ -243,8 +349,137 @@ function Configuration() {
                                       min="0"
                                       step="0.01"
                                     />
+
+                                    {/* Options personnalisables en mode édition - uniquement pour les Tacos */}
+                                    {categorie.toLowerCase() === 'tacos' && (() => {
+                                      // Initialiser les options par défaut si elles n'existent pas
+                                      const defaultOptions = {
+                                        sauces: { nom: "Sauces", choix: [] },
+                                        viandes: { nom: "Viandes", choix: [] },
+                                        crudites: { nom: "Crudités", choix: [] }
+                                      };
+                                      
+                                      // Fusionner avec les options existantes
+                                      const currentOptions = produit.options || {};
+                                      const mergedOptions = {
+                                        sauces: { ...defaultOptions.sauces, ...(currentOptions.sauces || {}) },
+                                        viandes: { ...defaultOptions.viandes, ...(currentOptions.viandes || {}) },
+                                        crudites: { ...defaultOptions.crudites, ...(currentOptions.crudites || {}) }
+                                      };
+                                      
+                                      return (
+                                    <div className="custom-options-wrapper">
+                                      <div className="options-header">
+                                        <h6>{t('configuration.menu.customOptions')}</h6>
+                                        <p>{t('configuration.menu.customOptionsHelp')}</p>
+                                      </div>
+                                      
+                                      {Object.entries(mergedOptions).map(([optionKey, optionData]) => (
+                                        <div key={optionKey} className="option-box">
+                                          <div className="option-top">
+                                            <div className="option-name">
+                                              <strong>{optionData.nom}</strong>
+                                            </div>
+                                          </div>
+                                          
+                                          <div className="option-choices">
+                                            <label className="choices-label">Choix disponibles :</label>
+                                            <div className="tags-list">
+                                              {(optionData.choix || []).map((choix, idx) => (
+                                                <span key={idx} className="choice-badge">
+                                                  {choix}
+                                                  <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                      const updated = [...produits];
+                                                      const updatedOptions = { ...mergedOptions };
+                                                      updatedOptions[optionKey] = {
+                                                        ...updatedOptions[optionKey],
+                                                        choix: updatedOptions[optionKey].choix.filter((_, i) => i !== idx)
+                                                      };
+                                                      updated[index] = { ...produit, options: updatedOptions };
+                                                      handleInputChange(`menuPricing.${categorie}.produits`, updated);
+                                                    }}
+                                                  >
+                                                    ×
+                                                  </button>
+                                                </span>
+                                              ))}
+                                            </div>
+                                            <input
+                                              type="text"
+                                              className="choice-input"
+                                              placeholder="Ajouter un choix (appuyez sur Entrée)"
+                                              onKeyPress={(e) => {
+                                                if (e.key === 'Enter') {
+                                                  e.preventDefault();
+                                                  const value = e.target.value.trim();
+                                                  if (value) {
+                                                    const updated = [...produits];
+                                                    const currentOptions = { ...mergedOptions };
+                                                    if (!currentOptions[optionKey].choix) {
+                                                      currentOptions[optionKey].choix = [];
+                                                    }
+                                                    currentOptions[optionKey] = {
+                                                      ...currentOptions[optionKey],
+                                                      choix: [...currentOptions[optionKey].choix, value]
+                                                    };
+                                                    updated[index] = { ...produit, options: currentOptions };
+                                                    handleInputChange(`menuPricing.${categorie}.produits`, updated);
+                                                    e.target.value = '';
+                                                  }
+                                                }
+                                              }}
+                                            />
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                      );
+                                    })()}
+
                                     <div className="edit-actions">
-                                      <button onClick={() => handleProductUpdate(categorie, produit._id, produit)}>
+                                      <button onClick={() => {
+                                        // Récupérer le produit mis à jour depuis safePricing
+                                        const updatedProduits = safePricing.menuPricing[categorie]?.produits || [];
+                                        const updatedProduit = updatedProduits[index];
+                                        
+                                        console.log('🔍 Debug - Produit récupéré:', updatedProduit);
+                                        console.log('🔍 Debug - ID du produit:', updatedProduit?._id);
+                                        console.log('🔍 Debug - Produit original (produit):', produit);
+                                        
+                                        if (updatedProduit) {
+                                          // Utiliser l'_id du produit original si celui de updatedProduit est undefined
+                                          const productId = updatedProduit._id || produit._id;
+                                          
+                                          if (!productId) {
+                                            console.error('❌ Impossible de trouver l\'ID du produit');
+                                            setError('Erreur: ID du produit manquant');
+                                            return;
+                                          }
+                                          
+                                          // Nettoyer les données : retirer _id, __v et autres champs MongoDB
+                                          const { _id, __v, ...cleanData } = updatedProduit;
+                                          
+                                          // Normaliser les données
+                                          const produitToSave = {
+                                            nom: cleanData.nom?.trim() || '',
+                                            description: cleanData.description?.trim() || '',
+                                            prixBase: parseFloat(cleanData.prixBase || cleanData.prix || 0),
+                                            disponible: Boolean(cleanData.disponible !== false),
+                                            ...(cleanData.taille && { taille: cleanData.taille }),
+                                            ...(cleanData.options && { options: cleanData.options })
+                                          };
+                                          
+                                          console.log('📤 Données envoyées au backend:', {
+                                            categorie,
+                                            produitId: productId,
+                                            produitData: produitToSave
+                                          });
+                                          
+                                          handleProductUpdate(categorie, productId, produitToSave);
+                                        }
+                                      }}>
                                         {t('common.save')}
                                       </button>
                                       <button onClick={() => setEditingProduct(null)}>
@@ -264,9 +499,16 @@ function Configuration() {
                                 ✏️ {t('common.edit')}
                               </button>
                               <button 
-                                onClick={() => handleProductDelete(categorie, produit._id)}
+                                onClick={() => {
+                                  if (!produit._id) {
+                                    console.error('❌ Produit sans _id:', produit);
+                                    setError('Impossible de supprimer: produit sans ID. Veuillez recharger la page.');
+                                    return;
+                                  }
+                                  handleProductDelete(categorie, produit._id);
+                                }}
                                 disabled={!produit._id}
-                                        title={t('common.delete')}
+                                        title={produit._id ? t('common.delete') : 'Produit sans ID - Rechargez la page'}
                               >
                                 🗑️ {t('common.delete')}
                               </button>
@@ -277,6 +519,8 @@ function Configuration() {
                             ))
                           )}
                   </div>
+                    </div>
+                  )}
                 </div>
                     );
                   })
@@ -368,7 +612,10 @@ function Configuration() {
               <p>{t('configuration.language.description')}</p>
               
               {languageSuccess && (
-                <div className="success-message">✅ {t('configuration.language.changeSuccess')}</div>
+                <div className="notification-toast success-message">
+                  <i className="bi bi-check-circle-fill"></i>
+                  <span className="message-content">{t('configuration.language.changeSuccess')}</span>
+                </div>
               )}
               
               <div className="language-options">
@@ -389,6 +636,13 @@ function Configuration() {
           )}
         </div>
 
+        {success && (
+          <div className="notification-toast success-message">
+            <i className="bi bi-check-circle-fill"></i>
+            <span className="message-content">{t('common.success')}</span>
+          </div>
+        )}
+
         {/* Bouton de sauvegarde global */}
         <div className="save-section">
             <button 
@@ -398,7 +652,6 @@ function Configuration() {
             >
             {saving ? t('common.loading') : t('common.save')}
             </button>
-          {success && <span className="success-indicator">✅ {t('common.success')}</span>}
           </div>
       </div>
     </AppLayout>

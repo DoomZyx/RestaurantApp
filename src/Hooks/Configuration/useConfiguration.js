@@ -20,7 +20,8 @@ export function useConfiguration() {
     description: "",
     prixBase: 0,
     taille: "Moyenne",
-    disponible: true
+    disponible: true,
+    options: {} // Options personnalisables (viandes, sauces, etc.)
   });
 
   // Valeurs par défaut pour les horaires
@@ -205,7 +206,8 @@ export function useConfiguration() {
           description: "",
           prixBase: 0,
           taille: "Moyenne",
-          disponible: true
+          disponible: true,
+          options: {}
         });
         setShowProductForm(false);
       } else {
@@ -275,12 +277,29 @@ export function useConfiguration() {
    * Ouvrir le formulaire d'ajout de produit
    */
   const handleOpenProductForm = (categorie) => {
+    // Initialiser avec les options par défaut pour les tacos
+    const defaultOptions = categorie.toLowerCase() === 'tacos' ? {
+      sauces: {
+        nom: "Sauces",
+        choix: []
+      },
+      viandes: {
+        nom: "Viandes",
+        choix: []
+      },
+      crudites: {
+        nom: "Crudités",
+        choix: []
+      }
+    } : {};
+
     setNewProduct({
       nom: "",
       description: "",
       prixBase: 0,
       taille: "Moyenne",
-      disponible: true
+      disponible: true,
+      options: defaultOptions
     });
     setShowProductForm(categorie);
   };

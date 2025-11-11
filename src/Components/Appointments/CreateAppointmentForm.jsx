@@ -16,7 +16,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
   const [errors, setErrors] = useState({});
   const [menuProducts, setMenuProducts] = useState([]); // produits depuis la config
   const [selectedItems, setSelectedItems] = useState([
-    { id: Date.now(), productId: "", qty: 1, supplements: "" }
+    { id: Date.now(), productId: "", qty: 1, supplements: "", options: {} }
   ]);
 
   // Charger les produits depuis la configuration Pricing
@@ -34,6 +34,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
             nom: p.nom,
             categorie: cat?.nom || key,
             prixBase: p.prixBase,
+            options: p.options || {}, // Inclure les options personnalisables
           }));
         });
         setMenuProducts(flattened);
@@ -99,7 +100,8 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
               categorie: prod?.categorie || "",
               quantite: it.qty && it.qty > 0 ? it.qty : 1,
               prixUnitaire: prod?.prixBase || 0,
-              supplements: it.supplements?.trim() || ""
+              supplements: it.supplements?.trim() || "",
+              options: it.options || {} // Inclure les options sélectionnées
             };
           });
         
@@ -201,51 +203,123 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
         <div className="form-group full-width" style={{ marginTop: '20px' }}>
           <label>🍽️ {t('createAppointment.orderedDishes')}</label>
           <div className="items-list">
-            {selectedItems.map((item, idx) => (
-              <div key={item.id} className="item-row">
-                <select
-                  value={item.productId}
-                  onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, productId: e.target.value } : it))}
-                  className="item-select"
-                >
-                  <option value="">{t('createAppointment.selectDish')}</option>
-                  {menuProducts.map((p) => (
-                    <option key={p._id} value={p._id}>
-                      {p.categorie} • {p.nom}{p.prixBase ? ` - ${p.prixBase.toFixed?.(2) || p.prixBase}€` : ''}
-                    </option>
-                  ))}
-                </select>
-                <input
-                  type="number"
-                  min={1}
-                  value={item.qty}
-                  onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, qty: Math.max(1, parseInt(e.target.value || '1')) } : it))}
-                  className="item-qty"
-                  placeholder={t('createAppointment.qty')}
-                />
-                <input
-                  type="text"
-                  placeholder={t('createAppointment.supplementsPlaceholder')}
-                  value={item.supplements}
-                  onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, supplements: e.target.value } : it))}
-                  className="item-supplements"
-                />
-                {selectedItems.length > 1 && (
-                  <button 
-                    type="button" 
-                    className="btn-secondary btn-remove" 
-                    onClick={() => setSelectedItems(prev => prev.filter(it => it.id !== item.id))}
-                  >
-                    ❌ {t('common.delete')}
-                  </button>
-                )}
-              </div>
-            ))}
+            {selectedItems.map((item, idx) => {
+              const selectedProduct = menuProducts.find(p => p._id === item.productId);
+              const hasOptions = selectedProduct && Object.keys(selectedProduct.options || {}).length > 0;
+              
+              return (
+                <div key={item.id} className="item-row-container">
+                  <div className="item-row">
+                    <select
+                      value={item.productId}
+                      onChange={(e) => {
+                        const newProductId = e.target.value;
+                        const newProduct = menuProducts.find(p => p._id === newProductId);
+                        // Réinitialiser les options quand on change de produit
+                        setSelectedItems(prev => prev.map(it => 
+                          it.id === item.id 
+                            ? { ...it, productId: newProductId, options: {} } 
+                            : it
+                        ));
+                      }}
+                      className="item-select"
+                    >
+                      <option value="">{t('createAppointment.selectDish')}</option>
+                      {menuProducts.map((p) => (
+                        <option key={p._id} value={p._id}>
+                          {p.categorie} • {p.nom}{p.prixBase ? ` - ${p.prixBase.toFixed?.(2) || p.prixBase}€` : ''}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="number"
+                      min={1}
+                      value={item.qty}
+                      onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, qty: Math.max(1, parseInt(e.target.value || '1')) } : it))}
+                      className="item-qty"
+                      placeholder={t('createAppointment.qty')}
+                    />
+                    {selectedItems.length > 1 && (
+                      <button 
+                        type="button" 
+                        className="btn-secondary btn-remove" 
+                        onClick={() => setSelectedItems(prev => prev.filter(it => it.id !== item.id))}
+                      >
+                        ❌ {t('common.delete')}
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Options personnalisables */}
+                  {hasOptions && (
+                    <div className="item-options">
+                      {Object.entries(selectedProduct.options).map(([optionKey, optionData]) => (
+                        <div key={optionKey} className="option-group">
+                          <label className="option-label">
+                            {optionData.nom}
+                            {optionData.obligatoire && <span className="required">*</span>}
+                          </label>
+                          <div className="option-choices">
+                            {optionData.choix.map((choix) => (
+                              <label key={choix} className="choice-label">
+                                <input
+                                  type={optionData.multiple ? "checkbox" : "radio"}
+                                  name={`${item.id}-${optionKey}`}
+                                  value={choix}
+                                  checked={
+                                    optionData.multiple
+                                      ? (item.options[optionKey] || []).includes(choix)
+                                      : item.options[optionKey] === choix
+                                  }
+                                  onChange={(e) => {
+                                    setSelectedItems(prev => prev.map(it => {
+                                      if (it.id !== item.id) return it;
+                                      
+                                      const newOptions = { ...it.options };
+                                      if (optionData.multiple) {
+                                        // Checkbox: gérer un tableau
+                                        const current = newOptions[optionKey] || [];
+                                        if (e.target.checked) {
+                                          newOptions[optionKey] = [...current, choix];
+                                        } else {
+                                          newOptions[optionKey] = current.filter(c => c !== choix);
+                                        }
+                                      } else {
+                                        // Radio: une seule valeur
+                                        newOptions[optionKey] = choix;
+                                      }
+                                      
+                                      return { ...it, options: newOptions };
+                                    }));
+                                  }}
+                                />
+                                {choix}
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Champ suppléments (notes supplémentaires) */}
+                  {!hasOptions && (
+                    <input
+                      type="text"
+                      placeholder={t('createAppointment.supplementsPlaceholder')}
+                      value={item.supplements}
+                      onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, supplements: e.target.value } : it))}
+                      className="item-supplements"
+                    />
+                  )}
+                </div>
+              );
+            })}
             <div className="add-item-container">
               <button 
                 type="button" 
                 className="btn-secondary btn-add-item" 
-                onClick={() => setSelectedItems(prev => [...prev, { id: Date.now() + Math.random(), productId: "", qty: 1, supplements: "" }])}
+                onClick={() => setSelectedItems(prev => [...prev, { id: Date.now() + Math.random(), productId: "", qty: 1, supplements: "", options: {} }])}
               >
                 ➕ {t('createAppointment.addDish')}
               </button>
