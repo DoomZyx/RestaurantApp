@@ -43,6 +43,10 @@ export const DEFAULT_MENU = {
   tacos: {
     nom: "Tacos",
     produits: []
+  },
+  menus: {
+    nom: "Menus",
+    produits: []
   }
 };
 
