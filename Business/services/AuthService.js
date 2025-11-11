@@ -52,7 +52,6 @@ export class AuthService {
     user.lastLogin = new Date();
     await user.save();
 
-    console.log("✅ Utilisateur créé:", user._id);
 
     return {
       user,
@@ -100,7 +99,6 @@ export class AuthService {
     user.lastLogin = new Date();
     await user.save();
 
-    console.log("✅ Connexion réussie:", user._id);
 
     return {
       user,
@@ -144,10 +142,6 @@ export class AuthService {
         });
 
         await adminUser.save();
-        console.log("✅ Utilisateur admin créé par défaut");
-        console.log("📧 Email: admin@handlehome.com");
-        console.log("🔑 Mot de passe: admin123");
-        console.log("⚠️  Changez ces identifiants en production !");
       }
     } catch (error) {
       console.error("❌ Erreur création admin par défaut:", error);

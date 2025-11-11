@@ -43,9 +43,6 @@ export class TranscriptionHandler {
           }
         );
         
-        console.log(`\n⏭️  APPEL IGNORÉ (${this.streamSid})`);
-        console.log(`   Raison: ${validation}`);
-        console.log(`   Transcription: "${transcription.substring(0, 150)}..."\n`);
         
         // Ne pas traiter ni notifier
         return;

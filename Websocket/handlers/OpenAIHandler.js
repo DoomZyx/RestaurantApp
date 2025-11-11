@@ -274,7 +274,6 @@ export class OpenAIHandler {
           type: "response.cancel"
         }));
         
-        console.log("✅ Réponse IA annulée - En attente de la parole du client");
         
         this.isAssistantSpeaking = false;
         this.currentResponseId = null;

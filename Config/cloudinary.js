@@ -21,7 +21,6 @@ function ensureCloudinaryConfigured() {
   });
 
   isConfigured = true;
-  console.log('✅ Cloudinary configuré:', process.env.CLOUDINARY_CLOUD_NAME);
 }
 
 /**
@@ -50,7 +49,6 @@ export async function uploadToCloudinary(fileBuffer, options = {}) {
           console.error('❌ Erreur upload Cloudinary:', error);
           reject(error);
         } else {
-          console.log('✅ Upload Cloudinary réussi:', result.secure_url);
           resolve(result);
         }
       }
@@ -70,7 +68,6 @@ export async function deleteFromCloudinary(publicId) {
   
   try {
     const result = await cloudinary.uploader.destroy(publicId);
-    console.log('🗑️ Image supprimée de Cloudinary:', publicId);
     return result;
   } catch (error) {
     console.error('❌ Erreur suppression Cloudinary:', error);

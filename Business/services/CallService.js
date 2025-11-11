@@ -40,7 +40,6 @@ export class CallService {
     }
 
     if (appointment && !client) {
-      console.log("ℹ️ Commande sans client associé (le client peut être ajouté plus tard)");
     }
 
     // 2. Créer l'appel
@@ -57,7 +56,6 @@ export class CallService {
     }
 
     const call = await CallModel.create(callData);
-    console.log("✅ Appel créé:", call._id);
 
     // 3. Créer la commande si présente
     let createdOrder = null;
@@ -88,7 +86,6 @@ export class CallService {
       );
       
       notificationService.notifyCallCompleted(notificationData);
-      console.log("📢 Notification WebSocket envoyée pour le nouvel appel");
     } catch (notifError) {
       console.error("⚠️ Erreur envoi notification WebSocket:", notifError);
     }
@@ -234,14 +231,12 @@ export class CallService {
       throw new Error("Appel introuvable");
     }
 
-    console.log("🔄 Mise à jour du statut:", { id: callId, statut: newStatus });
 
     call.statut = newStatus;
     await call.save();
 
     const updatedCall = await CallModel.findById(callId).populate("client");
 
-    console.log("✅ Statut mis à jour avec succès");
     return updatedCall;
   }
 
@@ -326,9 +321,7 @@ export class CallService {
       throw new Error("Appel non trouvé");
     }
 
-    console.log("🗑️ Suppression de l'appel:", callId);
     await CallModel.findByIdAndDelete(callId);
-    console.log("✅ Appel supprimé avec succès");
   }
 
   /**

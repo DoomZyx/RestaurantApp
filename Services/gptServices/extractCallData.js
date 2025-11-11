@@ -435,8 +435,6 @@ C'est parti ! 🚀
 
 export async function extractCallData(transcription) {
   try {
-    console.log("🎤 Début extraction GPT - Longueur transcription:", transcription?.length || 0);
-    console.log("📝 Transcription reçue:", transcription?.substring(0, 200) || "VIDE");
 
     if (!transcription || transcription.trim().length === 0) {
       throw new Error("Transcription vide ou invalide");
@@ -491,7 +489,6 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
     });
 
     const rawResponse = completion.choices?.[0]?.message?.content?.trim();
-    console.log("✅ Réponse OpenAI reçue (COMPLÈTE):", rawResponse);
 
     if (!rawResponse) {
       throw new Error("Aucune réponse de l'API OpenAI");
@@ -508,14 +505,11 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
     const extractedData = JSON.parse(response);
     
     // Log pour debugging : afficher si un order a été créé
-    console.log("🔍 Order détecté dans la réponse ?", extractedData.order ? "✅ OUI" : "❌ NON");
     if (extractedData.order) {
-      console.log("📦 Détails de l'order:", JSON.stringify(extractedData.order, null, 2));
     }
 
     // Vérifier si GPT a retourné une erreur (données non fournies)
     if (extractedData.error) {
-      console.warn("⚠️ GPT a détecté des données invalides :", extractedData.error);
       throw new Error(`Extraction impossible : ${extractedData.error}`);
     }
 
@@ -533,7 +527,6 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       nomClient = "Client inconnu";
     }
     
-    console.log("✅ Nom accepté:", nomClient);
     
     // Validation du téléphone (format français) - OPTIONNEL
     const phoneRegex = /^(?:(?:\+|00)33|0)[1-9](?:[0-9]{8})$/;
@@ -543,9 +536,7 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       const phoneTest = extractedData.telephone.replace(/[\s.-]/g, '');
       if (phoneRegex.test(phoneTest)) {
         cleanedPhone = phoneTest;
-        console.log("✅ Téléphone valide détecté:", cleanedPhone);
       } else {
-        console.warn("⚠️ Téléphone invalide, on le met à 'Non fourni':", extractedData.telephone);
         cleanedPhone = "Non fourni";
       }
     }
@@ -566,7 +557,6 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
     };
 
     // Logs pour debugging
-    console.log("🔍 Données extraites par GPT:", {
       client: `${validatedData.nom} - ${validatedData.telephone}`,
       type_demande: validatedData.type_demande,
       services: validatedData.services,
@@ -574,7 +564,6 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
     });
 
     if (validatedData.appointment) {
-      console.log("📅 Détails de la commande extraite:", validatedData.appointment);
     }
 
     return validatedData;

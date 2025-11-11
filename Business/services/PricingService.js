@@ -17,7 +17,6 @@ export class PricingService {
       // Créer une configuration par défaut
       const defaultConfig = getDefaultPricingConfig();
       pricing = await PricingModel.create(defaultConfig);
-      console.log("✅ Configuration par défaut créée");
     }
 
     return pricing.toObject();
@@ -37,11 +36,9 @@ export class PricingService {
       pricing.markModified('menuPricing');
       pricing.derniereModification = new Date();
       await pricing.save();
-      console.log("✅ Configuration mise à jour");
     } else {
       // Créer une nouvelle configuration
       pricing = await PricingModel.create(pricingData);
-      console.log("✅ Nouvelle configuration créée");
     }
 
     // Recharger pour retourner des données propres

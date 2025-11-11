@@ -11,6 +11,4 @@ fastify.listen({
     console.error(err);
     process.exit(1);
   }
-  console.log(`🚀 Server running on port ${config.PORT}`);
-  console.log(`📡 WebSocket endpoint: ws://0.0.0.0:${config.PORT}/media-stream`);
 });

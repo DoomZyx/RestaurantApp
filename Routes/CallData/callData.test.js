@@ -41,7 +41,6 @@ describe("Route POST /api/callsData", () => {
 
     expect(response.statusCode).toBe(201);
     const payload = JSON.parse(response.payload);
-    console.log("Contenu de payload : ", payload.data);
     expect(payload.success).toBe(true);
     expect(payload.data).toMatchObject({
       nom: "Dupont",

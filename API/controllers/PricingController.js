@@ -199,7 +199,6 @@ export class PricingController {
   static async updateProduct(request, reply) {
     try {
       const { categorie, produitId, produitData } = request.body;
-      console.log('📥 Backend reçoit updateProduct:', { categorie, produitId, produitData });
       
       const product = await ProductService.updateProduct(categorie, produitId, produitData);
 
@@ -211,7 +210,6 @@ export class PricingController {
       );
     } catch (error) {
       console.error("❌ Erreur updateProduct:", error);
-      console.error("❌ Message d'erreur:", error.message);
 
       if (error.message.includes("non trouvé")) {
         return reply.code(404).send(

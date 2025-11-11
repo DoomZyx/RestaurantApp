@@ -11,7 +11,6 @@ const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 
 // Vérifier la configuration
 if (!accountSid || !authToken || !twilioPhoneNumber) {
-  console.warn("⚠️ Configuration Twilio manquante. Les appels fournisseurs ne fonctionneront pas.");
 }
 
 const twilioClient = twilio(accountSid, authToken);
@@ -54,11 +53,9 @@ function normalizePhoneNumber(phoneNumber) {
  */
 export async function initiateSupplierCall(orderData, publicHost) {
   try {
-    console.log("📞 Initiation appel fournisseur:", orderData.fournisseur.nom);
 
     // Normaliser le numéro de téléphone au format international
     const normalizedPhone = normalizePhoneNumber(orderData.fournisseur.telephone);
-    console.log(`📱 Numéro normalisé: ${orderData.fournisseur.telephone} → ${normalizedPhone}`);
 
     // Créer la commande en base de données
     const order = await SupplierOrderModel.create({
@@ -73,14 +70,11 @@ export async function initiateSupplierCall(orderData, publicHost) {
       }
     });
 
-    console.log("✅ Commande créée:", order._id);
 
     // Générer l'URL pour le TwiML
     const twimlUrl = `https://${publicHost}/supplier-call/${order._id}`;
     const statusCallbackUrl = `https://${publicHost}/supplier-call-status/${order._id}`;
 
-    console.log("📡 TwiML URL:", twimlUrl);
-    console.log("📡 Status callback URL:", statusCallbackUrl);
 
     // Créer l'appel Twilio
     const call = await twilioClient.calls.create({
@@ -96,7 +90,6 @@ export async function initiateSupplierCall(orderData, publicHost) {
       asyncAmd: false
     });
 
-    console.log("✅ Appel Twilio créé:", call.sid);
 
     // Mettre à jour la commande avec le Call SID
     order.appel.callSid = call.sid;
@@ -149,7 +142,6 @@ export async function updateCallStatus(orderId, callStatus) {
       return;
     }
 
-    console.log(`📞 Statut appel ${callStatus.CallSid}: ${callStatus.CallStatus}`);
 
     // Mettre à jour les informations de l'appel
     order.appel.statut = callStatus.CallStatus;
@@ -161,7 +153,6 @@ export async function updateCallStatus(orderId, callStatus) {
     // Si l'appel a échoué ou n'a pas abouti
     if (["failed", "busy", "no-answer", "canceled"].includes(callStatus.CallStatus)) {
       order.statut = "erreur";
-      console.log(`❌ Appel échoué: ${callStatus.CallStatus}`);
     }
 
     await order.save();

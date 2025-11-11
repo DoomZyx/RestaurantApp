@@ -321,7 +321,6 @@ export async function createOrderFromAI(request, reply) {
     // Trouver le client (création automatique désactivée)
     let client = await Client.findOne({ telephone: orderData.telephone });
     if (!client) {
-      console.log("⚠️ Client non trouvé pour le téléphone:", orderData.telephone);
       return reply.code(404).send({
         error: "Client non trouvé. Veuillez créer le client manuellement avant d'importer la commande."
       });

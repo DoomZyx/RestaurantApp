@@ -39,12 +39,10 @@ class AudioCacheService {
     try {
       // Créer le dossier de cache s'il n'existe pas
       await fs.mkdir(CACHE_DIR, { recursive: true });
-      console.log(`✅ Dossier cache créé: ${CACHE_DIR}`);
 
       // Charger l'index du cache
       await this.loadCacheIndex();
       
-      console.log(`📊 Cache audio initialisé: ${Object.keys(this.cacheIndex).length} entrées`);
     } catch (error) {
       console.error("❌ Erreur initialisation cache audio:", error);
     }
@@ -134,7 +132,6 @@ class AudioCacheService {
         this.cacheIndex[hash].usageCount = (this.cacheIndex[hash].usageCount || 0) + 1;
       }
 
-      console.log(`🎯 Cache HIT: "${text.substring(0, 30)}..." (${audioBuffer.length} bytes)`);
       return audioBuffer;
     } catch (error) {
       console.error(`❌ Erreur lecture cache pour "${text}":`, error);
@@ -150,7 +147,6 @@ class AudioCacheService {
     const { hash, path: cachePath } = await this.isCached(text, voiceSettings);
 
     try {
-      console.log(`🔄 Génération audio pour: "${text.substring(0, 50)}..."`);
 
       // Générer l'audio avec ElevenLabs
       const audioBuffer = await elevenLabsService.textToSpeech(
@@ -184,7 +180,6 @@ class AudioCacheService {
       this.stats.generated++;
       this.stats.savings += text.length; // Approximatif (tokens)
 
-      console.log(`✅ Audio généré et mis en cache: ${audioBuffer.length} bytes`);
       return audioBuffer;
     } catch (error) {
       console.error(`❌ Erreur génération audio pour "${text}":`, error);
@@ -199,7 +194,6 @@ class AudioCacheService {
     // 1. Vérifier si la phrase est prédéfinie dans le cache
     const phrase = findPhrase(text);
     if (phrase) {
-      console.log(`📋 Phrase prédéfinie détectée: "${phrase.text}"`);
     }
 
     // 2. Chercher dans le cache
@@ -217,7 +211,6 @@ class AudioCacheService {
    * (À utiliser avec le script de prégénération)
    */
   async pregenerateAll(phrases, voiceId = null, voiceSettings = {}) {
-    console.log(`🚀 Début prégénération de ${phrases.length} phrases...`);
     
     let generated = 0;
     let skipped = 0;
@@ -229,7 +222,6 @@ class AudioCacheService {
         
         if (cached) {
           skipped++;
-          console.log(`⏭️ Déjà en cache: "${phrase.text}"`);
           continue;
         }
 
@@ -244,10 +236,6 @@ class AudioCacheService {
       }
     }
 
-    console.log(`\n✅ Prégénération terminée:`);
-    console.log(`   - Générées: ${generated}`);
-    console.log(`   - Déjà en cache: ${skipped}`);
-    console.log(`   - Erreurs: ${errors}`);
     
     return { generated, skipped, errors };
   }
@@ -272,13 +260,6 @@ class AudioCacheService {
    */
   logStats() {
     const stats = this.getStats();
-    console.log(`\n📊 Statistiques Cache Audio:`);
-    console.log(`   - Hits: ${stats.hits}`);
-    console.log(`   - Misses: ${stats.misses}`);
-    console.log(`   - Hit Rate: ${stats.hitRate}`);
-    console.log(`   - Taille cache: ${stats.cacheSize} fichiers`);
-    console.log(`   - Générés: ${stats.generated}`);
-    console.log(`   - Économies (tokens): ~${stats.savings}`);
   }
 
   /**
@@ -306,7 +287,6 @@ class AudioCacheService {
 
     if (cleaned > 0) {
       await this.saveCacheIndex();
-      console.log(`🧹 Cache nettoyé: ${cleaned} fichiers supprimés`);
     }
 
     return cleaned;

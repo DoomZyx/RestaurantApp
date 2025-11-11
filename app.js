@@ -34,7 +34,6 @@ async function connectDB() {
       throw new Error("MONGO_URI manquant dans le fichier .env");
     }
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("MongoDB connecté avec succès");
   } catch (err) {
     console.error("Erreur de connexion MongoDB :", err);
     process.exit(1);
@@ -46,9 +45,7 @@ await connectDB();
 await AuthService.createDefaultAdmin();
 
 // Initialiser le cache audio ElevenLabs
-console.log("🎵 Initialisation du cache audio ElevenLabs...");
 await audioCacheService.initialize();
-console.log("✅ Cache audio prêt");
 
 const fastify = Fastify();
 
@@ -82,7 +79,6 @@ fastify.register(fastifyStatic, {
   decorateReply: false,
 });
 
-console.log("📁 Dossier uploads servi sur /uploads/");
 
 // Configuration WebSocket avec options pour maintenir les connexions actives
 fastify.register(fastifyWs, {
@@ -91,7 +87,6 @@ fastify.register(fastifyWs, {
     clientTracking: true, // Garder trace des clients
     maxPayload: 100 * 1024 * 1024, // 100 MB pour les gros flux audio
     verifyClient: (info, callback) => {
-      console.log("🔍 Vérification client WebSocket:", info.origin);
       callback(true); // Accepter toutes les connexions
     }
   }

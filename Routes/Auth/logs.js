@@ -59,7 +59,6 @@ export default async function logsRoutes(fastify, options) {
             });
           }
         } catch (fileError) {
-          console.log("Aucun fichier de log Winston trouvé");
         }
 
         // Trier tous les logs par timestamp

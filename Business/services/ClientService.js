@@ -19,7 +19,6 @@ export class ClientService {
     }
 
     const client = await Client.findOne({ telephone });
-    console.log("🔍 Recherche client avec téléphone:", telephone, "→", client ? "Trouvé" : "Non trouvé");
     
     return client;
   }
@@ -49,7 +48,6 @@ export class ClientService {
       type, // Par défaut 'fournisseur' pour la page contacts
     });
 
-    console.log("✅ Client créé:", newClient._id, "- Type:", type);
     return newClient;
   }
 
@@ -73,7 +71,6 @@ export class ClientService {
     });
 
     await client.save();
-    console.log("✅ Client mis à jour:", client._id);
     
     return client;
   }
@@ -159,7 +156,6 @@ export class ClientService {
     }
 
     await Client.findByIdAndDelete(clientId);
-    console.log("✅ Client supprimé:", clientId);
   }
 }
 

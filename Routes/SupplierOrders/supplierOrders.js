@@ -25,7 +25,6 @@ export async function supplierOrderPublicRoutes(fastify) {
     const { orderId } = request.params;
     const publicHost = process.env.PUBLIC_HOST || request.headers.host;
 
-    console.log(`📞 Webhook TwiML pour commande ${orderId}`);
 
     const twiml = generateTwiML(orderId, publicHost);
 
@@ -42,7 +41,6 @@ export async function supplierOrderPublicRoutes(fastify) {
     const { orderId } = request.params;
     const publicHost = process.env.PUBLIC_HOST || request.headers.host;
 
-    console.log(`📞 Webhook TwiML (GET) pour commande ${orderId}`);
 
     const twiml = generateTwiML(orderId, publicHost);
 
@@ -59,7 +57,6 @@ export async function supplierOrderPublicRoutes(fastify) {
     const { orderId } = request.params;
     const callStatus = request.body;
 
-    console.log(`📊 Statut appel pour ${orderId}:`, callStatus.CallStatus);
 
     await updateCallStatus(orderId, callStatus);
 
@@ -74,7 +71,6 @@ export async function supplierOrderPublicRoutes(fastify) {
    */
   fastify.get("/supplier-stream/:orderId", { websocket: true }, (connection, request) => {
     const { orderId } = request.params;
-    console.log(`🎙️ Stream démarré pour commande: ${orderId}`);
 
     handleSupplierCallConnection(connection, orderId);
   });

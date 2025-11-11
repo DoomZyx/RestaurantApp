@@ -70,7 +70,6 @@ export class ProfileService {
     user.updatedAt = new Date();
     await user.save();
 
-    console.log("Profil mis à jour:", userId);
 
     return user;
   }
@@ -103,9 +102,7 @@ export class ProfileService {
       if (oldPublicId) {
         try {
           await deleteFromCloudinary(oldPublicId);
-          console.log("🗑️ Ancien avatar supprimé de Cloudinary");
         } catch (error) {
-          console.warn("⚠️ Impossible de supprimer l'ancien avatar:", error.message);
         }
       }
     }
@@ -123,14 +120,12 @@ export class ProfileService {
     // Récupérer l'URL sécurisée de Cloudinary
     const avatarUrl = result.secure_url;
 
-    console.log("✅ Avatar uploadé sur Cloudinary:", avatarUrl);
 
     // Mettre à jour l'avatar dans la base de données
     user.avatar = avatarUrl;
     user.updatedAt = new Date();
     await user.save();
 
-    console.log("✅ Avatar mis à jour pour user:", userId);
 
     return {
       avatarUrl,
@@ -156,9 +151,7 @@ export class ProfileService {
       if (publicId) {
         try {
           await deleteFromCloudinary(publicId);
-          console.log("🗑️ Avatar supprimé de Cloudinary");
         } catch (error) {
-          console.warn("⚠️ Impossible de supprimer l'avatar de Cloudinary:", error.message);
         }
       }
     }
@@ -168,7 +161,6 @@ export class ProfileService {
     user.updatedAt = new Date();
     await user.save();
 
-    console.log("✅ Avatar supprimé pour user:", userId);
 
     return user;
   }

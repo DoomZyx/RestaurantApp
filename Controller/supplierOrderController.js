@@ -6,7 +6,6 @@ import { initiateSupplierCall, isTwilioConfigured } from "../Services/supplierCa
  */
 export async function createSupplierOrder(request, reply) {
   try {
-    console.log("📦 Nouvelle commande fournisseur reçue");
 
     // Vérifier la configuration Twilio
     if (!isTwilioConfigured()) {

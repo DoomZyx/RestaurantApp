@@ -54,12 +54,6 @@ export default async function processCallRoutes(fastify, options) {
           }
         );
         
-        console.log(`\n⏭️  APPEL IGNORÉ APRÈS EXTRACTION (${streamSid})`);
-        console.log(`   Raison: Aucune donnée exploitable`);
-        console.log(`   - Nom: ${extractedData.nom}`);
-        console.log(`   - Téléphone: ${extractedData.telephone}`);
-        console.log(`   - Type: ${extractedData.type_demande}`);
-        console.log(`   - Commande: ${extractedData.order ? "Oui" : "Non"}\n`);
         
         // Ne pas sauvegarder ni notifier
         return reply.code(200).send({

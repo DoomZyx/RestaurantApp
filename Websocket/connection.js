@@ -18,9 +18,6 @@ dotenv.config();
  */
 export async function handleWebSocketConnection(connection, request) {
   try {
-    console.log("✅ WebSocket Twilio CONNECTÉ !");
-    console.log("   - ReadyState:", connection.readyState);
-    console.log("   - Timestamp:", new Date().toISOString());
     
     callLogger.callStarted(null, { event: "client_connected" });
 
@@ -38,12 +35,6 @@ export async function handleWebSocketConnection(connection, request) {
     const useElevenLabs = false;
 
     // 🎤 Configuration TTS
-    console.log("\n========================================");
-    console.log("🔊 CONFIGURATION TTS");
-    console.log("========================================");
-    console.log("Clé ElevenLabs présente: ❌ NON (désactivé)");
-    console.log("ℹ️ ElevenLabs désactivé - utilisation d'OpenAI TTS");
-    console.log("========================================\n");
 
     // ==========================================
     // CRÉATION SESSION OPENAI
@@ -65,7 +56,6 @@ export async function handleWebSocketConnection(connection, request) {
         // Événement START : Initialiser tous les gestionnaires
         if (data.event === "start") {
           streamSid = data.start.streamSid;
-          console.log("🎬 Événement START - StreamSid:", streamSid);
 
           // Initialisation des gestionnaires avec streamSid
           openAIHandler = new OpenAIHandler(
@@ -154,10 +144,6 @@ export async function handleWebSocketConnection(connection, request) {
     });
 
     connection.on("close", (code, reason) => {
-      console.log("🔴 WebSocket Twilio FERMÉ");
-      console.log("   - Code:", code);
-      console.log("   - Reason:", reason?.toString());
-      console.log("   - StreamSid:", streamSid);
       
       // Désenregistrer le stream
       if (streamSid) {
@@ -167,7 +153,6 @@ export async function handleWebSocketConnection(connection, request) {
       // Nettoyer le heartbeat
       if (heartbeatInterval) {
         clearInterval(heartbeatInterval);
-        console.log("💔 Heartbeat arrêté");
       }
       
       const totalDuration = Date.now() - callStartTime;
@@ -189,7 +174,6 @@ export async function handleWebSocketConnection(connection, request) {
     });
 
     openAiWs.on("close", () => {
-      console.log("🔴 OpenAI WebSocket FERMÉ");
       callLogger.info(streamSid, "Connexion OpenAI fermée");
     });
     

@@ -14,7 +14,6 @@ const openai = new OpenAI({
  */
 export async function extractSupplierResponse(transcription, ingredients) {
   try {
-    console.log("🤖 Extraction des données fournisseur avec GPT-4...");
 
     const ingredientsList = ingredients
       .map(ing => `${ing.quantite} ${ing.unite} de ${ing.nom}`)
@@ -65,7 +64,6 @@ Réponds UNIQUEMENT avec un objet JSON valide, sans texte avant ou après :
     });
 
     const responseText = completion.choices[0].message.content;
-    console.log("📝 Réponse GPT:", responseText);
 
     const extractedData = JSON.parse(responseText);
 
@@ -79,7 +77,6 @@ Réponds UNIQUEMENT avec un objet JSON valide, sans texte avant ou après :
       commentaire: extractedData.commentaire || null
     };
 
-    console.log("✅ Données extraites:", cleanedData);
     return cleanedData;
 
   } catch (error) {

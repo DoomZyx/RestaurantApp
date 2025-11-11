@@ -14,10 +14,8 @@ export class OrderService {
   static async createOrderFromAppointment(appointmentData, options = {}) {
     const { client, callId, nom, description } = options;
 
-    console.log("📅 Création d'une commande depuis la transcription:", appointmentData);
     
     if (appointmentData.nombrePersonnes) {
-      console.log("👥 Nombre de personnes détecté:", appointmentData.nombrePersonnes);
     }
 
     // Gérer les valeurs "ASAP" pour date/heure
@@ -43,12 +41,9 @@ export class OrderService {
       related_call: callId
     });
 
-    console.log("✅ Commande créée avec succès:", createdOrder._id);
     
     if (client) {
-      console.log("   - Client associé:", client._id);
     } else {
-      console.log("   - Aucun client associé (peut être ajouté ultérieurement)");
     }
 
     return createdOrder;
@@ -68,7 +63,6 @@ export class OrderService {
     // Gestion date ASAP
     if (date === "ASAP") {
       orderDate = new Date();
-      console.log("⏰ Date ASAP détectée → date actuelle:", orderDate.toISOString().split('T')[0]);
     } else {
       orderDate = new Date(date);
     }
@@ -78,7 +72,6 @@ export class OrderService {
       const now = new Date();
       now.setMinutes(now.getMinutes() + 30); // +30 min de préparation
       orderHeure = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-      console.log("⏰ Heure ASAP détectée → heure actuelle + 30min:", orderHeure);
     }
 
     return { orderDate, orderHeure };

@@ -74,7 +74,6 @@ export class UserService {
 
     await user.save();
 
-    console.log("✅ Utilisateur mis à jour (admin):", userId);
 
     return user;
   }
@@ -99,7 +98,6 @@ export class UserService {
 
     await User.findByIdAndDelete(userId);
 
-    console.log("✅ Utilisateur supprimé:", userId);
   }
 
   /**
@@ -149,7 +147,6 @@ export class UserService {
     user.isActive = isActive;
     await user.save();
 
-    console.log(`✅ Statut utilisateur ${isActive ? 'activé' : 'désactivé'}:`, userId);
 
     return user;
   }
@@ -174,7 +171,6 @@ export class UserService {
     user.role = newRole;
     await user.save();
 
-    console.log(`✅ Rôle utilisateur changé vers '${newRole}':`, userId);
 
     return user;
   }

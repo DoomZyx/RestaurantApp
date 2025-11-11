@@ -12,7 +12,6 @@ const OPENAI_REALTIME_URL = "wss://api.openai.com/v1/realtime?model=gpt-4o-realt
  * @param {string} orderId - ID de la commande
  */
 export async function handleSupplierCallConnection(twilioWs, orderId) {
-  console.log(`📞 Nouvelle connexion WebSocket fournisseur - Commande: ${orderId}`);
 
   try {
     // Récupérer la commande
@@ -41,7 +40,6 @@ export async function handleSupplierCallConnection(twilioWs, orderId) {
 
     // Configuration de la session OpenAI
     openaiWs.on("open", () => {
-      console.log("✅ Connecté à OpenAI Realtime API");
 
       const ingredientsList = order.getIngredientsText();
 
@@ -89,7 +87,6 @@ IMPORTANT :
       };
 
       openaiWs.send(JSON.stringify(sessionConfig));
-      console.log("🎙️ Session OpenAI configurée");
     });
 
     // Gestion des messages OpenAI
@@ -99,11 +96,9 @@ IMPORTANT :
 
         switch (message.type) {
           case "session.created":
-            console.log("✅ Session OpenAI créée");
             break;
 
           case "session.updated":
-            console.log("✅ Session OpenAI mise à jour");
             conversationStarted = true;
             break;
 
@@ -131,7 +126,6 @@ IMPORTANT :
                     const role = message.item.role === "user" ? "👤 Fournisseur" : "🤖 Assistant";
                     const text = part.text || part.transcript || "";
                     fullTranscription += `\n${role}: ${text}`;
-                    console.log(`${role}: ${text}`);
                   }
                 });
               }
@@ -139,11 +133,9 @@ IMPORTANT :
             break;
 
           case "input_audio_buffer.speech_started":
-            console.log("🎤 Le fournisseur parle...");
             break;
 
           case "input_audio_buffer.speech_stopped":
-            console.log("⏸️ Le fournisseur a fini de parler");
             break;
 
           case "error":
@@ -162,7 +154,6 @@ IMPORTANT :
 
         switch (message.event) {
           case "start":
-            console.log("🎙️ Stream Twilio démarré:", message.start.streamSid);
             twilioWs.streamSid = message.start.streamSid;
             break;
 
@@ -178,7 +169,6 @@ IMPORTANT :
             break;
 
           case "stop":
-            console.log("⏹️ Stream Twilio arrêté");
             openaiWs.close();
             break;
         }
@@ -189,13 +179,11 @@ IMPORTANT :
 
     // Nettoyage à la fin de l'appel
     twilioWs.on("close", async () => {
-      console.log("📴 WebSocket Twilio fermé");
       openaiWs.close();
 
       try {
         // Extraire les données avec GPT
         if (fullTranscription.trim()) {
-          console.log("📝 Transcription complète:", fullTranscription);
           
           const extractedData = await extractSupplierResponse(
             fullTranscription,
@@ -227,7 +215,6 @@ IMPORTANT :
         }
 
         await order.save();
-        console.log("✅ Commande mise à jour:", order._id);
 
       } catch (error) {
         console.error("❌ Erreur mise à jour commande:", error);
@@ -241,7 +228,6 @@ IMPORTANT :
     });
 
     openaiWs.on("close", () => {
-      console.log("📴 WebSocket OpenAI fermé");
     });
 
   } catch (error) {

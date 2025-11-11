@@ -5,10 +5,6 @@ import { generateEnrichedPrompt } from "./pricingService.js";
 export function createOpenAiSession(apiKey, voice = "ballad", instructions, options = {}) {
   const { useElevenLabs = false } = options;
   
-  console.log("🤖 Tentative de connexion à OpenAI Realtime...");
-  console.log("   - API Key présente:", apiKey ? "✓" : "✗");
-  console.log("   - Voice:", voice);
-  console.log("   - TTS:", useElevenLabs ? "ElevenLabs (audio OpenAI ignoré)" : "OpenAI natif");
   
   const ws = new WebSocket("wss://api.openai.com/v1/realtime?model=gpt-4o-mini-realtime-preview", {
     headers: {
@@ -18,8 +14,6 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
   });
 
   ws.on("open", async () => {
-    console.log("✅ OpenAI WebSocket CONNECTÉ !");
-    console.log("   - Timestamp:", new Date().toISOString());
     // Générer le prompt enrichi avec les tarifs ET la date actuelle
     const enrichedInstructions = await generateEnrichedPrompt(getSystemMessage());
     
@@ -116,7 +110,6 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
     };
     
     ws.send(JSON.stringify(sessionUpdate));
-    console.log("✅ Session OpenAI configurée avec succès");
   });
 
   ws.on("error", (error) => {
@@ -126,9 +119,6 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
   });
 
   ws.on("close", (code, reason) => {
-    console.log("🔴 OpenAI WebSocket FERMÉ");
-    console.log("   - Code:", code);
-    console.log("   - Reason:", reason?.toString());
   });
 
   return ws;
