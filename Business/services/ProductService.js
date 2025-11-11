@@ -67,6 +67,14 @@ export class ProductService {
       produitNettoye.options = productData.options || {};
     }
 
+    // Ajouter les champs spécifiques aux menus
+    if (category === 'menus' && productData.composition) {
+      produitNettoye.composition = {
+        platPrincipal: productData.composition.platPrincipal || null
+        // Frites et boisson au choix toujours incluses
+      };
+    }
+
     pricing.menuPricing[category].produits.push(produitNettoye);
     pricing.markModified('menuPricing');
     pricing.derniereModification = new Date();
@@ -139,6 +147,14 @@ export class ProductService {
       if (productData.options !== undefined) {
         donneesMisesAJour.options = productData.options;
       }
+    }
+
+    // Gérer les champs spécifiques aux menus
+    if (category === 'menus' && productData.composition !== undefined) {
+      donneesMisesAJour.composition = {
+        platPrincipal: productData.composition.platPrincipal || null
+        // Frites et boisson au choix toujours incluses
+      };
     }
 
     Object.assign(produit, donneesMisesAJour);

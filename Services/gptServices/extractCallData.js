@@ -170,21 +170,58 @@ COMMANDES (commandes) :
   "personnalisation": null  // Pour les tacos personnalisés (voir ci-dessous)
 }
 
-🌮 PERSONNALISATION TACOS :
-Si le client commande un TACOS et précise ses choix :
+🌮 PERSONNALISATION TACOS - RÈGLE OBLIGATOIRE :
+Quand le client commande un TACOS, tu DOIS extraire ses choix de viandes et sauces :
+
+Exemple 1 - Tacos Simple (1 viande) :
 {
-  "nom": "Tacos Double",
+  "nom": "Tacos Simple (1 viande)",
+  "categorie": "Tacos",
+  "quantite": 1,
+  "prixUnitaire": 7.50,
+  "supplements": "",
+  "personnalisation": {
+    "viandes": ["Poulet"],  // 1 viande pour un simple
+    "sauce": "Algérienne",
+    "sansIngredients": [],
+    "extras": []
+  }
+}
+
+Exemple 2 - Tacos Double (2 viandes) :
+{
+  "nom": "Tacos Double (2 viandes)",
   "categorie": "Tacos",
   "quantite": 1,
   "prixUnitaire": 9.50,
   "supplements": "",
   "personnalisation": {
-    "viandes": ["Poulet", "Merguez"],
-    "sauce": "Algérienne",
+    "viandes": ["Poulet", "Merguez"],  // 2 viandes pour un double
+    "sauce": "Sauce Blanche",
     "sansIngredients": ["oignons"],  // Si le client dit "sans X"
-    "extras": []  // "Supplément viande", "Supplément fromage", "XL"
+    "extras": []
   }
 }
+
+⚠️ IMPORTANT TACOS :
+- Tacos Simple = 1 viande → extrais LA viande choisie
+- Tacos Double = 2 viandes → extrais LES 2 viandes choisies  
+- Tacos Triple = 3 viandes → extrais LES 3 viandes choisies
+- TOUJOURS extraire la/les viande(s) et la sauce mentionnées
+- Utilise UNIQUEMENT les options disponibles dans le menu (voir ci-dessous)
+
+🍔 MENUS - RÈGLE IMPORTANTE :
+Si le client commande un MENU (ex: "Menu Tacos", "Menu Burger"), tu dois extraire :
+1. Le plat principal complet avec ses personnalisations
+2. La boisson choisie
+3. Les frites sont automatiquement incluses
+
+Exemple Menu Tacos :
+Client dit : "Je veux un menu tacos double poulet merguez sauce algérienne et un coca"
+→ Extrais comme 2 items dans commandes[] :
+  1. Le tacos avec sa personnalisation (viandes + sauce)
+  2. La boisson (Coca-Cola)
+  3. Mentionne "Frites" dans la description du menu
 
 ⚠️ Si pas de personnalisation ou produit non-tacos → personnalisation: null
 
