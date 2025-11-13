@@ -88,6 +88,10 @@ const orderSchema = new mongoose.Schema({
     supplements: {
       type: String,
       maxlength: 200
+    },
+    options: {
+      type: mongoose.Schema.Types.Mixed,
+      default: {}
     }
   }],
 
