@@ -14,10 +14,7 @@ export default async function pricingRoutes(fastify, options) {
         type: "object",
         properties: {
           restaurantInfo: { type: "object" },
-          menuPricing: { type: "object" },
-          deliveryPricing: { type: "object" },
-          promotions: { type: "array" },
-          taxes: { type: "object" }
+          menuPricing: { type: "object" }
         }
       },
       response: {
@@ -32,30 +29,6 @@ export default async function pricingRoutes(fastify, options) {
       }
     }
   }, PricingController.createOrUpdatePricing);
-
-  // Calculer les frais de livraison
-  fastify.get("/pricing/delivery/calculate", {
-    schema: {
-      tags: ["Pricing"],
-      summary: "Calculer les frais de livraison",
-      querystring: {
-        type: "object",
-        properties: {
-          distance: { type: "number" }
-        },
-        required: ["distance"]
-      },
-      response: {
-        200: {
-          type: "object",
-          properties: {
-            success: { type: "boolean" },
-            data: { type: "object" }
-          }
-        }
-      }
-    }
-  }, PricingController.calculateDeliveryFees);
 
   // Récupérer les produits disponibles par catégorie
   fastify.get("/pricing/products/:categorie", {

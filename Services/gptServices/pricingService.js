@@ -12,7 +12,6 @@ export async function getPricingForGPT() {
     const gptPricing = {
       restaurantInfo: pricing.restaurantInfo,
       menu: {},
-      delivery: pricing.deliveryPricing,
       availability: pricing.verifierDisponibilite()
     };
 
@@ -64,12 +63,6 @@ export async function generateEnrichedPrompt(basePrompt) {
       );
     }
 
-    // Récupérer toutes les données depuis la DB pour avoir taxes et promotions
-    const pricingDoc = await PricingModel.findOne();
-    const tauxTVA = pricingDoc?.taxes?.tva || 20;
-    const fraisService = pricingDoc?.taxes?.serviceCharge || 0;
-    const appliquerFraisService = pricingDoc?.taxes?.applicableServiceCharge || false;
-
     // Ajouter les informations sur les tarifs
     const pricingInfo = `
 ========================================
@@ -86,17 +79,9 @@ ${Object.entries(pricing.restaurantInfo.horairesOuverture || {}).map(([jour, hor
 ).join('\n')}
 
 ========================================
-MENU ET TARIFS (PRIX HT) :
+MENU ET TARIFS :
 ========================================
-⚠️ IMPORTANT : Les prix ci-dessous sont en HORS TAXES (HT).
-Tu DOIS TOUJOURS calculer et annoncer le prix TTC au client.
-
-TVA applicable : ${tauxTVA}%
-${appliquerFraisService ? `Frais de service : ${fraisService}%` : ''}
-
-Formule de calcul :
-- Prix TTC = Prix HT × (1 + ${tauxTVA}/100)${appliquerFraisService ? ` × (1 + ${fraisService}/100)` : ''}
-- Exemple : Un produit à 10€ HT = ${(10 * (1 + tauxTVA/100) * (appliquerFraisService ? (1 + fraisService/100) : 1)).toFixed(2)}€ TTC
+IMPORTANT : Tous les prix affichés sont TTC (prix finaux).
 
 MENU :
 ${Object.keys(pricing.menu).map(categorie => {
@@ -104,49 +89,17 @@ ${Object.keys(pricing.menu).map(categorie => {
   return `
 ${category.nom.toUpperCase()} :
 ${category.produits.map(produit => {
-  const prixTTC = (produit.prix * (1 + tauxTVA/100) * (appliquerFraisService ? (1 + fraisService/100) : 1)).toFixed(2);
-  return `- ${produit.nom} : ${produit.prix}€ HT (${prixTTC}€ TTC) - ${produit.description}`;
+  return `- ${produit.nom} : ${produit.prix}€ - ${produit.description}`;
 }).join('\n')}`;
 }).join('\n')}
 
 ========================================
-FRAIS DE LIVRAISON :
-========================================
-- Livraison ${pricing.delivery.activerLivraison ? 'activée' : 'désactivée'}
-- Frais de base : ${pricing.delivery.fraisBase}€
-- Prix par kilomètre : ${pricing.delivery.prixParKm}€
-- Distance maximale : ${pricing.delivery.distanceMaximale}km
-- Montant minimum pour livraison : ${pricing.delivery.montantMinimumCommande}€
-- Délai de préparation : ${pricing.delivery.delaiPreparation} minutes
-${pricing.delivery.zonesLivraison?.length > 0 ? `
-Zones de livraison avec frais supplémentaires :
-${pricing.delivery.zonesLivraison.map(zone => `- ${zone.nom} (${zone.codePostal}) : +${zone.fraisSupplimentaire}€`).join('\n')}` : ''}
-
-========================================
-PROMOTIONS ACTIVES :
-========================================
-${pricingDoc?.promotions?.filter(p => p.active && (!p.dateFin || new Date(p.dateFin) >= new Date())).length > 0 
-  ? pricingDoc.promotions.filter(p => p.active && (!p.dateFin || new Date(p.dateFin) >= new Date())).map(promo => `
-📢 ${promo.nom}
-Description : ${promo.description}
-Type : ${promo.type === 'pourcentage' ? `Réduction de ${promo.valeur}%` : promo.type === 'montant_fixe' ? `Réduction de ${promo.valeur}€` : 'Produit gratuit'}
-${promo.conditions.montantMinimum > 0 ? `Montant minimum : ${promo.conditions.montantMinimum}€` : ''}
-${promo.conditions.joursValides?.length > 0 ? `Jours valides : ${promo.conditions.joursValides.join(', ')}` : ''}
-${promo.conditions.heureDebut && promo.conditions.heureFin ? `Horaires : ${promo.conditions.heureDebut} - ${promo.conditions.heureFin}` : ''}
-${promo.dateFin ? `Valable jusqu'au : ${new Date(promo.dateFin).toLocaleDateString('fr-FR')}` : ''}
-`).join('\n---\n') 
-  : 'Aucune promotion active actuellement.'}
-
-========================================
 INSTRUCTIONS IMPORTANTES :
 ========================================
-1. 🔴 TOUJOURS annoncer les prix en TTC au client, jamais en HT
-2. Si le client demande un prix, calcule le TTC avec la formule ci-dessus
-3. Propose les promotions actives si elles s'appliquent à la commande du client
-4. Vérifie les horaires d'ouverture avant de confirmer une commande
-5. Informe le client des frais de livraison selon sa distance
-6. Tu peux donner l'adresse, le téléphone ou l'email si le client le demande
-7. Informe le client du délai de préparation estimé
+1. Les prix affichés sont les prix finaux TTC
+2. Vérifie les horaires d'ouverture avant de confirmer une commande
+3. Tu peux donner l'adresse, le téléphone ou l'email si le client le demande
+4. Informe le client du délai de préparation estimé
 `;
 
     // Ajouter les informations de tarifs à la fin du prompt
@@ -159,18 +112,17 @@ INSTRUCTIONS IMPORTANTES :
   }
 }
 
-// Calculer le prix total d'une commande (retourne HT et TTC)
-export async function calculateOrderTotal(orderItems, distance = 0) {
+// Calculer le prix total d'une commande (retourne uniquement TTC)
+export async function calculateOrderTotal(orderItems) {
   try {
     const pricingDoc = await PricingModel.findOne();
     if (!pricingDoc) {
-      return { totalHT: 0, totalTTC: 0, fraisLivraison: 0, taxes: 0 };
+      return { total: 0 };
     }
 
     const pricing = {
       restaurantInfo: pricingDoc.restaurantInfo,
-      menu: {},
-      delivery: pricingDoc.deliveryPricing
+      menu: {}
     };
 
     // Simplifier le menu pour la recherche
@@ -187,47 +139,22 @@ export async function calculateOrderTotal(orderItems, distance = 0) {
       };
     });
 
-    let totalHT = 0;
+    let total = 0;
     
-    // Calculer le total HT des articles
+    // Calculer le total TTC des articles
     orderItems.forEach(item => {
       const product = findProductInPricing(item.nom, item.categorie, pricing);
       if (product) {
-        totalHT += product.prix * (item.quantite || 1);
+        total += product.prix * (item.quantite || 1);
       }
     });
 
-    // Ajouter les frais de livraison si applicable
-    let fraisLivraison = 0;
-    if (distance > 0 && pricing.delivery.activerLivraison) {
-      fraisLivraison = pricing.delivery.fraisBase + (distance * pricing.delivery.prixParKm);
-      totalHT += fraisLivraison;
-    }
-
-    // Récupérer les taxes
-    const tauxTVA = pricingDoc.taxes?.tva || 20;
-    const fraisService = pricingDoc.taxes?.serviceCharge || 0;
-    const appliquerFraisService = pricingDoc.taxes?.applicableServiceCharge || false;
-
-    // Calculer le TTC
-    let totalTTC = totalHT * (1 + tauxTVA / 100);
-    if (appliquerFraisService) {
-      totalTTC = totalTTC * (1 + fraisService / 100);
-    }
-
-    const montantTaxes = totalTTC - totalHT;
-
     return {
-      totalHT: Math.round(totalHT * 100) / 100,
-      totalTTC: Math.round(totalTTC * 100) / 100,
-      fraisLivraison: Math.round(fraisLivraison * 100) / 100,
-      taxes: Math.round(montantTaxes * 100) / 100,
-      tauxTVA,
-      fraisService: appliquerFraisService ? fraisService : 0
+      total: Math.round(total * 100) / 100
     };
   } catch (error) {
     console.error("Erreur lors du calcul du total:", error);
-    return { totalHT: 0, totalTTC: 0, fraisLivraison: 0, taxes: 0 };
+    return { total: 0 };
   }
 }
 

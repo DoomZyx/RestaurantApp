@@ -1,6 +1,5 @@
 import { PricingService } from "../../Business/services/PricingService.js";
 import { ProductService } from "../../Business/services/ProductService.js";
-import { DeliveryService } from "../../Business/services/DeliveryService.js";
 import { PricingTransformer } from "../../Business/transformers/PricingTransformer.js";
 
 /**
@@ -46,42 +45,6 @@ export class PricingController {
       );
     } catch (error) {
       console.error("❌ Erreur createOrUpdatePricing:", error);
-
-      return reply.code(500).send(
-        PricingTransformer.errorResponse(
-          "Erreur interne du serveur",
-          error.message
-        )
-      );
-    }
-  }
-
-  /**
-   * Calcule les frais de livraison
-   * GET /api/pricing/delivery/calculate?distance=X
-   */
-  static async calculateDeliveryFees(request, reply) {
-    try {
-      const { distance } = request.query;
-      const fees = await DeliveryService.calculateDeliveryFees(distance);
-
-      return reply.send(
-        PricingTransformer.successResponse(fees)
-      );
-    } catch (error) {
-      console.error("❌ Erreur calculateDeliveryFees:", error);
-
-      if (error.message.includes("non trouvée")) {
-        return reply.code(404).send(
-          PricingTransformer.errorResponse(error.message)
-        );
-      }
-
-      if (error.message.includes("invalide")) {
-        return reply.code(400).send(
-          PricingTransformer.errorResponse(error.message)
-        );
-      }
 
       return reply.code(500).send(
         PricingTransformer.errorResponse(

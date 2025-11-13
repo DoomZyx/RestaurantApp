@@ -50,15 +50,6 @@ export const DEFAULT_MENU = {
   }
 };
 
-export const DEFAULT_DELIVERY_PRICING = {
-  activerLivraison: true,
-  fraisBase: 2.50,
-  prixParKm: 0.80,
-  distanceMaximale: 10,
-  montantMinimumCommande: 15,
-  delaiPreparation: 30
-};
-
 export const VALID_SIZES = {
   pizzas: ["Petite", "Moyenne", "Grande"],
   boissons: ["33cl", "50cl", "1L"]
@@ -71,8 +62,7 @@ export const VALID_SIZES = {
 export function getDefaultPricingConfig() {
   return {
     restaurantInfo: DEFAULT_RESTAURANT_INFO,
-    menuPricing: DEFAULT_MENU,
-    deliveryPricing: DEFAULT_DELIVERY_PRICING
+    menuPricing: DEFAULT_MENU
   };
 }
 

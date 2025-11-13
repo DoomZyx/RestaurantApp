@@ -74,52 +74,6 @@ const pricingSchema = new mongoose.Schema({
     }
   },
 
-  // Configuration des frais de livraison
-  deliveryPricing: {
-    activerLivraison: { type: Boolean, default: true },
-    fraisBase: { type: Number, default: 2.50 }, // Frais de base
-    prixParKm: { type: Number, default: 0.80 }, // Prix par kilomètre
-    distanceMaximale: { type: Number, default: 10 }, // Distance maximale en km
-    montantMinimumCommande: { type: Number, default: 15 }, // Montant minimum pour livraison
-    delaiPreparation: { type: Number, default: 30 }, // Délai en minutes
-    zonesLivraison: [{
-      nom: { type: String, required: true },
-      codePostal: { type: String, required: true },
-      fraisSupplimentaire: { type: Number, default: 0 }
-    }]
-  },
-
-  // Configuration des promotions
-  promotions: [{
-    nom: { type: String, required: true },
-    description: { type: String, default: "" },
-    type: { 
-      type: String, 
-      enum: ["pourcentage", "montant_fixe", "produit_gratuit"],
-      default: "pourcentage"
-    },
-    valeur: { type: Number, required: true }, // Pourcentage ou montant
-    conditions: {
-      montantMinimum: { type: Number, default: 0 },
-      produitsApplicables: [{ type: String }],
-      joursValides: [{ 
-        type: String, 
-        enum: ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
-      }],
-      heureDebut: { type: String, default: "00:00" },
-      heureFin: { type: String, default: "23:59" }
-    },
-    active: { type: Boolean, default: true },
-    dateDebut: { type: Date, default: Date.now },
-    dateFin: { type: Date }
-  }],
-
-  // Configuration des taxes
-  taxes: {
-    tva: { type: Number, default: 20 }, // Pourcentage de TVA
-    serviceCharge: { type: Number, default: 0 }, // Frais de service
-    applicableServiceCharge: { type: Boolean, default: false }
-  },
 
   // Métadonnées
   version: { type: String, default: "1.0" },
@@ -132,13 +86,6 @@ const pricingSchema = new mongoose.Schema({
 });
 
 // Méthodes utilitaires
-pricingSchema.methods.calculerFraisLivraison = function(distance) {
-  if (!this.deliveryPricing.activerLivraison) return 0;
-  if (distance > this.deliveryPricing.distanceMaximale) return null; // Trop loin
-  
-  return this.deliveryPricing.fraisBase + (distance * this.deliveryPricing.prixParKm);
-};
-
 pricingSchema.methods.verifierDisponibilite = function() {
   const maintenant = new Date();
   const jour = maintenant.toLocaleDateString('fr-FR', { weekday: 'long' });

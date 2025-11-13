@@ -101,7 +101,6 @@ export class PricingService {
     const gptData = {
       restaurantInfo: pricing.restaurantInfo,
       menu: {},
-      delivery: pricing.deliveryPricing,
       availability: pricing.verifierDisponibilite()
     };
 

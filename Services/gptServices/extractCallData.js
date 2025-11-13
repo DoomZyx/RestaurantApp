@@ -8,7 +8,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const EXTRACTION_PROMPT = `🚨 RÈGLES ABSOLUES - FORMAT JSON UNIQUEMENT 🚨
+const EXTRACTION_PROMPT = `RÈGLES ABSOLUES - FORMAT JSON UNIQUEMENT 
 
 1. Réponds UNIQUEMENT avec un JSON valide
 2. AUCUN texte avant ou après le JSON
@@ -16,11 +16,11 @@ const EXTRACTION_PROMPT = `🚨 RÈGLES ABSOLUES - FORMAT JSON UNIQUEMENT 🚨
 4. PAS de virgule finale dans les objets
 
 ========================================
-🎯 TA MISSION :
+TA MISSION :
 Extraire les informations d'un appel téléphonique de RESTAURANT
 ========================================
 
-🔧 CORRECTION AUTOMATIQUE DES ERREURS DE TRANSCRIPTION :
+CORRECTION AUTOMATIQUE DES ERREURS DE TRANSCRIPTION :
 
 Audio → Correction :
 - "copoins", "copins", "coco" → "Coca" ou "Coca-Cola"
@@ -34,10 +34,10 @@ Audio → Correction :
 - "quatre fromage" → "4 Fromages"
 - "reine", "reines" → "Reine"
 
-⚠️ Utilise les NOMS EXACTS du menu fourni ci-dessous, pas la transcription brute.
+Utilise les NOMS EXACTS du menu fourni ci-dessous, pas la transcription brute.
 
 ========================================
-📋 STRUCTURE JSON À RETOURNER :
+STRUCTURE JSON À RETOURNER :
 ========================================
 
 {
@@ -68,10 +68,10 @@ Audio → Correction :
 }
 
 ========================================
-🚨 RÈGLE CRITIQUE : QUAND CRÉER UN ORDER ?
+RÈGLE CRITIQUE : QUAND CRÉER UN ORDER ?
 ========================================
 
-✅ CRÉER ORDER si :
+CRÉER ORDER si :
 - Le client mentionne UN PLAT (pizza, burger, salade, etc.)
 - Le client dit "je veux commander"
 - Le client dit "livraison" ou "à emporter"
@@ -82,10 +82,10 @@ Audio → Correction :
 - Questions sur le menu/ingrédients
 - Réclamations sans commande
 
-⚠️ SI TU HÉSITES → CRÉER L'ORDER quand même !
+SI TU HÉSITES → CRÉER L'ORDER quand même !
 
 ========================================
-📝 CHAMPS À EXTRAIRE :
+CHAMPS À EXTRAIRE :
 ========================================
 
 NOM (nom) - RÈGLE CRITIQUE :
