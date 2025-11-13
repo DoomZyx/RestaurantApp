@@ -1,0 +1,117 @@
+// Styles pour les horaires (plages midi/soir) - Glassmorphism
+.opening-hours {
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 2rem;
+    letter-spacing: -0.025em;
+  }
+  
+  .hours-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  
+  .day-hours {
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .day-header {
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      
+      .day-name {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.125rem;
+        color: var(--color-text-primary);
+        letter-spacing: -0.02em;
+        
+        input[type="checkbox"] {
+          width: 22px;
+          height: 22px;
+          cursor: pointer;
+          accent-color: var(--color-accent);
+          border-radius: 6px;
+        }
+      }
+    }
+    
+    .time-slot {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: rgba(128, 128, 128, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(128, 128, 128, 0.2);
+      border-radius: 14px;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: rgba(128, 128, 128, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      span {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--color-accent);
+        min-width: 80px;
+        padding: 4px 12px;
+        background: rgba(99, 102, 241, 0.1);
+        border-radius: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      input[type="time"] {
+        padding: 10px 14px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        flex: 1;
+        background: rgba(255, 255, 255, 0.6);
+        color: var(--color-text-primary);
+        transition: all 0.2s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: var(--color-accent);
+          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+          background: rgba(255, 255, 255, 0.9);
+        }
+        
+        &:hover {
+          border-color: var(--color-accent);
+          background: rgba(255, 255, 255, 0.7);
+        }
+      }
+    }
+  }
+}
+

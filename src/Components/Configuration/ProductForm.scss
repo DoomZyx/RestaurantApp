@@ -1,0 +1,230 @@
+.product-form {
+  padding: 0;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+    background: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+
+    h5 {
+      margin: 0;
+      color: #333;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .close-form-btn {
+      background: transparent;
+      border: none;
+      color: #6c757d;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: all 0.2s;
+      line-height: 1;
+
+      &:hover {
+        background: #e9ecef;
+        color: #dc3545;
+      }
+    }
+  }
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+    margin: 20px;
+    flex-wrap: wrap;
+
+    input {
+      flex: 1;
+      min-width: 180px;
+      padding: 12px 14px;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.08);
+      }
+
+      &::placeholder {
+        color: #adb5bd;
+      }
+    }
+  }
+
+  .custom-options-wrapper {
+    margin: 0 20px;
+  }
+
+  .menu-composition-wrapper {
+    margin: 0 20px;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 20px;
+    border-top: 1px solid #e9ecef;
+
+    button {
+      padding: 10px 24px;
+      border: 1px solid;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+
+      &:first-child {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+
+        &:hover {
+          background: #0056b3;
+          border-color: #0056b3;
+        }
+      }
+
+      &:last-child {
+        background: white;
+        color: #6c757d;
+        border-color: #ced4da;
+
+        &:hover {
+          background: #f8f9fa;
+          border-color: #adb5bd;
+        }
+      }
+    }
+  }
+}
+
+// Styles pour la composition de menus
+.menu-composition-wrapper {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+
+  .search-filter {
+    margin-bottom: 20px;
+
+    input {
+      width: 100%;
+      padding: 10px 15px;
+      border: 2px solid #dee2e6;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+      }
+
+      &::placeholder {
+        color: #adb5bd;
+      }
+    }
+  }
+
+  .composition-section {
+    margin-bottom: 30px;
+
+    > label {
+      display: block;
+      font-weight: 600;
+      color: #495057;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+
+      input[type="checkbox"] {
+        margin-right: 8px;
+      }
+    }
+
+    .product-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+
+      .product-card {
+        background: white;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: center;
+
+        &:hover {
+          border-color: #007bff;
+          box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+        }
+
+        &.selected {
+          border-color: #007bff;
+          background: #e7f3ff;
+          box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+
+          .card-name {
+            color: #007bff;
+            font-weight: 600;
+          }
+        }
+
+        .card-name {
+          font-size: 0.9rem;
+          color: #495057;
+          margin-bottom: 8px;
+        }
+
+        .card-price {
+          font-size: 1rem;
+          font-weight: 700;
+          color: #28a745;
+        }
+      }
+    }
+  }
+
+  .auto-description {
+    background: #e7f3ff;
+    border-left: 4px solid #007bff;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #495057;
+
+    strong {
+      color: #007bff;
+    }
+  }
+}
+

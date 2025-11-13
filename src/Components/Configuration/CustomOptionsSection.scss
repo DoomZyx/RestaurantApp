@@ -1,0 +1,156 @@
+// Options personnalisables - Design épuré et intuitif
+.custom-options-wrapper {
+  margin-top: 30px;
+  padding: 0;
+  background: transparent;
+
+  .options-header {
+    margin-bottom: 25px;
+    padding: 0 0 15px 0;
+    border-bottom: 1px solid #e0e0e0;
+
+    h6 {
+      margin: 0 0 5px 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #495057;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+  }
+
+  .option-box {
+    background: white;
+    padding: 0;
+    margin-bottom: 40px;
+    border-radius: 0;
+    border: none;
+    border-left: 4px solid #007bff;
+    padding-left: 20px;
+
+    &:last-of-type {
+      margin-bottom: 25px;
+    }
+
+    .option-top {
+      margin-bottom: 20px;
+      padding-bottom: 0;
+      border-bottom: none;
+
+      .option-name {
+        strong {
+          font-size: 1rem;
+          color: #212529;
+          font-weight: 600;
+          text-transform: none;
+          letter-spacing: 0;
+        }
+      }
+    }
+
+    .option-choices {
+      label.choices-label {
+        display: inline-block !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        color: #495057 !important;
+        margin-bottom: 10px !important;
+        padding: 6px 12px !important;
+        background: rgba(108, 117, 125, 0.08) !important;
+        border-radius: 6px !important;
+        border: 1px solid rgba(108, 117, 125, 0.15) !important;
+        text-transform: none !important;
+        letter-spacing: 0 !important;
+      }
+
+      div.tags-list {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+        margin-bottom: 15px !important;
+        min-height: 44px !important;
+        padding: 12px !important;
+        background: rgba(255, 255, 255, 0.5) !important;
+        border-radius: 8px !important;
+        border: 2px dashed rgba(108, 117, 125, 0.2) !important;
+
+        &:empty::after {
+          content: "Aucun choix ajouté";
+          color: #adb5bd;
+          font-style: italic;
+          font-size: 0.9rem;
+        }
+
+        span.choice-badge {
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 8px !important;
+          background: linear-gradient(135deg, #e7f3ff 0%, #d4e9ff 100%) !important;
+          color: #0056b3 !important;
+          padding: 8px 14px !important;
+          border-radius: 8px !important;
+          font-size: 0.9rem !important;
+          font-weight: 600 !important;
+          border: 2px solid #b3d9ff !important;
+          box-shadow: none;
+          transition: all 0.2s;
+
+          &:hover {
+            background: #cce5ff;
+            transform: none;
+            box-shadow: none;
+          }
+
+          button {
+            background: transparent;
+            border: none;
+            color: #0056b3;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: all 0.2s;
+
+            &:hover {
+              background: rgba(0, 86, 179, 0.1);
+              transform: none;
+            }
+          }
+        }
+      }
+
+      .choice-input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        background: white;
+
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.08);
+        }
+
+        &::placeholder {
+          color: #adb5bd;
+        }
+      }
+    }
+  }
+}
+

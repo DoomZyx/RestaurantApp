@@ -3,6 +3,11 @@ import { useTranslation } from "react-i18next";
 import AppLayout from "../../Components/Layout/AppLayout";
 import PhoneToggle from "../../Components/PhoneToggle/PhoneToggle";
 import { useConfiguration } from "../../Hooks/Configuration/useConfiguration";
+import { ConfigurationRestaurant } from "../../Components/Configuration/ConfigurationRestaurant";
+import { ConfigurationLanguage } from "../../Components/Configuration/ConfigurationLanguage";
+import { ConfigurationHoraires } from "../../Components/Configuration/ConfigurationHoraires";
+import { ProductForm } from "../../Components/Configuration/ProductForm";
+import { CustomOptionsSection } from "../../Components/Configuration/CustomOptionsSection";
 import "./Configuration.scss";
 
 function Configuration() {
@@ -113,57 +118,10 @@ function Configuration() {
         <div className="tab-content">
           {/* TAB RESTAURANT */}
           {activeTab === "restaurant" && (
-            <div className="restaurant-info">
-              <h3>{t('configuration.restaurant.title')}</h3>
-              
-              <div className="form-group">
-                <label>{t('configuration.restaurant.name')}</label>
-                <input
-                  type="text"
-                  value={safePricing.restaurantInfo?.nom || ""}
-                  onChange={(e) => handleInputChange("restaurantInfo.nom", e.target.value)}
-                />
-              </div>
-              
-              <div className="form-group">
-                <label>{t('configuration.restaurant.address')}</label>
-                <input
-                  type="text"
-                  value={safePricing.restaurantInfo?.adresse || ""}
-                  onChange={(e) => handleInputChange("restaurantInfo.adresse", e.target.value)}
-                />
-              </div>
-              
-              <div className="form-group">
-                <label>{t('configuration.restaurant.phone')}</label>
-                <input
-                  type="tel"
-                  value={safePricing.restaurantInfo?.telephone || ""}
-                  onChange={(e) => handleInputChange("restaurantInfo.telephone", e.target.value)}
-                />
-              </div>
-              
-              <div className="form-group">
-                <label>{t('configuration.restaurant.email')}</label>
-                <input
-                  type="email"
-                  value={safePricing.restaurantInfo?.email || ""}
-                  onChange={(e) => handleInputChange("restaurantInfo.email", e.target.value)}
-                />
-              </div>
-              
-              <div className="form-group">
-                <label>{t('configuration.restaurant.seats')}</label>
-                <input
-                  type="number"
-                  min="0"
-                  value={safePricing.restaurantInfo?.nombreCouverts || 0}
-                  onChange={(e) => handleInputChange("restaurantInfo.nombreCouverts", parseInt(e.target.value) || 0)}
-                  placeholder="Ex: 50"
-                />
-                <small className="help-text">{t('configuration.restaurant.seatsHelp')}</small>
-              </div>
-            </div>
+            <ConfigurationRestaurant 
+              safePricing={safePricing}
+              handleInputChange={handleInputChange}
+            />
           )}
 
           {/* TAB MENU */}
@@ -203,174 +161,19 @@ function Configuration() {
                     <div className="category-content">
                   
                         {showProductForm === categorie && (
-                          <div className="product-form">
-                            <div className="form-header">
-                            <h5>{t('configuration.menu.newProduct')}</h5>
-                              <button 
-                                type="button"
-                                className="close-form-btn"
-                                onClick={() => setShowProductForm(false)}
-                                title="Fermer"
-                              >
-                                ✕
-                              </button>
-                            </div>
-                            <div className="form-row">
-                            <input
-                              type="text"
-                                placeholder={t('configuration.menu.productName')}
-                                value={newProduct.nom}
-                                onChange={(e) => setNewProduct({ ...newProduct, nom: e.target.value })}
-                            />
-                            <input
-                              type="text"
-                                placeholder={t('configuration.menu.description')}
-                                value={newProduct.description}
-                                onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-                            />
-                            <input
-                              type="number"
-                                placeholder={t('configuration.menu.price')}
-                                value={newProduct.prixBase}
-                                onChange={(e) => setNewProduct({ ...newProduct, prixBase: parseFloat(e.target.value) || 0 })}
-                                min="0"
-                              step="0.01"
-                              />
-                            </div>
-                            
-                            {/* Options personnalisables - uniquement pour les Tacos */}
-                            {categorie.toLowerCase() === 'tacos' && (
-                            <div className="custom-options-wrapper">
-                              <div className="options-header">
-                                <h6>{t('configuration.menu.customOptions')}</h6>
-                                <p>{t('configuration.menu.customOptionsHelp')}</p>
-                              </div>
-                              
-                              {Object.entries(newProduct.options || {}).map(([optionKey, optionData]) => (
-                                <div key={optionKey} className="option-box">
-                                  <div className="option-top">
-                                    <div className="option-name">
-                                      <strong>{optionData.nom}</strong>
-                                    </div>
-                                  </div>
-                                  
-                                  <div className="option-choices">
-                                    <label className="choices-label">Choix disponibles :</label>
-                                    <div className="tags-list">
-                                      {(optionData.choix || []).map((choix, idx) => (
-                                        <span key={idx} className="choice-badge">
-                                          {choix}
-                                          <button
-                                            type="button"
-                                            onClick={() => {
-                                              const newOptions = { ...newProduct.options };
-                                              newOptions[optionKey].choix = newOptions[optionKey].choix.filter((_, i) => i !== idx);
-                                              setNewProduct({ ...newProduct, options: newOptions });
-                                            }}
-                                          >
-                                            ×
-                                          </button>
-                                        </span>
-                                      ))}
-                                    </div>
-                                    <input
-                                      type="text"
-                                      className="choice-input"
-                                      placeholder="Ajouter un choix (appuyez sur Entrée)"
-                                      onKeyPress={(e) => {
-                                        if (e.key === 'Enter') {
-                                          e.preventDefault();
-                                          const value = e.target.value.trim();
-                                          if (value) {
-                                            const newOptions = { ...newProduct.options };
-                                            if (!newOptions[optionKey].choix) {
-                                              newOptions[optionKey].choix = [];
-                                            }
-                                            newOptions[optionKey] = {
-                                              ...newOptions[optionKey],
-                                              choix: [...newOptions[optionKey].choix, value]
-                                            };
-                                            setNewProduct({ ...newProduct, options: newOptions });
-                                            e.target.value = '';
-                                          }
-                                        }
-                                      }}
-                                    />
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                            )}
-
-                            {/* Composition de menu - uniquement pour les Menus */}
-                            {categorie.toLowerCase() === 'menus' && (
-                            <div className="menu-composition-wrapper">
-                              <div className="options-header">
-                                <h6>{t('configuration.menu.menuComposition')}</h6>
-                                <p>Sélectionnez le plat principal. Les frites et la boisson sont automatiquement incluses.</p>
-                              </div>
-
-                              {/* Input de recherche */}
-                              <div className="search-filter">
-                                <input
-                                  type="text"
-                                  placeholder={t('common.search') + "..."}
-                                  value={searchFilter}
-                                  onChange={(e) => setSearchFilter(e.target.value)}
-                                />
-                              </div>
-                              
-                              {/* Plat principal */}
-                              <div className="composition-section">
-                                <label>{t('configuration.menu.mainDish')}</label>
-                                <div className="product-cards">
-                                  {Object.keys(safePricing.menuPricing || {})
-                                    .filter(cat => !['boissons', 'menus', 'desserts', 'accompagnements'].includes(cat.toLowerCase()))
-                                    .map(cat => {
-                                      const category = safePricing.menuPricing[cat];
-                                      return category.produits?.filter(p => p.disponible && p.nom.toLowerCase().includes(searchFilter.toLowerCase())).map(produit => (
-                                        <div 
-                                          key={produit._id}
-                                          className={`product-card ${newProduct.composition?.platPrincipal?.produitId === produit._id ? 'selected' : ''}`}
-                                          onClick={() => {
-                                            setNewProduct({
-                                              ...newProduct,
-                                              composition: {
-                                                platPrincipal: { categorie: cat, produitId: produit._id }
-                                              },
-                                              description: generateMenuDescription({
-                                                platPrincipal: { categorie: cat, produitId: produit._id }
-                                              })
-                                            });
-                                          }}
-                                        >
-                                          <div className="card-name">{produit.nom}</div>
-                                          <div className="card-price">{produit.prixBase}€</div>
-                                        </div>
-                                      ));
-                                    })}
-                                </div>
-                              </div>
-
-                              {/* Description générée */}
-                              {newProduct.description && (
-                                <div className="auto-description">
-                                  <strong>{t('configuration.menu.autoDescription')} :</strong> {newProduct.description}
-                                </div>
-                              )}
-                            </div>
-                            )}
-                            
-                            <div className="form-actions">
-                              <button onClick={() => handleProductAdd(categorie)}>
-                                {t('common.add')}
-                              </button>
-                              <button onClick={() => setShowProductForm(false)}>
-                                {t('common.cancel')}
-                              </button>
-                            </div>
-                          </div>
+                          <ProductForm 
+                            categorie={categorie}
+                            newProduct={newProduct}
+                            setNewProduct={setNewProduct}
+                            searchFilter={searchFilter}
+                            setSearchFilter={setSearchFilter}
+                            safePricing={safePricing}
+                            generateMenuDescription={generateMenuDescription}
+                            onSubmit={() => handleProductAdd(categorie)}
+                            onCancel={() => setShowProductForm(false)}
+                          />
                         )}
+
 
                         <div className="products-list">
                           {produits.length === 0 ? (
@@ -414,92 +217,17 @@ function Configuration() {
                                     />
 
                                     {/* Options personnalisables en mode édition - uniquement pour les Tacos */}
-                                    {categorie.toLowerCase() === 'tacos' && (() => {
-                                      // Initialiser les options par défaut si elles n'existent pas
-                                      const defaultOptions = {
-                                        sauces: { nom: "Sauces", choix: [] },
-                                        viandes: { nom: "Viandes", choix: [] },
-                                        crudites: { nom: "Crudités", choix: [] }
-                                      };
-                                      
-                                      // Fusionner avec les options existantes
-                                      const currentOptions = produit.options || {};
-                                      const mergedOptions = {
-                                        sauces: { ...defaultOptions.sauces, ...(currentOptions.sauces || {}) },
-                                        viandes: { ...defaultOptions.viandes, ...(currentOptions.viandes || {}) },
-                                        crudites: { ...defaultOptions.crudites, ...(currentOptions.crudites || {}) }
-                                      };
-                                      
-                                      return (
-                                    <div className="custom-options-wrapper">
-                                      <div className="options-header">
-                                        <h6>{t('configuration.menu.customOptions')}</h6>
-                                        <p>{t('configuration.menu.customOptionsHelp')}</p>
-                                      </div>
-                                      
-                                      {Object.entries(mergedOptions).map(([optionKey, optionData]) => (
-                                        <div key={optionKey} className="option-box">
-                                          <div className="option-top">
-                                            <div className="option-name">
-                                              <strong>{optionData.nom}</strong>
-                                            </div>
-                                          </div>
-                                          
-                                          <div className="option-choices">
-                                            <label className="choices-label">Choix disponibles :</label>
-                                            <div className="tags-list">
-                                              {(optionData.choix || []).map((choix, idx) => (
-                                                <span key={idx} className="choice-badge">
-                                                  {choix}
-                                                  <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                      const updated = [...produits];
-                                                      const updatedOptions = { ...mergedOptions };
-                                                      updatedOptions[optionKey] = {
-                                                        ...updatedOptions[optionKey],
-                                                        choix: updatedOptions[optionKey].choix.filter((_, i) => i !== idx)
-                                                      };
-                                                      updated[index] = { ...produit, options: updatedOptions };
-                                                      handleInputChange(`menuPricing.${categorie}.produits`, updated);
-                                                    }}
-                                                  >
-                                                    ×
-                                                  </button>
-                                                </span>
-                                              ))}
-                                            </div>
-                                            <input
-                                              type="text"
-                                              className="choice-input"
-                                              placeholder="Ajouter un choix (appuyez sur Entrée)"
-                                              onKeyPress={(e) => {
-                                                if (e.key === 'Enter') {
-                                                  e.preventDefault();
-                                                  const value = e.target.value.trim();
-                                                  if (value) {
-                                                    const updated = [...produits];
-                                                    const currentOptions = { ...mergedOptions };
-                                                    if (!currentOptions[optionKey].choix) {
-                                                      currentOptions[optionKey].choix = [];
-                                                    }
-                                                    currentOptions[optionKey] = {
-                                                      ...currentOptions[optionKey],
-                                                      choix: [...currentOptions[optionKey].choix, value]
-                                                    };
-                                                    updated[index] = { ...produit, options: currentOptions };
-                                                    handleInputChange(`menuPricing.${categorie}.produits`, updated);
-                                                    e.target.value = '';
-                                                  }
-                                                }
-                                              }}
-                                            />
-                                          </div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                      );
-                                    })()}
+                                    {categorie.toLowerCase() === 'tacos' && (
+                                      <CustomOptionsSection 
+                                        categorie={categorie}
+                                        options={produit.options || {}}
+                                        onUpdateOptions={(newOptions) => {
+                                          const updated = [...produits];
+                                          updated[index] = { ...produit, options: newOptions };
+                                          handleInputChange(`menuPricing.${categorie}.produits`, updated);
+                                        }}
+                                      />
+                                    )}
 
                                     <div className="edit-actions">
                                       <button onClick={() => {
@@ -588,102 +316,18 @@ function Configuration() {
 
           {/* TAB HORAIRES */}
           {activeTab === "horaires" && (
-            <div className="opening-hours">
-              <h3>{t('configuration.hours.title')}</h3>
-              <div className="hours-grid">
-                {Object.keys(safePricing.restaurantInfo?.horairesOuverture || {}).map((jour) => {
-                  const horaire = safePricing.restaurantInfo.horairesOuverture[jour];
-                  return (
-                    <div key={jour} className="day-hours">
-                      <div className="day-header">
-                        <label className="day-name">
-                        <input
-                          type="checkbox"
-                            checked={horaire?.ouvert || false}
-                            onChange={(e) => 
-                              handleInputChange(`restaurantInfo.horairesOuverture.${jour}.ouvert`, e.target.checked)
-                            }
-                          />
-                          {t(`configuration.hours.days.${jour}`)}
-                      </label>
-                    </div>
-                      
-                      {horaire?.ouvert && (
-                        <>
-                          <div className="time-slot">
-                            <span>{t('configuration.hours.lunch')}</span>
-                            <input
-                              type="time"
-                              value={horaire.midi?.ouverture || ""}
-                              onChange={(e) => 
-                                handleInputChange(`restaurantInfo.horairesOuverture.${jour}.midi.ouverture`, e.target.value)
-                              }
-                            />
-                            <span>{t('configuration.hours.to')}</span>
-                            <input
-                              type="time"
-                              value={horaire.midi?.fermeture || ""}
-                              onChange={(e) => 
-                                handleInputChange(`restaurantInfo.horairesOuverture.${jour}.midi.fermeture`, e.target.value)
-                              }
-                            />
-                          </div>
-                          
-                          <div className="time-slot">
-                            <span>{t('configuration.hours.dinner')}</span>
-                            <input
-                              type="time"
-                              value={horaire.soir?.ouverture || ""}
-                              onChange={(e) => 
-                                handleInputChange(`restaurantInfo.horairesOuverture.${jour}.soir.ouverture`, e.target.value)
-                              }
-                            />
-                            <span>{t('configuration.hours.to')}</span>
-                            <input
-                              type="time"
-                              value={horaire.soir?.fermeture || ""}
-                              onChange={(e) => 
-                                handleInputChange(`restaurantInfo.horairesOuverture.${jour}.soir.fermeture`, e.target.value)
-                              }
-                            />
-                          </div>
-                        </>
-                    )}
-                  </div>
-                  );
-                })}
-              </div>
-            </div>
+            <ConfigurationHoraires 
+              safePricing={safePricing}
+              handleInputChange={handleInputChange}
+            />
           )}
 
           {/* TAB LANGUE */}
           {activeTab === "langue" && (
-            <div className="language-settings">
-              <h3>{t('configuration.language.title')}</h3>
-              <p>{t('configuration.language.description')}</p>
-              
-              {languageSuccess && (
-                <div className="notification-toast success-message">
-                  <i className="bi bi-check-circle-fill"></i>
-                  <span className="message-content">{t('configuration.language.changeSuccess')}</span>
-                </div>
-              )}
-              
-              <div className="language-options">
-                  <button
-                    onClick={() => handleLanguageChange('fr')}
-                  className="language-btn"
-                  >
-                  🇫🇷 {t('configuration.language.french')}
-                  </button>
-                  <button
-                    onClick={() => handleLanguageChange('en')}
-                  className="language-btn"
-                  >
-                  🇬🇧 {t('configuration.language.english')}
-                  </button>
-              </div>
-            </div>
+            <ConfigurationLanguage 
+              languageSuccess={languageSuccess}
+              handleLanguageChange={handleLanguageChange}
+            />
           )}
         </div>
 
