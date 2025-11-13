@@ -103,7 +103,7 @@ export async function initiateSupplierCall(orderData, publicHost) {
     };
 
   } catch (error) {
-    console.error("❌ Erreur initiation appel:", error);
+    console.error("Erreur initiation appel:", error);
     throw new Error(`Erreur Twilio: ${error.message}`);
   }
 }
@@ -138,7 +138,7 @@ export async function updateCallStatus(orderId, callStatus) {
   try {
     const order = await SupplierOrderModel.findById(orderId);
     if (!order) {
-      console.error("❌ Commande introuvable:", orderId);
+      console.error("Commande introuvable:", orderId);
       return;
     }
 
@@ -158,7 +158,7 @@ export async function updateCallStatus(orderId, callStatus) {
     await order.save();
 
   } catch (error) {
-    console.error("❌ Erreur mise à jour statut appel:", error);
+    console.error("Erreur mise à jour statut appel:", error);
   }
 }
 

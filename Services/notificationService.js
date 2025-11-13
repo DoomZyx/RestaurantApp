@@ -61,7 +61,7 @@ class NotificationService {
   // Notification de fin d'appel IA
   notifyCallCompleted(callData) {
     const notificationData = {
-      title: "🎉 Appel IA terminé",
+      title: "Appel IA terminé",
       message: `Appel traité avec succès pour ${callData.nom || "Client"}`,
       details: {
         callId: callData.callId, // ID de l'appel
@@ -82,7 +82,7 @@ class NotificationService {
   // Notification d'erreur d'appel
   notifyCallError(error, callData = {}) {
     const notificationData = {
-      title: "❌ Erreur appel IA",
+      title: "Erreur appel IA",
       message: "Erreur lors du traitement de l'appel",
       details: {
         error: error.message || "Erreur inconnue",
@@ -99,7 +99,7 @@ class NotificationService {
   // Notification de nouveau client
   notifyNewClient(clientData) {
     const notificationData = {
-      title: "👤 Nouveau client",
+      title: "Nouveau client",
       message: `Nouveau client ajouté : ${clientData.nom}`,
       details: {
         nom: clientData.nom,
@@ -132,7 +132,7 @@ class NotificationService {
   // Notification d'appel en cours (quand quelqu'un téléphone)
   notifyCallInProgress(callData) {
     const notificationData = {
-      title: "📞 Appel en cours",
+      title: "Appel en cours",
       message: `Appel entrant de ${callData.caller || "Numéro inconnu"}`,
       details: {
         caller: callData.caller,

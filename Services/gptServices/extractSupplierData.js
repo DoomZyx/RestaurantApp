@@ -80,7 +80,7 @@ Réponds UNIQUEMENT avec un objet JSON valide, sans texte avant ou après :
     return cleanedData;
 
   } catch (error) {
-    console.error("❌ Erreur extraction données fournisseur:", error);
+    console.error("Erreur extraction données fournisseur:", error);
     throw new Error(`Erreur extraction GPT: ${error.message}`);
   }
 }

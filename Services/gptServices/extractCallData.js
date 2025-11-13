@@ -77,7 +77,7 @@ CRÉER ORDER si :
 - Le client dit "livraison" ou "à emporter"
 - Le client dit "réserver une table"
 
-❌ ORDER = NULL si :
+ORDER = NULL si :
 - Questions d'horaires uniquement
 - Questions sur le menu/ingrédients
 - Réclamations sans commande
@@ -97,11 +97,11 @@ NOM (nom) - RÈGLE CRITIQUE :
 → Si flou/partiel : "Client" + initiale (ex: "Client M")
 → Si totalement absent : "Client inconnu"
 
-⚠️ IMPORTANT : Le nom est souvent dit au MILIEU de la conversation, pas au début
+IMPORTANT : Le nom est souvent dit au MILIEU de la conversation, pas au début
 Exemple : "Je veux une pizza... oui Martin... pour 19h"
 → Extrais : "Martin"
 
-🔍 PATTERNS DE NOM À DÉTECTER :
+PATTERNS DE NOM À DÉTECTER :
 - "Je m'appelle [NOM]"
 - "C'est [NOM]"
 - "[NOM] à l'appareil"
@@ -113,7 +113,7 @@ Exemple : "Je veux une pizza... oui Martin... pour 19h"
 TÉLÉPHONE (telephone) :
 → Si donné : Extrais-le (format : 0612345678)
 → Si absent : "Non fourni"
-⚠️ NE JAMAIS inventer un numéro
+NE JAMAIS inventer un numéro
 
 TYPE_DEMANDE (type_demande) :
 Valeurs autorisées UNIQUEMENT :
@@ -170,7 +170,7 @@ COMMANDES (commandes) :
   "personnalisation": null  // Pour les tacos personnalisés (voir ci-dessous)
 }
 
-🌮 PERSONNALISATION TACOS - RÈGLE OBLIGATOIRE :
+PERSONNALISATION TACOS - RÈGLE OBLIGATOIRE :
 Quand le client commande un TACOS, tu DOIS extraire ses choix de viandes et sauces :
 
 Exemple 1 - Tacos Simple (1 viande) :
@@ -203,14 +203,14 @@ Exemple 2 - Tacos Double (2 viandes) :
   }
 }
 
-⚠️ IMPORTANT TACOS :
+IMPORTANT TACOS :
 - Tacos Simple = 1 viande → extrais LA viande choisie
 - Tacos Double = 2 viandes → extrais LES 2 viandes choisies  
 - Tacos Triple = 3 viandes → extrais LES 3 viandes choisies
 - TOUJOURS extraire la/les viande(s) et la sauce mentionnées
 - Utilise UNIQUEMENT les options disponibles dans le menu (voir ci-dessous)
 
-🍔 MENUS - RÈGLE IMPORTANTE :
+MENUS - RÈGLE IMPORTANTE :
 Si le client commande un MENU (ex: "Menu Tacos", "Menu Burger"), tu dois extraire :
 1. Le plat principal complet avec ses personnalisations
 2. La boisson choisie
@@ -223,10 +223,10 @@ Client dit : "Je veux un menu tacos double poulet merguez sauce algérienne et u
   2. La boisson (Coca-Cola)
   3. Mentionne "Frites" dans la description du menu
 
-⚠️ Si pas de personnalisation ou produit non-tacos → personnalisation: null
+Si pas de personnalisation ou produit non-tacos → personnalisation: null
 
 ========================================
-✅ EXEMPLES CONCRETS :
+EXEMPLES CONCRETS :
 ========================================
 
 Exemple 1 - Commande simple :
@@ -442,12 +442,12 @@ JSON :
 }
 
 ========================================
-🚨 RAPPEL FINAL - RÈGLES ABSOLUES 🚨
+RAPPEL FINAL - RÈGLES ABSOLUES
 ========================================
 
 1. JSON valide UNIQUEMENT (pas de texte)
 
-2. 🔴 NOM DU CLIENT = CHERCHE-LE PARTOUT
+2. NOM DU CLIENT = CHERCHE-LE PARTOUT
    → Lis TOUTE la transcription (début, milieu, fin)
    → Patterns : "Je m'appelle X", "C'est X", "Pour X", "Monsieur/Madame X"
    → Même un prénom seul (ex: "Martin") = VALIDE, extrais-le
@@ -463,11 +463,11 @@ JSON :
 
 7. Corriger les erreurs de transcription audio
 
-💡 ASTUCE NOM : 
+ASTUCE NOM : 
 Le nom est RAREMENT dit au début. Cherche dans TOUTE la conversation.
 Exemple : "Une pizza... Martin... pour 19h" → Nom = "Martin"
 
-C'est parti ! 🚀
+C'est parti !
 `;
 
 export async function extractCallData(transcription) {
@@ -485,9 +485,9 @@ export async function extractCallData(transcription) {
     if (pricing && pricing.menu) {
       const menuInfo = `
 ========================================
-📋 MENU DU RESTAURANT (NOM EXACT DES PRODUITS) :
+MENU DU RESTAURANT (NOM EXACT DES PRODUITS) :
 ========================================
-⚠️ UTILISE CES NOMS EXACTS DANS LA DESCRIPTION DE LA COMMANDE
+UTILISE CES NOMS EXACTS DANS LA DESCRIPTION DE LA COMMANDE
 
 ${Object.keys(pricing.menu).map(categorie => {
   const category = pricing.menu[categorie];
@@ -511,14 +511,14 @@ ${category.produits.map(produit => {
 }).join('\n')}`;
 }).join('\n')}
 
-⚠️ RÈGLE IMPORTANTE : 
+RÈGLE IMPORTANTE : 
 Quand le client mentionne un produit, utilise le NOM EXACT du menu ci-dessus dans la description.
 Exemples :
 - Client dit "un copoin" → Écris "Coca-Cola" ou "Coca" (selon ce qui est au menu)
 - Client dit "un borger" → Écris le nom exact du burger commandé (ex: "USA Beef Burger")
 - Client dit "une pizaa" → Écris le nom exact de la pizza (ex: "Pizza Margherita")
 
-🌮 POUR LES TACOS :
+POUR LES TACOS :
 - Utilise les OPTIONS EXACTES affichées ci-dessus
 - Si le client précise viandes/sauces/crudités, remplis l'objet "personnalisation"
 - Exemples de viandes valides : celles listées dans "Viandes"
@@ -621,7 +621,7 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
     return validatedData;
 
   } catch (error) {
-    console.error("❌ ERREUR EXTRACTION GPT:");
+    console.error("ERREUR EXTRACTION GPT:");
     console.error("Type d'erreur:", error.name);
     console.error("Message d'erreur:", error.message);
     console.error("Stack:", error.stack);

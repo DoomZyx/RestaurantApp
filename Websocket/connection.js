@@ -137,7 +137,7 @@ export async function handleWebSocketConnection(connection, request) {
     // ==========================================
     
     connection.on("error", (error) => {
-      console.error("❌ ERREUR WebSocket Twilio:", error);
+      console.error("ERREUR WebSocket Twilio:", error);
       console.error("   - StreamSid:", streamSid);
       console.error("   - Message:", error.message);
       callLogger.error(streamSid, error, { context: "twilio_websocket_error" });
@@ -178,7 +178,7 @@ export async function handleWebSocketConnection(connection, request) {
     });
     
   } catch (error) {
-    console.error("❌ ERREUR FATALE dans handleWebSocketConnection:");
+    console.error("ERREUR FATALE dans handleWebSocketConnection:");
     console.error("   - Message:", error.message);
     console.error("   - Stack:", error.stack);
     
@@ -188,7 +188,7 @@ export async function handleWebSocketConnection(connection, request) {
         connection.close(1011, "Erreur interne du serveur");
       }
     } catch (closeError) {
-      console.error("   ⚠️ Impossible de fermer la connexion:", closeError.message);
+      console.error("Impossible de fermer la connexion:", closeError.message);
     }
   }
 }

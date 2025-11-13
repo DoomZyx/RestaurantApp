@@ -24,16 +24,16 @@ export class AudioService {
       let lastSendTime = Date.now();
       let fromCache = false;
 
-      // 🎯 STRATÉGIE 1 : Vérifier le cache en PREMIER
+      // STRATÉGIE 1 : Vérifier le cache en PREMIER
       const cachedAudio = await audioCacheService.getFromCache(text);
       
       if (cachedAudio) {
-        // ✅ CACHE HIT - Utiliser l'audio en cache (INSTANTANÉ + GRATUIT)
+        // CACHE HIT - Utiliser l'audio en cache (INSTANTANÉ + GRATUIT)
         buffer = cachedAudio;
         fromCache = true;
         callLogger.info(streamSid, `🎯 Cache HIT: "${text.substring(0, 30)}..." (${buffer.length} bytes)`);
       } else {
-        // ❌ CACHE MISS - Générer avec ElevenLabs et mettre en cache
+        // CACHE MISS - Générer avec ElevenLabs et mettre en cache
         callLogger.info(streamSid, `🔄 Cache MISS: Génération ElevenLabs pour "${text.substring(0, 30)}..."`);
         
         // Streaming avec voix AudiA (paramètres optimaux)
@@ -46,7 +46,7 @@ export class AudioService {
         
         let tempBuffer = Buffer.alloc(0);
         
-        // 🚀 STREAMING EN TEMPS RÉEL : Envoyer dès qu'on reçoit les chunks d'ElevenLabs
+        // STREAMING EN TEMPS RÉEL : Envoyer dès qu'on reçoit les chunks d'ElevenLabs
         for await (const audioChunk of audioStream) {
           // Ajouter le nouveau chunk au buffer temporaire (pour le cache)
           tempBuffer = Buffer.concat([tempBuffer, audioChunk]);
@@ -107,7 +107,7 @@ export class AudioService {
         return; // Déjà envoyé dans la boucle streaming
       }
       
-      // 📤 ENVOI DEPUIS LE CACHE (buffer complet disponible)
+      // ENVOI DEPUIS LE CACHE (buffer complet disponible)
       if (fromCache) {
         let offset = 0;
         
@@ -138,7 +138,7 @@ export class AudioService {
       
       callLogger.info(
         streamSid, 
-        `✅ Audio ${fromCache ? '🎯 (cache)' : '🔄 (généré)'} streamé: ${sentChunks} chunks`
+        `Audio ${fromCache ? '(cache)' : '(généré)'} streamé: ${sentChunks} chunks`
       );
       
     } catch (error) {

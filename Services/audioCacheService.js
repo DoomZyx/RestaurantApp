@@ -44,7 +44,7 @@ class AudioCacheService {
       await this.loadCacheIndex();
       
     } catch (error) {
-      console.error("❌ Erreur initialisation cache audio:", error);
+      console.error("Erreur initialisation cache audio:", error);
     }
   }
 
@@ -72,7 +72,7 @@ class AudioCacheService {
         "utf8"
       );
     } catch (error) {
-      console.error("❌ Erreur sauvegarde index cache:", error);
+      console.error("Erreur sauvegarde index cache:", error);
     }
   }
 
@@ -134,7 +134,7 @@ class AudioCacheService {
 
       return audioBuffer;
     } catch (error) {
-      console.error(`❌ Erreur lecture cache pour "${text}":`, error);
+      console.error(`Erreur lecture cache pour "${text}":`, error);
       this.stats.misses++;
       return null;
     }
@@ -182,7 +182,7 @@ class AudioCacheService {
 
       return audioBuffer;
     } catch (error) {
-      console.error(`❌ Erreur génération audio pour "${text}":`, error);
+      console.error(`Erreur génération audio pour "${text}":`, error);
       throw error;
     }
   }
@@ -232,7 +232,7 @@ class AudioCacheService {
         await new Promise(resolve => setTimeout(resolve, 500));
       } catch (error) {
         errors++;
-        console.error(`❌ Erreur génération "${phrase.text}":`, error.message);
+        console.error(`Erreur génération "${phrase.text}":`, error.message);
       }
     }
 
@@ -280,7 +280,7 @@ class AudioCacheService {
           delete this.cacheIndex[hash];
           cleaned++;
         } catch (error) {
-          console.error(`❌ Erreur nettoyage ${hash}:`, error.message);
+          console.error(`Erreur nettoyage ${hash}:`, error.message);
         }
       }
     }

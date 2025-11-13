@@ -46,7 +46,7 @@ export class ValidationService {
       return "Transcription ne contient que du bruit - Aucune information utile";
     }
 
-    // ✅ Transcription valide
+    // Transcription valide
     return true;
   }
 }

@@ -53,12 +53,7 @@ const consoleFormat = winston.format.combine(
   winston.format.colorize(),
   winston.format.timestamp({ format: "HH:mm:ss" }),
   winston.format.printf(({ timestamp, level, message, ...meta }) => {
-    const emoji = {
-      error: "❌",
-      warn: "⚠️",
-      info: "ℹ️",
-      debug: "🔍",
-    };
+ 
     
     return `${timestamp} ${emoji[level] || "📝"} ${message} ${
       Object.keys(meta).length && meta.streamSid ? `[${meta.streamSid.substring(0, 8)}...]` : ""

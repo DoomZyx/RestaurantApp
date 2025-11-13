@@ -22,18 +22,18 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
       session: {
         turn_detection: { 
           type: "server_vad",
-          threshold: 0.6,              // ✅ Plus sensible pour détecter les interruptions (0.5-0.6 = optimal)
-          prefix_padding_ms: 300,      // ✅ Réduit à 300ms pour réagir VITE aux interruptions
-          silence_duration_ms: 800,    // ✅ Réduit à 500ms pour une détection rapide de la fin de parole
-          create_response: true        // ✅ Permet à l'IA de répondre automatiquement
+          threshold: 0.6,              // Plus sensible pour détecter les interruptions (0.5-0.6 = optimal)
+          prefix_padding_ms: 300,      // Réduit à 300ms pour réagir VITE aux interruptions
+          silence_duration_ms: 800,    // Réduit à 500ms pour une détection rapide de la fin de parole
+          create_response: true        // Permet à l'IA de répondre automatiquement
         },
         input_audio_format: "g711_ulaw",
         output_audio_format: "g711_ulaw",
         voice: voice,
         instructions: enrichedInstructions,
         modalities: ["text", "audio"],
-        temperature: 0.6, // ✅ Minimum requis par gpt-4o-mini-realtime-preview
-        max_response_output_tokens: 4096, // ✅ Limite pour éviter les réponses trop longues
+        temperature: 0.6, // Minimum requis par gpt-4o-mini-realtime-preview
+        max_response_output_tokens: 4096, // Limite pour éviter les réponses trop longues
         input_audio_transcription: {
           model: "whisper-1",
         },
@@ -113,7 +113,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
   });
 
   ws.on("error", (error) => {
-    console.error("❌ ERREUR OpenAI WebSocket:", error);
+    console.error("ERREUR OpenAI WebSocket:", error);
     console.error("   - Message:", error.message);
     console.error("   - Code:", error.code);
   });
