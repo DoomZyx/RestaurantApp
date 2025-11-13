@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import { useTranslation } from "react-i18next";
 import { fetchPricing } from "../../API/Pricing/api";
 
-export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
+export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointmentType }) {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({
     nom: "",
     date: "",
     heure: "",
-    type: "",
+    type: appointmentType || "",
     nombrePersonnes: "",
     description: "",
   });
@@ -18,6 +19,8 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
   const [selectedItems, setSelectedItems] = useState([
     { id: Date.now(), productId: "", qty: 1, supplements: "", options: {} }
   ]);
+  const [searchFilter, setSearchFilter] = useState(""); // Pour filtrer les produits
+  const [showProductSelection, setShowProductSelection] = useState(null); // ID de l'item en cours de sélection
 
   // Charger les produits depuis la configuration Pricing
   useEffect(() => {
@@ -118,7 +121,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
       <div className="form-grid">
         {/* Nom du client (texte) */}
         <div className="form-group">
-          <label htmlFor="nom">👤 {t('createAppointment.clientName')} *</label>
+          <label htmlFor="nom">{t('createAppointment.clientName')}</label>
           <input
             type="text"
             id="nom"
@@ -133,7 +136,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
 
         {/* Date */}
         <div className="form-group">
-          <label htmlFor="date">📅 {t('createAppointment.date')} *</label>
+          <label htmlFor="date">{t('createAppointment.date')}</label>
           <input
             type="date"
             id="date"
@@ -148,7 +151,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
 
         {/* Heure */}
         <div className="form-group">
-          <label htmlFor="heure">🕒 {t('createAppointment.time')} *</label>
+          <label htmlFor="heure">{t('createAppointment.time')} *</label>
           <input
             type="time"
             id="heure"
@@ -160,27 +163,29 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
           {errors.heure && <span className="error-message">{errors.heure}</span>}
         </div>
 
-        {/* Type */}
-        <div className="form-group">
-          <label htmlFor="type">🏷️ {t('createAppointment.orderType')} *</label>
-          <select
-            id="type"
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
-            className={errors.type ? "error" : ""}
-          >
-            <option value="">{t('createAppointment.selectType')}</option>
-            <option value="Commande à emporter">{t('createAppointment.takeaway')}</option>
-            <option value="Réservation de table">{t('createAppointment.reservation')}</option>
-          </select>
-          {errors.type && <span className="error-message">{errors.type}</span>}
-        </div>
+        {/* Type - Masqué si appointmentType est fourni */}
+        {!appointmentType && (
+          <div className="form-group">
+            <label htmlFor="type">{t('createAppointment.orderType')}</label>
+            <select
+              id="type"
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+              className={errors.type ? "error" : ""}
+            >
+              <option value="">{t('createAppointment.selectType')}</option>
+              <option value="Commande à emporter">{t('createAppointment.takeaway')}</option>
+              <option value="Réservation de table">{t('createAppointment.reservation')}</option>
+            </select>
+            {errors.type && <span className="error-message">{errors.type}</span>}
+          </div>
+        )}
 
         {/* Nombre de personnes (uniquement pour les réservations) */}
         {formData.type === "Réservation de table" && (
           <div className="form-group">
-            <label htmlFor="nombrePersonnes">👥 {t('createAppointment.persons')} *</label>
+            <label htmlFor="nombrePersonnes">{t('createAppointment.persons')} *</label>
             <input
               type="number"
               id="nombrePersonnes"
@@ -200,7 +205,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
       {/* Sélection de plats (multiples) si commande à emporter */}
       {formData.type === "Commande à emporter" && (
         <div className="form-group full-width" style={{ marginTop: '20px' }}>
-          <label>🍽️ {t('createAppointment.orderedDishes')}</label>
+          <label>{t('createAppointment.orderedDishes')}</label>
           <div className="items-list">
             {selectedItems.map((item, idx) => {
               const selectedProduct = menuProducts.find(p => p._id === item.productId);
@@ -209,27 +214,41 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
               return (
                 <div key={item.id} className="item-row-container">
                   <div className="item-row">
-                    <select
-                      value={item.productId}
-                      onChange={(e) => {
-                        const newProductId = e.target.value;
-                        const newProduct = menuProducts.find(p => p._id === newProductId);
-                        // Réinitialiser les options quand on change de produit
-                        setSelectedItems(prev => prev.map(it => 
-                          it.id === item.id 
-                            ? { ...it, productId: newProductId, options: {} } 
-                            : it
-                        ));
+                    {/* Bouton pour ouvrir la sélection de produit */}
+                    <button
+                      type="button"
+                      className="product-select-btn"
+                      onClick={() => {
+                        setShowProductSelection(item.id);
+                        setSearchFilter("");
                       }}
-                      className="item-select"
+                      style={{
+                        flex: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.75rem',
+                        padding: '12px 16px',
+                        background: 'rgba(255, 255, 255, 0.5)',
+                        border: '2px solid rgba(0, 0, 0, 0.15)',
+                        borderRadius: '12px',
+                        cursor: 'pointer',
+                        minWidth: '250px',
+                        textAlign: 'left'
+                      }}
                     >
-                      <option value="">{t('createAppointment.selectDish')}</option>
-                      {menuProducts.map((p) => (
-                        <option key={p._id} value={p._id}>
-                          {p.categorie} • {p.nom}{p.prixBase ? ` - ${p.prixBase.toFixed?.(2) || p.prixBase}€` : ''}
-                        </option>
-                      ))}
-                    </select>
+                      {selectedProduct ? (
+                        <>
+                          <span className="product-category" style={{ color: '#6b7280', fontSize: '0.85rem', fontWeight: 600 }}>{selectedProduct.categorie}</span>
+                          <span className="product-name" style={{ color: '#1f2937', fontWeight: 700 }}>{selectedProduct.nom}</span>
+                          <span className="product-price" style={{ marginLeft: 'auto', color: '#6366f1', fontWeight: 700, fontSize: '1.1rem' }}>{selectedProduct.prixBase?.toFixed?.(2) || selectedProduct.prixBase}€</span>
+                        </>
+                      ) : (
+                        <span className="product-placeholder" style={{ color: '#9ca3af', fontSize: '1rem' }}>
+                          {t('createAppointment.selectDish')}
+                        </span>
+                      )}
+                    </button>
+                    
                     <input
                       type="number"
                       min={1}
@@ -244,7 +263,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
                         className="btn-secondary btn-remove" 
                         onClick={() => setSelectedItems(prev => prev.filter(it => it.id !== item.id))}
                       >
-                        ❌ {t('common.delete')}
+                        {t('common.delete')}
                       </button>
                     )}
                   </div>
@@ -320,7 +339,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
                 className="btn-secondary btn-add-item" 
                 onClick={() => setSelectedItems(prev => [...prev, { id: Date.now() + Math.random(), productId: "", qty: 1, supplements: "", options: {} }])}
               >
-                ➕ {t('createAppointment.addDish')}
+                {t('createAppointment.addDish')}
               </button>
             </div>
           </div>
@@ -330,7 +349,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
 
       {/* Description */}
       <div className="form-group full-width">
-        <label htmlFor="description">📝 {t('createAppointment.description')}</label>
+        <label htmlFor="description">{t('createAppointment.description')}</label>
         <textarea
           id="description"
           name="description"
@@ -349,16 +368,97 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading }) {
           className="btn-secondary"
           disabled={loading}
         >
-          ❌ {t('common.cancel')}
+          {t('common.cancel')}
         </button>
         <button
           type="submit"
           className="btn-primary"
           disabled={loading}
         >
-          {loading ? `⏳ ${t('createAppointment.creating')}` : `✅ ${t('createAppointment.createButton')}`}
+          {loading ? ` ${t('createAppointment.creating')}` : `${t('createAppointment.createButton')}`}
         </button>
       </div>
+
+      {/* Modal de sélection de produit avec cartes - Rendu via Portal */}
+      {showProductSelection && ReactDOM.createPortal(
+        <div className="product-selection-overlay" onClick={() => setShowProductSelection(null)}>
+          <div className="product-selection-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>🍽️ {t('createAppointment.selectDish')}</h3>
+              <button 
+                type="button" 
+                className="close-modal-btn" 
+                onClick={() => setShowProductSelection(null)}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Input de recherche */}
+            <div className="search-filter">
+              <input
+                type="text"
+                placeholder={t('common.search') + "..."}
+                value={searchFilter}
+                onChange={(e) => setSearchFilter(e.target.value)}
+                autoFocus
+              />
+            </div>
+
+            {/* Cartes de produits par catégorie */}
+            <div className="products-by-category">
+              {Object.entries(
+                menuProducts
+                  .filter(p => 
+                    p.nom.toLowerCase().includes(searchFilter.toLowerCase()) ||
+                    p.categorie.toLowerCase().includes(searchFilter.toLowerCase())
+                  )
+                  .reduce((acc, product) => {
+                    if (!acc[product.categorie]) {
+                      acc[product.categorie] = [];
+                    }
+                    acc[product.categorie].push(product);
+                    return acc;
+                  }, {})
+              ).map(([categorie, products]) => (
+                <div key={categorie} className="category-section">
+                  <h4 className="category-title">{categorie}</h4>
+                  <div className="product-cards">
+                    {products.map(product => (
+                      <div
+                        key={product._id}
+                        className="product-card"
+                        onClick={() => {
+                          setSelectedItems(prev => prev.map(it => 
+                            it.id === showProductSelection 
+                              ? { ...it, productId: product._id, options: {} } 
+                              : it
+                          ));
+                          setShowProductSelection(null);
+                          setSearchFilter("");
+                        }}
+                      >
+                        <div className="card-name">{product.nom}</div>
+                        <div className="card-price">{product.prixBase?.toFixed?.(2) || product.prixBase}€</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {menuProducts.filter(p => 
+              p.nom.toLowerCase().includes(searchFilter.toLowerCase()) ||
+              p.categorie.toLowerCase().includes(searchFilter.toLowerCase())
+            ).length === 0 && (
+              <div className="no-results">
+                Aucun produit trouvé pour "{searchFilter}"
+              </div>
+            )}
+          </div>
+        </div>,
+        document.body
+      )}
     </form>
   );
 }

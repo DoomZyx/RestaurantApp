@@ -205,9 +205,9 @@
     "addDish": "Ajouter un plat",
     "dishesNote": "Les plats seront enregistrés dans le champ \"commandes\" de la base de données.",
     "description": "Description",
-    "descriptionPlaceholder": "Détails du rendez-vous...",
+    "descriptionPlaceholder": "",
     "creating": "Création...",
-    "createButton": "Créer le rendez-vous",
+    "createButton": "Confirmer la commande",
     "errors": {
       "selectClient": "Veuillez sélectionner un client",
       "enterClientName": "Veuillez saisir le nom du client",

@@ -76,26 +76,10 @@ function ReservationsPage() {
           handleFilterChange={handleFilterChange}
           resetFilters={resetFilters}
           hasActiveFilters={hasActiveFilters}
+          activeService={activeService}
+          setActiveService={setActiveService}
         />
 
-        {/* Onglets de service Midi/Soir */}
-        <div className="service-tabs">
-          <h2 className="page-title">{t('reservations.title')}</h2>
-          <div className="tabs-container">
-            <button
-              className={`service-tab ${activeService === "midi" ? "active" : ""}`}
-              onClick={() => setActiveService("midi")}
-            >
-              {t('appointments.services.lunch')}
-            </button>
-            <button
-              className={`service-tab ${activeService === "soir" ? "active" : ""}`}
-              onClick={() => setActiveService("soir")}
-            >
-              {t('appointments.services.dinner')}
-            </button>
-          </div>
-        </div>
 
         <div className="page-header">
           <div className="header-actions">
@@ -238,6 +222,7 @@ function ReservationsPage() {
                   onSubmit={handleCreateAppointment}
                   onCancel={closeCreateModal}
                   loading={loading}
+                  appointmentType="Réservation de table"
                 />
               </div>
             </div>
