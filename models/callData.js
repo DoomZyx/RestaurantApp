@@ -22,16 +22,7 @@ const callSchema = new mongoose.Schema({
   },
   services: {
     type: String,
-    enum: [
-      "Pizzas",
-      "Burgers",
-      "Salades",
-      "Boissons",
-      "Desserts",
-      "Menus",
-      "Promotions",
-      "Autre",
-    ],
+    // Pas d'enum pour permettre l'ajout dynamique de catégories depuis la config
   },
   description: { type: String },
   date: { type: Date, required: true },
