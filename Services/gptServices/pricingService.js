@@ -89,7 +89,17 @@ ${Object.keys(pricing.menu).map(categorie => {
   return `
 ${category.nom.toUpperCase()} :
 ${category.produits.map(produit => {
-  return `- ${produit.nom} : ${produit.prix}€ - ${produit.description}`;
+  let productLine = `- ${produit.nom} : ${produit.prix}€ - ${produit.description}`;
+  
+  // Ajouter les options si elles existent
+  if (produit.options && Object.keys(produit.options).length > 0) {
+    productLine += '\n  OPTIONS PERSONNALISABLES :';
+    Object.entries(produit.options).forEach(([key, optionData]) => {
+      productLine += `\n  • ${optionData.nom} : ${optionData.choix.join(', ')}`;
+    });
+  }
+  
+  return productLine;
 }).join('\n')}`;
 }).join('\n')}
 
