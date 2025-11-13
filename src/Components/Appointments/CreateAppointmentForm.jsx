@@ -83,6 +83,13 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
       const payload = { ...formData };
       delete payload.client; // Supprimer le champ client pour éviter les erreurs de validation
       
+      // Mapper type vers modalite
+      if (formData.type === "Commande à emporter") {
+        payload.modalite = "À emporter";
+      } else if (formData.type === "Réservation de table") {
+        payload.modalite = "Sur place";
+      }
+      
       // Nettoyer nombrePersonnes : convertir en integer ou supprimer si vide
       if (payload.nombrePersonnes === "" || payload.nombrePersonnes === null || payload.nombrePersonnes === undefined) {
         delete payload.nombrePersonnes;
