@@ -29,16 +29,43 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
         const res = await fetchPricing();
         const pricing = res?.data || res; // selon structure
         const menu = pricing?.menuPricing || {};
+        
+        // Créer un index de tous les produits par _id pour faciliter la recherche
+        const produitsIndex = {};
+        Object.entries(menu).forEach(([key, cat]) => {
+          const produits = Array.isArray(cat?.produits) ? cat.produits : [];
+          produits.forEach(p => {
+            if (p._id) {
+              produitsIndex[p._id] = p;
+            }
+          });
+        });
+        
         // Aplatir {categorie: { produits: [] }} en liste unique
         const flattened = Object.entries(menu).flatMap(([key, cat]) => {
           const produits = Array.isArray(cat?.produits) ? cat.produits : [];
-          return produits.map((p) => ({
-            _id: p._id || `${key}-${p.nom}`,
-            nom: p.nom,
-            categorie: cat?.nom || key,
-            prixBase: p.prixBase,
-            options: p.options || {}, // Inclure les options personnalisables
-          }));
+          return produits.map((p) => {
+            const product = {
+              _id: p._id || `${key}-${p.nom}`,
+              nom: p.nom,
+              categorie: cat?.nom || key,
+              prixBase: p.prixBase,
+              options: p.options || {}, // Inclure les options personnalisables
+              composition: p.composition || null,
+            };
+            
+            // Si c'est un menu avec un plat principal, récupérer les options du plat principal
+            if (p.composition && p.composition.platPrincipal && p.composition.platPrincipal.produitId) {
+              const platPrincipal = produitsIndex[p.composition.platPrincipal.produitId];
+              if (platPrincipal && platPrincipal.options && Object.keys(platPrincipal.options).length > 0) {
+                // Ajouter les options du plat principal au menu
+                product.options = { ...platPrincipal.options };
+                product.platPrincipalNom = platPrincipal.nom;
+              }
+            }
+            
+            return product;
+          });
         });
         setMenuProducts(flattened);
       } catch (e) {
@@ -278,6 +305,11 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
                   {/* Options personnalisables */}
                   {hasOptions && (
                     <div className="item-options">
+                      {selectedProduct.platPrincipalNom && (
+                        <div className="options-header-info">
+                          <strong>Personnalisation du {selectedProduct.platPrincipalNom}</strong>
+                        </div>
+                      )}
                       {Object.entries(selectedProduct.options).map(([optionKey, optionData]) => (
                         <div key={optionKey} className="option-group">
                           <label className="option-label">
