@@ -245,6 +245,12 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
               const selectedProduct = menuProducts.find(p => p._id === item.productId);
               const hasOptions = selectedProduct && Object.keys(selectedProduct.options || {}).length > 0;
               
+              if (selectedProduct) {
+                console.log('🔍 Produit sélectionné:', selectedProduct.nom);
+                console.log('📋 Options disponibles:', selectedProduct.options);
+                console.log('✅ hasOptions:', hasOptions);
+              }
+              
               return (
                 <div key={item.id} className="item-row-container">
                   <div className="item-row">
