@@ -167,13 +167,20 @@ NOMBRE DE PERSONNES (nombrePersonnes) :
 COMMANDES (commandes) :
 → Tableau d'objets pour chaque plat :
 {
-  "nom": "Nom exact du produit",
+  "nom": "Nom EXACT du produit tel qu'il apparaît dans le menu",
   "categorie": "Pizzas",
   "quantite": 2,
   "prixUnitaire": 12.50,
   "supplements": "+fromage, +oignons",
   "personnalisation": null  // Pour les tacos personnalisés (voir ci-dessous)
 }
+
+⚠️ RÈGLE CRITIQUE - NOM DU PRODUIT :
+- Utilise le nom EXACT du menu (respect majuscules, variations)
+- ATTENTION aux variations : Simple ≠ Double ≠ Triple
+- Si client dit "triple tacos" → cherche "Menu Tacos Triple" ou "Tacos Triple"
+- Si client dit "double burger" → cherche "Menu Double Burger" ou "Burger Double"
+- NE PAS deviner ou simplifier le nom du produit
 
 PERSONNALISATION TACOS - RÈGLE OBLIGATOIRE :
 Quand le client commande un TACOS, tu DOIS extraire ses choix de viandes et sauces :
@@ -503,7 +510,8 @@ export async function extractCallData(transcription) {
 ========================================
 MENU DU RESTAURANT (NOM EXACT DES PRODUITS) :
 ========================================
-UTILISE CES NOMS EXACTS DANS LA DESCRIPTION DE LA COMMANDE
+⚠️ UTILISE CES NOMS EXACTS - ATTENTION AUX VARIATIONS (Simple/Double/Triple)
+Tu dois trouver et utiliser le nom EXACT du produit dans ce menu
 
 ${Object.keys(pricing.menu).map(categorie => {
   const category = pricing.menu[categorie];
