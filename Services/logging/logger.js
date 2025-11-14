@@ -47,15 +47,13 @@ const generalLogFormat = winston.format.combine(
 );
 
 /**
- * Format pour la console (avec couleurs et emojis)
+ * Format pour la console (avec couleurs)
  */
 const consoleFormat = winston.format.combine(
   winston.format.colorize(),
   winston.format.timestamp({ format: "HH:mm:ss" }),
   winston.format.printf(({ timestamp, level, message, ...meta }) => {
- 
-    
-    return `${timestamp} ${emoji[level] || "📝"} ${message} ${
+    return `${timestamp} [${level}] ${message} ${
       Object.keys(meta).length && meta.streamSid ? `[${meta.streamSid.substring(0, 8)}...]` : ""
     }`;
   })
@@ -197,7 +195,7 @@ export const callLogger = {
       });
     },
     error: (streamSid, error, context = {}) => {
-      elevenLabsLogger.error("❌ Erreur ElevenLabs", {
+      elevenLabsLogger.error("Erreur ElevenLabs", {
         streamSid,
         service: "elevenlabs",
         error: error.message,
@@ -230,7 +228,7 @@ export const callLogger = {
       });
     },
     error: (streamSid, error, context = {}) => {
-      openAiLogger.error("❌ Erreur OpenAI", {
+      openAiLogger.error("Erreur OpenAI", {
         streamSid,
         service: "openai",
         error: error.message,
@@ -244,7 +242,7 @@ export const callLogger = {
 
   // Début d'appel
   callStarted: (streamSid, callerInfo = {}) => {
-    logger.info("📞 Appel démarré", {
+    logger.info("Appel demarre", {
       streamSid,
       callerInfo,
       event: "call_started",
@@ -254,7 +252,7 @@ export const callLogger = {
 
   // Transcription reçue
   transcriptionReceived: (streamSid, transcriptionLength) => {
-    logger.info("🎤 Transcription reçue", {
+    logger.info("Transcription recue", {
       streamSid,
       transcriptionLength,
       event: "transcription_received",
@@ -264,7 +262,7 @@ export const callLogger = {
 
   // Extraction GPT-4
   extractionStarted: (streamSid) => {
-    logger.info("🔍 Extraction GPT-4 démarrée", {
+    logger.info("Extraction GPT-4 demarree", {
       streamSid,
       event: "extraction_started",
       timestamp: new Date().toISOString(),
@@ -272,7 +270,7 @@ export const callLogger = {
   },
 
   extractionCompleted: (streamSid, extractedData) => {
-    logger.info("✅ Extraction GPT-4 terminée", {
+    logger.info("Extraction GPT-4 terminee", {
       streamSid,
       extractedData,
       event: "extraction_completed",
@@ -282,7 +280,7 @@ export const callLogger = {
 
   // Sauvegarde API
   apiCallStarted: (streamSid, endpoint) => {
-    logger.info("🌐 Appel API démarré", {
+    logger.info("Appel API demarre", {
       streamSid,
       endpoint,
       event: "api_call_started",
@@ -291,7 +289,7 @@ export const callLogger = {
   },
 
   apiCallCompleted: (streamSid, response) => {
-    logger.info("✅ Appel API terminé", {
+    logger.info("Appel API termine", {
       streamSid,
       responseStatus: response.status,
       event: "api_call_completed",
@@ -301,7 +299,7 @@ export const callLogger = {
 
   // Erreurs
   error: (streamSid, error, context = {}) => {
-    logger.error("❌ Erreur détectée", {
+    logger.error("Erreur detectee", {
       streamSid,
       error: error.message,
       stack: error.stack,
@@ -313,7 +311,7 @@ export const callLogger = {
 
   // Performance
   performance: (streamSid, operation, duration) => {
-    logger.info("⏱️ Performance", {
+    logger.info("Performance", {
       streamSid,
       operation,
       duration: `${duration}ms`,
@@ -324,7 +322,7 @@ export const callLogger = {
 
   // Appel terminé
   callCompleted: (streamSid, totalDuration) => {
-    logger.info("🎉 Appel terminé avec succès", {
+    logger.info("Appel termine avec succes", {
       streamSid,
       totalDuration: `${totalDuration}ms`,
       event: "call_completed",
