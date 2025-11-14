@@ -5,8 +5,52 @@ import "./CustomOptionsSection.scss";
 export function CustomOptionsSection({ categorie, options, onUpdateOptions }) {
   const { t } = useTranslation();
 
-  // Ne pas afficher si ce n'est pas un tacos
-  if (categorie.toLowerCase() !== 'tacos') {
+  // Afficher pour les produits personnalisables (Tacos, Burgers, etc.)
+  const categorieLower = categorie.toLowerCase();
+  const isCustomizable = categorieLower.includes('tacos') || 
+                         categorieLower.includes('burger') || 
+                         categorieLower.includes('sandwich');
+  
+  // Ne pas afficher pour les menus, boissons, desserts, accompagnements
+  const isExcluded = ['menus', 'menu', 'boissons', 'boisson', 'desserts', 'dessert', 'accompagnements', 'accompagnement']
+    .some(cat => categorieLower.includes(cat));
+  
+  if (isExcluded || !isCustomizable) {
+    return null;
+  }
+
+  // Initialiser les options par défaut si vide
+  React.useEffect(() => {
+    if (!options || Object.keys(options).length === 0) {
+      const defaultOptions = categorieLower.includes('tacos') ? {
+        viandes: {
+          nom: "Viandes",
+          choix: ["Poulet", "Bœuf", "Agneau", "Mixte"],
+          multiple: false,
+          obligatoire: true
+        },
+        sauces: {
+          nom: "Sauces",
+          choix: ["Algérienne", "Blanche", "Samourai", "Harissa", "Ketchup", "Mayonnaise"],
+          multiple: true,
+          obligatoire: true
+        },
+        crudites: {
+          nom: "Crudités",
+          choix: ["Salade", "Tomates", "Oignons", "Cornichons"],
+          multiple: true,
+          obligatoire: false
+        }
+      } : {};
+      
+      if (Object.keys(defaultOptions).length > 0) {
+        onUpdateOptions(defaultOptions);
+      }
+    }
+  }, []);
+  
+  // Si toujours vide après init, ne rien afficher
+  if (!options || Object.keys(options).length === 0) {
     return null;
   }
 
