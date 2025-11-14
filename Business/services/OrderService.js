@@ -24,15 +24,25 @@ export class OrderService {
       appointmentData.heure
     );
 
+    // Déterminer la modalité par défaut en fonction du type
+    const typeCommande = appointmentData.type || "Commande à emporter";
+    let modaliteDefaut = "Sur place";
+    
+    if (typeCommande === "Commande à emporter") {
+      modaliteDefaut = "À emporter";
+    } else if (typeCommande === "Livraison à domicile") {
+      modaliteDefaut = "Livraison";
+    }
+
     // Créer la commande
     const createdOrder = await OrderModel.create({
       client: client?._id || null,
-      nom: !client ? nom : null,
+      nom: !client ? (nom || "Client Inconnu") : null,
       date: orderDate,
       heure: orderHeure,
       duree: appointmentData.duree || 60,
-      type: appointmentData.type || "Commande à emporter",
-      modalite: appointmentData.modalite || "Sur place",
+      type: typeCommande,
+      modalite: appointmentData.modalite || modaliteDefaut,
       nombrePersonnes: appointmentData.nombrePersonnes,
       description: appointmentData.description || description,
       commandes: appointmentData.commandes || [],

@@ -471,7 +471,7 @@ export class CallService {
     return {
       callId: call._id.toString(),
       orderId: order?._id?.toString(),
-      nom: client ? `${client.prenom} ${client.nom}` : originalData.nom,
+      nom: client ? `${client.prenom} ${client.nom}` : (originalData.nom || "Client Inconnu"),
       telephone: originalData.telephone || "Non fourni",
       type_demande: originalData.type_demande,
       services: originalData.services,
