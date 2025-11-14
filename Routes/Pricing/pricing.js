@@ -86,10 +86,13 @@ export default async function pricingRoutes(fastify, options) {
               nom: { type: "string" },
               description: { type: "string" },
               prixBase: { type: "number" },
-              taille: { type: "string" },
-              disponible: { type: "boolean" }
+              disponible: { type: "boolean" },
+              options: { type: "object" },
+              composition: { type: "object" },
+              boissonsDisponibles: { type: "array", items: { type: "string" } }
             },
-            required: ["nom", "prixBase"]
+            required: ["nom", "prixBase"],
+            additionalProperties: true
           }
         },
         required: ["categorie", "produit"]
