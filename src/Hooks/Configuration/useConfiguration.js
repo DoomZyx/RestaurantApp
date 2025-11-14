@@ -19,7 +19,6 @@ export function useConfiguration() {
     nom: "",
     description: "",
     prixBase: 0,
-    taille: "Moyenne",
     disponible: true,
     options: {}, // Options personnalisables (viandes, sauces, etc.)
     composition: { // Pour les menus
@@ -180,7 +179,26 @@ export function useConfiguration() {
         return;
       }
 
-      const response = await addProduct(categorie, newProduct);
+      // Nettoyer les données avant envoi
+      const cleanedProduct = { ...newProduct };
+      
+      // Supprimer options si vide
+      if (cleanedProduct.options && Object.keys(cleanedProduct.options).length === 0) {
+        delete cleanedProduct.options;
+      }
+      
+      // Supprimer composition si vide ou sans plat principal
+      if (cleanedProduct.composition && !cleanedProduct.composition.platPrincipal) {
+        delete cleanedProduct.composition;
+      }
+      
+      // Supprimer boissonsDisponibles si vide
+      if (cleanedProduct.boissonsDisponibles && cleanedProduct.boissonsDisponibles.length === 0) {
+        delete cleanedProduct.boissonsDisponibles;
+      }
+
+      console.log('📤 Envoi produit:', cleanedProduct);
+      const response = await addProduct(categorie, cleanedProduct);
       
       if (response.success) {
         // Recharger les données depuis le serveur pour avoir les IDs corrects
@@ -190,7 +208,6 @@ export function useConfiguration() {
           nom: "",
           description: "",
           prixBase: 0,
-          taille: "Moyenne",
           disponible: true,
           options: {},
           composition: {

@@ -109,6 +109,43 @@ export function ProductForm({
             </div>
           </div>
 
+          {/* Boissons disponibles */}
+          <div className="composition-section" style={{ marginTop: '20px' }}>
+            <label>Boissons disponibles pour ce menu</label>
+            <p style={{ fontSize: '0.9rem', color: '#666', marginBottom: '10px' }}>
+              Sélectionnez les boissons que le client peut choisir pour ce menu
+            </p>
+            <div className="boissons-selection">
+              {Object.keys(safePricing.menuPricing || {})
+                .filter(cat => cat.toLowerCase() === 'boissons')
+                .map(cat => {
+                  const category = safePricing.menuPricing[cat];
+                  return category.produits?.map(boisson => {
+                    const isSelected = newProduct.boissonsDisponibles?.includes(boisson.nom);
+                    return (
+                      <label key={boisson._id} className="boisson-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={(e) => {
+                            const currentBoissons = newProduct.boissonsDisponibles || [];
+                            const updated = e.target.checked
+                              ? [...currentBoissons, boisson.nom]
+                              : currentBoissons.filter(b => b !== boisson.nom);
+                            setNewProduct({
+                              ...newProduct,
+                              boissonsDisponibles: updated
+                            });
+                          }}
+                        />
+                        <span>{boisson.nom}</span>
+                      </label>
+                    );
+                  });
+                })}
+            </div>
+          </div>
+
           {/* Description générée */}
           {newProduct.description && (
             <div className="auto-description">

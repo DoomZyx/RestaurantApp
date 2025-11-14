@@ -213,6 +213,53 @@
     }
   }
 
+  .boissons-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+
+    .boisson-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #007bff;
+        background: #f8f9fa;
+      }
+
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: #007bff;
+      }
+
+      span {
+        font-size: 0.9rem;
+        color: #495057;
+        font-weight: 500;
+      }
+
+      &:has(input:checked) {
+        border-color: #007bff;
+        background: #e7f3ff;
+
+        span {
+          color: #007bff;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
   .auto-description {
     background: #e7f3ff;
     border-left: 4px solid #007bff;

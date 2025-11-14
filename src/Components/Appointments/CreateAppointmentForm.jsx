@@ -16,6 +16,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
 
   const [errors, setErrors] = useState({});
   const [menuProducts, setMenuProducts] = useState([]); // produits depuis la config
+  const [boissonsDisponibles, setBoissonsDisponibles] = useState([]); // boissons depuis la config
   const [selectedItems, setSelectedItems] = useState([
     { id: Date.now(), productId: "", qty: 1, supplements: "", options: {} }
   ]);
@@ -52,6 +53,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
               prixBase: p.prixBase,
               options: p.options || {}, // Inclure les options personnalisables
               composition: p.composition || null,
+              boissonsDisponibles: p.boissonsDisponibles || [], // Boissons pour les menus
             };
             
             // Si c'est un menu avec un plat principal, récupérer les options du plat principal
@@ -68,6 +70,21 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
           });
         });
         setMenuProducts(flattened);
+        
+        // Extraire les boissons pour les menus
+        console.log('🔍 Structure menu complète:', menu);
+        console.log('🔍 Catégories disponibles:', Object.keys(menu));
+        
+        const boissonsCategorie = menu['Boissons'] || menu['boissons'];
+        console.log('🍹 Catégorie Boissons trouvée:', boissonsCategorie);
+        
+        if (boissonsCategorie && Array.isArray(boissonsCategorie.produits)) {
+          const boissons = boissonsCategorie.produits.map(b => b.nom);
+          console.log('✅ Boissons extraites:', boissons);
+          setBoissonsDisponibles(boissons);
+        } else {
+          console.log('❌ Aucune boisson trouvée dans la config');
+        }
       } catch (e) {
         setMenuProducts([]);
       }
@@ -301,6 +318,64 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
                       </button>
                     )}
                   </div>
+
+                  {/* Choix de boisson pour les menus */}
+                  {(() => {
+                    const isMenu = selectedProduct && (
+                      selectedProduct.categorie?.toLowerCase().includes('menu') || 
+                      selectedProduct.nom?.toLowerCase().includes('menu')
+                    );
+                    console.log('🔍 Produit sélectionné:', selectedProduct?.nom);
+                    console.log('📦 Catégorie:', selectedProduct?.categorie);
+                    console.log('🍹 Boissons disponibles produit:', selectedProduct?.boissonsDisponibles);
+                    console.log('🍹 Boissons disponibles globales:', boissonsDisponibles);
+                    console.log('✅ Est un menu:', isMenu);
+                    
+                    return isMenu && (
+                      <div className="item-options" style={{ marginTop: '10px' }}>
+                        <div className="option-group">
+                          <label className="option-label">Boisson incluse *</label>
+                          <select
+                            value={item.options?.boisson || ''}
+                            onChange={(e) => setSelectedItems(prev => prev.map(it => 
+                              it.id === item.id 
+                                ? { ...it, options: { ...it.options, boisson: e.target.value } } 
+                                : it
+                            ))}
+                            style={{
+                              padding: '8px 12px',
+                              borderRadius: '6px',
+                              border: '1px solid #ddd',
+                              width: '100%',
+                              maxWidth: '300px'
+                            }}
+                          >
+                            <option value="">Choisir une boisson</option>
+                            {selectedProduct.boissonsDisponibles && selectedProduct.boissonsDisponibles.length > 0 ? (
+                              // Utiliser les boissons configurées pour ce menu spécifique
+                              selectedProduct.boissonsDisponibles.map((boisson, idx) => (
+                                <option key={idx} value={boisson}>{boisson}</option>
+                              ))
+                            ) : boissonsDisponibles.length > 0 ? (
+                              // Fallback: toutes les boissons de la catégorie
+                              boissonsDisponibles.map((boisson, idx) => (
+                                <option key={idx} value={boisson}>{boisson}</option>
+                              ))
+                            ) : (
+                              // Fallback ultime si rien n'est configuré
+                              <>
+                                <option value="Coca-Cola">Coca-Cola</option>
+                                <option value="Ice Tea">Ice Tea</option>
+                                <option value="Fanta">Fanta</option>
+                                <option value="Sprite">Sprite</option>
+                                <option value="Eau">Eau</option>
+                              </>
+                            )}
+                          </select>
+                        </div>
+                      </div>
+                    );
+                  })()}
 
                   {/* Options personnalisables */}
                   {hasOptions && (
