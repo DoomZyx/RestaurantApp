@@ -210,18 +210,29 @@ IMPORTANT TACOS :
 - TOUJOURS extraire la/les viande(s) et la sauce mentionnées
 - Utilise UNIQUEMENT les options disponibles dans le menu (voir ci-dessous)
 
-MENUS - RÈGLE IMPORTANTE :
-Si le client commande un MENU (ex: "Menu Tacos", "Menu Burger"), tu dois extraire :
-1. Le plat principal complet avec ses personnalisations
-2. La boisson choisie
-3. Les frites sont automatiquement incluses
+MENUS - RÈGLE CRITIQUE :
+Si le client commande un MENU (ex: "Menu USA Beef Burger", "Menu Tacos Double"), c'est UN SEUL produit.
+Le menu INCLUT DEJA : plat + boisson + accompagnement (frites).
 
-Exemple Menu Tacos :
-Client dit : "Je veux un menu tacos double poulet merguez sauce algérienne et un coca"
-→ Extrais comme 2 items dans commandes[] :
-  1. Le tacos avec sa personnalisation (viandes + sauce)
-  2. La boisson (Coca-Cola)
-  3. Mentionne "Frites" dans la description du menu
+→ Extrais le menu comme UN SEUL item dans commandes[] avec le nom exact du menu
+→ NE PAS extraire séparément le burger/tacos, la boisson et les frites
+→ La boisson choisie va dans le champ "options" comme objet structuré
+
+Exemple Menu :
+Client dit : "Je veux un menu USA Beef Burger avec un coca"
+→ Extrais comme 1 seul item :
+{
+  "nom": "Menu USA Beef Burger",
+  "categorie": "Menus",
+  "quantite": 1,
+  "prixUnitaire": 15.00,
+  "supplements": "",
+  "options": {
+    "boisson": "Coca-Cola"
+  }
+}
+
+Si le client ne précise pas la boisson, mets "options": null ou "options": { "boisson": "Non précisée" }
 
 Si pas de personnalisation ou produit non-tacos → personnalisation: null
 
