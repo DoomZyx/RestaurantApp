@@ -140,6 +140,11 @@ DATE (date) :
 HEURE (heure) :
 → Si heure mentionnée : Format HH:MM (ex: 19:00)
 → Si AUCUNE heure : "ASAP"
+→ IMPORTANT : Si heure ambiguë (ex: "8h" sans "matin/soir"):
+  * Fast-food ouvert midi (11h-15h) et soir (18h-23h)
+  * "8h" = probablement 20:00 (soir)
+  * "midi" ou "12h" = 12:00
+  * Si contexte clair → adapte (ex: "8h du matin" = 08:00)
 
 DURÉE (duree) :
 → Commande : 60
