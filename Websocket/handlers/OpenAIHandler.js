@@ -266,21 +266,9 @@ export class OpenAIHandler {
    * L'utilisateur commence à parler
    */
   handleUserSpeechStarted() {
-    if (this.isAssistantSpeaking && this.currentResponseId) {
-      this.callLogger.info(this.streamSid, "🛑 INTERRUPTION DÉTECTÉE - Client parle, annulation de l'IA");
-      
-      if (this.openAiWs && this.openAiWs.readyState === 1) {
-        this.openAiWs.send(JSON.stringify({
-          type: "response.cancel"
-        }));
-        
-        
-        this.isAssistantSpeaking = false;
-        this.currentResponseId = null;
-      }
-    } else {
-      this.callLogger.debug(this.streamSid, "🎤 Client commence à parler");
-    }
+    // Cancel response désactivé - peut interférer avec la compréhension du GPT
+    // Le GPT gère naturellement les interruptions via VAD (Voice Activity Detection)
+    this.callLogger.debug(this.streamSid, "Client commence a parler");
   }
 
   // ==========================================
@@ -351,7 +339,7 @@ export class OpenAIHandler {
    * Gère les erreurs OpenAI
    */
   handleError(data) {
-    console.error("❌ ERREUR OPENAI:", JSON.stringify(data, null, 2));
+    console.error("ERREUR OPENAI:", JSON.stringify(data, null, 2));
     this.callLogger.error(this.streamSid, new Error(`OpenAI Error: ${data.error?.message || 'Unknown'}`), {
       errorType: data.error?.type,
       errorCode: data.error?.code,
