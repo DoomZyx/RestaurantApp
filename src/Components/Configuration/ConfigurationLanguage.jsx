@@ -13,7 +13,7 @@ export function ConfigurationLanguage({ languageSuccess, handleLanguageChange })
       {languageSuccess && (
         <div className="notification-toast success-message">
           <i className="bi bi-check-circle-fill"></i>
-          <span className="message-content">{t('configuration.language.changeSuccess')}</span>
+          <span className="message-content">{t('common.success')}</span>
         </div>
       )}
       
