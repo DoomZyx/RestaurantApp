@@ -80,3 +80,4 @@ export function CustomOptionsSection({ categorie, options, onUpdateOptions }) {
   );
 }
 
+

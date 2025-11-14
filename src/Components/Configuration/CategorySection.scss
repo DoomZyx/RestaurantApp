@@ -1,0 +1,130 @@
+.category-section {
+  margin-bottom: 25px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #f8f9fa;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &.collapsed {
+    .category-content {
+      display: none;
+    }
+  }
+
+  .category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, #5568d3 0%, #6a4296 100%);
+    }
+
+    .category-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .btn-collapse {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.3);
+          transform: scale(1.1);
+        }
+
+        i {
+          color: white;
+          font-size: 1rem;
+          transition: transform 0.2s ease;
+        }
+      }
+
+      h4 {
+        margin: 0;
+        color: white;
+        font-size: 1.3rem;
+        font-weight: 600;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .btn-addProduct {
+      background: white;
+      color: #667eea;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        background: #f8f9fa;
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .category-content {
+    padding: 20px;
+    background: white;
+
+    .products-list {
+      margin-top: 15px;
+
+      .no-products {
+        text-align: center;
+        color: #95a5a6;
+        padding: 30px;
+        font-size: 1rem;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .category-section {
+    .category-header {
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+
+      .category-header-left {
+        width: 100%;
+
+        h4 {
+          font-size: 1.1rem;
+        }
+      }
+
+      .btn-addProduct {
+        width: 100%;
+      }
+    }
+  }
+}
+

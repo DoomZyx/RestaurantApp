@@ -115,3 +115,24 @@
   }
 }
 
+// Responsive
+@media (max-width: 768px) {
+  .opening-hours {
+    .day-hours {
+      .time-slot {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+
+        span {
+          text-align: center;
+          min-width: auto;
+        }
+
+        input[type="time"] {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
