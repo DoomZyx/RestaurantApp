@@ -33,7 +33,13 @@ export class PricingService {
     if (pricing) {
       // Mettre à jour la configuration existante
       Object.assign(pricing, pricingData);
+      
+      // IMPORTANT : Marquer TOUS les objets imbriqués comme modifiés pour Mongoose
       pricing.markModified('menuPricing');
+      pricing.markModified('restaurantInfo');
+      pricing.markModified('restaurantInfo.horairesOuverture');
+      pricing.markModified('deliveryPricing');
+      
       pricing.derniereModification = new Date();
       await pricing.save();
     } else {

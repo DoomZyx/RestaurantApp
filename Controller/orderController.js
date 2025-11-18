@@ -276,12 +276,65 @@ export async function getAvailableSlots(request, reply) {
   try {
     const { date } = request.query;
     
-    // Générer les créneaux de 30 min de 9h à 18h
+    // Récupérer les horaires depuis la BDD (dynamique)
+    const PricingModel = (await import("../models/pricing.js")).default;
+    const pricing = await PricingModel.findOne();
+    
+    if (!pricing || !pricing.restaurantInfo?.horairesOuverture) {
+      return reply.code(503).send({
+        error: "Horaires non configurés",
+        message: "Veuillez configurer les horaires d'ouverture dans la page Configuration"
+      });
+    }
+
+    // Déterminer le jour de la semaine
+    const requestDate = new Date(date);
+    const joursFr = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    const jour = joursFr[requestDate.getDay()];
+    
+    const horaire = pricing.restaurantInfo.horairesOuverture[jour];
+    
+    if (!horaire || !horaire.ouvert) {
+      return reply.send({
+        success: true,
+        availableSlots: [],
+        occupiedSlots: [],
+        message: "Restaurant fermé ce jour-là"
+      });
+    }
+
+    // Générer les créneaux de 30 min basés sur les horaires dynamiques
     const slots = [];
-    for (let hour = 9; hour < 18; hour++) {
-      for (let minute = 0; minute < 60; minute += 30) {
-        const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-        slots.push(timeString);
+    
+    // Ajouter les créneaux du midi
+    if (horaire.midi?.ouverture && horaire.midi?.fermeture) {
+      const [midiStartH, midiStartM] = horaire.midi.ouverture.split(':').map(Number);
+      const [midiEndH, midiEndM] = horaire.midi.fermeture.split(':').map(Number);
+      
+      let currentMinutes = midiStartH * 60 + midiStartM;
+      const midiEndMinutes = midiEndH * 60 + midiEndM;
+      
+      while (currentMinutes < midiEndMinutes) {
+        const hours = Math.floor(currentMinutes / 60);
+        const minutes = currentMinutes % 60;
+        slots.push(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`);
+        currentMinutes += 30; // Créneaux de 30 minutes
+      }
+    }
+    
+    // Ajouter les créneaux du soir
+    if (horaire.soir?.ouverture && horaire.soir?.fermeture) {
+      const [soirStartH, soirStartM] = horaire.soir.ouverture.split(':').map(Number);
+      const [soirEndH, soirEndM] = horaire.soir.fermeture.split(':').map(Number);
+      
+      let currentMinutes = soirStartH * 60 + soirStartM;
+      const soirEndMinutes = soirEndH * 60 + soirEndM;
+      
+      while (currentMinutes < soirEndMinutes) {
+        const hours = Math.floor(currentMinutes / 60);
+        const minutes = currentMinutes % 60;
+        slots.push(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`);
+        currentMinutes += 30; // Créneaux de 30 minutes
       }
     }
 

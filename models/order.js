@@ -131,13 +131,57 @@ orderSchema.index({ client: 1, date: -1 });
 orderSchema.index({ statut: 1, date: 1 });
 
 // Méthode pour vérifier si le créneau est dans les horaires d'ouverture
-orderSchema.methods.isValidTimeSlot = function() {
-  const [hours, minutes] = this.heure.split(':').map(Number);
-  const timeInMinutes = hours * 60 + minutes;
+// ⚠️ IMPORTANT : Cette méthode nécessite les horaires depuis la BDD (PricingModel)
+// Elle doit être appelée avec les horaires en paramètre
+orderSchema.methods.isValidTimeSlot = async function() {
+  const PricingModel = require("./pricing.js").default;
+  
+  try {
+    const pricing = await PricingModel.findOne();
+    if (!pricing || !pricing.restaurantInfo?.horairesOuverture) {
+      console.warn("⚠️ Horaires non configurés, validation impossible");
+      return true; // Accepter par défaut si pas configuré
+    }
 
-  // 9h-12h (540-720) ou 13h-18h (780-1080)
-  return (timeInMinutes >= 540 && timeInMinutes <= 720) ||
-         (timeInMinutes >= 780 && timeInMinutes <= 1080);
+    // Récupérer le jour de la commande
+    const orderDate = new Date(this.date);
+    const joursFr = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    const jour = joursFr[orderDate.getDay()];
+    
+    const horaire = pricing.restaurantInfo.horairesOuverture[jour];
+    
+    if (!horaire || !horaire.ouvert) {
+      return false; // Fermé ce jour-là
+    }
+
+    const [hours, minutes] = this.heure.split(':').map(Number);
+    const timeInMinutes = hours * 60 + minutes;
+
+    // Vérifier si dans la plage midi
+    let isValidMidi = false;
+    if (horaire.midi?.ouverture && horaire.midi?.fermeture) {
+      const [midiStartH, midiStartM] = horaire.midi.ouverture.split(':').map(Number);
+      const [midiEndH, midiEndM] = horaire.midi.fermeture.split(':').map(Number);
+      const midiStart = midiStartH * 60 + midiStartM;
+      const midiEnd = midiEndH * 60 + midiEndM;
+      isValidMidi = timeInMinutes >= midiStart && timeInMinutes <= midiEnd;
+    }
+
+    // Vérifier si dans la plage soir
+    let isValidSoir = false;
+    if (horaire.soir?.ouverture && horaire.soir?.fermeture) {
+      const [soirStartH, soirStartM] = horaire.soir.ouverture.split(':').map(Number);
+      const [soirEndH, soirEndM] = horaire.soir.fermeture.split(':').map(Number);
+      const soirStart = soirStartH * 60 + soirStartM;
+      const soirEnd = soirEndH * 60 + soirEndM;
+      isValidSoir = timeInMinutes >= soirStart && timeInMinutes <= soirEnd;
+    }
+
+    return isValidMidi || isValidSoir;
+  } catch (error) {
+    console.error("Erreur validation horaire:", error);
+    return true; // Accepter par défaut en cas d'erreur
+  }
 };
 
 // Méthode pour calculer l'heure de fin
