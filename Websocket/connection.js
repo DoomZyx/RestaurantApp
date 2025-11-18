@@ -6,6 +6,7 @@ import { registerStream, unregisterStream } from "../Services/streamRegistry.js"
 import { OpenAIHandler } from "./handlers/OpenAIHandler.js";
 import { TwilioHandler } from "./handlers/TwilioHandler.js";
 import { TranscriptionHandler } from "./handlers/TranscriptionHandler.js";
+import { cleanAudio, checkRNNoiseAvailability } from "../Services/audioProcessing/audioCleaningService.js";
 
 dotenv.config();
 
@@ -33,6 +34,14 @@ export async function handleWebSocketConnection(connection, request) {
     
     // ElevenLabs désactivé pour éviter tout coût
     const useElevenLabs = false;
+    
+    // Vérifier disponibilité RNNoise (une seule fois au début)
+    const rnnoiseAvailable = await checkRNNoiseAvailability();
+    if (rnnoiseAvailable) {
+      callLogger.info(null, "🎙️ RNNoise activé - Réduction de bruit en temps réel");
+    } else {
+      callLogger.warn(null, "⚠️ RNNoise non disponible - Audio non filtré");
+    }
 
     // 🎤 Configuration TTS
 
@@ -86,12 +95,17 @@ export async function handleWebSocketConnection(connection, request) {
           registerStream(streamSid, connection, callSid);
         }
 
-        // Événement MEDIA : Transférer l'audio à OpenAI
+        // Événement MEDIA : Nettoyer et transférer l'audio à OpenAI
         if (data.event === "media" && openAiWs && openAiWs.readyState === WebSocket.OPEN) {
+          // Nettoyer l'audio avec RNNoise si disponible
+          const audioPayload = rnnoiseAvailable 
+            ? await cleanAudio(data.media.payload)
+            : data.media.payload;
+          
           openAiWs.send(
             JSON.stringify({
               type: "input_audio_buffer.append",
-              audio: data.media.payload,
+              audio: audioPayload,
             })
           );
         } else if (twilioHandler) {
