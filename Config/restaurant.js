@@ -1,10 +1,17 @@
 /**
- * Configuration centralisée du restaurant
- * Utilisé pour les appels aux fournisseurs et autres communications
+ * Configuration centralisée du restaurant (LEGACY - FALLBACK UNIQUEMENT)
+ * 
+ * ⚠️ IMPORTANT : Ce fichier sert UNIQUEMENT de fallback si la BDD est vide
+ * 
+ * Les vraies informations du restaurant doivent être configurées dans :
+ * - Frontend : Page Configuration > Infos Restaurant
+ * - Backend : Base de données (PricingModel.restaurantInfo)
+ * 
+ * Le GPT utilise TOUJOURS les infos dynamiques de la BDD, pas ce fichier statique
  */
 
 export const restaurantConfig = {
-  nom: "TastyFood",
+  nom: process.env.RESTAURANT_NAME || "TastyFood",
   telephone: process.env.RESTAURANT_PHONE || "+33123456789",
   email: process.env.RESTAURANT_EMAIL || "contact@tastyfood.com",
   adresse: {

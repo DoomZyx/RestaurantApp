@@ -14,8 +14,12 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
   });
 
   ws.on("open", async () => {
+    // Récupérer les infos du restaurant depuis la BDD (dynamique)
+    const { getRestaurantInfo } = await import("./pricingService.js");
+    const restaurantInfo = await getRestaurantInfo();
+    
     // Générer le prompt enrichi avec les tarifs ET la date actuelle
-    const enrichedInstructions = await generateEnrichedPrompt(getSystemMessage());
+    const enrichedInstructions = await generateEnrichedPrompt(getSystemMessage(restaurantInfo));
     
     const sessionUpdate = {
       type: "session.update",
@@ -36,6 +40,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
         max_response_output_tokens: 4096, // Limite pour éviter les réponses trop longues
         input_audio_transcription: {
           model: "whisper-1",
+          prompt: "Restaurant fast-food: nuggets, tacos, burgers, sauce Biggy, sauce Algérienne, sauce Samourai, frites, Coca-Cola, Ice Tea, menu simple, menu double, menu triple, crudités, poulet, bœuf, agneau"
         },
         tools: [
           {

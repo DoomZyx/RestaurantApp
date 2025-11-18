@@ -63,6 +63,25 @@ export async function generateEnrichedPrompt(basePrompt) {
       );
     }
 
+    // Formater les horaires correctement
+    const formattedHoraires = Object.entries(pricing.restaurantInfo.horairesOuverture || {})
+      .map(([jour, horaire]) => {
+        if (!horaire || !horaire.ouvert) {
+          return `- ${jour.charAt(0).toUpperCase() + jour.slice(1)} : Fermé`;
+        }
+        
+        const periodes = [];
+        if (horaire.midi?.ouverture && horaire.midi?.fermeture) {
+          periodes.push(`${horaire.midi.ouverture}-${horaire.midi.fermeture}`);
+        }
+        if (horaire.soir?.ouverture && horaire.soir?.fermeture) {
+          periodes.push(`${horaire.soir.ouverture}-${horaire.soir.fermeture}`);
+        }
+        
+        return `- ${jour.charAt(0).toUpperCase() + jour.slice(1)} : ${periodes.join(' et ')}`;
+      })
+      .join('\n');
+
     // Ajouter les informations sur les tarifs
     const pricingInfo = `
 ========================================
@@ -74,9 +93,7 @@ Téléphone : ${pricing.restaurantInfo.telephone || "Non renseigné"}
 Email : ${pricing.restaurantInfo.email || "Non renseigné"}
 
 HORAIRES D'OUVERTURE :
-${Object.entries(pricing.restaurantInfo.horairesOuverture || {}).map(([jour, horaire]) => 
-  `- ${jour.charAt(0).toUpperCase() + jour.slice(1)} : ${horaire.ouvert ? `${horaire.ouverture} - ${horaire.fermeture}` : 'Fermé'}`
-).join('\n')}
+${formattedHoraires}
 
 ========================================
 MENU ET TARIFS :
@@ -223,4 +240,10 @@ export function getSimilarProducts(nomProduit, categorie, pricing) {
     console.error("Erreur lors de la recherche de produits similaires:", error);
     return [];
   }
+}
+
+// Fonction utilitaire pour récupérer les infos du restaurant depuis la BDD
+export async function getRestaurantInfo() {
+  const pricing = await getPricingForGPT();
+  return pricing?.restaurantInfo || null;
 }

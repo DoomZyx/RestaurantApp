@@ -470,11 +470,15 @@ RAPPEL FINAL - RÈGLES ABSOLUES
 
 1. JSON valide UNIQUEMENT (pas de texte)
 
-2. NOM DU CLIENT = CHERCHE-LE PARTOUT
-   → Lis TOUTE la transcription (début, milieu, fin)
-   → Patterns : "Je m'appelle X", "C'est X", "Pour X", "Monsieur/Madame X"
-   → Même un prénom seul (ex: "Martin") = VALIDE, extrais-le
-   → Si vraiment absent = "Client inconnu"
+2. NOM DU CLIENT = RÈGLE ABSOLUE - CHERCHE PARTOUT
+   → LIS LA TRANSCRIPTION COMPLÈTE (début, milieu, fin)
+   → Patterns courants :
+     * "Je m'appelle X", "C'est X", "Mon nom c'est X"
+     * "Pour X", "Au nom de X", "À quel nom ?" → "X"
+     * "Monsieur/Madame X", juste "X" après une question
+   → ACCEPTE TOUT : prénom seul (Martin), nom seul (Dupont), les deux
+   → ⚠️ Si le GPT vocal demande le nom ET le client répond → TU DOIS L'EXTRAIRE
+   → Seulement si VRAIMENT absent ou client refuse = "Client inconnu"
 
 3. Créer ORDER dès qu'un plat est mentionné
 

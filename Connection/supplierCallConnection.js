@@ -1,7 +1,7 @@
 import WebSocket from "ws";
 import SupplierOrderModel from "../models/supplierOrder.js";
 import { extractSupplierResponse } from "../Services/gptServices/extractSupplierData.js";
-import restaurantConfig from "../Config/restaurant.js";
+import { getRestaurantInfo } from "../Services/gptServices/pricingService.js";
 
 // Configuration OpenAI Realtime API
 const OPENAI_REALTIME_URL = "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01";
@@ -21,6 +21,10 @@ export async function handleSupplierCallConnection(twilioWs, orderId) {
       twilioWs.close();
       return;
     }
+
+    // Récupérer les infos du restaurant depuis la BDD (dynamique)
+    const restaurantInfo = await getRestaurantInfo();
+    const nomRestaurant = restaurantInfo?.nom || "Mon Restaurant";
 
     // Mettre à jour le statut
     order.statut = "appel_en_cours";
@@ -48,10 +52,10 @@ export async function handleSupplierCallConnection(twilioWs, orderId) {
         type: "session.update",
         session: {
           modalities: ["text", "audio"],
-          instructions: `Tu es un assistant qui appelle un fournisseur pour passer une commande au nom du restaurant "${restaurantConfig.nom}".
+          instructions: `Tu es un assistant qui appelle un fournisseur pour passer une commande au nom du restaurant "${nomRestaurant}".
 
 CONTEXTE :
-- Tu représentes le restaurant "${restaurantConfig.nom}"
+- Tu représentes le restaurant "${nomRestaurant}"
 - Tu appelles le fournisseur "${order.fournisseur.nom}"
 - Tu dois commander : ${ingredientsList}
 
