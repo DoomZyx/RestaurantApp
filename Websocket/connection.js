@@ -58,7 +58,7 @@ export async function handleWebSocketConnection(connection, request) {
     // ==========================================
     // HANDLER MESSAGES TWILIO
     // ==========================================
-    connection.on("message", async (message) => {
+    connection.on("message", (message) => {
       try {
         const data = JSON.parse(message.toString());
 
