@@ -55,7 +55,7 @@ export async function cleanAudio(audioPayload) {
     });
 
     if (!response.ok) {
-      console.warn(`⚠️ Erreur service RNNoise: ${response.status}`);
+      console.warn(`Erreur service RNNoise: ${response.status}`);
       return audioPayload; // Fallback: retourner l'audio original
     }
 
@@ -68,7 +68,7 @@ export async function cleanAudio(audioPayload) {
     return audioPayload;
   } catch (error) {
     // En cas d'erreur, retourner l'audio original (fail-safe)
-    console.warn('⚠️ Erreur nettoyage audio, utilisation audio original:', error.message);
+    console.warn('Erreur nettoyage audio, utilisation audio original:', error.message);
     return audioPayload;
   }
 }

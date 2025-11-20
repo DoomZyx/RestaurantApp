@@ -182,6 +182,20 @@ COMMANDES (commandes) :
 - Si client dit "double burger" → cherche "Menu Double Burger" ou "Burger Double"
 - NE PAS deviner ou simplifier le nom du produit
 
+⚠️ TACOS - CORRESPONDANCE NOMBRE VIANDES :
+Le client peut dire le NOMBRE DE VIANDES au lieu du type :
+- "1 viande" ou "une viande" = Tacos Simple
+- "2 viandes" ou "deux viandes" = Tacos Double
+- "3 viandes" ou "trois viandes" = Tacos Triple
+
+Exemples de detection :
+- "un menu tacos 3 viandes" → "Menu Tacos Triple"
+- "tacos avec 2 viandes" → "Tacos Double"
+- "menu tacos une viande" → "Menu Tacos Simple"
+- "triple tacos" → "Tacos Triple" (ou "Menu Tacos Triple" si menu)
+
+Tu DOIS faire la conversion automatiquement.
+
 PERSONNALISATION TACOS - RÈGLE OBLIGATOIRE :
 Quand le client commande un TACOS, tu DOIS extraire ses choix de viandes et sauces :
 
@@ -221,6 +235,12 @@ IMPORTANT TACOS :
 - Tacos Triple = 3 viandes → extrais LES 3 viandes choisies
 - TOUJOURS extraire la/les viande(s) et la sauce mentionnées
 - Utilise UNIQUEMENT les options disponibles dans le menu (voir ci-dessous)
+
+DETECTION AUTOMATIQUE DU TYPE :
+Si tu vois "1 viande"/"une viande" → Utilise "Tacos Simple" dans le nom
+Si tu vois "2 viandes"/"deux viandes" → Utilise "Tacos Double" dans le nom
+Si tu vois "3 viandes"/"trois viandes" → Utilise "Tacos Triple" dans le nom
+Si tu vois "menu" + nombre viandes → Utilise "Menu Tacos [Simple/Double/Triple]"
 
 MENUS - RÈGLE CRITIQUE :
 Si le client commande un MENU (ex: "Menu USA Beef Burger", "Menu Tacos Double"), c'est UN SEUL produit.
