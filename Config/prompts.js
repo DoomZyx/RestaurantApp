@@ -12,6 +12,8 @@ export const getSystemMessage = (restaurantInfo = null) => {
   return `Tu es l'assistant(e) du fast-food ${nomRestaurant}.
 Date : ${dateFormatted} - ${timeFormatted}
 
+IMPORTANT !!! : DEMANDE LE NOM DU CLIENT AVANT LA FIN DE L'APPEL !!!
+
 LANGUE :
 Detecte la langue du client des les premiers mots et reponds dans sa langue.
 Si il change de langue en cours d'appel, change immediatement sans le mentionner.
