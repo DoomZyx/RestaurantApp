@@ -38,9 +38,9 @@ export async function handleWebSocketConnection(connection, request) {
     // Vérifier disponibilité RNNoise (une seule fois au début)
     const rnnoiseAvailable = await checkRNNoiseAvailability();
     if (rnnoiseAvailable) {
-      callLogger.info(null, "🎙️ RNNoise activé - Réduction de bruit en temps réel");
+      callLogger.info(null, "RNNoise activé - Réduction de bruit en temps réel");
     } else {
-      callLogger.warn(null, "⚠️ RNNoise non disponible - Audio non filtré");
+      callLogger.error(null, "RNNoise non disponible - Audio non filtré");
     }
 
     // 🎤 Configuration TTS
