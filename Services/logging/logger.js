@@ -175,6 +175,17 @@ export const callLogger = {
   },
 
   /**
+   * Log de warning générique
+   */
+  warn: (streamSid, message, meta = {}) => {
+    logger.warn(message, {
+      streamSid,
+      ...meta,
+      timestamp: new Date().toISOString(),
+    });
+  },
+
+  /**
    * Logs spécifiques pour ElevenLabs TTS
    */
   elevenLabs: {
