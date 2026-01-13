@@ -1,15 +1,15 @@
-# 📞 HandleHome Backend - Système de Gestion d'Appels Automatisé
+# HandleHome Backend - Système de Gestion d'Appels Automatisé
 
-## 🎯 Vue d'ensemble
+## Vue d'ensemble
 
 Système backend pour la gestion automatisée d'appels téléphoniques avec :
-- ✅ Assistant vocal IA (OpenAI Realtime API)
-- ✅ Transcription automatique (Whisper)
-- ✅ Extraction de données client (GPT-4)
-- ✅ Sauvegarde automatique (MongoDB)
-- ✅ Monitoring avancé (Winston)
+- Assistant vocal IA (OpenAI Realtime API)
+- Transcription automatique (Whisper)
+- Extraction de données client (GPT-4)
+- Sauvegarde automatique (MongoDB)
+- Monitoring avancé (Winston)
 
-## 🚀 Démarrage rapide
+## Démarrage rapide
 
 ### Prérequis
 - Node.js 18+
@@ -55,7 +55,7 @@ pnpm run monitor
 pnpm run test-multiple
 ```
 
-## 📁 Structure du projet
+## Structure du projet
 
 ```
 Backend/
@@ -97,7 +97,7 @@ Traite la transcription complète :
 - Extraction GPT-4
 - Sauvegarde automatique
 
-## 📊 Monitoring
+## Monitoring
 
 ### Logs structurés
 - **Niveaux** : error, warn, info, debug
@@ -109,43 +109,17 @@ Traite la transcription complète :
 - Performance GPT-4
 - Temps de sauvegarde API
 
-## 🧪 Tests
-
-### Tests multiples
-```bash
-pnpm run test-multiple
-```
-Simule 5 appels différents :
-- Site web restaurant
-- Logo startup
-- Formation Excel
-- Gestion réseaux sociaux
-- Automatisation
-
-## 🛡️ Sécurité
+## Sécurité
 
 - Authentification par clé API (`x-api-key`)
 - Validation des paramètres
 - Gestion d'erreurs robuste
 
-## 📈 Optimisations réalisées
-
-### ✅ Code nettoyé
-- Suppression des fichiers de debug
-- Refactorisation en classes
-- Separation of concerns
-
-### ✅ Dépendances optimisées
-- Suppression de `twilio` package (inutile)
-- Suppression de `prism-media`
-- Moins de scripts de test
-
-### ✅ Performance
-- Classes réutilisables
+### Performance
 - Gestion d'erreurs améliorée
 - Logs optimisés
 
-## 🔄 Flux d'appel
+## Flux d'appel
 
 1. **Réception** → Twilio reçoit l'appel
 2. **WebSocket** → Connexion OpenAI Realtime
@@ -155,31 +129,11 @@ Simule 5 appels différents :
 6. **Sauvegarde** → MongoDB stockage
 7. **Logs** → Monitoring complet
 
-## 📞 API Endpoints
 
-### POST `/incoming-call`
-TwiML pour Twilio
-
-### POST `/api/callsdata`
-Sauvegarde données client
-
-### POST `/api/process-call`
-Traitement transcription
-
-### GET `/api/calls`
-Liste des appels
-
-### WebSocket `/media-stream`
-Stream audio temps réel
-
-## 🏆 Résultat
+## Résultat
 
 **Système 100% automatisé :**
 - Aucune saisie manuelle
 - Extraction précise des données
 - Monitoring complet
 - Code maintenable et évolutif
-
----
-
-**Prêt pour la production ! 🚀** 
