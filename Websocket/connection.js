@@ -32,9 +32,6 @@ export async function handleWebSocketConnection(connection, request) {
     let twilioHandler = null;
     let transcriptionHandler = null;
     
-    // ElevenLabs désactivé pour éviter tout coût
-    const useElevenLabs = false;
-    
     // Vérifier disponibilité RNNoise (une seule fois au début)
     const rnnoiseAvailable = await checkRNNoiseAvailability();
     if (rnnoiseAvailable) {
@@ -43,7 +40,7 @@ export async function handleWebSocketConnection(connection, request) {
       callLogger.error(null, "RNNoise non disponible - Audio non filtré");
     }
 
-    // 🎤 Configuration TTS
+
 
     // ==========================================
     // CRÉATION SESSION OPENAI
@@ -51,8 +48,7 @@ export async function handleWebSocketConnection(connection, request) {
     const openAiWs = createOpenAiSession(
       process.env.OPENAI_API_KEY, 
       "ballad",
-      null,
-      { useElevenLabs: useElevenLabs }
+      null
     );
 
     // ==========================================
@@ -71,8 +67,7 @@ export async function handleWebSocketConnection(connection, request) {
             streamSid,
             connection,
             callLogger,
-            openAiWs,
-            useElevenLabs
+            openAiWs
           );
 
           twilioHandler = new TwilioHandler(

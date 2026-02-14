@@ -1,11 +1,9 @@
 /**
- * Configuration des phrases prégénérées pour le cache audio ElevenLabs
- * 
+ * Configuration des phrases prégénérées pour le cache audio
+ *
  * Stratégie :
  * - Prégénérer les phrases STATIQUES (90% du contenu)
  * - Générer en temps réel UNIQUEMENT les parties dynamiques (prix, noms, dates)
- * 
- * Économie : Réduction de ~85-90% des coûts d'API ElevenLabs
  */
 
 export const PHRASES_CACHE = {

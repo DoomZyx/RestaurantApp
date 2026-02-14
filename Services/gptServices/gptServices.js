@@ -2,10 +2,7 @@ import WebSocket from "ws";
 import { getSystemMessage } from "../../Config/prompts.js";
 import { generateEnrichedPrompt } from "./pricingService.js";
 
-export function createOpenAiSession(apiKey, voice = "ballad", instructions, options = {}) {
-  const { useElevenLabs = false } = options;
-  
-  
+export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
   const ws = new WebSocket("wss://api.openai.com/v1/realtime?model=gpt-4o-mini-realtime-preview", {
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -37,7 +34,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions, opti
         instructions: enrichedInstructions,
         modalities: ["text", "audio"],
         temperature: 0.6, // Minimum requis par gpt-4o-mini-realtime-preview
-        max_response_output_tokens: 4096, // Limite pour éviter les réponses trop longues
+        max_response_output_tokens: 512,  // Limite les monologues pour que l'interruption soit prise en compte plus tôt
         input_audio_transcription: {
           model: "whisper-1",
           prompt: "Restaurant fast-food: nuggets, tacos, burgers, sauce Biggy, sauce Algérienne, sauce Samourai, frites, Coca-Cola, Ice Tea, menu simple, menu double, menu triple, crudités, poulet, bœuf, agneau"

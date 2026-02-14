@@ -20,7 +20,6 @@ import pricingRoutes from "./Routes/Pricing/pricing.js";
 import pingRoutes from "./Routes/Ping/ping.js";
 import { supplierOrderPublicRoutes, supplierOrderProtectedRoutes } from "./Routes/SupplierOrders/supplierOrders.js";
 import { AuthService } from "./Business/services/AuthService.js";
-import audioCacheService from "./Services/audioCacheService.js";
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
@@ -44,8 +43,6 @@ await connectDB();
 // Créer l'utilisateur admin par défaut
 await AuthService.createDefaultAdmin();
 
-// Initialiser le cache audio ElevenLabs
-await audioCacheService.initialize();
 
 const fastify = Fastify();
 

@@ -1,5 +1,7 @@
-import { AudioService } from "../services/AudioService.js";
 import { FunctionCallService } from "../services/FunctionCallService.js";
+
+/** Timestamp ISO pour logs barge-in (diagnostic temps réel) */
+const ts = () => new Date().toISOString();
 
 /**
  * Gestionnaire des messages OpenAI
@@ -10,7 +12,7 @@ import { FunctionCallService } from "../services/FunctionCallService.js";
  * - Function calls (disponibilités, rendez-vous)
  */
 export class OpenAIHandler {
-  constructor(streamSid, connection, callLogger, openAiWs, useElevenLabs = false) {
+  constructor(streamSid, connection, callLogger, openAiWs) {
     this.streamSid = streamSid;
     this.connection = connection;
     this.callLogger = callLogger;
@@ -20,11 +22,8 @@ export class OpenAIHandler {
     this.currentResponseId = null;
     /** True après une interruption (barge-in) : on ne renvoie plus l'audio vers Twilio jusqu'à response.done/cancelled */
     this.isInterrupted = false;
-    this.useElevenLabs = useElevenLabs;
     this.currentResponseText = "";
     this.initialGreetingSent = false;
-    this.audioQueue = [];
-    this.isProcessingAudio = false;
   }
 
   /**
@@ -105,13 +104,29 @@ export class OpenAIHandler {
   // ==========================================
 
   /**
-   * Début d'une nouvelle réponse de l'assistant
+   * Début d'une nouvelle réponse de l'assistant.
+   * Si shouldCancel est vrai (speech_started était arrivé avant), on cancel tout de suite.
    */
   handleResponseCreated(data) {
-    this.currentResponseId = data.response?.id;
+    this.currentResponseId = data.response?.id ?? null;
     this.isAssistantSpeaking = true;
-    this.isInterrupted = false;
+    this._audioDeltaLogged = false;
     this.currentResponseText = "";
+    console.log(ts(), "[OPENAI] response.created", this.currentResponseId);
+
+    if (this.shouldCancel && this.currentResponseId && this.openAiWs?.readyState === 1) {
+      console.log(ts(), "[OPENAI] Cancelling response after delayed speech_started", this.currentResponseId);
+      this.openAiWs.send(JSON.stringify({
+        type: "response.cancel",
+        response_id: this.currentResponseId
+      }));
+      this.currentResponseId = null;
+      this.isAssistantSpeaking = false;
+      this.isInterrupted = true;
+      this.shouldCancel = false;
+      return;
+    }
+
     this.callLogger.debug(this.streamSid, "Réponse assistant démarrée", {
       responseId: this.currentResponseId
     });
@@ -127,17 +142,12 @@ export class OpenAIHandler {
       output_text: remainingText ? remainingText.substring(0, 100) + "..." : "Déjà streamé",
     });
 
-    // Si ElevenLabs est activé et qu'il reste du texte non streamé
-    if (this.useElevenLabs && remainingText.length > 0) {
-      this.audioQueue.push(remainingText);
-      this.processAudioQueue();
-      this.transcription += `\nAssistant: ${remainingText}`;
-    }
-
-    // Réinitialiser l'état
+    console.log(ts(), "[OPENAI] response.done", this.currentResponseId);
     this.isAssistantSpeaking = false;
     this.isInterrupted = false;
     this.currentResponseId = null;
+    this.shouldCancel = false;
+    this._audioDeltaLogged = false;
     this.currentResponseText = "";
   }
 
@@ -149,17 +159,15 @@ export class OpenAIHandler {
    * Réception d'audio delta depuis OpenAI
    */
   handleAudioDelta(data) {
-    // Si ElevenLabs est activé, ignorer l'audio d'OpenAI
-    if (this.useElevenLabs) {
-      return;
-    }
-    // Barge-in : ne plus envoyer d'audio vers Twilio après interruption
     if (this.isInterrupted) {
+      console.log(ts(), "[TWILIO] audio suppressed (isInterrupted)");
       return;
     }
-    
-    // Sinon, utiliser l'audio d'OpenAI
     if (data.delta) {
+      if (!this._audioDeltaLogged) {
+        this._audioDeltaLogged = true;
+        console.log(ts(), "[OPENAI] response.audio.delta (streaming)");
+      }
       const audioDelta = {
         event: "media",
         streamSid: this.streamSid,
@@ -168,35 +176,6 @@ export class OpenAIHandler {
         },
       };
       this.connection.send(JSON.stringify(audioDelta));
-    }
-  }
-
-  /**
-   * Traite la queue d'audio de manière séquentielle
-   */
-  async processAudioQueue() {
-    if (this.isProcessingAudio || this.audioQueue.length === 0) {
-      return;
-    }
-    
-    this.isProcessingAudio = true;
-    
-    try {
-      while (this.audioQueue.length > 0) {
-        const text = this.audioQueue.shift();
-        await AudioService.generateAndStreamAudio(
-          text, 
-          this.streamSid, 
-          this.connection, 
-          this.callLogger
-        );
-      }
-    } catch (error) {
-      this.callLogger.error(this.streamSid, error, {
-        context: "audio_queue_processing"
-      });
-    } finally {
-      this.isProcessingAudio = false;
     }
   }
 
@@ -210,25 +189,6 @@ export class OpenAIHandler {
   async handleAudioTranscriptDelta(data) {
     if (data.delta) {
       this.currentResponseText += data.delta;
-      
-      // STREAMING EN TEMPS RÉEL avec ElevenLabs
-      if (this.useElevenLabs) {
-        const lastChar = data.delta.trim().slice(-1);
-        if (['.', '!', '?'].includes(lastChar)) {
-          const sentenceToStream = this.currentResponseText.trim();
-          if (sentenceToStream.length > 0) {
-            if (!this.transcription.includes("\nAssistant:")) {
-              this.transcription += "\nAssistant: ";
-            }
-            this.transcription += sentenceToStream + " ";
-            
-            this.audioQueue.push(sentenceToStream);
-            this.processAudioQueue();
-            
-            this.currentResponseText = "";
-          }
-        }
-      }
     }
   }
 
@@ -274,33 +234,41 @@ export class OpenAIHandler {
   // ==========================================
 
   /**
-   * Barge-in : l'utilisateur commence à parler pendant que l'assistant parle.
-   * On annule la réponse en cours et on vide le buffer audio pour arrêter immédiatement.
+   * Barge-in : l'utilisateur commence à parler.
+   * Ordre critique : isInterrupted = true AVANT cancel/clear pour que les audio.delta
+   * qui arrivent en parallèle ne partent pas vers Twilio.
    */
   handleUserSpeechStarted() {
-    this.callLogger.debug(this.streamSid, "Client commence a parler (barge-in)");
-    if (!this.isAssistantSpeaking || !this.openAiWs || this.openAiWs.readyState !== 1) {
-      return;
-    }
-    this.isInterrupted = true;
-    this.isAssistantSpeaking = false;
-    if (this.currentResponseId) {
+    console.log(ts(), "[VAD] speech_started");
+    if (!this.openAiWs || this.openAiWs.readyState !== 1) return;
+
+    if (this.isAssistantSpeaking && this.currentResponseId) {
+      console.log(ts(), "[OPENAI] Barge-in: cancelling response immediately", this.currentResponseId);
       this.openAiWs.send(JSON.stringify({
         type: "response.cancel",
         response_id: this.currentResponseId
       }));
+      this.currentResponseId = null;
+      this.isAssistantSpeaking = false;
+      this.isInterrupted = true;
+      this.callLogger.debug(this.streamSid, "Client commence a parler (barge-in)");
+      return;
     }
-    this.openAiWs.send(JSON.stringify({ type: "output_audio_buffer.clear" }));
-    this.currentResponseId = null;
+
+    this.shouldCancel = true;
+    console.log(ts(), "[OPENAI] Speech started before response.created, will cancel when response created");
   }
 
   /**
-   * Réponse annulée par le serveur (après notre response.cancel)
+   * Réponse annulée par le serveur (après notre response.cancel).
+   * On ne remet pas isInterrupted = false ici (seul response.done le fait).
    */
   handleResponseCancelled() {
+    console.log(ts(), "[OPENAI] response.cancelled");
     this.isAssistantSpeaking = false;
-    this.isInterrupted = false;
     this.currentResponseId = null;
+    this.shouldCancel = false;
+    this._audioDeltaLogged = false;
     this.callLogger.debug(this.streamSid, "Réponse assistant annulée (barge-in)");
   }
 

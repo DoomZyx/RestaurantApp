@@ -6,6 +6,8 @@ import { getRestaurantInfo } from "../Services/gptServices/pricingService.js";
 // Configuration OpenAI Realtime API
 const OPENAI_REALTIME_URL = "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01";
 
+const ts = () => new Date().toISOString();
+
 /**
  * Gère la connexion WebSocket pour un appel fournisseur
  * @param {WebSocket} twilioWs - WebSocket de Twilio
@@ -37,6 +39,8 @@ export async function handleSupplierCallConnection(twilioWs, orderId) {
     let currentResponseId = null;
     let isAssistantSpeaking = false;
     let isInterrupted = false;
+    let shouldCancel = false;
+    let audioDeltaLogged = false;
 
     // Connexion à OpenAI Realtime API
     const openaiWs = new WebSocket(OPENAI_REALTIME_URL, {
@@ -88,7 +92,9 @@ IMPORTANT :
             type: "server_vad",
             threshold: 0.5,
             prefix_padding_ms: 300,
-            silence_duration_ms: 500
+            silence_duration_ms: 500,
+            create_response: true,
+            interrupt_response: true
           },
           temperature: 0.7
         }
@@ -113,34 +119,66 @@ IMPORTANT :
           case "response.created":
             currentResponseId = message.response?.id ?? null;
             isAssistantSpeaking = true;
-            isInterrupted = false;
+            audioDeltaLogged = false;
+            console.log(ts(), "[OPENAI] response.created", currentResponseId);
+
+            if (shouldCancel && currentResponseId && openaiWs.readyState === WebSocket.OPEN) {
+              console.log(ts(), "[OPENAI] Cancelling response after delayed speech_started", currentResponseId);
+              openaiWs.send(JSON.stringify({
+                type: "response.cancel",
+                response_id: currentResponseId
+              }));
+              currentResponseId = null;
+              isAssistantSpeaking = false;
+              isInterrupted = true;
+              shouldCancel = false;
+            }
             break;
 
           case "response.done":
-          case "response.cancelled":
+            console.log(ts(), "[OPENAI] response.done", currentResponseId);
             isAssistantSpeaking = false;
             isInterrupted = false;
             currentResponseId = null;
+            shouldCancel = false;
+            audioDeltaLogged = false;
+            break;
+
+          case "response.cancelled":
+            console.log(ts(), "[OPENAI] response.cancelled");
+            isAssistantSpeaking = false;
+            currentResponseId = null;
+            shouldCancel = false;
+            audioDeltaLogged = false;
             break;
 
           case "input_audio_buffer.speech_started":
-            if (isAssistantSpeaking && openaiWs.readyState === WebSocket.OPEN) {
-              isInterrupted = true;
-              isAssistantSpeaking = false;
-              if (currentResponseId) {
-                openaiWs.send(JSON.stringify({
-                  type: "response.cancel",
-                  response_id: currentResponseId
-                }));
-              }
-              openaiWs.send(JSON.stringify({ type: "output_audio_buffer.clear" }));
+            console.log(ts(), "[VAD] speech_started");
+            if (isAssistantSpeaking && currentResponseId && openaiWs.readyState === WebSocket.OPEN) {
+              console.log(ts(), "[OPENAI] Barge-in: cancelling response immediately", currentResponseId);
+              openaiWs.send(JSON.stringify({
+                type: "response.cancel",
+                response_id: currentResponseId
+              }));
               currentResponseId = null;
+              isAssistantSpeaking = false;
+              isInterrupted = true;
+            } else {
+              shouldCancel = true;
+              console.log(ts(), "[OPENAI] Speech started before response.created, will cancel when response created");
             }
             break;
 
           case "response.audio.delta":
-            if (isInterrupted) break;
+            if (isInterrupted) {
+              console.log(ts(), "[TWILIO] audio suppressed (isInterrupted)");
+              break;
+            }
             if (message.delta && twilioWs.readyState === WebSocket.OPEN) {
+              if (!audioDeltaLogged) {
+                audioDeltaLogged = true;
+                console.log(ts(), "[OPENAI] response.audio.delta (streaming)");
+              }
               const audioData = {
                 event: "media",
                 streamSid: twilioWs.streamSid,
@@ -166,9 +204,6 @@ IMPORTANT :
                 });
               }
             }
-            break;
-
-          case "input_audio_buffer.speech_started":
             break;
 
           case "input_audio_buffer.speech_stopped":

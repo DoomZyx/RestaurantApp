@@ -83,13 +83,6 @@ const transports = [
     format: generalLogFormat,
   }),
 
-  // Fichier pour ElevenLabs uniquement
-  new winston.transports.File({
-    filename: path.join(process.cwd(), "logs", "elevenlabs.log"),
-    level: "debug",
-    format: generalLogFormat,
-  }),
-
   // Fichier pour OpenAI uniquement
   new winston.transports.File({
     filename: path.join(process.cwd(), "logs", "openai.log"),
@@ -112,23 +105,6 @@ const logger = winston.createLogger({
 // ========================================
 // LOGGERS SPÉCIALISÉS PAR SERVICE
 // ========================================
-
-/**
- * Logger spécifique pour ElevenLabs
- * Écrit dans elevenlabs.log
- */
-const elevenLabsLogger = winston.createLogger({
-  level: "debug",
-  format: generalLogFormat,
-  transports: [
-    new winston.transports.Console({ format: consoleFormat }),
-    new winston.transports.File({
-      filename: path.join(process.cwd(), "logs", "elevenlabs.log"),
-      format: generalLogFormat,
-    }),
-  ],
-  exitOnError: false,
-});
 
 /**
  * Logger spécifique pour OpenAI
@@ -183,39 +159,6 @@ export const callLogger = {
       ...meta,
       timestamp: new Date().toISOString(),
     });
-  },
-
-  /**
-   * Logs spécifiques pour ElevenLabs TTS
-   */
-  elevenLabs: {
-    info: (streamSid, message, meta = {}) => {
-      elevenLabsLogger.info(message, {
-        streamSid,
-        service: "elevenlabs",
-        ...meta,
-        timestamp: new Date().toISOString(),
-      });
-    },
-    debug: (streamSid, message, meta = {}) => {
-      elevenLabsLogger.debug(message, {
-        streamSid,
-        service: "elevenlabs",
-        ...meta,
-        timestamp: new Date().toISOString(),
-      });
-    },
-    error: (streamSid, error, context = {}) => {
-      elevenLabsLogger.error("Erreur ElevenLabs", {
-        streamSid,
-        service: "elevenlabs",
-        error: error.message,
-        stack: error.stack,
-        context,
-        event: "elevenlabs_error",
-        timestamp: new Date().toISOString(),
-      });
-    },
   },
 
   /**
