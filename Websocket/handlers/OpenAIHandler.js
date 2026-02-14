@@ -18,6 +18,8 @@ export class OpenAIHandler {
     this.transcription = `Appel démarré - StreamSid: ${streamSid}\n`;
     this.isAssistantSpeaking = false;
     this.currentResponseId = null;
+    /** True après une interruption (barge-in) : on ne renvoie plus l'audio vers Twilio jusqu'à response.done/cancelled */
+    this.isInterrupted = false;
     this.useElevenLabs = useElevenLabs;
     this.currentResponseText = "";
     this.initialGreetingSent = false;
@@ -42,6 +44,9 @@ export class OpenAIHandler {
         break;
       case "response.done":
         this.handleResponseCompleted(data);
+        break;
+      case "response.cancelled":
+        this.handleResponseCancelled();
         break;
       case "response.audio_transcript.delta":
         this.handleAudioTranscriptDelta(data);
@@ -105,6 +110,7 @@ export class OpenAIHandler {
   handleResponseCreated(data) {
     this.currentResponseId = data.response?.id;
     this.isAssistantSpeaking = true;
+    this.isInterrupted = false;
     this.currentResponseText = "";
     this.callLogger.debug(this.streamSid, "Réponse assistant démarrée", {
       responseId: this.currentResponseId
@@ -130,6 +136,7 @@ export class OpenAIHandler {
 
     // Réinitialiser l'état
     this.isAssistantSpeaking = false;
+    this.isInterrupted = false;
     this.currentResponseId = null;
     this.currentResponseText = "";
   }
@@ -144,6 +151,10 @@ export class OpenAIHandler {
   handleAudioDelta(data) {
     // Si ElevenLabs est activé, ignorer l'audio d'OpenAI
     if (this.useElevenLabs) {
+      return;
+    }
+    // Barge-in : ne plus envoyer d'audio vers Twilio après interruption
+    if (this.isInterrupted) {
       return;
     }
     
@@ -263,12 +274,34 @@ export class OpenAIHandler {
   // ==========================================
 
   /**
-   * L'utilisateur commence à parler
+   * Barge-in : l'utilisateur commence à parler pendant que l'assistant parle.
+   * On annule la réponse en cours et on vide le buffer audio pour arrêter immédiatement.
    */
   handleUserSpeechStarted() {
-    // Cancel response désactivé - peut interférer avec la compréhension du GPT
-    // Le GPT gère naturellement les interruptions via VAD (Voice Activity Detection)
-    this.callLogger.debug(this.streamSid, "Client commence a parler");
+    this.callLogger.debug(this.streamSid, "Client commence a parler (barge-in)");
+    if (!this.isAssistantSpeaking || !this.openAiWs || this.openAiWs.readyState !== 1) {
+      return;
+    }
+    this.isInterrupted = true;
+    this.isAssistantSpeaking = false;
+    if (this.currentResponseId) {
+      this.openAiWs.send(JSON.stringify({
+        type: "response.cancel",
+        response_id: this.currentResponseId
+      }));
+    }
+    this.openAiWs.send(JSON.stringify({ type: "output_audio_buffer.clear" }));
+    this.currentResponseId = null;
+  }
+
+  /**
+   * Réponse annulée par le serveur (après notre response.cancel)
+   */
+  handleResponseCancelled() {
+    this.isAssistantSpeaking = false;
+    this.isInterrupted = false;
+    this.currentResponseId = null;
+    this.callLogger.debug(this.streamSid, "Réponse assistant annulée (barge-in)");
   }
 
   // ==========================================

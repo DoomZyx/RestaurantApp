@@ -33,6 +33,10 @@ export async function handleSupplierCallConnection(twilioWs, orderId) {
     // Variables pour stocker la transcription
     let fullTranscription = "";
     let conversationStarted = false;
+    // Barge-in : état de la réponse en cours pour interruption
+    let currentResponseId = null;
+    let isAssistantSpeaking = false;
+    let isInterrupted = false;
 
     // Connexion à OpenAI Realtime API
     const openaiWs = new WebSocket(OPENAI_REALTIME_URL, {
@@ -106,8 +110,36 @@ IMPORTANT :
             conversationStarted = true;
             break;
 
+          case "response.created":
+            currentResponseId = message.response?.id ?? null;
+            isAssistantSpeaking = true;
+            isInterrupted = false;
+            break;
+
+          case "response.done":
+          case "response.cancelled":
+            isAssistantSpeaking = false;
+            isInterrupted = false;
+            currentResponseId = null;
+            break;
+
+          case "input_audio_buffer.speech_started":
+            if (isAssistantSpeaking && openaiWs.readyState === WebSocket.OPEN) {
+              isInterrupted = true;
+              isAssistantSpeaking = false;
+              if (currentResponseId) {
+                openaiWs.send(JSON.stringify({
+                  type: "response.cancel",
+                  response_id: currentResponseId
+                }));
+              }
+              openaiWs.send(JSON.stringify({ type: "output_audio_buffer.clear" }));
+              currentResponseId = null;
+            }
+            break;
+
           case "response.audio.delta":
-            // Transférer l'audio à Twilio
+            if (isInterrupted) break;
             if (message.delta && twilioWs.readyState === WebSocket.OPEN) {
               const audioData = {
                 event: "media",
