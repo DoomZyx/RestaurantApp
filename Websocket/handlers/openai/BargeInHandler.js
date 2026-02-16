@@ -216,7 +216,7 @@ export class BargeInHandler {
   /**
    * L'audio de l'utilisateur a été commité (committed).
    * L'utilisateur a définitivement fini de parler, on peut réinitialiser shouldCancel.
-   * CRITIQUE : On réinitialise aussi isInterrupted pour permettre à la nouvelle réponse de jouer.
+   * CRITIQUE : On réinitialise aussi isInterrupted pour permettre à la nouvelle réponse de GPT de jouer.
    */
   handleUserSpeechCommitted() {
     this.state.isUserSpeaking = false;

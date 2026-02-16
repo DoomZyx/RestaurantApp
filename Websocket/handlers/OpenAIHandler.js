@@ -125,6 +125,28 @@ export class OpenAIHandler {
   }
 
   /**
+   * Met à jour le streamSid (appelé quand l'événement "start" arrive de Twilio)
+   * @param {string} newStreamSid - Nouveau streamSid
+   */
+  setStreamSid(newStreamSid) {
+    this.streamSid = newStreamSid;
+    
+    // Mettre à jour le streamSid dans tous les handlers
+    this.sessionHandler.streamSid = newStreamSid;
+    this.responseHandler.streamSid = newStreamSid;
+    this.audioHandler.streamSid = newStreamSid;
+    this.transcriptionHandler.streamSid = newStreamSid;
+    this.bargeInHandler.streamSid = newStreamSid;
+    this.functionCallHandler.streamSid = newStreamSid;
+    this.errorHandler.streamSid = newStreamSid;
+    
+    // Mettre à jour la transcription dans l'état
+    if (this.state.transcription.startsWith("Appel démarré - StreamSid: null")) {
+      this.state.transcription = `Appel démarré - StreamSid: ${newStreamSid}\n`;
+    }
+  }
+
+  /**
    * Récupère la transcription complète
    * @returns {string} Transcription de l'appel
    */

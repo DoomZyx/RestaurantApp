@@ -26,7 +26,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
           threshold: 0.35,              // Plus sensible = détection parole plus rapide (0.5 = par défaut, risque faux positifs si trop bas)
           prefix_padding_ms: 200,       // Réduit pour latence barge-in
           silence_duration_ms: 600,     // Détection fin de tour plus réactive
-          create_response: false,
+          create_response: true,        // CRITIQUE : Génère automatiquement une réponse après que l'utilisateur ait fini de parler
           interrupt_response: true     // Permet d'interrompre la réponse en cours quand le client parle
         },
         input_audio_format: "g711_ulaw",
