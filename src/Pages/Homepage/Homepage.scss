@@ -40,8 +40,8 @@
 
     // Section du tableau de bord
     .dashboard-section {
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
       overflow: hidden;
@@ -56,8 +56,8 @@
 
       // Titre de section
       .section-title {
-        background: rgba(255, 255, 255, 0.5);
-        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
         padding: 1.25rem 1.75rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 
@@ -65,7 +65,8 @@
           margin: 0;
           font-size: 1.125rem;
           font-weight: 700;
-          color: var(--color-text-primary);
+          color: white;
+         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           display: flex;
           align-items: center;
           gap: 0.625rem;
@@ -158,6 +159,7 @@
 
               .action-text .action-title {
                 color: white;
+         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               }
             }
           }
@@ -172,6 +174,7 @@
             background: var(--color-accent);
             border-radius: var(--radius-lg);
             color: white;
+         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             flex-shrink: 0;
             transition: all var(--transition-fast);
             box-shadow: var(--shadow-sm);
@@ -185,13 +188,15 @@
             .action-title {
               font-size: 0.9375rem;
               font-weight: 700;
-              color: var(--color-text-primary);
+              color: white;
+         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               transition: color var(--transition-fast);
             }
 
             .action-desc {
               font-size: 0.8125rem;
-              color: var(--color-text-tertiary);
+              color: white;
+         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               line-height: 1.4;
             }
           }

@@ -1,10 +1,16 @@
 .app-layout {
   display: flex;
   min-height: 100vh;
-  background: linear-gradient(to left, rgb(92, 51, 158), rgb(134, 96, 173), rgb(171, 141, 187), rgb(207, 188, 200), rgb(242, 237, 212));
+  position: relative;
 
   .app-wallpaper {
-    display: none; // Retirer l'image de fond pour un style épuré
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
   }
 
   .main-content {

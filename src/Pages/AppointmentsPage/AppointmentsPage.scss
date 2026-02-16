@@ -5,8 +5,8 @@
   .service-tabs {
     margin-bottom: 2rem;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.397);
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
@@ -20,15 +20,16 @@
       margin: 0;
       font-size: 1.8rem;
       font-weight: 800;
-      color: var(--color-text-primary);
+      color: white;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       letter-spacing: -0.025em;
     }
 
     .tabs-container {
       display: flex;
       gap: 0.75rem;
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border-radius: 14px;
       padding: 0.5rem;
       border: 1px solid rgba(255, 255, 255, 0.3);
@@ -38,7 +39,8 @@
         background: transparent;
         border: none;
         border-radius: 10px;
-        color: var(--color-text-secondary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 1rem;
         font-weight: 700;
         cursor: pointer;
@@ -47,12 +49,14 @@
 
         &:hover {
           background: rgba(255, 255, 255, 0.3);
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
 
         &.active {
           background: var(--color-accent);
           color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
       }
@@ -62,15 +66,16 @@
   .quick-filters {
     margin-bottom: 2rem;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.397);
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
 
     h4 {
       margin: 0 0 1rem 0;
-      color: var(--color-text-primary);
+      color: white;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       font-size: 1.2rem;
       font-weight: 600;
     }
@@ -83,10 +88,11 @@
       .quick-filter-btn {
         padding: 0.75rem 1.5rem;
         border: 2px solid rgba(255, 255, 255, 0.3);
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
         border-radius: 12px;
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -102,6 +108,7 @@
           background: var(--color-primary);
           border-color: var(--color-primary);
           color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           box-shadow: 0 4px 16px rgba(var(--color-primary-rgb), 0.3);
         }
 
@@ -125,8 +132,8 @@
     align-items: flex-start;
     margin-bottom: 2rem;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.397);
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
@@ -134,7 +141,8 @@
     .header-left {
       h1 {
         margin: 0 0 0.5rem 0;
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 2rem;
         font-weight: 800;
         letter-spacing: -0.025em;
@@ -142,7 +150,8 @@
 
       p {
         margin: 0;
-        color: var(--color-text-secondary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 1.1rem;
         font-weight: 500;
       }
@@ -155,8 +164,8 @@
 
         .view-toggle {
           display: flex;
-          background: rgba(255, 255, 255, 0.35);
-          backdrop-filter: blur(10px);
+          background: rgba(255, 255, 255, 0.397);
+          backdrop-filter: blur(2px);
           border-radius: 14px;
           overflow: hidden;
           border: 1px solid rgba(255, 255, 255, 0.3);
@@ -165,7 +174,8 @@
             padding: 0.625rem 1.25rem;
             background: transparent;
             border: none;
-            color: var(--color-text-secondary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 0.9rem;
             cursor: pointer;
             transition: all var(--transition-fast);
@@ -178,12 +188,14 @@
 
             &:hover {
               background: rgba(255, 255, 255, 0.3);
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             }
 
             &.active {
               background: var(--color-accent);
               color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-weight: 700;
             }
           }
@@ -192,6 +204,7 @@
         .btn-primary {
           background: var(--color-accent);
           color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           border: none;
           padding: 12px 24px;
           border-radius: 16px;
@@ -210,8 +223,8 @@
   }
 
   .filters-section {
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.397);
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
     padding: 1.5rem;
@@ -233,7 +246,8 @@
 
         label {
           font-weight: 700;
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 0.9rem;
         }
 
@@ -242,9 +256,10 @@
           padding: 10px 12px;
           border: 1px solid rgba(0, 0, 0, 0.08);
           border-radius: 14px;
-          background: rgba(255, 255, 255, 0.35);
-          backdrop-filter: blur(10px);
-          color: var(--color-text-primary);
+          background: rgba(255, 255, 255, 0.397);
+          backdrop-filter: blur(2px);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 0.9rem;
           transition: all var(--transition-fast);
 
@@ -256,12 +271,14 @@
           }
 
           &::placeholder {
-            color: var(--color-text-tertiary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           }
 
           option {
             background: white;
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           }
         }
       }
@@ -269,8 +286,8 @@
       .service-buttons {
         display: flex;
         gap: 0.75rem;
-        background: rgba(255, 255, 255, 0.35);
-        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
         border-radius: 14px;
         padding: 0.5rem;
         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -281,7 +298,8 @@
           background: transparent;
           border: none;
           border-radius: 10px;
-          color: var(--color-text-secondary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 1rem;
           font-weight: 700;
           cursor: pointer;
@@ -290,12 +308,14 @@
 
           &:hover {
             background: rgba(255, 255, 255, 0.3);
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           }
 
           &.active {
             background: var(--color-accent);
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
           }
         }
@@ -350,8 +370,8 @@
     .loading-state {
       text-align: center;
       padding: 4rem 2rem;
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
@@ -367,7 +387,8 @@
       }
 
       p {
-        color: var(--color-text-secondary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 1.1rem;
         font-weight: 600;
       }
@@ -376,8 +397,8 @@
     .empty-state {
       text-align: center;
       padding: 4rem 2rem;
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
@@ -385,17 +406,20 @@
       .empty-icon {
         font-size: 4rem;
         margin-bottom: 1rem;
-        color: var(--color-text-tertiary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       }
 
       h3 {
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         margin-bottom: 0.5rem;
         font-weight: 700;
       }
 
       p {
-        color: var(--color-text-secondary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         margin-bottom: 2rem;
         font-weight: 500;
       }
@@ -403,6 +427,7 @@
       .btn-primary {
         background: var(--color-accent);
         color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         border: none;
         padding: 12px 24px;
         border-radius: 16px;
@@ -429,13 +454,14 @@
         gap: 1rem;
         margin-bottom: 1.5rem;
         padding: 1.25rem 1.75rem;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
         border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 20px;
         font-size: 1.3rem;
         font-weight: 700;
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
         transition: all 0.3s ease;
 
@@ -447,6 +473,7 @@
           margin-left: auto;
           background: var(--color-accent);
           color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           padding: 0.4rem 1rem;
           border-radius: 12px;
           font-size: 0.95rem;
@@ -505,11 +532,12 @@
       .no-data-zone {
         text-align: center;
         padding: 3rem 2rem;
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(15px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
         border: 1px dashed rgba(0, 0, 0, 0.1);
         border-radius: 20px;
-        color: var(--color-text-secondary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 1rem;
         font-weight: 500;
       }
@@ -522,8 +550,8 @@
       margin-bottom: 2rem;
 
       .appointment-card {
-        background: rgba(255, 255, 255, 0.35);
-        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
         border-radius: 24px;
         border: 1px solid rgba(255, 255, 255, 0.3);
         overflow: hidden;
@@ -538,8 +566,8 @@
 
         .card-header {
           padding: 1rem;
-          background: rgba(255, 255, 255, 0.5);
-          backdrop-filter: blur(10px);
+          background: rgba(255, 255, 255, 0.397);
+          backdrop-filter: blur(2px);
           border-bottom: 1px solid rgba(0, 0, 0, 0.06);
           display: flex;
           justify-content: space-between;
@@ -549,13 +577,15 @@
             .date {
               display: block;
               font-weight: 700;
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               text-transform: capitalize;
             }
 
             .time {
               font-size: 0.9rem;
-              color: var(--color-text-secondary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-weight: 600;
             }
           }
@@ -580,14 +610,16 @@
 
             h3 {
               margin: 0 0 0.5rem 0;
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-size: 1.2rem;
               font-weight: 700;
             }
 
             p {
               margin: 0.25rem 0;
-              color: var(--color-text-secondary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-size: 0.9rem;
               font-weight: 500;
             }
@@ -602,20 +634,23 @@
 
               .label {
                 font-weight: 600;
-                color: var(--color-text-secondary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.9rem;
                 min-width: 80px;
               }
 
               span {
-                color: var(--color-text-primary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-weight: 700;
                 text-align: right;
                 flex: 1;
               }
 
               .description {
-                color: var(--color-text-secondary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.9rem;
                 text-align: right;
                 max-width: 200px;
@@ -641,7 +676,8 @@
 
             h3 {
               margin: 0;
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-size: 1.3rem;
               font-weight: 700;
             }
@@ -665,14 +701,16 @@
               .label {
                 display: block;
                 font-weight: 600;
-                color: var(--color-text-secondary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.9rem;
                 margin-bottom: 0.5rem;
               }
 
               .description-text {
                 margin: 0;
-                color: var(--color-text-primary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 1rem;
                 font-weight: 600;
                 line-height: 1.5;
@@ -690,7 +728,8 @@
 
               .label {
                 font-weight: 600;
-                color: var(--color-text-secondary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.9rem;
               }
 
@@ -706,8 +745,8 @@
 
         .card-actions {
           padding: 1rem;
-          background: rgba(255, 255, 255, 0.5);
-          backdrop-filter: blur(10px);
+background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
           border-top: 1px solid rgba(0, 0, 0, 0.06);
           display: flex;
           gap: 0.625rem;
@@ -723,9 +762,10 @@
             font-size: 0.9rem;
 
             &.btn-details {
-              background: rgba(255, 255, 255, 0.35);
-              backdrop-filter: blur(10px);
-              color: var(--color-text-primary);
+background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
 
               &:hover {
@@ -738,6 +778,7 @@
             &.btn-start {
               background: var(--color-success);
               color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               box-shadow: 0 4px 12px rgba(63, 185, 80, 0.3);
 
               &:hover {
@@ -750,6 +791,7 @@
             &.btn-complete {
               background: var(--color-accent);
               color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 
               &:hover {
@@ -763,8 +805,8 @@
       }
 
       .appointment-card-compact {
-        background: rgba(255, 255, 255, 0.35);
-        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
         border-radius: 16px;
         border: 1px solid rgba(255, 255, 255, 0.3);
         padding: 1rem;
@@ -790,7 +832,8 @@
           .client-name-compact {
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             margin-bottom: 0.5rem;
           }
 
@@ -799,18 +842,21 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.9rem;
-            color: var(--color-text-secondary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-weight: 500;
             margin-bottom: 0.5rem;
 
             .time-label {
               font-weight: 600;
-              color: black;
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             }
 
             .time-value {
               background: var(--color-accent);
               color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               padding: 0.25rem 0.75rem;
               border-radius: 8px;
               font-weight: 700;
@@ -820,7 +866,8 @@
 
           .order-info {
             font-size: 0.9rem;
-            color: var(--color-text-secondary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-weight: 500;
           }
         }
@@ -860,6 +907,7 @@
             &.btn-start {
               background: var(--color-success);
               color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 
               &:hover {
@@ -872,6 +920,7 @@
             &.btn-complete {
               background: var(--color-accent);
               color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 
               &:hover {
@@ -912,18 +961,19 @@
       align-items: center;
       gap: 1rem;
       padding: 2rem;
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
 
       button {
         padding: 10px 20px;
-        background: rgba(255, 255, 255, 0.35);
-        backdrop-filter: blur(10px);
+background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
         border: 1px solid rgba(255, 255, 255, 0.3);
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         border-radius: 12px;
         cursor: pointer;
         font-weight: 700;
@@ -943,7 +993,8 @@
       }
 
       span {
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-weight: 600;
       }
     }
@@ -1004,8 +1055,8 @@
   padding: 2rem;
 
     .modal-content {
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
       max-width: 800px;
@@ -1025,7 +1076,8 @@
 
         h2 {
           margin: 0;
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 1.5rem;
           font-weight: 800;
           letter-spacing: -0.025em;
@@ -1035,7 +1087,8 @@
           background: none;
           border: none;
           font-size: 1.5rem;
-          color: var(--color-text-secondary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           cursor: pointer;
           padding: 0.5rem;
           border-radius: 12px;
@@ -1072,33 +1125,36 @@
             display: flex;
             justify-content: space-between;
             padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.397);
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 12px;
 
             label {
               font-weight: 700;
-              color: var(--color-text-secondary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             }
 
             span {
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-weight: 700;
             }
           }
           }
 
           .client-details {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.397);
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 1.5rem;
             border-radius: 16px;
 
             p {
               margin: 0.5rem 0;
-              color: var(--color-text-secondary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-weight: 500;
 
               strong {
@@ -1111,12 +1167,13 @@
 
           .description,
           .notes {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.397);
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 1rem;
             border-radius: 14px;
-            color: var(--color-text-secondary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             line-height: 1.6;
             margin: 0;
             font-weight: 500;
@@ -1126,7 +1183,8 @@
           .commandes-list {
             h4 {
               margin: 0 0 1rem 0;
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-size: 1rem;
               font-weight: 700;
             }
@@ -1140,8 +1198,8 @@
               gap: 0.75rem;
 
               .commande-item {
-                background: rgba(255, 255, 255, 0.5);
-                backdrop-filter: blur(10px);
+background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
                 border: 1px solid rgba(255, 255, 255, 0.4);
                 padding: 1rem;
                 border-radius: 12px;
@@ -1162,13 +1220,15 @@
 
                   .item-name {
                     font-weight: 700;
-                    color: var(--color-text-primary);
+                    color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                     font-size: 1rem;
                   }
 
                   .item-quantity {
                     background: var(--color-accent);
                     color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                     padding: 0.25rem 0.75rem;
                     border-radius: 8px;
                     font-weight: 600;
@@ -1195,7 +1255,8 @@
 
                 .item-supplements {
                   display: block;
-                  color: var(--color-text-secondary);
+                  color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                   font-size: 0.85rem;
                   font-style: italic;
                   margin-top: 0.5rem;
@@ -1213,7 +1274,8 @@
               align-items: center;
 
               strong {
-                color: var(--color-text-primary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 1.1rem;
               }
 
@@ -1226,7 +1288,8 @@
           }
 
           .no-items {
-            color: var(--color-text-tertiary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-style: italic;
             padding: 1rem;
             text-align: center;
@@ -1239,18 +1302,20 @@
 
             h4 {
               margin: 0 0 0.75rem 0;
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-size: 1rem;
               font-weight: 700;
             }
 
             p {
-              background: rgba(255, 255, 255, 0.35);
-              backdrop-filter: blur(20px);
+              background: rgba(255, 255, 255, 0.397);
+              backdrop-filter: blur(2px);
               border: 1px solid rgba(255, 255, 255, 0.3);
               padding: 1rem;
               border-radius: 12px;
-              color: var(--color-text-secondary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               line-height: 1.6;
               margin: 0;
               font-weight: 500;
@@ -1296,8 +1361,8 @@
       .modal-footer {
         padding: 1.5rem;
         border-top: 1px solid rgba(0, 0, 0, 0.06);
-        background: rgba(255, 255, 255, 0.35);
-        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
         border: 1px solid rgba(255, 255, 255, 0.3);
         display: flex;
         justify-content: space-between;
@@ -1324,6 +1389,7 @@
           &.btn-start {
             background: var(--color-success);
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 12px rgba(63, 185, 80, 0.3);
 
             &:hover {
@@ -1336,6 +1402,7 @@
           &.btn-complete {
             background: var(--color-accent);
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 
             &:hover {
@@ -1348,6 +1415,7 @@
           &.btn-cancel {
             background: var(--color-danger);
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 
             &:hover {
@@ -1360,6 +1428,7 @@
           &.btn-edit {
             background: var(--color-warning);
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 
             &:hover {
@@ -1372,6 +1441,7 @@
           &.btn-delete {
             background: var(--color-danger);
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 
             &:hover {
@@ -1382,10 +1452,11 @@
           }
 
           &.btn-secondary {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.397);
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
 
             &:hover {
@@ -1425,8 +1496,8 @@
   padding: 2rem;
 
   .product-selection-modal {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.397);
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
     padding: 2rem;
@@ -1448,7 +1519,8 @@
         margin: 0;
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       }
 
       .close-modal-btn {
@@ -1498,7 +1570,8 @@
         .category-title {
           font-size: 1.2rem;
           font-weight: 700;
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           margin-bottom: 1rem;
           padding-bottom: 0.5rem;
           border-bottom: 2px solid rgba(0, 0, 0, 0.1);
@@ -1528,7 +1601,8 @@
 
             .card-name {
               font-weight: 600;
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-size: 0.95rem;
             }
 
@@ -1545,7 +1619,8 @@
     .no-results {
       text-align: center;
       padding: 3rem 1rem;
-      color: var(--color-text-secondary);
+      color: white;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       font-size: 1.1rem;
     }
   }
@@ -1702,7 +1777,8 @@
     .form-section {
           h3 {
             margin: 0 0 1rem 0;
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 1.1rem;
             font-weight: 700;
             padding-bottom: 0.5rem;
@@ -1726,7 +1802,8 @@
 
         label {
           font-weight: 700;
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 0.9rem;
         }
 
@@ -1736,9 +1813,10 @@
             padding: 12px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(20px);
-            color: var(--color-text-primary);
+            background: rgba(255, 255, 255, 0.397);
+            backdrop-filter: blur(2px);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 0.95rem;
             transition: all var(--transition-fast);
 
@@ -1750,12 +1828,14 @@
             }
 
             &::placeholder {
-              color: var(--color-text-tertiary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             }
 
             option {
               background: white;
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             }
           }
 
@@ -1784,6 +1864,7 @@
         .btn-check-availability {
           background: linear-gradient(135deg, #3b82f6, #2563eb);
           color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           border: none;
           padding: 8px 16px;
           border-radius: 6px;
@@ -1851,7 +1932,8 @@
 
       label {
         font-weight: 600;
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 0.9rem;
       }
 
@@ -1861,9 +1943,10 @@
         padding: 12px;
         border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 12px;
-        background: rgba(255, 255, 255, 0.35);
-        backdrop-filter: blur(20px);
-        color: var(--color-text-primary);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 0.95rem;
         transition: all 0.3s ease;
 
@@ -1875,7 +1958,8 @@
         }
 
         &::placeholder {
-          color: var(--color-text-secondary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           opacity: 0.7;
         }
 
@@ -1886,7 +1970,8 @@
 
         option {
           background: rgba(255, 255, 255, 0.95);
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
       }
 
@@ -1963,13 +2048,15 @@
           }
 
           .product-category {
-            color: var(--color-text-secondary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 0.85rem;
             font-weight: 600;
           }
 
           .product-name {
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-weight: 700;
             font-size: 1rem;
           }
@@ -1982,7 +2069,8 @@
           }
 
           .product-placeholder {
-            color: var(--color-text-tertiary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 1rem;
           }
         }
@@ -1994,8 +2082,8 @@
         flex-direction: column;
         gap: 12px;
         padding: 15px;
-        background: rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
         border-radius: 12px;
         border: 1px solid rgba(255, 255, 255, 0.3);
       }
@@ -2028,7 +2116,8 @@
           .option-label {
             display: block;
             font-weight: 600;
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             margin-bottom: 8px;
             font-size: 0.95rem;
 
@@ -2054,7 +2143,8 @@
               cursor: pointer;
               transition: all 0.2s;
               font-size: 0.9rem;
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-weight: 500;
 
               input[type="checkbox"],
@@ -2072,6 +2162,7 @@
               input:checked + & {
                 background: var(--color-accent);
                 color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 border-color: var(--color-accent);
               }
             }
@@ -2116,9 +2207,10 @@
         }
 
         .btn-secondary {
-          background: rgba(255, 255, 255, 0.35);
-          backdrop-filter: blur(20px);
-          color: var(--color-text-primary);
+          background: rgba(255, 255, 255, 0.397);
+          backdrop-filter: blur(2px);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           border: 1px solid rgba(255, 255, 255, 0.3);
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
@@ -2133,6 +2225,7 @@
         .btn-primary {
           background: var(--color-accent);
           color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           border: 1px solid transparent;
           box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 
@@ -2160,14 +2253,16 @@
       .appointment-info {
           h3 {
             margin: 0 0 0.5rem 0;
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 1.3rem;
             font-weight: 800;
             letter-spacing: -0.025em;
           }
 
           .time-info {
-            color: var(--color-text-secondary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 1rem;
             margin: 0;
             font-weight: 600;
@@ -2187,7 +2282,8 @@
 
           h4 {
             margin: 0 0 1rem 0;
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 1.1rem;
             font-weight: 700;
             padding-bottom: 0.5rem;
@@ -2195,8 +2291,8 @@
           }
 
           .client-details {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.397);
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 1rem;
             border-radius: 14px;
@@ -2204,13 +2300,15 @@
             .client-name {
               margin: 0 0 0.5rem 0;
               font-size: 1.1rem;
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-weight: 700;
             }
 
             .client-contact {
               margin: 0.25rem 0;
-              color: var(--color-text-secondary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-size: 0.95rem;
               font-weight: 600;
             }
@@ -2222,8 +2320,8 @@
             gap: 1rem;
 
             .info-item {
-              background: rgba(255, 255, 255, 0.35);
-              backdrop-filter: blur(20px);
+              background: rgba(255, 255, 255, 0.397);
+              backdrop-filter: blur(2px);
               border: 1px solid rgba(255, 255, 255, 0.3);
               padding: 1rem;
               border-radius: 14px;
@@ -2241,13 +2339,15 @@
               }
 
               .value {
-                color: var(--color-text-primary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.95rem;
                 font-weight: 700;
               }
 
               .description {
-                color: var(--color-text-secondary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.95rem;
                 line-height: 1.4;
                 margin: 0;
@@ -2273,6 +2373,7 @@
           &.btn-confirm {
             background: var(--color-success);
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 12px rgba(63, 185, 80, 0.3);
 
             &:hover {
@@ -2285,6 +2386,7 @@
           &.btn-start {
             background: var(--color-accent);
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 
             &:hover {
@@ -2297,6 +2399,7 @@
           &.btn-complete {
             background: var(--color-success);
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 12px rgba(63, 185, 80, 0.3);
 
             &:hover {
@@ -2309,6 +2412,7 @@
           &.btn-cancel {
             background: var(--color-danger);
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 
             &:hover {
@@ -2329,10 +2433,11 @@
       border-top: 1px solid rgba(70, 72, 72, 0.3);
 
         .btn-secondary {
-          background: rgba(255, 255, 255, 0.35);
-          backdrop-filter: blur(20px);
+          background: rgba(255, 255, 255, 0.397);
+          backdrop-filter: blur(2px);
           border: 1px solid rgba(255, 255, 255, 0.3);
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           padding: 12px 24px;
           border-radius: 16px;
           font-weight: 700;
@@ -2365,6 +2470,7 @@
         .btn-warning {
           background: linear-gradient(135deg, #f59e0b, #d97706);
           color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 
           &:hover {
             transform: translateY(-2px);
@@ -2375,6 +2481,7 @@
         .btn-danger {
           background: linear-gradient(135deg, #ef4444, #dc2626);
           color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 
           &:hover {
             transform: translateY(-2px);
@@ -2392,8 +2499,8 @@
     .form-section {
       margin: 2rem 0;
       padding: 1.5rem;
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.3);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
@@ -2403,7 +2510,8 @@
 
         h3 {
           margin: 0;
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 1.2rem;
           font-weight: 700;
         }
@@ -2442,8 +2550,8 @@
       gap: 1rem;
       align-items: center;
       padding: 1rem;
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 14px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
@@ -2469,6 +2577,7 @@
         height: 32px;
         background: var(--color-accent);
         color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         border-radius: 50%;
         font-weight: 700;
         font-size: 0.9rem;
@@ -2480,9 +2589,10 @@
         padding: 10px;
         border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 10px;
-        background: rgba(255, 255, 255, 0.35);
-        backdrop-filter: blur(20px);
-        color: var(--color-text-primary);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 0.9rem;
         transition: all 0.3s ease;
 
@@ -2494,7 +2604,8 @@
         }
 
         &::placeholder {
-          color: var(--color-text-secondary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           opacity: 0.7;
         }
       }
@@ -2508,8 +2619,8 @@
 
       .btn-remove {
         padding: 8px;
-        background: rgba(255, 255, 255, 0.35);
-        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
         border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 10px;
         color: var(--color-danger);
@@ -2535,8 +2646,8 @@
     .btn-add-article {
       width: 100%;
       padding: 12px;
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border: 2px dashed rgba(255, 255, 255, 0.3);
       border-radius: 14px;
       color: var(--color-accent);
@@ -2569,14 +2680,15 @@
       align-items: center;
       margin-top: 1.5rem;
       padding: 1.5rem;
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 16px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
 
       strong {
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 1.2rem;
       }
 
@@ -2643,7 +2755,8 @@
           transition: color 0.2s ease;
 
           &:hover {
-            color: #333;
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           }
         }
       }
@@ -2656,14 +2769,15 @@
 
           .customer-name {
             font-size: 1.1rem;
-            color: #333;
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-weight: 600;
             margin-bottom: 0.25rem;
           }
 
           .customer-phone {
             font-size: 0.9rem;
-            color: #666;
+            color: rgba(255, 255, 255, 0.85);
           }
         }
 
@@ -2673,7 +2787,7 @@
           h4 {
             font-size: 0.85rem;
             font-weight: 600;
-            color: #999;
+            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -2681,14 +2795,15 @@
 
           .order-items-list {
             .order-description {
-              color: #1a1a1a;
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-size: 1rem;
               line-height: 1.6;
               font-weight: 400;
             }
 
             .no-items {
-              color: #999;
+              color: rgba(255, 255, 255, 0.8);
               font-size: 0.95rem;
             }
           }
@@ -2696,7 +2811,8 @@
 
         .order-time-info {
           padding: 1rem;
-          background: #f5f5f5;
+          background: rgba(255, 255, 255, 0.397);
+          backdrop-filter: blur(2px);
           border-radius: 8px;
           margin-bottom: 1.5rem;
 
@@ -2708,13 +2824,14 @@
             .label {
               font-size: 0.9rem;
               font-weight: 500;
-              color: #666;
+              color: rgba(255, 255, 255, 0.85);
             }
 
             .value {
               font-size: 1.2rem;
               font-weight: 600;
-              color: #1a1a1a;
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             }
           }
         }
@@ -2728,22 +2845,25 @@
         .btn-action {
           flex: 1;
           padding: 0.75rem;
-          border: 1px solid #e5e5e5;
-          background: white;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          background: rgba(255, 255, 255, 0.397);
+          backdrop-filter: blur(2px);
           border-radius: 8px;
           font-weight: 500;
           cursor: pointer;
           transition: all 0.2s ease;
           font-size: 0.9rem;
-          color: #333;
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 
           &:hover {
-            background: #f9f9f9;
+            background: rgba(255, 255, 255, 0.5);
           }
 
           &.btn-confirm {
             background: #1a1a1a;
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             border-color: #1a1a1a;
 
             &:hover {

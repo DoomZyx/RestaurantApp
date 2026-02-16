@@ -17,6 +17,7 @@
 
       h1 {
         color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 2rem;
         font-weight: 600;
         display: flex;
@@ -35,6 +36,7 @@
         border-radius: 16px;
         padding: 0.75rem 1.5rem;
         color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 0.95rem;
         font-weight: 700;
         cursor: pointer;
@@ -140,8 +142,8 @@
   }
 
   .clients-panel {
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.397);
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
     padding: 1.5rem;
@@ -156,7 +158,8 @@
       flex-shrink: 0;
 
       h2 {
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 1.25rem;
         font-weight: 700;
         margin-bottom: 1rem;
@@ -170,24 +173,27 @@
           left: 1rem;
           top: 50%;
           transform: translateY(-50%);
-          color: var(--color-text-secondary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 1.125rem;
         }
 
         input {
           width: 100%;
-          background: rgba(255, 255, 255, 0.35);
-          backdrop-filter: blur(10px);
+          background: rgba(255, 255, 255, 0.397);
+          backdrop-filter: blur(2px);
           border: 1px solid rgba(0, 0, 0, 0.08);
           border-radius: 16px;
           padding: 0.875rem 1rem 0.875rem 2.75rem;
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 0.95rem;
           transition: all var(--transition-fast);
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
 
           &::placeholder {
-            color: var(--color-text-tertiary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           }
 
           &:focus {
@@ -227,8 +233,8 @@
     }
 
     .client-card {
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 16px;
       padding: 1.25rem;
@@ -257,7 +263,8 @@
         }
 
         .client-details span {
-          color: rgba(255, 255, 255, 0.8);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
 
         i.bi-chevron-right {
@@ -269,7 +276,8 @@
         flex: 1;
 
         h3 {
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 1.15rem;
           font-weight: 700;
           margin-bottom: 0.6rem;
@@ -290,7 +298,8 @@
           gap: 0.35rem;
 
           span {
-            color: var(--color-text-secondary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 0.95rem;
             display: flex;
             align-items: center;
@@ -308,7 +317,8 @@
       }
 
       i.bi-chevron-right {
-        color: var(--color-text-secondary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 1.3rem;
         flex-shrink: 0;
         transition: transform var(--transition-fast);
@@ -321,8 +331,8 @@
   }
 
   .client-details-panel {
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.397);
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
     padding: 1.5rem;
@@ -339,16 +349,20 @@
       justify-content: center;
       height: 100%;
       text-align: center;
-      color: #ccc;
+      color: white;
+
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 
       i {
         font-size: 4rem;
         margin-bottom: 1rem;
-        color: #888;
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       }
 
       h3 {
-        color: #ccc;
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 1.25rem;
         margin-bottom: 0.5rem;
       }
@@ -370,6 +384,7 @@
 
         h2 {
           color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 1.5rem;
           font-weight: 600;
           display: flex;
@@ -387,12 +402,14 @@
           border: none;
           border-radius: 6px;
           padding: 0.5rem;
-          color: #ccc;
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           cursor: pointer;
           transition: all 0.2s ease;
 
           &:hover {
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           }
 
           i {
@@ -421,7 +438,8 @@
           }
 
           span {
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 0.95rem;
             font-weight: 600;
           }
@@ -455,7 +473,8 @@
         margin-bottom: 2rem;
 
         h3 {
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 1.3rem;
           font-weight: 700;
           margin-bottom: 0.5rem;
@@ -470,7 +489,8 @@
         }
 
         p {
-          color: var(--color-text-secondary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 0.95rem;
           margin: 0;
         }
@@ -551,7 +571,8 @@
               display: flex;
               align-items: center;
               gap: 0.5rem;
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-size: 0.9rem;
               font-weight: 600;
 
@@ -605,7 +626,8 @@
           }
 
           .error-reason {
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 0.9rem;
             font-weight: 500;
           }
@@ -620,8 +642,8 @@
           margin-bottom: 1.5rem;
 
           .ingredient-row {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.397);
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 16px;
             padding: 1.25rem;
@@ -645,6 +667,7 @@
             .row-number {
               background: var(--color-accent);
               color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               width: 32px;
               height: 32px;
               border-radius: 50%;
@@ -666,7 +689,8 @@
               gap: 0.5rem;
 
               label {
-                color: var(--color-text-secondary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.85rem;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -679,13 +703,15 @@
                 border: 1px solid rgba(0, 0, 0, 0.1);
                 border-radius: 12px;
                 padding: 0.75rem 1rem;
-                color: var(--color-text-primary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.95rem;
                 font-weight: 500;
                 transition: all var(--transition-fast);
 
                 &::placeholder {
-                  color: var(--color-text-tertiary);
+                  color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 }
 
                 &:focus {
@@ -774,6 +800,7 @@
             border-radius: 16px;
             padding: 1rem 2rem;
             color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
@@ -835,7 +862,8 @@
           margin-bottom: 1.5rem;
 
           h3 {
-            color: var(--color-text-primary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 1.3rem;
             font-weight: 700;
             display: flex;
@@ -866,8 +894,8 @@
           gap: 1rem;
 
           .history-item {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.397);
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 16px;
             padding: 1.25rem;
@@ -889,7 +917,8 @@
               border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 
               .order-date {
-                color: var(--color-text-secondary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.9rem;
                 font-weight: 600;
                 display: flex;
@@ -950,7 +979,8 @@
 
             .history-item-content {
               h4 {
-                color: var(--color-text-primary);
+                color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.95rem;
                 font-weight: 700;
                 margin-bottom: 0.75rem;
@@ -975,7 +1005,8 @@
                   justify-content: space-between;
 
                   .ingredient-name {
-                    color: var(--color-text-primary);
+                    color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                     font-size: 0.9rem;
                     font-weight: 600;
                   }
@@ -997,7 +1028,8 @@
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
 
                 h4 {
-                  color: var(--color-text-primary);
+                  color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                   font-size: 0.85rem;
                   font-weight: 700;
                   margin-bottom: 0.5rem;
@@ -1013,7 +1045,8 @@
                   margin-bottom: 0.5rem;
 
                   span {
-                    color: var(--color-text-primary);
+                    color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                     font-size: 0.9rem;
                     font-weight: 600;
                     display: flex;
@@ -1038,7 +1071,8 @@
                 }
 
                 .delivery-comment {
-                  color: var(--color-text-secondary);
+                  color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                   font-size: 0.85rem;
                   font-style: italic;
                   margin: 0;
@@ -1063,7 +1097,8 @@
                 }
 
                 span {
-                  color: var(--color-text-primary);
+                  color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                   font-size: 0.85rem;
                   font-weight: 500;
                 }
@@ -1118,7 +1153,8 @@
         }
 
         .stat-label {
-          color: var(--color-text-secondary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 0.85rem;
           text-transform: uppercase;
           letter-spacing: 0.75px;
@@ -1131,7 +1167,8 @@
       margin-bottom: 2rem;
 
       h3 {
-        color: var(--color-text-primary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 1.1rem;
         font-weight: 700;
         margin-bottom: 1rem;
@@ -1153,8 +1190,8 @@
 
         .call-item,
         .appointment-item {
-          background: rgba(255, 255, 255, 0.35);
-          backdrop-filter: blur(10px);
+          background: rgba(255, 255, 255, 0.397);
+          backdrop-filter: blur(2px);
           border: 1px solid rgba(255, 255, 255, 0.3);
           border-radius: 16px;
           padding: 1rem;
@@ -1169,7 +1206,8 @@
 
           .call-date,
           .appointment-date {
-            color: var(--color-text-secondary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 0.9rem;
             font-weight: 600;
           }
@@ -1188,12 +1226,14 @@
           gap: 0.5rem;
 
           div {
-            color: var(--color-text-secondary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 0.9rem;
             font-weight: 500;
 
             strong {
-              color: var(--color-text-primary);
+              color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-weight: 700;
             }
           }

@@ -1,7 +1,6 @@
 import Menu from "../Menu/menu";
 import NotificationCenter from "../NotificationCenter/NotificationCenter";
-import { useSystemNotifications } from "../../Hooks/Notification/useSystemNotifications";
-import fd from "../../assets/fd.jpg";
+import { useSystemNotifications } from "../../Hooks/Notification/useSystemNotifications"
 import "./AppLayout.scss";
 
 function AppLayout({ children, title, subtitle }) {
@@ -9,7 +8,7 @@ function AppLayout({ children, title, subtitle }) {
   useSystemNotifications();
   return (
     <div className="app-layout">
-      <img className="app-wallpaper" src={fd} alt="" />
+      <img className="app-wallpaper" src="../../../public/bg.webp" alt="" />
       <Menu />
       <main className="main-content">
             <div className="title-section">

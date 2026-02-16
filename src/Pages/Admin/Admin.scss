@@ -43,6 +43,8 @@
       &:hover {
         background: var(--color-danger);
         color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         transform: scale(1.1) rotate(90deg);
         border-color: var(--color-danger);
       }
@@ -75,7 +77,8 @@
     align-items: center;
     justify-content: center;
     min-height: 400px;
-    color: var(--color-text-secondary);
+    color: white;
+   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     font-size: 1.125rem;
     font-weight: 600;
 
@@ -89,8 +92,8 @@
 
   // Contenu des onglets
   .tab-content {
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.397);
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
     padding: 2rem;
@@ -104,7 +107,9 @@
     }
 
     h3 {
-      color: var(--color-text-primary);
+      color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       font-size: 1.5rem;
       font-weight: 800;
       margin: 0 0 2rem 0;
@@ -126,7 +131,9 @@
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          color: var(--color-text-primary);
+          color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 1.5rem;
           font-weight: 800;
           letter-spacing: -0.025em;
@@ -139,6 +146,8 @@
           padding: 0.875rem 1.5rem;
           background: var(--color-accent);
           color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           border: none;
           border-radius: 16px;
           font-weight: 700;
@@ -181,7 +190,9 @@
             th {
               padding: 1rem 1.25rem;
               text-align: left;
-              color: var(--color-text-primary);
+              color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               font-weight: 700;
               font-size: 0.875rem;
               text-transform: uppercase;
@@ -204,12 +215,16 @@
 
               td {
                 padding: 1.25rem;
-                color: var(--color-text-secondary);
+                color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.9375rem;
                 vertical-align: middle;
 
                 &:first-child {
-                  color: var(--color-text-primary);
+                  color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                   font-weight: 600;
                 }
 
@@ -251,7 +266,9 @@
 
                   &.inactive {
                     background: rgba(156, 163, 175, 0.15);
-                    color: #6b7280;
+                    color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                   }
                 }
 
@@ -269,7 +286,9 @@
                     border-radius: var(--radius-md);
                     border: 2px solid var(--color-border);
                     background: transparent;
-                    color: var(--color-text-secondary);
+                    color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                     cursor: pointer;
                     transition: all var(--transition-fast);
                     font-size: 1rem;
@@ -312,8 +331,8 @@
     animation: fadeIn 0.2s ease-out;
 
     .modal-content {
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.397);
+      backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
       padding: 0;
@@ -332,11 +351,13 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(255, 255, 255, 0.5);
-        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.397);
+        backdrop-filter: blur(2px);
 
         h3 {
-          color: var(--color-text-primary);
+          color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           margin: 0;
           display: flex;
           align-items: center;
@@ -353,7 +374,9 @@
         .close-btn {
           background: rgba(255, 255, 255, 0.5);
           border: 1px solid rgba(0, 0, 0, 0.08);
-          color: var(--color-text-secondary);
+          color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 1.5rem;
           cursor: pointer;
           padding: 0.375rem;
@@ -388,7 +411,9 @@
 
           label {
             display: block;
-            color: var(--color-text-primary);
+            color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             margin-bottom: 0.625rem;
             font-weight: 700;
             font-size: 0.9375rem;
@@ -398,11 +423,13 @@
           select {
             width: 100%;
             padding: 0.875rem 1.25rem;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.397);
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(0, 0, 0, 0.08);
             border-radius: 14px;
-            color: var(--color-text-primary);
+            color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-size: 0.9375rem;
             font-family: inherit;
             transition: all var(--transition-fast);
@@ -422,7 +449,9 @@
             }
 
             &::placeholder {
-              color: var(--color-text-tertiary);
+              color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             }
           }
 
@@ -436,7 +465,9 @@
 
             option {
               background: white;
-              color: var(--color-text-primary);
+              color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             }
           }
         }
@@ -454,9 +485,11 @@
             align-items: center;
             justify-content: center;
             padding: 0.875rem 1.5rem;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(10px);
-            color: var(--color-text-primary);
+            background: rgba(255, 255, 255, 0.397);
+            backdrop-filter: blur(2px);
+            color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 16px;
             font-weight: 700;
@@ -483,6 +516,8 @@
             padding: 0.875rem 1.5rem;
             background: var(--color-accent);
             color: white;
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             border: none;
             border-radius: 16px;
             font-weight: 700;

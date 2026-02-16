@@ -12,8 +12,8 @@
   }
 
   .login-card {
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.397);
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
     padding: 3rem;
@@ -29,6 +29,7 @@
 
       h1 {
         color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 2.5rem;
         font-weight: 800;
         margin-bottom: 0.75rem;
@@ -36,7 +37,8 @@
       }
 
       p {
-        color: var(--color-text-secondary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 1.1rem;
         margin: 0;
         font-weight: 500;
@@ -67,7 +69,8 @@
 
         label {
           display: block;
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           margin-bottom: 0.625rem;
           font-weight: 700;
           font-size: 0.9rem;
@@ -76,11 +79,12 @@
         input {
           width: 100%;
           padding: 1rem;
-          background: rgba(255, 255, 255, 0.35);
-          backdrop-filter: blur(10px);
+          background: rgba(255, 255, 255, 0.397);
+          backdrop-filter: blur(2px);
           border: 1px solid rgba(0, 0, 0, 0.08);
           border-radius: 14px;
-          color: var(--color-text-primary);
+          color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           font-size: 1rem;
           transition: all var(--transition-fast);
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
@@ -93,7 +97,8 @@
           }
 
           &::placeholder {
-            color: var(--color-text-tertiary);
+            color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
           }
         }
       }
@@ -103,6 +108,7 @@
         padding: 1rem;
         background: var(--color-accent);
         color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         border: none;
         border-radius: 16px;
         font-size: 1.1rem;
@@ -139,7 +145,8 @@
       text-align: center;
 
       p {
-        color: var(--color-text-secondary);
+        color: white;
+       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         margin: 0.25rem 0;
         font-size: 0.9rem;
         font-weight: 500;
