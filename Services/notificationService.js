@@ -41,8 +41,9 @@ class NotificationService {
           sentCount++;
         }
       } catch (error) {
-        callLogger.error(null, "Erreur envoi notification", {
-          error: error.message,
+        callLogger.error(null, error, {
+          source: "notificationService.js",
+          context: "sendNotification_websocket",
           connectionId: connection.id,
         });
       }

@@ -2,6 +2,7 @@ import WebSocket from "ws";
 import SupplierOrderModel from "../models/supplierOrder.js";
 import { extractSupplierResponse } from "../Services/gptServices/extractSupplierData.js";
 import { getRestaurantInfo } from "../Services/gptServices/pricingService.js";
+import { callLogger } from "../Services/logging/logger.js";
 
 // Configuration OpenAI Realtime API
 const OPENAI_REALTIME_URL = "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01";
@@ -40,6 +41,10 @@ export async function handleSupplierCallConnection(twilioWs, orderId) {
     let isAssistantSpeaking = false;
     let isInterrupted = false;
     let shouldCancel = false;
+    /** True après input_audio_buffer.committed : le serveur va envoyer response.created */
+    let awaitingResponse = false;
+    /** True après speech_started (avant response.created) ; false après speech_stopped. Annuler seulement si encore true à response.created */
+    let userStillSpeaking = false;
     let audioDeltaLogged = false;
 
     // Connexion à OpenAI Realtime API
@@ -92,7 +97,7 @@ IMPORTANT :
             type: "server_vad",
             threshold: 0.5,
             prefix_padding_ms: 300,
-            silence_duration_ms: 500,
+            silence_duration_ms: 800,
             create_response: true,
             interrupt_response: true
           },
@@ -116,46 +121,23 @@ IMPORTANT :
             conversationStarted = true;
             break;
 
+          case "input_audio_buffer.committed":
+            awaitingResponse = true;
+            break;
+
+          case "input_audio_buffer.speech_stopped":
+            userStillSpeaking = false;
+            break;
+
           case "response.created":
+            awaitingResponse = false;
             currentResponseId = message.response?.id ?? null;
             isAssistantSpeaking = true;
             audioDeltaLogged = false;
             console.log(ts(), "[OPENAI] response.created", currentResponseId);
 
-            if (shouldCancel && currentResponseId && openaiWs.readyState === WebSocket.OPEN) {
-              console.log(ts(), "[OPENAI] Cancelling response after delayed speech_started", currentResponseId);
-              openaiWs.send(JSON.stringify({
-                type: "response.cancel",
-                response_id: currentResponseId
-              }));
-              currentResponseId = null;
-              isAssistantSpeaking = false;
-              isInterrupted = true;
-              shouldCancel = false;
-            }
-            break;
-
-          case "response.done":
-            console.log(ts(), "[OPENAI] response.done", currentResponseId);
-            isAssistantSpeaking = false;
-            isInterrupted = false;
-            currentResponseId = null;
-            shouldCancel = false;
-            audioDeltaLogged = false;
-            break;
-
-          case "response.cancelled":
-            console.log(ts(), "[OPENAI] response.cancelled");
-            isAssistantSpeaking = false;
-            currentResponseId = null;
-            shouldCancel = false;
-            audioDeltaLogged = false;
-            break;
-
-          case "input_audio_buffer.speech_started":
-            console.log(ts(), "[VAD] speech_started");
-            if (isAssistantSpeaking && currentResponseId && openaiWs.readyState === WebSocket.OPEN) {
-              console.log(ts(), "[OPENAI] Barge-in: cancelling response immediately", currentResponseId);
+            if (shouldCancel && userStillSpeaking && currentResponseId && openaiWs.readyState === WebSocket.OPEN) {
+              console.log(ts(), "[OPENAI] Cancelling response after delayed speech_started (user still speaking)", currentResponseId);
               openaiWs.send(JSON.stringify({
                 type: "response.cancel",
                 response_id: currentResponseId
@@ -164,8 +146,49 @@ IMPORTANT :
               isAssistantSpeaking = false;
               isInterrupted = true;
             } else {
+              isInterrupted = false;
+            }
+            shouldCancel = false;
+            userStillSpeaking = false;
+            break;
+
+          case "response.done":
+            console.log(ts(), "[OPENAI] response.done", currentResponseId);
+            isAssistantSpeaking = false;
+            isInterrupted = false;
+            currentResponseId = null;
+            shouldCancel = false;
+            awaitingResponse = false;
+            userStillSpeaking = false;
+            audioDeltaLogged = false;
+            break;
+
+          case "response.cancelled":
+            console.log(ts(), "[OPENAI] response.cancelled");
+            isAssistantSpeaking = false;
+            currentResponseId = null;
+            shouldCancel = false;
+            awaitingResponse = false;
+            userStillSpeaking = false;
+            audioDeltaLogged = false;
+            break;
+
+          case "input_audio_buffer.speech_started":
+            console.log(ts(), "[VAD] speech_started");
+            if (isAssistantSpeaking && currentResponseId && openaiWs.readyState === WebSocket.OPEN) {
+              const responseIdToCancel = currentResponseId;
+              isInterrupted = true;
+              isAssistantSpeaking = false;
+              currentResponseId = null;
+              openaiWs.send(JSON.stringify({
+                type: "response.cancel",
+                response_id: responseIdToCancel
+              }));
+              console.log(ts(), "[OPENAI] Barge-in: cancelling response immediately", responseIdToCancel);
+            } else if (awaitingResponse) {
               shouldCancel = true;
-              console.log(ts(), "[OPENAI] Speech started before response.created, will cancel when response created");
+              userStillSpeaking = true;
+              console.log(ts(), "[OPENAI] Speech started before response.created, will cancel when response created if user still speaking");
             }
             break;
 
@@ -210,11 +233,18 @@ IMPORTANT :
             break;
 
           case "error":
-            console.error("❌ Erreur OpenAI:", message.error);
+            callLogger.error(twilioWs.streamSid ?? null, new Error(message.error?.message || JSON.stringify(message.error)), {
+              source: "supplierCallConnection.js",
+              context: "openai_message_error",
+              errorDetails: message.error,
+            });
             break;
         }
       } catch (error) {
-        console.error("❌ Erreur traitement message OpenAI:", error);
+        callLogger.error(twilioWs.streamSid ?? null, error, {
+          source: "supplierCallConnection.js",
+          context: "openai_message_parse",
+        });
       }
     });
 
@@ -288,7 +318,10 @@ IMPORTANT :
         await order.save();
 
       } catch (error) {
-        console.error("❌ Erreur mise à jour commande:", error);
+        callLogger.error(null, error, {
+          source: "supplierCallConnection.js",
+          context: "order_update_on_close",
+        });
         order.statut = "erreur";
         await order.save();
       }
@@ -302,7 +335,10 @@ IMPORTANT :
     });
 
   } catch (error) {
-    console.error("❌ Erreur handleSupplierCallConnection:", error);
+    callLogger.error(null, error, {
+      source: "supplierCallConnection.js",
+      context: "handleSupplierCallConnection_init",
+    });
     twilioWs.close();
   }
 }

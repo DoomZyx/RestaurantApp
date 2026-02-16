@@ -37,7 +37,7 @@ export async function handleWebSocketConnection(connection, request) {
     if (rnnoiseAvailable) {
       callLogger.info(null, "RNNoise activé - Réduction de bruit en temps réel");
     } else {
-      callLogger.error(null, "RNNoise non disponible - Audio non filtré");
+      callLogger.info(null, "RNNoise non disponible - Audio non filtré (service optionnel)");
     }
 
 
@@ -46,10 +46,21 @@ export async function handleWebSocketConnection(connection, request) {
     // CRÉATION SESSION OPENAI
     // ==========================================
     const openAiWs = createOpenAiSession(
-      process.env.OPENAI_API_KEY, 
-      "ballad",
-      null
+      process.env.OPENAI_API_KEY
     );
+
+    // Handlers créés dès la connexion (streamSid = null) pour recevoir media avant "start"
+    openAIHandler = new OpenAIHandler(null, connection, callLogger, openAiWs);
+    twilioHandler = new TwilioHandler(
+      null,
+      callLogger,
+      async () => {
+        if (transcriptionHandler && openAIHandler) {
+          await transcriptionHandler.process(openAIHandler.getTranscription());
+        }
+      }
+    );
+    transcriptionHandler = new TranscriptionHandler(null, callLogger);
 
     // ==========================================
     // HANDLER MESSAGES TWILIO
@@ -58,39 +69,18 @@ export async function handleWebSocketConnection(connection, request) {
       try {
         const data = JSON.parse(message.toString());
 
-        // Événement START : Initialiser tous les gestionnaires
+        // Événement START : mettre à jour streamSid dans les handlers
         if (data.event === "start") {
           streamSid = data.start.streamSid;
-
-          // Initialisation des gestionnaires avec streamSid
-          openAIHandler = new OpenAIHandler(
-            streamSid,
-            connection,
-            callLogger,
-            openAiWs
-          );
-
-          twilioHandler = new TwilioHandler(
-            streamSid,
-            callLogger,
-            async () => {
-              if (transcriptionHandler && openAIHandler) {
-                await transcriptionHandler.process(openAIHandler.getTranscription());
-              }
-            }
-          );
-
-          transcriptionHandler = new TranscriptionHandler(
-            streamSid,
-            callLogger
-          );
-
-          // Enregistrer le stream actif
+          openAIHandler.setStreamSid(streamSid);
+          twilioHandler.setStreamSid(streamSid);
+          transcriptionHandler.setStreamSid(streamSid);
+          twilioHandler.handleMessage(data);
           const callSid = data.start?.callSid || null;
           registerStream(streamSid, connection, callSid);
         }
 
-        // Événement MEDIA : Nettoyer et transférer l'audio à OpenAI
+        // Événement MEDIA : Nettoyer et transférer l'audio à OpenAI (même avant "start")
         if (data.event === "media" && openAiWs && openAiWs.readyState === WebSocket.OPEN) {
           // Nettoyer l'audio avec RNNoise si disponible
           const audioPayload = rnnoiseAvailable 
@@ -108,7 +98,7 @@ export async function handleWebSocketConnection(connection, request) {
           twilioHandler.handleMessage(data);
         }
       } catch (err) {
-        callLogger.error(streamSid, err, { context: "twilio_message_parse" });
+        callLogger.error(streamSid, err, { source: "connection.js", context: "twilio_message_parse" });
       }
     });
 
@@ -137,7 +127,7 @@ export async function handleWebSocketConnection(connection, request) {
           openAIHandler.handleMessage(data);
         }
       } catch (err) {
-        callLogger.error(streamSid, err, { context: "openai_message_parse" });
+        callLogger.error(streamSid, err, { source: "connection.js", context: "openai_message_parse" });
       }
     });
 
@@ -146,10 +136,7 @@ export async function handleWebSocketConnection(connection, request) {
     // ==========================================
     
     connection.on("error", (error) => {
-      console.error("ERREUR WebSocket Twilio:", error);
-      console.error("   - StreamSid:", streamSid);
-      console.error("   - Message:", error.message);
-      callLogger.error(streamSid, error, { context: "twilio_websocket_error" });
+      callLogger.error(streamSid, error, { source: "connection.js", context: "twilio_websocket_error" });
     });
 
     connection.on("close", (code, reason) => {
@@ -179,7 +166,7 @@ export async function handleWebSocketConnection(connection, request) {
     });
 
     openAiWs.on("error", (err) => {
-      callLogger.error(streamSid, err, { context: "openai_websocket_error" });
+      callLogger.error(streamSid, err, { source: "connection.js", context: "openai_websocket_error" });
     });
 
     openAiWs.on("close", () => {
@@ -187,17 +174,14 @@ export async function handleWebSocketConnection(connection, request) {
     });
     
   } catch (error) {
-    console.error("ERREUR FATALE dans handleWebSocketConnection:");
-    console.error("   - Message:", error.message);
-    console.error("   - Stack:", error.stack);
-    
+    callLogger.error(null, error, { source: "connection.js", context: "handleWebSocketConnection_init" });
     // Fermer proprement la connexion en cas d'erreur
     try {
       if (connection && connection.readyState === WebSocket.OPEN) {
         connection.close(1011, "Erreur interne du serveur");
       }
     } catch (closeError) {
-      console.error("Impossible de fermer la connexion:", closeError.message);
+      callLogger.error(null, closeError, { source: "connection.js", context: "close_on_fatal_error" });
     }
   }
 }

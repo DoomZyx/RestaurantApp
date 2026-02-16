@@ -3,7 +3,7 @@ import { getSystemMessage } from "../../Config/prompts.js";
 import { generateEnrichedPrompt } from "./pricingService.js";
 
 export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
-  const ws = new WebSocket("wss://api.openai.com/v1/realtime?model=gpt-4o-mini-realtime-preview", {
+  const ws = new WebSocket("wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview", {
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "OpenAI-Beta": "realtime=v1"
@@ -23,18 +23,19 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
       session: {
         turn_detection: { 
           type: "server_vad",
-          threshold: 0.6,              // Plus sensible pour détecter les interruptions (0.5-0.6 = optimal)
-          prefix_padding_ms: 300,      // Réduit à 300ms pour réagir VITE aux interruptions
-          silence_duration_ms: 800,    // Réduit à 500ms pour une détection rapide de la fin de parole
-          create_response: true        // Permet à l'IA de répondre automatiquement
+          threshold: 0.35,              // Plus sensible = détection parole plus rapide (0.5 = par défaut, risque faux positifs si trop bas)
+          prefix_padding_ms: 200,       // Réduit pour latence barge-in
+          silence_duration_ms: 600,     // Détection fin de tour plus réactive
+          create_response: false,
+          interrupt_response: true     // Permet d'interrompre la réponse en cours quand le client parle
         },
         input_audio_format: "g711_ulaw",
         output_audio_format: "g711_ulaw",
         voice: voice,
         instructions: enrichedInstructions,
         modalities: ["text", "audio"],
-        temperature: 0.6, // Minimum requis par gpt-4o-mini-realtime-preview
-        max_response_output_tokens: 512,  // Limite les monologues pour que l'interruption soit prise en compte plus tôt
+        temperature: 0.8,
+        max_response_output_tokens: 812,  // Limite les monologues pour que l'interruption soit prise en compte plus tôt
         input_audio_transcription: {
           model: "whisper-1",
           prompt: "Restaurant fast-food: nuggets, tacos, burgers, sauce Biggy, sauce Algérienne, sauce Samourai, frites, Coca-Cola, Ice Tea, menu simple, menu double, menu triple, crudités, poulet, bœuf, agneau"

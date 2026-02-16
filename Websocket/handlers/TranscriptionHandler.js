@@ -15,6 +15,10 @@ export class TranscriptionHandler {
     this.callLogger = callLogger;
   }
 
+  setStreamSid(streamSid) {
+    this.streamSid = streamSid;
+  }
+
   /**
    * Traite une transcription complète
    * @param {string} transcription - Transcription de l'appel
@@ -59,6 +63,7 @@ export class TranscriptionHandler {
       await this.sendToProcessingAPI(transcription, startTime);
     } catch (error) {
       this.callLogger.error(this.streamSid, error, {
+        source: "TranscriptionHandler.js",
         context: "process_transcription",
       });
     }
@@ -101,6 +106,8 @@ export class TranscriptionHandler {
         this.streamSid,
         new Error(`Erreur API: ${response.status}`),
         {
+          source: "TranscriptionHandler.js",
+          context: "sendToProcessingAPI",
           status: response.status,
           statusText: response.statusText,
         }
@@ -114,6 +121,7 @@ export class TranscriptionHandler {
         );
       } catch (notificationError) {
         this.callLogger.error(this.streamSid, notificationError, {
+          source: "TranscriptionHandler.js",
           context: "notification_error_send",
         });
       }

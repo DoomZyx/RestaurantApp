@@ -42,6 +42,10 @@ export class TwilioHandler {
    * Gère l'événement START (début de l'appel)
    * @param {Object} data - Données de l'événement start
    */
+  setStreamSid(streamSid) {
+    this.streamSid = streamSid;
+  }
+
   handleStart(data) {
     this.streamSid = data.start.streamSid;
     this.callLogger.callStarted(this.streamSid, {

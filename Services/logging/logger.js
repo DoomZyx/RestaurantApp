@@ -7,31 +7,37 @@ import path from "path";
 
 /**
  * Format lisible pour les fichiers de log
- * Affiche: [TIMESTAMP] [LEVEL] Message - Détails
+ * Affiche: [TIMESTAMP] [LEVEL] [SOURCE] Message - Détails
  */
-const readableFormat = winston.format.printf(({ timestamp, level, message, streamSid, event, ...meta }) => {
+const readableFormat = winston.format.printf(({ timestamp, level, message, streamSid, event, source, ...meta }) => {
   let log = `[${timestamp}] [${level.toUpperCase()}]`;
   
-  // Ajouter le streamSid si présent
-  if (streamSid) {
-    log += ` [${streamSid.substring(0, 8)}...]`;
+  if (source) {
+    log += ` [${source}]`;
   }
-  
-  // Ajouter le type d'événement si présent
+  if (streamSid) {
+    log += ` [${String(streamSid).substring(0, 8)}...]`;
+  }
   if (event) {
     log += ` [${event.toUpperCase()}]`;
   }
   
   log += ` ${message}`;
   
-  // Ajouter les métadonnées si présentes (sauf timestamp/event déjà affichés)
   const filteredMeta = { ...meta };
   delete filteredMeta.timestamp;
   delete filteredMeta.event;
   delete filteredMeta.streamSid;
+  delete filteredMeta.source;
   
   if (Object.keys(filteredMeta).length > 0) {
-    log += `\n   ${JSON.stringify(filteredMeta, null, 3)}`;
+    const hasStack = filteredMeta.stack;
+    if (hasStack) {
+      log += `\n   Contexte: ${JSON.stringify({ ...filteredMeta, stack: undefined }, null, 2)}`;
+      log += `\n   Stack: ${filteredMeta.stack}`;
+    } else {
+      log += `\n   ${JSON.stringify(filteredMeta, null, 2)}`;
+    }
   }
   
   return log;
@@ -48,14 +54,20 @@ const generalLogFormat = winston.format.combine(
 
 /**
  * Format pour la console (avec couleurs)
+ * Pour les erreurs: affiche [source] et extrait du contexte
  */
 const consoleFormat = winston.format.combine(
   winston.format.colorize(),
   winston.format.timestamp({ format: "HH:mm:ss" }),
-  winston.format.printf(({ timestamp, level, message, ...meta }) => {
-    return `${timestamp} [${level}] ${message} ${
-      Object.keys(meta).length && meta.streamSid ? `[${meta.streamSid.substring(0, 8)}...]` : ""
-    }`;
+  winston.format.printf(({ timestamp, level, message, source, streamSid, ...meta }) => {
+    let out = `${timestamp} [${level}]`;
+    if (source) out += ` [${source}]`;
+    if (streamSid) out += ` [${String(streamSid).substring(0, 8)}...]`;
+    out += ` ${message}`;
+    if (meta.stack) {
+      out += `\n   ${String(meta.stack).split("\n").slice(0, 4).join("\n   ")}`;
+    }
+    return out;
   })
 );
 
@@ -251,13 +263,16 @@ export const callLogger = {
     });
   },
 
-  // Erreurs
+  // Erreurs - source: fichier ou module d'origine, context: description de l'action
   error: (streamSid, error, context = {}) => {
-    logger.error("Erreur detectee", {
+    const message = error?.message || (typeof error === "string" ? error : "Erreur inconnue");
+    const { source, ...rest } = typeof context === "object" ? context : { context };
+    logger.error(message, {
       streamSid,
-      error: error.message,
-      stack: error.stack,
-      context,
+      source: source || "app",
+      error: error?.message,
+      stack: error?.stack,
+      ...rest,
       event: "error",
       timestamp: new Date().toISOString(),
     });
