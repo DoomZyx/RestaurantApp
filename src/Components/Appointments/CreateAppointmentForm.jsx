@@ -497,7 +497,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
       {showProductSelection && ReactDOM.createPortal(
         <div className="product-selection-overlay" onClick={() => setShowProductSelection(null)}>
           <div className="product-selection-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
+            <div className="modal-header-appointment">
               <h3>🍽️ {t('createAppointment.selectDish')}</h3>
               <button 
                 type="button" 

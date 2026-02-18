@@ -78,7 +78,7 @@ function AppointmentsWidget() {
     return (
       <div className="appointments-widget">
         <div className="widget-header">
-          <h3>📅 {t('appointmentsWidget.todayOrders')}</h3>
+          <h3>{t('appointmentsWidget.todayOrders')}</h3>
           <span className="current-time">{currentTime}</span>
         </div>
         <div className="loading-state">
@@ -106,7 +106,7 @@ function AppointmentsWidget() {
   return (
     <div className="appointments-widget">
       <div className="widget-header">
-        <h3>📅 {t('appointmentsWidget.todayOrders')}</h3>
+        <h3>{t('appointmentsWidget.todayOrders')}</h3>
         <div className="header-info">
           <span className="current-time">{currentTime}</span>
           <span className="appointments-count">

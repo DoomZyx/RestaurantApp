@@ -1,5 +1,4 @@
 .appointments-page {
-  padding: 2rem;
   min-height: 100vh;
 
   .service-tabs {
@@ -126,80 +125,11 @@
     }
   }
 
-  .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.397);
-    backdrop-filter: blur(2px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 24px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
-
-    .header-left {
-      h1 {
-        margin: 0 0 0.5rem 0;
-        color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-        font-size: 2rem;
-        font-weight: 800;
-        letter-spacing: -0.025em;
-      }
-
-      p {
-        margin: 0;
-        color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-        font-size: 1.1rem;
-        font-weight: 500;
-      }
-    }
-
     .header-actions {
       display: flex;
       gap: 1rem;
       align-items: center;
-
-        .view-toggle {
-          display: flex;
-          background: rgba(255, 255, 255, 0.397);
-          backdrop-filter: blur(2px);
-          border-radius: 14px;
-          overflow: hidden;
-          border: 1px solid rgba(255, 255, 255, 0.3);
-
-          .btn-toggle {
-            padding: 0.625rem 1.25rem;
-            background: transparent;
-            border: none;
-            color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            border-right: 1px solid rgba(0, 0, 0, 0.06);
-            font-weight: 600;
-
-            &:last-child {
-              border-right: none;
-            }
-
-            &:hover {
-              background: rgba(255, 255, 255, 0.3);
-              color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-            }
-
-            &.active {
-              background: var(--color-accent);
-              color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-              font-weight: 700;
-            }
-          }
-        }
+      margin: 1rem;
 
         .btn-primary {
           background: var(--color-accent);
@@ -223,9 +153,9 @@
   }
 
   .filters-section {
-    background: rgba(255, 255, 255, 0.397);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(2px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 24px;
     padding: 1.5rem;
     margin-bottom: 2rem;
@@ -397,14 +327,13 @@
     .empty-state {
       text-align: center;
       padding: 4rem 2rem;
-      background: rgba(255, 255, 255, 0.397);
-      backdrop-filter: blur(2px);
+      background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
 
-      .empty-icon {
-        font-size: 4rem;
+       i {
+        font-size: 1.5rem;
         margin-bottom: 1rem;
         color: white;
        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
@@ -447,14 +376,20 @@
     // Zones de séparation des commandes
     .appointments-zone {
       margin-bottom: 3rem;
-      
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
+
       .zone-title {
         display: flex;
         align-items: center;
         gap: 1rem;
         margin-bottom: 1.5rem;
         padding: 1.25rem 1.75rem;
-        background: rgba(255, 255, 255, 0.397);
+        background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(2px);
         border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 20px;
@@ -532,7 +467,7 @@
       .no-data-zone {
         text-align: center;
         padding: 3rem 2rem;
-        background: rgba(255, 255, 255, 0.397);
+        background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(2px);
         border: 1px dashed rgba(0, 0, 0, 0.1);
         border-radius: 20px;
@@ -999,7 +934,6 @@ background: rgba(255, 255, 255, 0.397);
       }
     }
   }
-}
 
 // Status Colors
 .status-planned .status-badge {
@@ -1055,7 +989,7 @@ background: rgba(255, 255, 255, 0.397);
   padding: 2rem;
 
     .modal-content {
-      background: rgba(255, 255, 255, 0.397);
+      background: rgba(255, 255, 255, 0.894);
       backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
@@ -1109,7 +1043,7 @@ background: rgba(255, 255, 255, 0.397);
 
           h3 {
             margin: 0 0 1rem 0;
-            color: var(--color-accent);
+            color: black;
             font-size: 1.2rem;
             font-weight: 600;
             padding-bottom: 0.5rem;
@@ -1132,8 +1066,7 @@ background: rgba(255, 255, 255, 0.397);
 
             label {
               font-weight: 700;
-              color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+              color: black;
             }
 
             span {
@@ -1153,13 +1086,12 @@ background: rgba(255, 255, 255, 0.397);
 
             p {
               margin: 0.5rem 0;
-              color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+              color: black;
               font-weight: 500;
 
               strong {
-                color: var(--color-accent);
-                font-weight: 700;
+                color: black;
+                font-weight: 500;
                 margin-right: 0.5rem;
               }
             }
@@ -1172,8 +1104,7 @@ background: rgba(255, 255, 255, 0.397);
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 1rem;
             border-radius: 14px;
-            color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            color: black;
             line-height: 1.6;
             margin: 0;
             font-weight: 500;
@@ -1183,8 +1114,7 @@ background: rgba(255, 255, 255, 0.397);
           .commandes-list {
             h4 {
               margin: 0 0 1rem 0;
-              color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+              color: black;
               font-size: 1rem;
               font-weight: 700;
             }
@@ -1220,8 +1150,7 @@ background: rgba(255, 255, 255, 0.397);
 
                   .item-name {
                     font-weight: 700;
-                    color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                    color: black;
                     font-size: 1rem;
                   }
 
@@ -1236,7 +1165,7 @@ background: rgba(255, 255, 255, 0.397);
                   }
 
                   .item-price {
-                    color: var(--color-success);
+                    color: var(--color-accent);
                     font-weight: 700;
                     font-size: 1rem;
                   }
@@ -1255,8 +1184,7 @@ background: rgba(255, 255, 255, 0.397);
 
                 .item-supplements {
                   display: block;
-                  color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                  color: black;
                   font-size: 0.85rem;
                   font-style: italic;
                   margin-top: 0.5rem;
@@ -1266,7 +1194,7 @@ background: rgba(255, 255, 255, 0.397);
 
             .commande-total {
               padding: 1rem;
-              background: rgba(16, 185, 129, 0.1);
+              background: rgba(99, 102, 241, 0.1);
               border: 1px solid rgba(16, 185, 129, 0.3);
               border-radius: 12px;
               display: flex;
@@ -1274,13 +1202,12 @@ background: rgba(255, 255, 255, 0.397);
               align-items: center;
 
               strong {
-                color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                color: black;
                 font-size: 1.1rem;
               }
 
               span {
-                color: var(--color-success);
+                color: var(--color-accent);
                 font-size: 1.3rem;
                 font-weight: 800;
               }
@@ -1360,10 +1287,8 @@ background: rgba(255, 255, 255, 0.397);
 
       .modal-footer {
         padding: 1.5rem;
+        background: none !important;
         border-top: 1px solid rgba(0, 0, 0, 0.06);
-        background: rgba(255, 255, 255, 0.397);
-        backdrop-filter: blur(2px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
         display: flex;
         justify-content: space-between;
         gap: 1rem;
@@ -1496,7 +1421,7 @@ background: rgba(255, 255, 255, 0.397);
   padding: 2rem;
 
   .product-selection-modal {
-    background: rgba(255, 255, 255, 0.397);
+    background: rgb(255, 255, 255);
     backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
@@ -1507,13 +1432,15 @@ background: rgba(255, 255, 255, 0.397);
     overflow-y: auto;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 
-    .modal-header {
+    .modal-header-appointment {
       display: flex;
       justify-content: space-between;
+      background: none;
       align-items: center;
       margin-bottom: 1.5rem;
       padding-bottom: 1rem;
       border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+      padding: 1em;
 
       h3 {
         margin: 0;
@@ -1583,8 +1510,9 @@ background: rgba(255, 255, 255, 0.397);
           gap: 1rem;
 
           .product-card {
-            background: rgba(255, 255, 255, 0.6);
-            border: 2px solid rgba(0, 0, 0, 0.08);
+            background: rgb(255, 255, 255);
+            box-shadow: 0px 0px 10px 7px rgba(0, 0, 0, 0.04);
+            border: 1px solid #d0d0d0;
             border-radius: 12px;
             padding: 1rem;
             cursor: pointer;
@@ -1631,12 +1559,6 @@ background: rgba(255, 255, 255, 0.397);
 @media (max-width: 1024px) {
   .appointments-page {
     padding: 1rem;
-
-    .page-header {
-      flex-direction: column;
-      gap: 1rem;
-      align-items: stretch;
-    }
 
     .filters-section .filters-group {
       flex-direction: column;
@@ -1693,9 +1615,6 @@ background: rgba(255, 255, 255, 0.397);
 @media (max-width: 768px) {
   .appointments-page {
     padding: 0.5rem;
-
-    .page-header {
-      padding: 1rem;
 
       .header-left h1 {
         font-size: 1.5rem;
@@ -1762,7 +1681,6 @@ background: rgba(255, 255, 255, 0.397);
       font-size: 1rem;
     }
   }
-}
 
 // Styles spécifiques pour la modal de création
 .modal-content.create-modal {
@@ -1901,15 +1819,6 @@ background: rgba(255, 255, 255, 0.397);
     }
   }
 
-  // Vue calendrier
-  .calendar-view {
-    margin-top: 1rem;
-    
-    .appointments-calendar {
-      margin: 0;
-    }
-  }
-
   // Styles pour le formulaire de création
   .appointment-form {
     padding: 1.5rem;
@@ -1932,8 +1841,7 @@ background: rgba(255, 255, 255, 0.397);
 
       label {
         font-weight: 600;
-        color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        color: black;
         font-size: 0.9rem;
       }
 
@@ -1945,8 +1853,7 @@ background: rgba(255, 255, 255, 0.397);
         border-radius: 12px;
         background: rgba(255, 255, 255, 0.397);
         backdrop-filter: blur(2px);
-        color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        color: black;
         font-size: 0.95rem;
         transition: all 0.3s ease;
 
@@ -1958,8 +1865,7 @@ background: rgba(255, 255, 255, 0.397);
         }
 
         &::placeholder {
-          color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+          color: black;
           opacity: 0.7;
         }
 
@@ -1970,8 +1876,7 @@ background: rgba(255, 255, 255, 0.397);
 
         option {
           background: rgba(255, 255, 255, 0.95);
-          color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+          color: black;
         }
       }
 
@@ -2069,8 +1974,7 @@ background: rgba(255, 255, 255, 0.397);
           }
 
           .product-placeholder {
-            color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            color: black;
             font-size: 1rem;
           }
         }

@@ -28,13 +28,13 @@ export function AppointmentsFilters({
               className={`service-btn ${activeService === "midi" ? "active" : ""}`}
               onClick={() => setActiveService("midi")}
             >
-              🌞 {t('appointments.services.lunch')}
+            {t('appointments.services.lunch')}
             </button>
             <button
               className={`service-btn ${activeService === "soir" ? "active" : ""}`}
               onClick={() => setActiveService("soir")}
             >
-              🌙 {t('appointments.services.dinner')}
+              {t('appointments.services.dinner')}
             </button>
           </div>
         )}

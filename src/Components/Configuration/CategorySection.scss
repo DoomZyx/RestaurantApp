@@ -1,6 +1,5 @@
 .category-section {
   margin-bottom: 40px;
-  border: 1px solid #e0e0e0;
   border-radius: 10px;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -19,7 +18,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #f8f9fa;
+    background: #f8f9fa77;
     padding: 15px 20px;
     border-bottom: 1px solid #e0e0e0;
 
@@ -80,7 +79,7 @@
 
   .category-content {
     padding: 20px;
-    background: white;
+    background: #f8f9fa77;
 
     .products-list {
       margin-top: 15px;

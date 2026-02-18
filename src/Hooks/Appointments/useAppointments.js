@@ -12,7 +12,6 @@ import {
 } from "../../API/Appointment/api";
 import { useAppointmentsFilters } from "./useAppointmentsFilters";
 import { useAppointmentsModal } from "./useAppointmentsModal";
-import { useAppointmentsView } from "./useAppointmentsView";
 import { useWebSocket } from "../../Context/WebSocketContext";
 
 export function useAppointments() {
@@ -21,7 +20,6 @@ export function useAppointments() {
   // Hooks spécialisés
   const filtersHook = useAppointmentsFilters();
   const modalHook = useAppointmentsModal();
-  const viewHook = useAppointmentsView();
 
   // État principal
   const [appointments, setAppointments] = useState([]);
@@ -421,16 +419,6 @@ export function useAppointments() {
     };
   }, []);
 
-  // Gestion du calendrier
-  const handleCalendarSelectAppointment = useCallback((appointment) => {
-    modalHook.openDetailsModal(appointment);
-  }, [modalHook]);
-
-  const handleCalendarSelectSlot = useCallback((slotInfo) => {
-    modalHook.openCreateModal();
-    // TODO: pré-remplir les champs date/heure dans le modal
-  }, [modalHook]);
-
   return {
     // États principaux
     appointments,
@@ -458,14 +446,6 @@ export function useAppointments() {
     closeAllModals: modalHook.closeAllModals,
     handleViewDetails: (appointmentId) => modalHook.handleViewDetails(loadAppointment, appointmentId),
 
-    // Vue
-    viewMode: viewHook.viewMode,
-    switchToList: viewHook.switchToList,
-    switchToCalendar: viewHook.switchToCalendar,
-    toggleView: viewHook.toggleView,
-    isListView: viewHook.isListView,
-    isCalendarView: viewHook.isCalendarView,
-
     // Actions
     loadAppointments,
     loadTodayAppointments,
@@ -488,8 +468,6 @@ export function useAppointments() {
     handleDeleteAppointment,
     handleCreateAppointment,
     handleEditAppointment,
-    handleCalendarSelectAppointment,
-    handleCalendarSelectSlot,
 
     // Reset
     clearError: () => setError(null),

@@ -4,8 +4,8 @@ nav {
   top: 0;
   width: 280px;
   height: 100vh;
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.106);
+  backdrop-filter: blur(2px);
   border-right: 1px solid rgba(255, 255, 255, 0.3);
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@ nav {
     font-size: 0.9375rem;
     font-weight: 600;
     margin: 0;
-    color: var(--color-text-primary);
+    color: white;
   }
 
   a, button {
@@ -78,7 +78,7 @@ nav {
     font-size: 1.125rem;
     font-weight: 700;
     margin: 0;
-    color: var(--color-text-primary);
+    color: white;
     letter-spacing: -0.025em;
   }
 
@@ -157,6 +157,8 @@ nav {
       width: 24px;
       text-align: center;
       flex-shrink: 0;
+      color: white;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     }
 
     h3 {
@@ -221,6 +223,8 @@ nav {
 
   i {
     font-size: 1.125rem;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
   }
 
   h3 {

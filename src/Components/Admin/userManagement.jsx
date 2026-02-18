@@ -25,8 +25,8 @@ function UserManagement({
       </tr>
     </thead>
     <tbody>
-      {users.map((user) => (
-        <tr key={user._id}>
+      {users.map((user, index) => (
+        <tr key={user.id ?? user._id ?? `user-${index}`}>
           <td>{user.username}</td>
           <td>{user.email}</td>
           <td>
@@ -57,7 +57,7 @@ function UserManagement({
               <i className="bi bi-pencil"></i>
             </button>
             <button
-              onClick={() => handleDeleteUser(user._id)}
+              onClick={() => handleDeleteUser(user.id ?? user._id)}
               className="btn-delete"
               title={t('common.delete')}
             >

@@ -56,7 +56,7 @@ const handleUserSubmit = async (e) => {
   e.preventDefault();
   try {
     if (editingUser) {
-      await updateUser(editingUser._id, newUserForm);
+      await updateUser(editingUser.id, newUserForm);
       setSuccessMessage("Utilisateur modifié avec succès !");
     } else {
       await createUser(newUserForm);
@@ -110,6 +110,7 @@ const formatDateTime = (dateString) => {
    users,
    loading,
    error,
+   setError,
    successMessage,
    showUserModal,
    setShowUserModal,

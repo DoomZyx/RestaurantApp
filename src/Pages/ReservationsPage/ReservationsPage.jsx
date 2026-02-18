@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import { useState, useMemo } from "react";
 import { useAppointments } from "../../Hooks/Appointments/useAppointments";
 import AppLayout from "../../Components/Layout/AppLayout";
-import AppointmentsCalendar from "../../Components/Calendar/AppointmentsCalendar";
 import { AppointmentsFilters } from "../../Components/Appointments/AppointmentsFilters";
 import { AppointmentsList } from "../../Components/Appointments/AppointmentsList";
 import { CreateAppointmentForm } from "../../Components/Appointments/CreateAppointmentForm";
@@ -30,11 +29,6 @@ function ReservationsPage() {
     closeDetailsModal,
     closeCreateModal,
     handleViewDetails,
-    viewMode,
-    switchToList,
-    switchToCalendar,
-    isListView,
-    isCalendarView,
     clearError,
     formatDateTime,
     getStatusBadge,
@@ -71,6 +65,18 @@ function ReservationsPage() {
   return (
     <AppLayout>
       <div className="appointments-page">
+
+        <div className="page-header">
+          <div className="header-actions">
+            <button
+              className="btn-primary"
+              onClick={openCreateModal}
+            >
+              {t('reservations.newButton')}
+            </button>
+          </div>
+        </div>
+        
         <AppointmentsFilters
           filters={filters}
           handleFilterChange={handleFilterChange}
@@ -81,31 +87,6 @@ function ReservationsPage() {
         />
 
 
-        <div className="page-header">
-          <div className="header-actions">
-            <div className="view-toggle">
-              <button
-                className={`btn-toggle ${isListView ? "active" : ""}`}
-                onClick={switchToList}
-              >
-                📋 {t('appointments.views.list')}
-              </button>
-              <button
-                className={`btn-toggle ${isCalendarView ? "active" : ""}`}
-                onClick={switchToCalendar}
-              >
-                📅 {t('appointments.views.calendar')}
-              </button>
-            </div>
-            <button
-              className="btn-primary"
-              onClick={openCreateModal}
-            >
-              {t('reservations.newButton')}
-            </button>
-          </div>
-        </div>
-
         {/* Messages d'erreur */} 
         {error && (
           <div className="notification-toast error-message">
@@ -115,20 +96,9 @@ function ReservationsPage() {
           </div>
         )}
 
-        {/* Contenu principal - Liste ou Calendrier */}
         <div className="appointments-section">
-          {isCalendarView ? (
-            <div className="calendar-view">
-              <AppointmentsCalendar
-                appointments={filteredReservations}
-                onSelectAppointment={handleCalendarSelectAppointment}
-                onSelectSlot={handleCalendarSelectSlot}
-              />
-            </div>
-          ) : (
-            <>
-              {/* Zone des réservations en attente */}
-              <div className="appointments-zone waiting-zone">
+          {/* Zone des réservations en attente */}
+          <div className="appointments-zone waiting-zone">
                 <h3 className="zone-title">
                   <span className="zone-icon"></span>
                   {t('reservations.waitingReservations')}
@@ -209,8 +179,6 @@ function ReservationsPage() {
                   }}
                 />
               </div>
-            </>
-          )}
         </div>
 
         {/* Modal de création de réservation */}

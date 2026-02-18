@@ -92,9 +92,6 @@
 
   // Contenu des onglets
   .tab-content {
-    background: rgba(255, 255, 255, 0.397);
-    backdrop-filter: blur(2px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
     padding: 2rem;
     min-height: 500px;
@@ -174,7 +171,7 @@
       }
 
       .users-table {
-        background: var(--color-surface);
+        background: rgba(255, 255, 255, 0.2);
         border-radius: var(--radius-lg);
         overflow: hidden;
         box-shadow: var(--shadow-sm);
@@ -184,7 +181,8 @@
           border-collapse: collapse;
 
           thead {
-            background: var(--color-background);
+            background: rgba(255, 255, 255, 0.104);
+            backdrop-filter: blur(2px);
             border-bottom: 2px solid var(--color-border);
             
             th {
@@ -216,15 +214,16 @@
               td {
                 padding: 1.25rem;
                 color: white;
-     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                color: white;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                 font-size: 0.9375rem;
                 vertical-align: middle;
 
                 &:first-child {
                   color: white;
-     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
                   font-weight: 600;
                 }
 
@@ -241,11 +240,15 @@
                   &.admin {
                     background: var(--color-danger-muted);
                     color: var(--color-danger);
+                    text-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+                    text-shadow: 0 1px 3px rgba(0, 0, 0, 0);
                   }
 
                   &.user {
                     background: var(--color-accent-muted);
                     color: var(--color-accent);
+                    text-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+                    text-shadow: 0 1px 3px rgba(0, 0, 0, 0);
                   }
                 }
 
@@ -258,6 +261,7 @@
                   font-weight: 700;
                   text-transform: uppercase;
                   letter-spacing: 0.5px;
+                  text-shadow: 0 1px 3px rgba(0, 0, 0, 0);
 
                   &.active {
                     background: var(--color-success-muted);

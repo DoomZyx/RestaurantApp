@@ -113,6 +113,7 @@
       padding: 15px 25px;
       cursor: pointer;
       font-size: 1rem;
+      color: white;
       border-bottom: 3px solid transparent;
       transition: all 0.3s;
       position: relative;
@@ -146,7 +147,7 @@
   }
 
   .tab-content {
-    background: rgba(255, 255, 255, 0.397);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 2rem;
@@ -228,9 +229,7 @@
   .save-section {
     margin-top: 2rem;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.397);
-    backdrop-filter: blur(2px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: none;
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
     display: flex;

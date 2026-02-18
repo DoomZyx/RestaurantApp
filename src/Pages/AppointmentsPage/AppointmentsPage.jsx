@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import { useState, useMemo } from "react";
 import { useAppointments } from "../../Hooks/Appointments/useAppointments";
 import AppLayout from "../../Components/Layout/AppLayout";
-import AppointmentsCalendar from "../../Components/Calendar/AppointmentsCalendar";
 import { AppointmentsFilters } from "../../Components/Appointments/AppointmentsFilters";
 import { AppointmentsList } from "../../Components/Appointments/AppointmentsList";
 import { CreateAppointmentForm } from "../../Components/Appointments/CreateAppointmentForm";
@@ -30,11 +29,6 @@ function AppointmentsPage() {
     closeDetailsModal,
     closeCreateModal,
     handleViewDetails,
-    viewMode,
-    switchToList,
-    switchToCalendar,
-    isListView,
-    isCalendarView,
     clearError,
     formatDateTime,
     getStatusBadge,
@@ -42,8 +36,6 @@ function AppointmentsPage() {
     handleDeleteAppointment,
     handleCreateAppointment,
     handleEditAppointment,
-    handleCalendarSelectAppointment,
-    handleCalendarSelectSlot,
   } = useAppointments();
 
   // Fonction pour déterminer si une heure appartient au service midi ou soir
@@ -71,6 +63,18 @@ function AppointmentsPage() {
   return (
     <AppLayout>
       <div className="appointments-page">
+
+        <div className="page-header">
+          <div className="header-actions">
+            <button
+              className="btn-primary"
+              onClick={openCreateModal}
+            >
+              {t('appointments.newButton')}
+            </button>
+          </div>
+        </div>
+        
         <AppointmentsFilters
           filters={filters}
           handleFilterChange={handleFilterChange}
@@ -81,31 +85,6 @@ function AppointmentsPage() {
         />
 
 
-        <div className="page-header">
-          <div className="header-actions">
-            <div className="view-toggle">
-              <button
-                className={`btn-toggle ${isListView ? "active" : ""}`}
-                onClick={switchToList}
-              >
-                📋 {t('appointments.views.list')}
-              </button>
-              <button
-                className={`btn-toggle ${isCalendarView ? "active" : ""}`}
-                onClick={switchToCalendar}
-              >
-                📅 {t('appointments.views.calendar')}
-              </button>
-            </div>
-            <button
-              className="btn-primary"
-              onClick={openCreateModal}
-            >
-              {t('appointments.newButton')}
-            </button>
-          </div>
-        </div>
-
         {/* Messages d'erreur */} 
         {error && (
           <div className="notification-toast error-message">
@@ -115,18 +94,7 @@ function AppointmentsPage() {
           </div>
         )}
 
-        {/* Contenu principal - Liste ou Calendrier */}
         <div className="appointments-section">
-          {isCalendarView ? (
-            <div className="calendar-view">
-              <AppointmentsCalendar
-                appointments={filteredAppointments}
-                onSelectAppointment={handleCalendarSelectAppointment}
-                onSelectSlot={handleCalendarSelectSlot}
-              />
-            </div>
-          ) : (
-            <>
               {/* Zone des commandes en attente */}
               <div className="appointments-zone waiting-zone">
                 <h3 className="zone-title">
@@ -209,8 +177,6 @@ function AppointmentsPage() {
                   }}
                 />
               </div>
-            </>
-          )}
         </div>
 
         {/* Modal de création de rendez-vous */}

@@ -40,7 +40,7 @@
 
     // Section du tableau de bord
     .dashboard-section {
-      background: rgba(255, 255, 255, 0.397);
+      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
@@ -56,7 +56,7 @@
 
       // Titre de section
       .section-title {
-        background: rgba(255, 255, 255, 0.397);
+        background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(2px);
         padding: 1.25rem 1.75rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.06);
