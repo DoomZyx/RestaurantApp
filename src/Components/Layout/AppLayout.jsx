@@ -8,7 +8,7 @@ function AppLayout({ children, title, subtitle }) {
   useSystemNotifications();
   return (
     <div className="app-layout">
-      <img className="app-wallpaper" src={`${import.meta.env.BASE_URL}bgs.jpg`} alt="" />
+      <img className="app-wallpaper" src={`${(import.meta.env.BASE_URL ?? "/").replace(/\/?$/, "/")}bgs.jpg`} alt="" />
       <Menu />
       <main className="main-content">
             <div className="title-section">
