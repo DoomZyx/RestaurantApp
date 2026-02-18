@@ -54,7 +54,9 @@
     "configuration": "CONFIGURATION",
     "myAccount": "MY ACCOUNT",
     "adminPanel": "ADMIN",
-    "logout": "LOGOUT"
+    "logout": "LOGOUT",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "login": {
     "title": "AirFood AI",

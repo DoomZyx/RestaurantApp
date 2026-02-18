@@ -74,14 +74,6 @@ function Login() {
             )}
           </button>
         </form>
-
-        <div className="login-footer">
-          <p>
-            <strong>{t('login.defaultAccount')}</strong>
-          </p>
-          <p>{t('login.defaultEmail')}</p>
-          <p>{t('login.defaultPassword')}</p>
-        </div>
       </div>
     </div>
   );

@@ -54,20 +54,19 @@
     "configuration": "CONFIGURATION",
     "myAccount": "MON COMPTE",
     "adminPanel": "ADMIN",
-    "logout": "DECONNEXION"
+    "logout": "DECONNEXION",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
   },
   "login": {
-    "title": "AirFood AI",
+    "title": "SmartFood",
     "subtitle": "Connexion à votre espace",
     "email": "Email",
     "password": "Mot de passe",
     "emailPlaceholder": "votre@email.com",
     "passwordPlaceholder": "Votre mot de passe",
     "loginButton": "Se connecter",
-    "loggingIn": "Connexion...",
-    "defaultAccount": "Compte par défaut :",
-    "defaultEmail": "Email: admin@handlehome.com",
-    "defaultPassword": "Mot de passe: admin123"
+    "loggingIn": "Connexion..."
   },
   "homepage": {
     "title": "Tableau de bord"

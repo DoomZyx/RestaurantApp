@@ -262,6 +262,8 @@ nav {
     transform: translateX(-100%);
     transition: transform var(--transition-base);
     box-shadow: var(--shadow-xl);
+    z-index: 301;
+    backdrop-filter: blur(20px);
 
     &.open {
       transform: translateX(0);
@@ -273,5 +275,79 @@ nav {
   nav {
     width: 100%;
     max-width: 360px;
+  }
+}
+
+/* Menu burger et overlay (mobile / tablette) */
+.menu-burger {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  color: white;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+
+  i {
+    font-size: 1.5rem;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+
+.nav-close {
+  display: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+
+  i {
+    font-size: 1.25rem;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+@media (max-width: 1024px) {
+  .menu-burger {
+    display: flex;
+    z-index: 302;
+  }
+
+  .nav-close {
+    display: flex;
   }
 }
