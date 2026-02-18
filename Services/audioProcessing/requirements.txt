@@ -1,10 +1,15 @@
 # Dépendances Python pour le service RNNoise
+# setuptools/wheel requis pour compiler rnnoise-python (installer en premier si venv vide)
+setuptools>=65.0
+wheel
+
 fastapi==0.104.1
 uvicorn==0.24.0
-numpy==1.24.3
+numpy>=1.26.0
 pydantic==2.5.0
 python-multipart==0.0.6
 
-# RNNoise pour suppression de bruit
-rnnoise-python==0.1.0
+# RNNoise (compatible Python 3.12, PyPI). audiolab (dep de pyrnnoise) exige requests
+pyrnnoise>=0.4.0
+requests>=2.28.0
 

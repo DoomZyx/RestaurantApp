@@ -4,11 +4,16 @@
 
 echo "🎙️ Démarrage du service RNNoise..."
 
-# Activer l'environnement virtuel
+# Repertoire du script (pour appeler le bon venv)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR"
+
 if [ -d "venv" ]; then
-    source venv/bin/activate
+    PYTHON="venv/bin/python3"
+elif [ -d ".venv" ]; then
+    PYTHON=".venv/bin/python3"
 else
-    echo "❌ Environnement virtuel non trouvé. Exécutez d'abord ./install.sh"
+    echo "Environnement virtuel non trouve. Executez d'abord: ./install.sh"
     exit 1
 fi
 
@@ -21,6 +26,6 @@ echo ""
 echo "Pour arrêter le service, appuyez sur Ctrl+C"
 echo ""
 
-# Démarrer le service
-python3 rnnoise_service.py
+# Demarrer le service avec le Python du venv
+exec "$PYTHON" rnnoise_service.py
 

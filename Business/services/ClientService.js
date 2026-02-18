@@ -31,13 +31,20 @@ export class ClientService {
   static async createClient(clientData) {
     const { prenom = '-', nom = '-', telephone, email, adresse, entrepriseName, type = 'fournisseur' } = clientData;
 
-    // Vérifier si le client existe déjà
     const existingClient = await Client.findOne({ telephone });
     if (existingClient) {
-      throw new Error("Un client avec ce numéro de téléphone existe déjà");
+      // Même numéro déjà en base (ex: créé après un appel en tant que client).
+      // On met à jour le contact existant en fournisseur et on fusionne les infos.
+      existingClient.type = type;
+      if (prenom !== '-') existingClient.prenom = prenom;
+      if (nom !== '-') existingClient.nom = nom;
+      if (email) existingClient.email = email;
+      if (adresse !== undefined) existingClient.adresse = adresse;
+      if (entrepriseName !== undefined) existingClient.entrepriseName = entrepriseName;
+      await existingClient.save();
+      return existingClient;
     }
 
-    // Créer le nouveau client
     const newClient = await Client.create({
       prenom,
       nom,
@@ -45,7 +52,7 @@ export class ClientService {
       email,
       adresse,
       entrepriseName,
-      type, // Par défaut 'fournisseur' pour la page contacts
+      type,
     });
 
     return newClient;

@@ -14,39 +14,47 @@ fi
 
 echo "✅ Python 3 détecté: $(python3 --version)"
 
-# Créer un environnement virtuel si nécessaire
+# Créer un environnement virtuel si nécessaire (évite externally-managed-environment sur Debian/Ubuntu)
 if [ ! -d "venv" ]; then
-    echo "📦 Création de l'environnement virtuel..."
-    python3 -m venv venv
+    echo "Création de l'environnement virtuel..."
+    if ! python3 -m venv venv; then
+        echo ""
+        echo "Erreur: impossible de creer le venv. Sur Debian/Ubuntu, installez d'abord:"
+        echo "  sudo apt install python3.12-venv"
+        echo "ou: sudo apt install python3-venv"
+        echo ""
+        exit 1
+    fi
 fi
 
 # Activer l'environnement virtuel
 echo "🔄 Activation de l'environnement virtuel..."
 source venv/bin/activate
 
+# Installer setuptools/wheel d'abord (requis pour compiler rnnoise-python)
+echo "Installation de setuptools et wheel..."
+pip install --upgrade pip setuptools wheel
+
 # Installer les dépendances
-echo "📥 Installation des dépendances..."
-pip install --upgrade pip
+echo "Installation des dependances..."
 pip install -r requirements.txt
 
-# Vérifier l'installation
+# Vérifier l'installation (dépendances principales)
 echo ""
-echo "🔍 Vérification de l'installation..."
-python3 -c "from rnnoise_python import RNNoise; print('✅ RNNoise importé avec succès')"
-
-if [ $? -eq 0 ]; then
-    echo ""
-    echo "✅ Installation terminée avec succès !"
-    echo ""
-    echo "Pour démarrer le service:"
-    echo "  source venv/bin/activate"
-    echo "  python3 rnnoise_service.py"
-    echo ""
-    echo "Ou utilisez le script de démarrage:"
-    echo "  ./start_rnnoise.sh"
-else
-    echo ""
-    echo "❌ Erreur lors de l'installation. Vérifiez les messages ci-dessus."
+echo "Verification de l'installation..."
+if ! python3 -c "import fastapi, uvicorn, numpy; print('OK')" 2>/dev/null; then
+    echo "Erreur: dependances principales manquantes."
     exit 1
 fi
+
+if ./venv/bin/python3 -c "from pyrnnoise import RNNoise; print('OK')" 2>/dev/null; then
+    echo "pyrnnoise: actif (reduction de bruit disponible)"
+else
+    echo "pyrnnoise: import echoue (voir erreur ci-dessus ou lancer: ./venv/bin/python3 -c \"from pyrnnoise import RNNoise\")"
+fi
+
+echo ""
+echo "Installation terminee."
+echo "Demarrer le service: ./start_rnnoise.sh"
+echo "Ou: source venv/bin/activate && python3 rnnoise_service.py"
 

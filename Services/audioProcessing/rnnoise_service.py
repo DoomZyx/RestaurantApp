@@ -3,7 +3,16 @@ Service RNNoise pour suppression de bruit en temps réel
 API HTTP légère pour traiter l'audio des appels téléphoniques
 """
 
+import sys
 import os
+
+def _log(msg):
+    """Log vers stderr (visible au demarrage avant uvicorn)."""
+    print(f"[RNNoise-service] {msg}", file=sys.stderr, flush=True)
+
+_log(f"Python: {sys.executable}")
+_log(f"sys.path[0]: {sys.path[0] if sys.path else 'vide'}")
+
 import io
 import wave
 import base64
@@ -14,12 +23,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
 
-# Importer rnnoise (sera installé via pip)
+# pyrnnoise (PyPI, compatible Python 3.12) : 48kHz, 480 samples/frame
+RNNoise = None
 try:
-    from rnnoise_python import RNNoise
-except ImportError:
-    print("WARNING: rnnoise-python non installe. Executez: pip install rnnoise-python")
-    RNNoise = None
+    import pyrnnoise as _pyrnnoise_mod
+    _log(f"pyrnnoise module: {getattr(_pyrnnoise_mod, '__file__', '?')}")
+    from pyrnnoise import RNNoise
+    _log("pyrnnoise.RNNoise importe OK")
+except Exception as e:
+    import traceback
+    _log(f"pyrnnoise import KO: {type(e).__name__}: {e}")
+    _log("Traceback:\n" + traceback.format_exc())
 
 app = FastAPI(title="RNNoise Audio Cleaning Service", version="1.0.0")
 
@@ -48,13 +62,18 @@ class AudioResponse(BaseModel):
 
 @app.on_event("startup")
 async def startup_event():
-    """Initialiser RNNoise au démarrage"""
+    """Initialiser RNNoise au démarrage (pyrnnoise: 48kHz)"""
     global denoiser
     if RNNoise:
-        denoiser = RNNoise()
-        print("✅ RNNoise initialisé avec succès")
+        try:
+            denoiser = RNNoise(sample_rate=48000)
+            _log("RNNoise initialise (pyrnnoise)")
+        except Exception as e:
+            import traceback
+            _log(f"RNNoise(sample_rate=48000) KO: {type(e).__name__}: {e}")
+            _log(traceback.format_exc())
     else:
-        print("❌ RNNoise non disponible")
+        _log("RNNoise non disponible (voir traceback ci-dessus)")
 
 @app.get("/")
 async def root():
@@ -88,47 +107,43 @@ async def clean_audio(request: AudioRequest):
     if not denoiser:
         raise HTTPException(
             status_code=503,
-            detail="RNNoise non disponible. Installez: pip install rnnoise-python"
+            detail="RNNoise non disponible. pip install pyrnnoise"
         )
-    
+
     try:
-        # Décoder l'audio base64 (format mulaw de Twilio)
+        # Décoder l'audio base64 (format mulaw de Twilio, 8kHz)
         audio_bytes = base64.b64decode(request.audio_payload)
-        
-        # Convertir mulaw en PCM 16-bit avec audioop (plus fiable)
-        pcm_bytes = audioop.ulaw2lin(audio_bytes, 2)  # 2 = 16-bit
+        pcm_bytes = audioop.ulaw2lin(audio_bytes, 2)
         pcm_audio = np.frombuffer(pcm_bytes, dtype=np.int16)
-        
-        # Convertir en numpy array (float32 normalisé entre -1 et 1)
         audio_float = pcm_audio.astype(np.float32) / 32768.0
-        
-        # RNNoise fonctionne par blocs de 480 échantillons (10ms à 48kHz)
-        # Pour 8kHz, on utilise des blocs de 80 échantillons
-        frame_size = 80  # 10ms à 8kHz
-        
-        # Padding si nécessaire
-        remainder = len(audio_float) % frame_size
+
+        # pyrnnoise attend 48kHz, 480 échantillons/frame (10ms). On re-échantillonne 8k -> 48k par frame.
+        frame_8k_size = 80   # 10ms à 8kHz
+        frame_48k_size = 480  # 10ms à 48kHz
+        remainder = len(audio_float) % frame_8k_size
         if remainder != 0:
-            padding = frame_size - remainder
-            audio_float = np.pad(audio_float, (0, padding), mode='constant')
-        
-        # Traiter l'audio par blocs
+            audio_float = np.pad(audio_float, (0, frame_8k_size - remainder), mode="constant")
+
         cleaned_frames = []
         noise_detected = False
-        
-        for i in range(0, len(audio_float), frame_size):
-            frame = audio_float[i:i + frame_size]
-            
-            # RNNoise traite le frame et retourne la probabilité de bruit
-            cleaned_frame = denoiser.process_frame(frame)
-            
-            if cleaned_frame is not None:
-                cleaned_frames.append(cleaned_frame)
-            else:
-                # Si RNNoise échoue, garder le frame original
-                cleaned_frames.append(frame)
-        
-        # Reconstituer l'audio nettoyé
+
+        for i in range(0, len(audio_float), frame_8k_size):
+            frame_8k = audio_float[i : i + frame_8k_size]
+            # Upsample 80 -> 480 (interpolation linéaire)
+            x_old = np.arange(frame_8k_size, dtype=np.float64)
+            x_new = np.linspace(0, frame_8k_size - 1, frame_48k_size, dtype=np.float64)
+            frame_48k = np.interp(x_new, x_old, frame_8k).astype(np.float32)
+
+            try:
+                speech_prob, denoised_48k = denoiser.denoise_frame(frame_48k, partial=False)
+            except Exception:
+                denoised_48k = frame_48k
+            if denoised_48k is None or len(denoised_48k) != frame_48k_size:
+                denoised_48k = frame_48k
+            # Downsample 480 -> 80 (un échantillon sur 6)
+            frame_out = np.asarray(denoised_48k[::6], dtype=np.float32)
+            cleaned_frames.append(frame_out)
+
         cleaned_audio = np.concatenate(cleaned_frames)
         
         # Reconvertir en PCM 16-bit

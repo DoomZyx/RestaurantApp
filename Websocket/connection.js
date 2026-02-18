@@ -10,6 +10,20 @@ import { cleanAudio, checkRNNoiseAvailability } from "../Services/audioProcessin
 
 dotenv.config();
 
+/** Cache RNNoise (une vérification par processus, log une seule fois) */
+let _rnnoiseAvailable = null;
+async function getRnnoiseAvailable() {
+  if (_rnnoiseAvailable === null) {
+    _rnnoiseAvailable = await checkRNNoiseAvailability();
+    if (_rnnoiseAvailable) {
+      callLogger.info(null, "RNNoise activé - Réduction de bruit en temps réel");
+    } else {
+      callLogger.info(null, "RNNoise non disponible - Audio non filtré (service optionnel)");
+    }
+  }
+  return _rnnoiseAvailable;
+}
+
 /**
  * Gestionnaire principal de la connexion WebSocket
  * Orchestre la communication entre Twilio et OpenAI
@@ -32,13 +46,7 @@ export async function handleWebSocketConnection(connection, request) {
     let twilioHandler = null;
     let transcriptionHandler = null;
     
-    // Vérifier disponibilité RNNoise (une seule fois au début)
-    const rnnoiseAvailable = await checkRNNoiseAvailability();
-    if (rnnoiseAvailable) {
-      callLogger.info(null, "RNNoise activé - Réduction de bruit en temps réel");
-    } else {
-      callLogger.info(null, "RNNoise non disponible - Audio non filtré (service optionnel)");
-    }
+    const rnnoiseAvailable = await getRnnoiseAvailable();
 
 
 
