@@ -366,34 +366,50 @@ export async function getAvailableSlots(request, reply) {
   }
 }
 
+// Retourne les chiffres du numéro uniquement (pour recherche insensible au format)
+function digitsOnly(phone) {
+  if (phone == null || phone === "") return "";
+  return String(phone).replace(/\D/g, "");
+}
+
 // Créer une commande depuis l'IA
 export async function createOrderFromAI(request, reply) {
   try {
     const orderData = request.body;
-
-    // Trouver le client (création automatique désactivée)
-    let client = await Client.findOne({ telephone: orderData.telephone });
-    if (!client) {
-      return reply.code(404).send({
-        error: "Client non trouvé. Veuillez créer le client manuellement avant d'importer la commande."
+    const rawPhone = orderData.clientPhone || orderData.telephone || "";
+    const phoneNormalized = digitsOnly(rawPhone);
+    if (phoneNormalized.length < 10) {
+      return reply.code(400).send({
+        error: "Numéro de téléphone invalide ou manquant.",
       });
     }
 
-    // Créer la commande
+    // Recherche client existant par téléphone (pas de création de contact en restauration rapide)
+    const client = await Client.findOne({
+      $or: [
+        { telephone: rawPhone.trim() },
+        { telephone: phoneNormalized },
+        { telephone: rawPhone.replace(/\s+/g, "").replace(/-/g, "") },
+      ],
+    });
+
+    // Créer la commande : avec client si trouvé, sinon sans client (nom uniquement)
     const order = await OrderModel.create({
-      client: client._id,
+      client: client?._id ?? null,
+      nom: client ? null : (orderData.name || "Client").trim() || null,
       date: new Date(orderData.date),
-      heure: orderData.heure,
-      duree: orderData.duree || 60,
-      type: orderData.type,
-      modalite: orderData.modalite,
-      description: orderData.description,
+      heure: orderData.time ?? orderData.heure,
+      duree: orderData.duration ?? orderData.duree ?? 60,
+      type: orderData.type ?? null,
+      modalite: orderData.modalite ?? null,
+      description: orderData.description ?? null,
       statut: "confirme",
       createdBy: "system",
     });
 
-    // Populer les données du client
-    await order.populate("client");
+    if (order.client) {
+      await order.populate("client");
+    }
 
     return reply.code(201).send({
       success: true,

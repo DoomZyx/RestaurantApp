@@ -21,7 +21,18 @@ export class SessionHandler {
       
       // Forcer une réponse de l'assistant sans attendre l'utilisateur
       this.openAiWs.send(JSON.stringify({
-        type: "response.create"
+        type: "response.create",
+        response: {
+          instructions: "Bonjour, je parle un peu plus vite !",
+          modalities: ["audio", "text"],
+          audio: {
+            voice: "ballad",
+            voice_settings: {
+              speech_rate: 1.2,  // 1.0 = normal, >1 = plus rapide
+              pitch: 0           // facultatif
+            }
+          }
+        }
       }));
     }
   }
