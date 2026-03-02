@@ -14,13 +14,33 @@ export class ValidationService {
       return "Transcription trop courte (< 50 caractères) - Appel probablement raccroché immédiatement";
     }
 
-    // 2. Compter le nombre de mots
-    const words = transcription.trim().split(/\s+/);
+    // 2. Détecter phrases incomplètes (appel coupé)
+    const trimmed = transcription.trim();
+    const lastChar = trimmed[trimmed.length - 1];
+    const hasFinalPunctuation = /[.!?]/.test(lastChar);
+    
+    // Vérifier si dernière phrase est incomplète
+    const sentences = trimmed.split(/[.!?]/);
+    const lastSentence = sentences[sentences.length - 1].trim();
+    
+    // Si pas de ponctuation finale ET dernière phrase très courte (< 10 caractères)
+    if (!hasFinalPunctuation && lastSentence.length < 10 && lastSentence.length > 0) {
+      return "Transcription incomplète - Phrase coupée détectée (appel interrompu)";
+    }
+
+    // Vérifier si dernier mot est coupé (moins de 3 caractères et pas de ponctuation)
+    const words = trimmed.split(/\s+/);
+    const lastWord = words[words.length - 1];
+    if (lastWord && lastWord.length < 3 && !/[.!?]/.test(lastWord)) {
+      return "Transcription incomplète - Mot coupé détecté (appel interrompu)";
+    }
+
+    // 3. Compter le nombre de mots
     if (words.length < 10) {
       return `Transcription trop courte (${words.length} mots) - Pas assez d'informations`;
     }
 
-    // 3. Vérifier si la transcription contient au moins une interaction client
+    // 4. Vérifier si la transcription contient au moins une interaction client
     const hasClientInteraction = /Client:/i.test(transcription);
     const hasUserContent = transcription.split("Client:").length > 1;
     
@@ -28,7 +48,7 @@ export class ValidationService {
       return "Aucune interaction client détectée - Client n'a probablement rien dit";
     }
 
-    // 4. Extraire uniquement les parties "Client:" pour analyser
+    // 5. Extraire uniquement les parties "Client:" pour analyser
     const clientParts = transcription.split(/Client:/i).slice(1).join(" ");
     const clientWords = clientParts.trim().split(/\s+/).filter(w => w.length > 0);
     
@@ -36,7 +56,7 @@ export class ValidationService {
       return `Client a parlé trop peu (${clientWords.length} mots) - Informations insuffisantes`;
     }
 
-    // 5. Vérifier si c'est juste du bruit (mots répétés, onomatopées)
+    // 6. Vérifier si c'est juste du bruit (mots répétés, onomatopées)
     const noiseWords = ["euh", "hein", "ah", "oh", "um", "uh", "mmm", "hum"];
     const meaningfulWords = clientWords.filter(word => 
       !noiseWords.includes(word.toLowerCase()) && word.length > 2

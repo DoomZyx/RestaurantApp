@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import dotenv from "dotenv";
 import notificationService from "../../Services/notificationService.js";
 import { ValidationService } from "../services/ValidationService.js";
+import { normalizeTranscription } from "../../Services/transcription/transcriptionNormalizer.js";
 
 dotenv.config();
 
@@ -33,8 +34,23 @@ export class TranscriptionHandler {
         transcription.length
       );
 
+      // ✅ NORMALISATION : Améliorer la qualité de la transcription
+      const normalizedTranscription = normalizeTranscription(transcription);
+      
+      if (normalizedTranscription !== transcription) {
+        this.callLogger.info(
+          this.streamSid,
+          "Transcription normalisée",
+          {
+            originalLength: transcription.length,
+            normalizedLength: normalizedTranscription.length,
+            preview: normalizedTranscription.substring(0, 200)
+          }
+        );
+      }
+
       // ✅ VALIDATION : Vérifier si la transcription est exploitable
-      const validation = ValidationService.validateTranscription(transcription);
+      const validation = ValidationService.validateTranscription(normalizedTranscription);
       
       if (validation !== true) {
         // ❌ Transcription invalide - Annuler le traitement
@@ -53,14 +69,14 @@ export class TranscriptionHandler {
       }
 
       // Si la transcription est trop courte, on la garde quand même (fallback désactivé)
-      if (transcription.length < 100) {
+      if (normalizedTranscription.length < 100) {
         this.callLogger.info(
           this.streamSid,
           "Transcription courte détectée - utilisation de la transcription OpenAI"
         );
       }
 
-      await this.sendToProcessingAPI(transcription, startTime);
+      await this.sendToProcessingAPI(normalizedTranscription, startTime);
     } catch (error) {
       this.callLogger.error(this.streamSid, error, {
         source: "TranscriptionHandler.js",

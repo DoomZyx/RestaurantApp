@@ -16,7 +16,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
     const restaurantInfo = await getRestaurantInfo();
     
     // Générer le prompt enrichi avec les tarifs ET la date actuelle
-    const enrichedInstructions = await generateEnrichedPrompt(getSystemMessage(restaurantInfo));
+    const enrichedInstructions = await generateEnrichedPrompt(getSystemMessage(restaurantInfo ?? null));
     
     const sessionUpdate = {
       type: "session.update",
@@ -38,16 +38,24 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
         modalities: ["text", "audio"],
         temperature: 0.8,
         max_response_output_tokens: 812,  // Limite les monologues pour que l'interruption soit prise en compte plus tôt
+        // Configuration Whisper pour la transcription côté OpenAI Realtime
+        // Attention : l'API ne supporte PAS le paramètre temperature ici
+        // Limite : prompt max 1024 caractères
         input_audio_transcription: {
           model: "whisper-1",
-          prompt:
-            "Transcription d'appels téléphoniques pour un restaurant ou fast-food en français. " +
-            "Priorité ABSOLUE : bien entendre et transcrire les CHIFFRES, HEURES et NUMÉROS DE TÉLÉPHONE. " +
-            "Exemples d'heures : '18h', '18h30', 'dix-huit heures trente', 'vers 19h', 'à midi', 'midi', 'minuit'. " +
-            "Transcris les heures de façon cohérente dans le texte (18h, 18h30, 19h, etc.). " +
-            "Exemples de numéros : '06 72 88 62 55', '07 86 87 67 89'. " +
-            "Même s'il y a du bruit, privilégie la justesse des chiffres et des horaires. " +
-            "Vocabulaire du menu : nuggets, tacos, burgers, sauce Biggy, sauce Algérienne, sauce Samourai, frites, Coca-Cola, Ice Tea, menu simple, menu double, menu triple, crudités, poulet, bœuf, agneau."
+          language: "fr",
+          prompt: (() => {
+            const fullPrompt =
+              "Transcription d'appels téléphoniques pour restaurant/fast-food en français.\n\n" +
+              "PRIORITÉ - CHIFFRES : Transcris TOUS les chiffres en numérique (0-9), jamais en lettres. Ex: 'deux' → '2', 'trois' → '3'.\n\n" +
+              "PRIORITÉ - HEURES : Format HHh ou HHhMM (ex: '18h', '19h30'). Ne JAMAIS transcrire en lettres. 'midi' → '12h', 'minuit' → '00h', 'huit heures' → '8h' (matin) ou '20h' (soir).\n\n" +
+              "PRIORITÉ - TÉLÉPHONE : Format XX XX XX XX XX (10 chiffres avec espaces). Ex: 'zéro six soixante-douze...' → '06 72 88 62 55'. Transcris chaque chiffre en numérique.\n\n" +
+              "VOCABULAIRE MENU : 'Coca-Cola' (majuscules et tiret), 'burger', 'frites', 'tacos', 'pizza', 'margherita' (avec 'h'), 'sauce Algérienne' (majuscule), 'sauce Samouraï'.\n\n" +
+              "RÈGLES : Privilégie justesse chiffres/horaires même avec bruit. Si incertain, transcris quand même. Garde ponctuation naturelle. Respecte majuscules noms propres et produits.";
+            
+            // Tronquer à 1024 caractères maximum (limite OpenAI)
+            return fullPrompt.length > 1024 ? fullPrompt.substring(0, 1024) : fullPrompt;
+          })()
         },
         tools: [
           {
@@ -121,7 +129,9 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
   ws.on("error", (error) => {
     console.error("ERREUR OpenAI WebSocket:", error);
     console.error("   - Message:", error.message);
-    console.error("   - Code:", error.code);
+    if ("code" in error) {
+      console.error("   - Code:", error.code);
+    }
   });
 
   ws.on("close", (code, reason) => {
