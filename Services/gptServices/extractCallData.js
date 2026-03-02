@@ -1,12 +1,38 @@
 import OpenAI from "openai";
 import dotenv from "dotenv";
 import { getPricingForGPT } from "./pricingService.js";
+import {
+  validateCallData,
+  getValidationReport,
+  validateTimeAgainstOpeningHours,
+  validateTypeDemandeConsistency,
+  validateQuantities,
+  consolidateProducts,
+  detectSuspiciousOrder,
+} from "../validation/callDataValidation.js";
+import {
+  validateAllProducts,
+} from "../validation/ProductValidationService.js";
+import { callLogger } from "../logging/logger.js";
+import {
+  recordSuccessfulExtraction,
+  recordParsingError,
+  recordInvalidPhone,
+  recordInvalidTime,
+} from "../monitoring/extractionMetrics.js";
+import { retryWithBackoff } from "../utils/retryWithBackoff.js";
+import { extractWithRules } from "./ruleBasedExtractor.js";
+import { FailedExtractionService } from "./failedExtractionService.js";
+import circuitBreaker from "./circuitBreaker.js";
 
 dotenv.config();
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+// Version du prompt pour traçabilité (AMEL-011)
+const PROMPT_VERSION = "2.0";
 
 const EXTRACTION_PROMPT = `RÈGLES ABSOLUES - FORMAT JSON UNIQUEMENT 
 
@@ -18,21 +44,7 @@ const EXTRACTION_PROMPT = `RÈGLES ABSOLUES - FORMAT JSON UNIQUEMENT
 ========================================
 TA MISSION :
 Extraire les informations d'un appel téléphonique de RESTAURANT
-========================================
-
-CORRECTION AUTOMATIQUE DES ERREURS DE TRANSCRIPTION :
-
-Audio → Correction :
-- "copoins", "copins", "coco" → "Coca" ou "Coca-Cola"
-- "pizaa", "pizzza" → "Pizza"
-- "borger", "burgeur" → "Burger"
-- "frite", "frittes" → "Frites"
-- "salad" → "Salade"
-- "mennu" → "Menu"
-- "desert", "désert" → "Dessert"
-- "marguerite", "margarita" → "Margherita"
-- "quatre fromage" → "4 Fromages"
-- "reine", "reines" → "Reine"
+=======================================
 
 Utilise les NOMS EXACTS du menu fourni ci-dessous, pas la transcription brute.
 
@@ -81,8 +93,14 @@ ORDER = NULL si :
 - Questions d'horaires uniquement
 - Questions sur le menu/ingrédients sans demande de commande
 - Réclamations sans commande
+- Le client dit "je regarde le menu" ou "je consulte le menu"
+- Le client demande seulement des informations (prix, horaires, adresse)
+- Le client dit "je vais réfléchir" ou "je vais voir"
 
-SI TU HÉSITES → CRÉER L'ORDER quand même !
+SI TU HÉSITES → Analyse le contexte :
+- Si mention d'un PLAT CONCRET (nom de pizza, burger, etc.) → CRÉER ORDER
+- Si seulement questions/infos sans mention de plat → ORDER = NULL
+- En cas de doute, privilégie ORDER = NULL plutôt que créer une commande fantôme
 
 ========================================
 CHAMPS À EXTRAIRE :
@@ -532,12 +550,72 @@ Exemple : "Une pizza... Martin... pour 19h" → Nom = "Martin"
 C'est parti !
 `;
 
-export async function extractCallData(transcription) {
-  try {
+// Schéma JSON strict pour l'extraction
+const EXTRACTION_JSON_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    nom: { type: ["string", "null"] },
+    telephone: { type: ["string", "null"] },
+    type_demande: { type: "string" },
+    services: { type: "string" },
+    description: { type: "string" },
+    statut: { type: "string" },
+    order: {
+      type: ["object", "null"],
+      additionalProperties: false,
+      properties: {
+        date: { type: "string" },
+        heure: { type: ["string", "null"] },
+        duree: { type: "number" },
+        type: { type: "string" },
+        modalite: { type: "string" },
+        nombrePersonnes: { type: ["number", "null"] },
+        description: { type: "string" },
+        commandes: {
+          type: "array",
+          items: {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+              nom: { type: "string" },
+              categorie: { type: "string" },
+              quantite: { type: "number" },
+              prixUnitaire: { type: "number" },
+              supplements: { type: "string" },
+              personnalisation: { type: ["object", "null"] },
+              options: { type: ["object", "null"] }
+            },
+            required: ["nom", "categorie", "quantite", "prixUnitaire"]
+          }
+        }
+      },
+      required: ["date", "duree", "type", "modalite", "commandes"]
+    }
+  },
+  required: ["nom", "telephone", "type_demande", "services", "description", "statut"]
+};
 
+/**
+ * Consolide les produits identiques (même nom + même personnalisation) (AMEL-012)
+ * @param {Array} produits - Tableau de produits
+ * @returns {Array} - Tableau de produits consolidés
+ */
+export async function extractCallData(transcription, streamSid = "unknown") {
+  const extractionStartTime = Date.now();
+  
+  try {
     if (!transcription || transcription.trim().length === 0) {
       throw new Error("Transcription vide ou invalide");
     }
+
+    // Log transcription brute et version du prompt (AMEL-009)
+    callLogger.info(streamSid, "Transcription brute reçue", {
+      transcriptionLength: transcription.length,
+      transcriptionPreview: transcription.substring(0, 200) + (transcription.length > 200 ? "..." : ""),
+      promptVersion: PROMPT_VERSION,
+      event: "transcription_raw"
+    });
 
     // Récupérer le menu configuré
     const pricing = await getPricingForGPT();
@@ -594,21 +672,132 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       enrichedPrompt = EXTRACTION_PROMPT + menuInfo;
     }
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: enrichedPrompt,
+    // Vérifier si le circuit breaker est ouvert (OpenAI down)
+    if (circuitBreaker.isOpen()) {
+      callLogger.warn(streamSid, "Circuit breaker ouvert - Utilisation extracteur rule-based", {
+        circuitState: circuitBreaker.getState(),
+        event: "circuit_breaker_open",
+      });
+
+      // Utiliser extracteur rule-based directement
+      const ruleBasedData = extractWithRules(transcription);
+      callLogger.info(streamSid, "Extraction rule-based effectuée (fallback)", {
+        event: "rule_based_extraction",
+      });
+
+      // Convertir au format attendu
+      return {
+        nom: ruleBasedData.nom,
+        telephone: ruleBasedData.telephone || "Non fourni",
+        type_demande: ruleBasedData.type_demande,
+        services: ruleBasedData.services,
+        description: ruleBasedData.description,
+        statut: ruleBasedData.statut,
+        date: ruleBasedData.date,
+        appointment: ruleBasedData.appointment,
+        extraction_rule_based: true,
+      };
+    }
+
+    // Appel OpenAI avec retry et backoff exponentiel (AMEL-005)
+    let completion;
+    let tentatives = 0;
+    
+    try {
+      completion = await retryWithBackoff(
+        async () => {
+          tentatives++;
+          return await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+              {
+                role: "system",
+                content: enrichedPrompt,
+              },
+              {
+                role: "user",
+                content: transcription,
+              },
+            ],
+            temperature: 0,
+            max_tokens: 2000,
+            response_format: {
+              type: "json_schema",
+              json_schema: {
+                name: "call_extraction",
+                schema: EXTRACTION_JSON_SCHEMA,
+              },
+            },
+          });
         },
         {
-          role: "user",
-          content: transcription,
-        },
-      ],
-      temperature: 0.1,
-      max_tokens: 500,
-    });
+          maxRetries: 3,
+          baseDelay: 1000,
+          onRetry: (attempt, error, delay) => {
+            callLogger.warn(streamSid, `Tentative ${attempt}/3 d'extraction GPT après erreur`, {
+              error: error.message,
+              status: error.status || (error.response && error.response.status),
+              delay: `${delay}ms`,
+              event: "gpt_extraction_retry",
+            });
+
+            // Si erreur 429 (rate limit), enregistrer dans circuit breaker
+            if (error.status === 429 || (error.response && error.response.status === 429)) {
+              circuitBreaker.recordFailure();
+            }
+          },
+        }
+      );
+
+      // Succès - enregistrer dans circuit breaker
+      circuitBreaker.recordSuccess();
+    } catch (retryError) {
+      // Toutes les tentatives ont échoué
+      const errorStatus = retryError.status || (retryError.response && retryError.response.status);
+      
+      callLogger.error(streamSid, new Error("Échec complet de l'extraction GPT après retry"), {
+        source: "extractCallData",
+        context: "gpt_extraction_failed",
+        error: retryError.message,
+        status: errorStatus,
+        tentatives,
+      });
+
+      // Enregistrer l'échec dans le circuit breaker
+      circuitBreaker.recordFailure();
+
+      // Sauvegarder la transcription brute pour traitement manuel
+      await FailedExtractionService.saveFailedExtraction(
+        streamSid,
+        transcription,
+        retryError,
+        tentatives
+      );
+
+      // Si erreur 429 (rate limit) ou erreurs serveur, utiliser fallback rule-based
+      if (errorStatus === 429 || errorStatus === 500 || errorStatus === 502 || errorStatus === 503) {
+        callLogger.warn(streamSid, "Utilisation extracteur rule-based après échec GPT", {
+          errorStatus,
+          event: "fallback_rule_based",
+        });
+
+        const ruleBasedData = extractWithRules(transcription);
+        return {
+          nom: ruleBasedData.nom,
+          telephone: ruleBasedData.telephone || "Non fourni",
+          type_demande: ruleBasedData.type_demande,
+          services: ruleBasedData.services,
+          description: ruleBasedData.description,
+          statut: ruleBasedData.statut,
+          date: ruleBasedData.date,
+          appointment: ruleBasedData.appointment,
+          extraction_rule_based: true,
+        };
+      }
+
+      // Re-throw pour que le catch principal gère l'erreur
+      throw retryError;
+    }
 
     const rawResponse = completion.choices?.[0]?.message?.content?.trim();
 
@@ -616,74 +805,213 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       throw new Error("Aucune réponse de l'API OpenAI");
     }
 
-    // Nettoyer le markdown éventuel
-    let response = rawResponse;
-    if (response.startsWith("```json")) {
-      response = response.replace(/```json\n?/, "").replace(/```\n?/, "");
-    } else if (response.startsWith("```")) {
-      response = response.replace(/```\n?/, "").replace(/```\n?/, "");
+    // Avec json_schema, la réponse est déjà du JSON valide, pas besoin de nettoyer le markdown
+    let extractedData;
+    try {
+      extractedData = JSON.parse(rawResponse);
+    } catch (parseError) {
+      recordParsingError();
+      callLogger.error(streamSid, new Error("Erreur parsing JSON extrait"), {
+        source: "extractCallData",
+        context: "json_parsing",
+        rawResponse: rawResponse.substring(0, 500),
+      });
+      throw new Error("Impossible de parser les données extraites");
     }
 
-    const extractedData = JSON.parse(response);
-    
-    // Log pour debugging : afficher si un order a été créé
-    if (extractedData.order) {
-    }
+    // Log JSON extrait
+    callLogger.info(streamSid, "JSON extrait par GPT", {
+      extractedData: JSON.stringify(extractedData),
+      event: "json_extracted"
+    });
 
     // Vérifier si GPT a retourné une erreur (données non fournies)
     if (extractedData.error) {
       throw new Error(`Extraction impossible : ${extractedData.error}`);
     }
 
-    // ===== VALIDATION SOUPLE DES DONNÉES =====
-    
-    // Validation du nom (accepte "Client inconnu" maintenant)
-    let nomClient = extractedData.nom || "Client inconnu";
-    
-    // Nettoyer les valeurs invalides
-    if (typeof nomClient !== 'string' || 
-        nomClient.trim().length < 2 ||
-        nomClient === "Non spécifié" ||
-        nomClient === "Inconnu" ||
-        nomClient === "Non fourni") {
-      nomClient = "Client inconnu";
+    // ===== VALIDATION DES PRODUITS (AMEL-001 à AMEL-004) =====
+    let productsToValidate = [];
+    if (extractedData.order?.commandes && Array.isArray(extractedData.order.commandes)) {
+      productsToValidate = extractedData.order.commandes;
     }
-    // Téléphone : aucune validation stricte, on garde ce que GPT a extrait
-    const cleanedPhone = (extractedData.telephone && extractedData.telephone.trim() !== "")
-      ? extractedData.telephone.trim()
-      : "Non fourni";
+    
+    const productsValidation = await validateAllProducts(productsToValidate, streamSid);
+    
+    // Remplacer les produits extraits par les produits validés
+    if (extractedData.order && productsValidation.validatedProducts.length > 0) {
+      extractedData.order.commandes = productsValidation.validatedProducts;
+    }
+    
+    // Logger erreurs et warnings produits
+    if (productsValidation.hasErrors) {
+      callLogger.warn(streamSid, "Erreurs de validation produits", {
+        errors: productsValidation.errors,
+        event: "product_validation_errors"
+      });
+    }
+    
+    if (productsValidation.warnings.length > 0) {
+      callLogger.info(streamSid, "Avertissements validation produits", {
+        warnings: productsValidation.warnings,
+        event: "product_validation_warnings"
+      });
+    }
 
-    // Normaliser la structure
-    // IMPORTANT : GPT retourne "order" pas "appointment" donc on lit "order"
-    const validatedData = {
-      nom: nomClient.trim(),
-      telephone: cleanedPhone,
-      type_demande: extractedData.type_demande || "Autre",
-      services: extractedData.services || "Autre",
-      description: extractedData.description || "Aucune description fournie",
-      statut: extractedData.statut || "nouveau",
-      date: new Date(),
-      appointment: extractedData.hasOwnProperty("order") 
-      ? extractedData.order 
-      : null
+    // ===== CONSOLIDATION PRODUITS IDENTIQUES (AMEL-012) =====
+    if (extractedData.order?.commandes && Array.isArray(extractedData.order.commandes)) {
+      const consolidated = consolidateProducts(extractedData.order.commandes);
+      extractedData.order.commandes = consolidated;
+      
+      if (consolidated.length !== extractedData.order.commandes.length) {
+        callLogger.info(streamSid, "Produits consolidés", {
+          avant: extractedData.order.commandes.length,
+          apres: consolidated.length,
+          event: "products_consolidated",
+        });
+      }
+    }
+
+
+    // ===== VALIDATION STRICTE DES DONNÉES =====
+    const validatedData = validateCallData(extractedData);
+    const validationReport = getValidationReport(extractedData, validatedData);
+    
+    // ===== VALIDATION HEURES CONTRE HORAIRES (AMEL-007) =====
+    if (validatedData.appointment?.heure && validatedData.appointment?.date) {
+      const timeValidation = await validateTimeAgainstOpeningHours(
+        validatedData.appointment.heure,
+        validatedData.appointment.date
+      );
+      
+      if (!timeValidation.isValid) {
+        callLogger.warn(streamSid, "Heure hors horaires d'ouverture", {
+          heure: validatedData.appointment.heure,
+          date: validatedData.appointment.date,
+          reason: timeValidation.reason,
+          adjustedTime: timeValidation.adjustedTime,
+          event: "time_outside_hours"
+        });
+        
+        // Ajuster l'heure si possible
+        if (timeValidation.adjustedTime) {
+          validatedData.appointment.heure = timeValidation.adjustedTime;
+        }
+      }
+    }
+
+    // ===== VALIDATION HEURES CONTRE HORAIRES (AMEL-007) =====
+    if (validatedData.appointment?.heure) {
+      const timeValidation = await validateTimeAgainstOpeningHours(
+        validatedData.appointment.heure,
+        validatedData.appointment.date
+      );
+      
+      if (!timeValidation.isValid) {
+        callLogger.warn(streamSid, "Heure hors horaires d'ouverture", {
+          heure: validatedData.appointment.heure,
+          date: validatedData.appointment.date,
+          reason: timeValidation.reason,
+          adjustedTime: timeValidation.adjustedTime,
+          event: "time_outside_hours",
+        });
+        
+        // Ajuster l'heure si possible
+        if (timeValidation.adjustedTime) {
+          validatedData.appointment.heure = timeValidation.adjustedTime;
+        }
+      }
+    }
+
+    // ===== VALIDATION COHÉRENCE TYPE_DEMANDE (AMEL-014) =====
+    const consistencyValidation = validateTypeDemandeConsistency(
+      validatedData.type_demande,
+      validatedData.appointment?.commandes || []
+    );
+    
+    if (!consistencyValidation.isValid) {
+      callLogger.warn(streamSid, "Incohérence type_demande vs commandes", {
+        type_demande: validatedData.type_demande,
+        nombreCommandes: validatedData.appointment?.commandes?.length || 0,
+        errors: consistencyValidation.errors,
+        event: "type_demande_inconsistency",
+      });
+    }
+
+    // Log erreurs de validation et enregistrer métriques
+    if (!validationReport.isValid || validationReport.errors.length > 0) {
+      callLogger.warn(streamSid, "Erreurs de validation détectées", {
+        validationReport,
+        event: "validation_errors"
+      });
+
+      // Enregistrer les métriques d'erreur
+      validationReport.errors.forEach((error) => {
+        if (error.field === "telephone") {
+          recordInvalidPhone();
+        } else if (error.field === "heure") {
+          recordInvalidTime();
+        }
+      });
+    }
+
+    // Enregistrer extraction réussie
+    recordSuccessfulExtraction();
+
+    // Convertir "order" en "appointment" pour la compatibilité
+    const finalData = {
+      nom: validatedData.nom,
+      telephone: validatedData.telephone || "Non fourni",
+      type_demande: validatedData.type_demande,
+      services: validatedData.services,
+      description: validatedData.description,
+      statut: validatedData.statut,
+      date: validatedData.date,
+      appointment: validatedData.appointment,
     };
 
-    if (validatedData.appointment) {
-    }
+    const extractionDuration = Date.now() - extractionStartTime;
+    callLogger.performance(streamSid, "gpt_extraction", extractionDuration);
 
-    return validatedData;
+    return finalData;
 
   } catch (error) {
-    console.error("ERREUR EXTRACTION GPT:");
-    console.error("Type d'erreur:", error.name);
-    console.error("Message d'erreur:", error.message);
-    console.error("Stack:", error.stack);
+    const extractionDuration = Date.now() - extractionStartTime;
+    
+    callLogger.error(streamSid, error, {
+      source: "extractCallData",
+      context: "extraction_error",
+      extractionDuration,
+    });
     
     // Vérifier si c'est une erreur d'API OpenAI
     if (error.response) {
-      console.error("Erreur API OpenAI:", {
+      callLogger.error(streamSid, new Error("Erreur API OpenAI"), {
+        source: "extractCallData",
+        context: "openai_api_error",
         status: error.response.status,
-        data: error.response.data
+        data: error.response.data,
+      });
+    }
+
+    // En cas d'erreur complète, utiliser extracteur rule-based de secours (AMEL-006)
+    callLogger.warn(streamSid, "Erreur extraction GPT, tentative extraction rule-based", {
+      error: error.message,
+      event: "fallback_to_rule_based_on_error"
+    });
+    
+    try {
+      const pricing = await getPricingForGPT();
+      const fallbackData = extractWithRules(transcription, pricing);
+      callLogger.info(streamSid, "Extraction rule-based utilisée après erreur GPT", {
+        extractedData: fallbackData,
+        event: "rule_based_extraction_used"
+      });
+      return fallbackData;
+    } catch (fallbackError) {
+      callLogger.error(streamSid, new Error("Échec extraction rule-based également"), {
+        error: fallbackError.message,
+        event: "rule_based_extraction_failed"
       });
     }
 

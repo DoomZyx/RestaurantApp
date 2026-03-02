@@ -1,6 +1,7 @@
 import { extractCallData } from "../../Services/gptServices/extractCallData.js";
 import fetch from "node-fetch";
 import { callLogger } from "../../Services/logging/logger.js";
+import { retryFetch } from "../../Services/utils/retryWithBackoff.js";
 
 export default async function processCallRoutes(fastify, options) {
   // Route pour traiter un appel terminé
@@ -26,12 +27,9 @@ export default async function processCallRoutes(fastify, options) {
       });
 
       // Extraire les données avec GPT-4
-      const extractionStartTime = Date.now();
-      const extractedData = await extractCallData(transcription);
-      const extractionDuration = Date.now() - extractionStartTime;
+      const extractedData = await extractCallData(transcription, streamSid);
 
       callLogger.extractionCompleted(streamSid, extractedData);
-      callLogger.performance(streamSid, "gpt4_extraction", extractionDuration);
 
       // ✅ VALIDATION SUPPLÉMENTAIRE : Vérifier si les données extraites sont exploitables
       const isUseless = 
@@ -64,7 +62,7 @@ export default async function processCallRoutes(fastify, options) {
         });
       }
 
-      // Appeler votre API POST /api/callsdata
+      // Appeler votre API POST /api/callsdata avec retry
       const apiStartTime = Date.now();
       const apiUrl = `http://localhost:${
         process.env.PORT || 8080
@@ -72,29 +70,32 @@ export default async function processCallRoutes(fastify, options) {
 
       callLogger.apiCallStarted(streamSid, apiUrl);
 
-      const apiResponse = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": process.env.X_API_KEY,
-        },
-        body: JSON.stringify(extractedData),
-      });
+      // Retry avec backoff exponentiel pour la sauvegarde
+      const apiResponse = await retryFetch(
+        () => fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": process.env.X_API_KEY,
+          },
+          body: JSON.stringify(extractedData),
+        }),
+        {
+          maxRetries: 3,
+          baseDelay: 1000,
+          onRetry: (attempt, error, delay) => {
+            callLogger.warn(streamSid, `Tentative ${attempt}/3 de sauvegarde après erreur`, {
+              error: error.message,
+              status: error.status,
+              delay: `${delay}ms`,
+              event: "api_save_retry",
+            });
+          },
+        }
+      );
 
       const apiDuration = Date.now() - apiStartTime;
       callLogger.performance(streamSid, "api_save", apiDuration);
-
-      if (!apiResponse.ok) {
-        const error = new Error(
-          `Erreur API: ${apiResponse.status} ${apiResponse.statusText}`
-        );
-        callLogger.error(streamSid, error, {
-          context: "api_call",
-          status: apiResponse.status,
-          statusText: apiResponse.statusText,
-        });
-        throw error;
-      }
 
       const savedCall = await apiResponse.json();
       callLogger.apiCallCompleted(streamSid, apiResponse);

@@ -1,0 +1,509 @@
+{
+  "audit": {
+    "date": "2025-01-27",
+    "scope": "Audit de robustesse du flux complet audio → transcription → extraction JSON → backend",
+    "version": "1.0",
+    "objectif": "Identifier les points de blocage, pertes de commandes et proposer mécanismes de résilience"
+  },
+  "risques_flux": [
+    {
+      "id": "R001",
+      "titre": "Pas de retry si extraction GPT échoue",
+      "description": "Dans extractCallData.js, si l'appel API OpenAI échoue (timeout, erreur réseau, rate limit), la fonction retourne directement un objet par défaut sans retry. La transcription est perdue.",
+      "etape_flux": "extractCallData() → openai.chat.completions.create()",
+      "code_reference": "extractCallData.js:645-770",
+      "impact": "critique",
+      "probabilite": "moderee",
+      "consequence": "Perte totale de la commande client. Transcription sauvegardée nulle part. Pas de possibilité de traitement manuel.",
+      "scenarios": [
+        "Rate limit OpenAI (429) → Commande perdue",
+        "Timeout réseau → Commande perdue",
+        "Erreur serveur OpenAI (500/503) → Commande perdue",
+        "Quota dépassé → Commande perdue"
+      ],
+      "detection_actuelle": "Erreur loggée uniquement, pas de sauvegarde de la transcription brute"
+    },
+    {
+      "id": "R002",
+      "titre": "Pas de fallback si API OpenAI indisponible",
+      "description": "Aucun mécanisme de secours si l'API OpenAI est complètement indisponible. Le système est bloqué et aucune commande ne peut être traitée.",
+      "etape_flux": "extractCallData() → dépendance totale à OpenAI",
+      "code_reference": "extractCallData.js:15-17, 645-666",
+      "impact": "critique",
+      "probabilite": "faible",
+      "consequence": "Système complètement bloqué. Toutes les commandes en attente sont perdues. Pas de dégradation gracieuse.",
+      "scenarios": [
+        "Panne OpenAI → Toutes les commandes bloquées",
+        "Maintenance OpenAI → Aucun traitement possible",
+        "Problème réseau vers OpenAI → Blocage total"
+      ],
+      "detection_actuelle": "Erreur loggée, mais pas de queue de retry ni de fallback"
+    },
+    {
+      "id": "R003",
+      "titre": "Validation en temps réel insuffisante",
+      "description": "La validation se fait uniquement après la fin de l'appel. Pas de validation progressive pendant la conversation. Les erreurs sont détectées trop tard.",
+      "etape_flux": "TranscriptionHandler.process() → validation uniquement à la fin",
+      "code_reference": "TranscriptionHandler.js:26-70, extractCallData.js:699-718",
+      "impact": "moderee",
+      "probabilite": "elevee",
+      "consequence": "Erreurs détectées après coup. Pas de possibilité de correction en temps réel. Client doit rappeler.",
+      "scenarios": [
+        "Produit invalide détecté après l'appel → Client doit rappeler",
+        "Téléphone invalide détecté après → Pas de contact possible",
+        "Heure invalide détectée après → Commande à la mauvaise heure"
+      ],
+      "detection_actuelle": "Validation uniquement dans validateCallData() après extraction complète"
+    },
+    {
+      "id": "R004",
+      "titre": "Pas de queue de retry asynchrone",
+      "description": "Si l'API /api/process-call échoue, l'erreur est loggée mais la transcription n'est pas mise en queue pour retry ultérieur.",
+      "etape_flux": "TranscriptionHandler.sendToProcessingAPI() → POST /api/process-call",
+      "code_reference": "TranscriptionHandler.js:77-129",
+      "impact": "moderee",
+      "probabilite": "moderee",
+      "consequence": "Si le backend est temporairement indisponible, la transcription est perdue. Pas de retry automatique.",
+      "scenarios": [
+        "Backend redémarré → Transcription perdue",
+        "Erreur 500 temporaire → Transcription perdue",
+        "Timeout réseau → Transcription perdue"
+      ],
+      "detection_actuelle": "Erreur loggée et notification envoyée, mais pas de queue"
+    },
+    {
+      "id": "R005",
+      "titre": "Pas d'extracteur rule-based de secours",
+      "description": "Dépendance totale à GPT pour l'extraction. Si GPT échoue ou retourne un JSON invalide, aucun fallback basé sur regex/règles.",
+      "etape_flux": "extractCallData() → extraction uniquement via GPT",
+      "code_reference": "extractCallData.js:575-770",
+      "impact": "moderee",
+      "probabilite": "moderee",
+      "consequence": "Même pour des cas simples (nom, téléphone, heure), pas d'extraction possible si GPT échoue.",
+      "scenarios": [
+        "GPT retourne JSON invalide → Pas de fallback",
+        "GPT timeout → Pas d'extraction même basique",
+        "Prompt trop long → Erreur, pas de fallback simple"
+      ],
+      "detection_actuelle": "Erreur de parsing loggée, mais pas de tentative d'extraction alternative"
+    },
+    {
+      "id": "R006",
+      "titre": "Pas de sauvegarde de transcription brute en cas d'échec",
+      "description": "Si l'extraction échoue complètement, la transcription brute n'est pas sauvegardée pour traitement manuel ultérieur.",
+      "etape_flux": "extractCallData() → catch block retourne objet par défaut",
+      "code_reference": "extractCallData.js:740-769",
+      "impact": "moderee",
+      "probabilite": "moderee",
+      "consequence": "Impossible de récupérer les commandes perdues. Pas de traitement manuel possible.",
+      "scenarios": [
+        "Extraction échoue → Transcription perdue",
+        "Parsing JSON échoue → Transcription perdue",
+        "Erreur API → Transcription perdue"
+      ],
+      "detection_actuelle": "Erreur loggée mais transcription non sauvegardée"
+    },
+    {
+      "id": "R007",
+      "titre": "Pas de backoff exponentiel pour retry",
+      "description": "Même si un mécanisme de retry était implémenté, il n'y a pas de stratégie de backoff exponentiel pour éviter de surcharger l'API.",
+      "etape_flux": "Toutes les étapes avec appels API externes",
+      "code_reference": "Aucun retry actuellement implémenté",
+      "impact": "faible",
+      "probabilite": "N/A",
+      "consequence": "Si retry implémenté sans backoff, risque de surcharge API et rate limiting aggravé.",
+      "scenarios": [
+        "Retry immédiat → Rate limit aggravé",
+        "Retry sans délai → Surcharge serveur"
+      ],
+      "detection_actuelle": "Pas de retry donc pas de backoff nécessaire actuellement"
+    },
+    {
+      "id": "R008",
+      "titre": "Pas de validation progressive pendant l'appel",
+      "description": "La validation se fait uniquement après la fin de l'appel. Pas de validation partielle pendant la conversation pour détecter les erreurs tôt.",
+      "etape_flux": "OpenAIHandler → TranscriptionHandler (validation uniquement à la fin)",
+      "code_reference": "TranscriptionHandler.js:26-70",
+      "impact": "faible",
+      "probabilite": "elevee",
+      "consequence": "Erreurs détectées trop tard. Pas de possibilité de demander clarification au client en temps réel.",
+      "scenarios": [
+        "Produit invalide mentionné → Détecté après l'appel",
+        "Téléphone invalide → Détecté après l'appel",
+        "Heure ambiguë → Détectée après l'appel"
+      ],
+      "detection_actuelle": "Validation uniquement dans validateCallData() après extraction"
+    },
+    {
+      "id": "R009",
+      "titre": "Pas d'alertes pour erreurs critiques",
+      "description": "Les erreurs critiques (perte de commande, extraction échouée) sont loggées mais pas d'alerte proactive pour l'équipe.",
+      "etape_flux": "Toutes les étapes avec gestion d'erreur",
+      "code_reference": "extractCallData.js:740-769, TranscriptionHandler.js:104-128",
+      "impact": "moderee",
+      "probabilite": "elevee",
+      "consequence": "Erreurs critiques non détectées rapidement. Pas de réaction proactive possible.",
+      "scenarios": [
+        "Plusieurs commandes perdues → Découverte tardive",
+        "API OpenAI down → Découverte tardive",
+        "Taux d'erreur élevé → Pas d'alerte"
+      ],
+      "detection_actuelle": "Logs uniquement, pas de système d'alertes"
+    },
+    {
+      "id": "R010",
+      "titre": "Erreur API /api/callsdata non retry",
+      "description": "Si l'appel POST /api/callsdata échoue (erreur 500, timeout), l'erreur est loggée mais pas de retry. La commande extraite est perdue.",
+      "etape_flux": "processCall.js → POST /api/callsdata",
+      "code_reference": "processCall.js:72-94",
+      "impact": "critique",
+      "probabilite": "faible",
+      "consequence": "Extraction réussie mais sauvegarde échouée → Commande perdue malgré extraction réussie.",
+      "scenarios": [
+        "Base de données temporairement indisponible → Commande perdue",
+        "Timeout sauvegarde → Commande perdue",
+        "Erreur 500 temporaire → Commande perdue"
+      ],
+      "detection_actuelle": "Erreur loggée et throw, mais pas de retry"
+    }
+  ],
+  "ameliorations_proposees": [
+    {
+      "id": "A001",
+      "titre": "Implémenter retry avec backoff exponentiel pour extraction GPT",
+      "description": "Ajouter un mécanisme de retry dans extractCallData() avec backoff exponentiel (1s, 2s, 4s) pour un maximum de 3 tentatives. Gérer spécifiquement les erreurs rate limit (429) avec retry-after.",
+      "priorite": "critique",
+      "impact": "Réduit drastiquement la perte de commandes en cas d'erreur temporaire OpenAI",
+      "implementation": {
+        "fichier": "backend/Services/gptServices/extractCallData.js",
+        "fonction": "extractCallData()",
+        "changements": [
+          "Wrapper retry autour de openai.chat.completions.create()",
+          "Détection erreurs retryables (429, 500, 502, 503, timeout)",
+          "Backoff exponentiel avec jitter",
+          "Max 3 tentatives",
+          "Logging détaillé de chaque tentative"
+        ],
+        "code_exemple": "async function retryWithBackoff(fn, maxRetries = 3) { ... }"
+      },
+      "effort": "moyen",
+      "dependances": []
+    },
+    {
+      "id": "A002",
+      "titre": "Créer extracteur rule-based de secours",
+      "description": "Implémenter un extracteur basé sur regex/règles pour cas simples (nom, téléphone, heure, produits basiques). Utilisé si GPT échoue complètement ou retourne JSON invalide.",
+      "priorite": "moderee",
+      "impact": "Permet extraction basique même si GPT est indisponible. Réduit dépendance totale à GPT.",
+      "implementation": {
+        "fichier": "backend/Services/gptServices/ruleBasedExtractor.js",
+        "fonction": "extractWithRules(transcription)",
+        "changements": [
+          "Regex pour téléphone (10 chiffres)",
+          "Regex pour heures (HH:MM, HHh, midi, soir)",
+          "Regex pour noms (patterns courants)",
+          "Détection produits basiques (mots-clés)",
+          "Flag 'extraction_rule_based' dans résultat"
+        ],
+        "code_exemple": "export function extractWithRules(transcription) { ... }"
+      },
+      "effort": "moyen",
+      "dependances": []
+    },
+    {
+      "id": "A003",
+      "titre": "Sauvegarder transcription brute en cas d'échec",
+      "description": "Si l'extraction échoue complètement (après tous les retry), sauvegarder la transcription brute dans une table 'failed_extractions' avec statut 'extraction_echouee' pour traitement manuel.",
+      "priorite": "critique",
+      "impact": "Permet récupération des commandes perdues. Traitement manuel possible.",
+      "implementation": {
+        "fichier": "backend/Services/gptServices/extractCallData.js",
+        "fonction": "extractCallData() → catch block",
+        "changements": [
+          "Créer table 'failed_extractions' (streamSid, transcription, erreur, timestamp)",
+          "Sauvegarder transcription brute avant retour objet par défaut",
+          "Flag statut 'extraction_echouee'",
+          "Endpoint admin pour lister/traiter les extractions échouées"
+        ],
+        "code_exemple": "await saveFailedExtraction(streamSid, transcription, error)"
+      },
+      "effort": "moyen",
+      "dependances": ["A001"]
+    },
+    {
+      "id": "A004",
+      "titre": "Implémenter queue de retry asynchrone",
+      "description": "Créer une queue (Redis ou in-memory) pour les transcriptions en échec. Worker de background pour retry périodique des transcriptions en échec.",
+      "priorite": "moderee",
+      "impact": "Résilience aux pannes temporaires du backend. Pas de perte de transcription.",
+      "implementation": {
+        "fichier": "backend/Services/queue/transcriptionQueue.js",
+        "fonction": "enqueueTranscription(), processQueue()",
+        "changements": [
+          "Queue Redis ou in-memory pour transcriptions",
+          "Worker de background (setInterval ou Bull)",
+          "Retry avec backoff exponentiel",
+          "Max tentatives configurable",
+          "Dead letter queue pour échecs définitifs"
+        ],
+        "code_exemple": "await transcriptionQueue.add({ transcription, streamSid, retries: 0 })"
+      },
+      "effort": "eleve",
+      "dependances": []
+    },
+    {
+      "id": "A005",
+      "titre": "Validation progressive pendant l'appel",
+      "description": "Implémenter validation partielle après chaque tour de conversation. Détecter erreurs tôt (produit invalide, téléphone invalide) et demander clarification via GPT vocal.",
+      "priorite": "faible",
+      "impact": "Améliore expérience client. Réduit erreurs détectées après l'appel.",
+      "implementation": {
+        "fichier": "backend/Websocket/handlers/TranscriptionHandler.js",
+        "fonction": "validateProgressive(partialTranscription)",
+        "changements": [
+          "Validation partielle après chaque tour",
+          "Détection produits invalides en temps réel",
+          "Détection téléphone/heure invalides",
+          "GPT vocal demande clarification si erreur détectée",
+          "Flag 'validation_progressive' activé"
+        ],
+        "code_exemple": "const validation = await validateProgressive(partialTranscription)"
+      },
+      "effort": "eleve",
+      "dependances": []
+    },
+    {
+      "id": "A006",
+      "titre": "Système d'alertes pour erreurs critiques",
+      "description": "Créer système d'alertes (email, Slack, webhook) pour erreurs critiques : taux d'erreur élevé, API OpenAI down, perte de commandes.",
+      "priorite": "moderee",
+      "impact": "Détection proactive des problèmes. Réaction rapide possible.",
+      "implementation": {
+        "fichier": "backend/Services/alerting/alertService.js",
+        "fonction": "checkAndAlert(metrics, thresholds)",
+        "changements": [
+          "Monitoring taux d'erreur extraction",
+          "Seuils configurables (ex: >5% erreur)",
+          "Alertes email/Slack/webhook",
+          "Cooldown pour éviter spam d'alertes",
+          "Dashboard de monitoring"
+        ],
+        "code_exemple": "if (errorRate > threshold) await alertService.sendAlert(...)"
+      },
+      "effort": "moyen",
+      "dependances": ["extractionMetrics.js"]
+    },
+    {
+      "id": "A007",
+      "titre": "Retry pour sauvegarde /api/callsdata",
+      "description": "Ajouter retry avec backoff pour l'appel POST /api/callsdata. Si sauvegarde échoue, retry jusqu'à 3 fois avant d'abandonner.",
+      "priorite": "critique",
+      "impact": "Évite perte de commandes même si extraction réussie mais sauvegarde échoue.",
+      "implementation": {
+        "fichier": "backend/Routes/CallData/processCall.js",
+        "fonction": "saveCallData() avec retry",
+        "changements": [
+          "Wrapper retry autour de fetch('/api/callsdata')",
+          "Détection erreurs retryables (500, 502, 503, timeout)",
+          "Backoff exponentiel",
+          "Max 3 tentatives",
+          "Sauvegarder dans queue si échec définitif"
+        ],
+        "code_exemple": "const savedCall = await retryWithBackoff(() => fetch(...))"
+      },
+      "effort": "faible",
+      "dependances": []
+    },
+    {
+      "id": "A008",
+      "titre": "Détection et gestion rate limit OpenAI",
+      "description": "Détecter spécifiquement les erreurs 429 (rate limit) et utiliser le header Retry-After pour respecter le délai. Mettre en queue les requêtes en attente.",
+      "priorite": "moderee",
+      "impact": "Évite aggravation du rate limiting. Gestion gracieuse des limites.",
+      "implementation": {
+        "fichier": "backend/Services/gptServices/extractCallData.js",
+        "fonction": "extractCallData() → gestion 429",
+        "changements": [
+          "Détection erreur 429 spécifique",
+          "Lecture header Retry-After",
+          "Respect délai avant retry",
+          "Queue des requêtes en attente",
+          "Logging spécifique rate limit"
+        ],
+        "code_exemple": "if (error.status === 429) { const retryAfter = error.headers['retry-after'] }"
+      },
+      "effort": "faible",
+      "dependances": ["A001"]
+    },
+    {
+      "id": "A009",
+      "titre": "Fallback gracieux si OpenAI complètement indisponible",
+      "description": "Détecter si OpenAI est complètement down (plusieurs erreurs consécutives). Basculer automatiquement sur extracteur rule-based et sauvegarder avec flag 'fallback_mode'.",
+      "priorite": "moderee",
+      "impact": "Système reste opérationnel même si OpenAI est down. Dégradation gracieuse.",
+      "implementation": {
+        "fichier": "backend/Services/gptServices/extractCallData.js",
+        "fonction": "extractCallData() → circuit breaker",
+        "changements": [
+          "Circuit breaker pour détecter OpenAI down",
+          "Basculer sur rule-based extractor si circuit ouvert",
+          "Flag 'fallback_mode' dans résultat",
+          "Réessayer GPT périodiquement pour rétablir",
+          "Monitoring état circuit breaker"
+        ],
+        "code_exemple": "if (circuitBreaker.isOpen()) return extractWithRules(transcription)"
+      },
+      "effort": "moyen",
+      "dependances": ["A002"]
+    },
+    {
+      "id": "A010",
+      "titre": "Monitoring et métriques avancées",
+      "description": "Enrichir extractionMetrics.js avec métriques de retry, taux de fallback, durée extraction, taux de succès par étape.",
+      "priorite": "faible",
+      "impact": "Meilleure visibilité sur la santé du pipeline. Détection proactive des problèmes.",
+      "implementation": {
+        "fichier": "backend/Services/monitoring/extractionMetrics.js",
+        "fonction": "Ajout métriques",
+        "changements": [
+          "Métriques retry (nombre, succès après retry)",
+          "Métriques fallback (utilisation rule-based)",
+          "Durée extraction (p50, p95, p99)",
+          "Taux de succès par étape",
+          "Dashboard de monitoring"
+        ],
+        "code_exemple": "recordRetryAttempt(), recordFallbackUsage(), recordExtractionDuration()"
+      },
+      "effort": "faible",
+      "dependances": []
+    }
+  ],
+  "priorite": {
+    "critique": [
+      {
+        "id": "A001",
+        "titre": "Retry avec backoff pour extraction GPT",
+        "raison": "Réduit drastiquement perte de commandes. Impact immédiat sur robustesse."
+      },
+      {
+        "id": "A003",
+        "titre": "Sauvegarder transcription brute en cas d'échec",
+        "raison": "Permet récupération commandes perdues. Traitement manuel possible."
+      },
+      {
+        "id": "A007",
+        "titre": "Retry pour sauvegarde /api/callsdata",
+        "raison": "Évite perte même si extraction réussie. Critique pour intégrité données."
+      }
+    ],
+    "moderee": [
+      {
+        "id": "A002",
+        "titre": "Extracteur rule-based de secours",
+        "raison": "Réduit dépendance totale à GPT. Permet dégradation gracieuse."
+      },
+      {
+        "id": "A004",
+        "titre": "Queue de retry asynchrone",
+        "raison": "Résilience aux pannes temporaires. Important pour production."
+      },
+      {
+        "id": "A006",
+        "titre": "Système d'alertes pour erreurs critiques",
+        "raison": "Détection proactive. Réaction rapide possible."
+      },
+      {
+        "id": "A008",
+        "titre": "Détection et gestion rate limit OpenAI",
+        "raison": "Évite aggravation rate limiting. Gestion gracieuse."
+      },
+      {
+        "id": "A009",
+        "titre": "Fallback gracieux si OpenAI indisponible",
+        "raison": "Système reste opérationnel. Dégradation gracieuse."
+      }
+    ],
+    "faible": [
+      {
+        "id": "A005",
+        "titre": "Validation progressive pendant l'appel",
+        "raison": "Améliore UX mais pas critique pour robustesse. Effort élevé."
+      },
+      {
+        "id": "A010",
+        "titre": "Monitoring et métriques avancées",
+        "raison": "Améliore visibilité mais pas critique. Peut être fait après."
+      }
+    ]
+  },
+  "plan_implementation": {
+    "phase1_critique": {
+      "duree_estimee": "1-2 semaines",
+      "ameliorations": ["A001", "A003", "A007"],
+      "objectif": "Réduire perte de commandes à <1% en cas d'erreurs temporaires"
+    },
+    "phase2_moderee": {
+      "duree_estimee": "2-3 semaines",
+      "ameliorations": ["A002", "A004", "A006", "A008", "A009"],
+      "objectif": "Résilience complète aux pannes. Dégradation gracieuse."
+    },
+    "phase3_amelioration": {
+      "duree_estimee": "1-2 semaines",
+      "ameliorations": ["A005", "A010"],
+      "objectif": "Amélioration UX et monitoring avancé"
+    }
+  },
+  "metriques_succes": {
+    "taux_perte_commandes": {
+      "actuel": "Inconnu (pas de tracking)",
+      "cible": "<1%",
+      "mesure": "Nombre commandes perdues / Total commandes"
+    },
+    "taux_succes_extraction": {
+      "actuel": "Tracké dans extractionMetrics.js",
+      "cible": ">95%",
+      "mesure": "Extractions réussies / Total extractions"
+    },
+    "taux_retry_succes": {
+      "actuel": "N/A (pas de retry)",
+      "cible": ">50%",
+      "mesure": "Succès après retry / Total retry"
+    },
+    "duree_extraction_p95": {
+      "actuel": "Non tracké",
+      "cible": "<5s",
+      "mesure": "95ème percentile durée extraction"
+    }
+  },
+  "dependances_externes": {
+    "openai_api": {
+      "risque": "Rate limiting, pannes, maintenance",
+      "mitigation": "Retry avec backoff, fallback rule-based, circuit breaker"
+    },
+    "backend_api": {
+      "risque": "Pannes temporaires, timeouts",
+      "mitigation": "Retry avec backoff, queue asynchrone"
+    },
+    "base_donnees": {
+      "risque": "Indisponibilité temporaire",
+      "mitigation": "Retry sauvegarde, queue de retry"
+    }
+  },
+  "recommandations_finales": {
+    "immediat": [
+      "Implémenter A001 (retry extraction GPT) - Impact critique immédiat",
+      "Implémenter A003 (sauvegarde transcription brute) - Récupération possible",
+      "Implémenter A007 (retry sauvegarde) - Intégrité données"
+    ],
+    "court_terme": [
+      "Implémenter A002 (extracteur rule-based) - Réduit dépendance GPT",
+      "Implémenter A004 (queue retry) - Résilience production",
+      "Implémenter A006 (alertes) - Détection proactive"
+    ],
+    "moyen_terme": [
+      "Implémenter A005 (validation progressive) - Améliore UX",
+      "Implémenter A010 (métriques avancées) - Monitoring complet"
+    ]
+  }
+}
+

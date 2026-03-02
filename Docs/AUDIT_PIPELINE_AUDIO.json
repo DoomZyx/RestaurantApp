@@ -1,0 +1,499 @@
+{
+  "audit": {
+    "date": "2025-01-XX",
+    "scope": "Pipeline audio → transcription → extraction JSON GPT → validation → backend",
+    "version": "2.0",
+    "objectif": "Auditer la fiabilité de GPT pour l'extraction de commandes audio → JSON"
+  },
+  "erreurs_detectees": [
+    {
+      "id": "ERR-001",
+      "titre": "GPT peut inventer un produit inexistant dans le catalogue",
+      "type": "GPT",
+      "severite": "critique",
+      "description": "GPT peut extraire un nom de produit qui n'existe pas dans le catalogue, même si le prompt demande d'utiliser les noms exacts du menu",
+      "scenario": "Client dit 'pizza hawaienne' mais le menu contient 'Pizza Hawaïenne' (avec accent). GPT extrait 'Pizza Hawaienne' (sans accent) → produit non trouvé",
+      "impact": "Commande incorrecte, produit non disponible, confusion en cuisine, client mécontent",
+      "localisation_code": "extractCallData.js:173-178, pricingService.js:201-214",
+      "validation_actuelle": "findProductInPricing() utilise seulement toLowerCase(), pas de normalisation accents, pas de correspondance flexible",
+      "risque_probabilite": "elevee",
+      "risque_frequence": "frequente"
+    },
+    {
+      "id": "ERR-002",
+      "titre": "GPT peut inventer un prix différent du catalogue",
+      "type": "GPT",
+      "severite": "critique",
+      "description": "GPT retourne prixUnitaire dans le JSON extrait, mais ce prix peut être incorrect ou obsolète",
+      "scenario": "GPT extrait prixUnitaire: 12.50€ mais le catalogue indique 13.00€ → erreur tarifaire",
+      "impact": "Erreur tarifaire, perte de revenus ou sur-facturation client, problèmes comptables",
+      "localisation_code": "extractCallData.js:560, pricingService.js:155-198",
+      "validation_actuelle": "Les prix GPT sont sauvegardés tels quels. calculateOrderTotal() recalcule mais seulement pour le total, pas pour chaque produit",
+      "risque_probabilite": "moyenne",
+      "risque_frequence": "occasionnelle"
+    },
+    {
+      "id": "ERR-003",
+      "titre": "GPT peut mal mapper le nombre de viandes pour les tacos",
+      "type": "GPT",
+      "severite": "critique",
+      "description": "GPT peut extraire un nombre de viandes incohérent avec le type de tacos (ex: 3 viandes pour un Tacos Simple)",
+      "scenario": "Client dit 'tacos simple avec poulet, merguez et dinde' → GPT extrait nom: 'Tacos Simple' mais personnalisation.viandes: ['Poulet', 'Merguez', 'Dinde'] (3 viandes pour un simple)",
+      "impact": "Commande tacos incorrecte, confusion en cuisine, client mécontent, perte de revenus",
+      "localisation_code": "extractCallData.js:194-238, ProductService.js:64-68",
+      "validation_actuelle": "Aucune validation backend du nombre de viandes vs maxViandes du produit",
+      "risque_probabilite": "moyenne",
+      "risque_frequence": "occasionnelle"
+    },
+    {
+      "id": "ERR-004",
+      "titre": "GPT peut inventer des options de personnalisation non disponibles",
+      "type": "GPT",
+      "severite": "critique",
+      "description": "GPT peut extraire des viandes, sauces ou ingrédients qui n'existent pas dans les options du produit",
+      "scenario": "Client dit 'sauce barbecue' mais le menu propose seulement 'Algérienne', 'Blanche', 'Samouraï'. GPT extrait sauce: 'Barbecue' → option invalide",
+      "impact": "Commande impossible à préparer, confusion en cuisine, client mécontent",
+      "localisation_code": "extractCallData.js:232, ProductService.js:66",
+      "validation_actuelle": "Aucune validation des options de personnalisation contre le catalogue",
+      "risque_probabilite": "moyenne",
+      "risque_frequence": "occasionnelle"
+    },
+    {
+      "id": "ERR-005",
+      "titre": "GPT peut mal interpréter les heures ambiguës",
+      "type": "GPT",
+      "severite": "moderee",
+      "description": "GPT peut mal interpréter une heure ambiguë malgré les règles du prompt",
+      "scenario": "Client dit '8h' sans contexte. Prompt dit '8h = probablement 20:00' mais GPT extrait 08:00 → commande à la mauvaise heure",
+      "impact": "Commande à la mauvaise heure, client mécontent, perte de temps",
+      "localisation_code": "extractCallData.js:137-142",
+      "validation_actuelle": "Validation format HH:MM uniquement, pas de validation contre horaires d'ouverture",
+      "risque_probabilite": "faible",
+      "risque_frequence": "rare"
+    },
+    {
+      "id": "ERR-006",
+      "titre": "GPT peut créer une commande quand le client ne commande pas vraiment",
+      "type": "GPT",
+      "severite": "moderee",
+      "description": "Le prompt dit 'SI TU HÉSITES → CRÉER L'ORDER quand même !' ce qui peut créer des commandes fantômes",
+      "scenario": "Client dit 'je regarde le menu' → GPT hésite → crée order avec commandes vides ou produits génériques",
+      "impact": "Commandes fantômes, pollution de la base de données, statistiques faussées",
+      "localisation_code": "extractCallData.js:68-79, processCall.js:34-40",
+      "validation_actuelle": "Validation basique dans processCall.js mais seulement si order null ET nom inconnu ET téléphone absent",
+      "risque_probabilite": "faible",
+      "risque_frequence": "rare"
+    },
+    {
+      "id": "ERR-007",
+      "titre": "Prompt très long → risque tronqué",
+      "type": "GPT",
+      "severite": "moderee",
+      "description": "Le prompt fait ~527 lignes + menu complet, peut dépasser les limites de contexte selon la taille du menu",
+      "scenario": "Menu avec 200+ produits → prompt > 50k tokens → risque de troncature, instructions manquantes",
+      "impact": "Extraction dégradée, instructions manquantes, erreurs d'extraction",
+      "localisation_code": "extractCallData.js:19-527, pricingService.js:49-152",
+      "validation_actuelle": "Aucun monitoring de la taille du prompt",
+      "risque_probabilite": "faible",
+      "risque_frequence": "rare"
+    },
+    {
+      "id": "ERR-008",
+      "titre": "Dépendance totale à GPT → pas de fallback rule-based",
+      "type": "flux",
+      "severite": "moderee",
+      "description": "Si GPT échoue, le système retourne seulement des valeurs par défaut, pas d'extraction alternative",
+      "scenario": "API OpenAI indisponible ou rate limit → extraction échoue → retourne 'Client inconnu', 'Non fourni', order null",
+      "impact": "Perte de commande, client non traité, aucune résilience",
+      "localisation_code": "extractCallData.js:740-769",
+      "validation_actuelle": "Pas de retry, pas de fallback rule-based",
+      "risque_probabilite": "faible",
+      "risque_frequence": "rare"
+    },
+    {
+      "id": "ERR-009",
+      "titre": "Pas de versioning du prompt",
+      "type": "GPT",
+      "severite": "faible",
+      "description": "Le prompt est en constante, pas de versioning. Changements peuvent casser l'extraction silencieusement",
+      "scenario": "Modification du prompt → extraction dégradée → pas de traçabilité de la version utilisée",
+      "impact": "Régression silencieuse, debugging difficile",
+      "localisation_code": "extractCallData.js:19",
+      "validation_actuelle": "Aucun système de versioning",
+      "risque_probabilite": "faible",
+      "risque_frequence": "rare"
+    },
+    {
+      "id": "ERR-010",
+      "titre": "Pas de validation stricte des noms de produits après extraction",
+      "type": "backend",
+      "severite": "critique",
+      "description": "Les produits extraits par GPT ne sont pas validés contre le catalogue avant sauvegarde",
+      "scenario": "GPT extrait 'Pizza Margarita' (faute) → sauvegardé tel quel → produit non trouvé lors du calcul du prix",
+      "impact": "Produits invalides sauvegardés en base, commandes impossibles à traiter",
+      "localisation_code": "processCall.js:78, pricingService.js:201-214",
+      "validation_actuelle": "Aucune validation produit avant sauvegarde",
+      "risque_probabilite": "elevee",
+      "risque_frequence": "frequente"
+    },
+    {
+      "id": "ERR-011",
+      "titre": "Pas de validation que les produits extraits sont disponibles",
+      "type": "backend",
+      "severite": "moderee",
+      "description": "Aucune vérification que disponible === true avant sauvegarde",
+      "scenario": "GPT extrait un produit qui existe mais est indisponible (disponible: false) → commande impossible",
+      "impact": "Commande de produits indisponibles",
+      "localisation_code": "pricingService.js:172, ProductService.js:51",
+      "validation_actuelle": "getPricingForGPT() filtre les produits indisponibles, mais pas de validation après extraction",
+      "risque_probabilite": "faible",
+      "risque_frequence": "rare"
+    },
+    {
+      "id": "ERR-012",
+      "titre": "Pas de validation des quantités (peut être 0, négative, ou très élevée)",
+      "type": "backend",
+      "severite": "faible",
+      "description": "Aucune validation que quantite >= 1 et <= limite raisonnable",
+      "scenario": "GPT extrait quantite: 0 ou quantite: 1000 → commande invalide",
+      "impact": "Commandes impossibles (0 produit) ou suspectes (quantité excessive)",
+      "localisation_code": "callDataValidation.js:100",
+      "validation_actuelle": "Aucune validation de quantité",
+      "risque_probabilite": "faible",
+      "risque_frequence": "rare"
+    },
+    {
+      "id": "ERR-013",
+      "titre": "Pas de validation que la catégorie extraite correspond au produit réel",
+      "type": "backend",
+      "severite": "faible",
+      "description": "GPT peut extraire une catégorie incorrecte pour un produit",
+      "scenario": "GPT extrait nom: 'Pizza Margherita', categorie: 'Burgers' → incohérence",
+      "impact": "Catégorie incorrecte, statistiques faussées",
+      "localisation_code": "pricingService.js:201-214",
+      "validation_actuelle": "Aucune validation de cohérence catégorie",
+      "risque_probabilite": "faible",
+      "risque_frequence": "rare"
+    },
+    {
+      "id": "ERR-014",
+      "titre": "Pas de validation que l'heure est dans les horaires d'ouverture",
+      "type": "backend",
+      "severite": "faible",
+      "description": "Aucune vérification que l'heure commande est dans les horaires du restaurant",
+      "scenario": "GPT extrait heure: '02:00' mais restaurant fermé → commande impossible",
+      "impact": "Commandes pour heures où restaurant fermé",
+      "localisation_code": "pricingService.js:15",
+      "validation_actuelle": "Validation format uniquement, pas de validation horaires",
+      "risque_probabilite": "faible",
+      "risque_frequence": "rare"
+    },
+    {
+      "id": "ERR-015",
+      "titre": "Pas de retry si l'extraction GPT échoue",
+      "type": "flux",
+      "severite": "moderee",
+      "description": "Si l'API OpenAI échoue, pas de mécanisme de retry avec backoff",
+      "scenario": "Rate limit OpenAI → extraction échoue immédiatement → perte de commande",
+      "impact": "Perte de commande, client non traité",
+      "localisation_code": "extractCallData.js:740-769",
+      "validation_actuelle": "Pas de retry",
+      "risque_probabilite": "faible",
+      "risque_frequence": "occasionnelle"
+    }
+  ],
+  "ameliorations_proposees": [
+    {
+      "id": "AMEL-001",
+      "titre": "Créer un service de validation produit centralisé",
+      "priorite": "critique",
+      "description": "Service ProductValidationService avec méthodes : validateProductName(), validateProductPrice(), validateProductOptions(), validateTacosPersonalization()",
+      "impact": "Réduit risques critiques de produits invalides",
+      "implementation": "Créer backend/Services/validation/ProductValidationService.js avec matching flexible (exact → case-insensitive → sans accents → partiel)",
+      "effort": "moyen",
+      "dependances": []
+    },
+    {
+      "id": "AMEL-002",
+      "titre": "Implémenter recalcul systématique des prix depuis le catalogue",
+      "priorite": "critique",
+      "description": "Toujours ignorer prixUnitaire de GPT et recalculer depuis catalogue après validation produit",
+      "impact": "Élimine erreurs tarifaires",
+      "implementation": "Dans extractCallData.js, après validation produit, remplacer prixUnitaire par le prix du catalogue",
+      "effort": "faible",
+      "dependances": ["AMEL-001"]
+    },
+    {
+      "id": "AMEL-003",
+      "titre": "Créer système de matching flexible pour noms de produits",
+      "priorite": "critique",
+      "description": "Fonction matchProduct() avec : correspondance exacte → correspondance case-insensitive → correspondance sans accents → correspondance partielle → null",
+      "impact": "Réduit faux négatifs (produit non trouvé)",
+      "implementation": "Dans ProductValidationService, fonction matchProductName() avec normalisation accents (é→e, à→a, etc.)",
+      "effort": "moyen",
+      "dependances": []
+    },
+    {
+      "id": "AMEL-004",
+      "titre": "Valider personnalisations tacos contre options disponibles",
+      "priorite": "critique",
+      "description": "Pour chaque tacos, valider viandes[] contre options.viandes.choix, sauce contre options.sauces.choix, nombre viandes vs maxViandes",
+      "impact": "Élimine commandes impossibles à préparer",
+      "implementation": "Dans ProductValidationService, méthode validateTacosPersonalization() qui vérifie chaque option",
+      "effort": "moyen",
+      "dependances": ["AMEL-001"]
+    },
+    {
+      "id": "AMEL-005",
+      "titre": "Implémenter retry avec backoff exponentiel pour extraction GPT",
+      "priorite": "moderee",
+      "description": "Max 3 tentatives avec délais 1s, 2s, 4s. Si échec, sauvegarder transcription brute avec statut 'extraction_echouee'",
+      "impact": "Réduit perte de commandes",
+      "implementation": "Dans extractCallData.js, wrapper avec retry logic et sauvegarde transcription si échec total",
+      "effort": "moyen",
+      "dependances": []
+    },
+    {
+      "id": "AMEL-006",
+      "titre": "Créer extracteur rule-based de secours",
+      "priorite": "moderee",
+      "description": "Extracteur basé regex pour cas simples (nom, téléphone, heures, produits basiques). Utilisé si GPT échoue",
+      "impact": "Résilience du système",
+      "implementation": "Créer backend/Services/extraction/ruleBasedExtractor.js avec regex patterns pour extraction basique",
+      "effort": "eleve",
+      "dependances": []
+    },
+    {
+      "id": "AMEL-007",
+      "titre": "Valider heures contre horaires d'ouverture",
+      "priorite": "moderee",
+      "description": "Vérifier que heure commande est dans horaires restaurant. Ajuster si nécessaire",
+      "impact": "Évite commandes impossibles",
+      "implementation": "Dans callDataValidation.js, ajouter validateTimeAgainstOpeningHours()",
+      "effort": "faible",
+      "dependances": []
+    },
+    {
+      "id": "AMEL-008",
+      "titre": "Optimiser prompt GPT pour réduire taille",
+      "priorite": "moderee",
+      "description": "Séparer instructions générales (système) et menu (user). Utiliser compression du menu (formats plus compacts). Monitorer taille du prompt",
+      "impact": "Réduit risque de troncature",
+      "implementation": "Refactorer extractCallData.js pour séparer prompt système et menu, compresser format menu",
+      "effort": "moyen",
+      "dependances": []
+    },
+    {
+      "id": "AMEL-009",
+      "titre": "Versionner et logger les prompts GPT",
+      "priorite": "faible",
+      "description": "Système de versioning pour prompts avec logging de la version utilisée",
+      "impact": "Traçabilité et debugging",
+      "implementation": "Ajouter constante PROMPT_VERSION dans extractCallData.js et logger dans chaque extraction",
+      "effort": "faible",
+      "dependances": []
+    },
+    {
+      "id": "AMEL-010",
+      "titre": "Valider disponibilité produits avant sauvegarde",
+      "priorite": "moderee",
+      "description": "Vérifier que chaque produit a disponible === true avant sauvegarde",
+      "impact": "Évite commandes de produits indisponibles",
+      "implementation": "Dans ProductValidationService.validateProductName(), vérifier disponible === true",
+      "effort": "faible",
+      "dependances": ["AMEL-001"]
+    },
+    {
+      "id": "AMEL-011",
+      "titre": "Valider quantités (>= 1 et <= limite raisonnable)",
+      "priorite": "faible",
+      "description": "Valider quantite >= 1 et <= 100 (ou limite raisonnable)",
+      "impact": "Données plus propres",
+      "implementation": "Dans callDataValidation.js, ajouter validation quantité",
+      "effort": "faible",
+      "dependances": []
+    },
+    {
+      "id": "AMEL-012",
+      "titre": "Consolider produits identiques avant sauvegarde",
+      "priorite": "faible",
+      "description": "Détecter doublons (même nom + personnalisation) et additionner quantités",
+      "impact": "Données plus propres",
+      "implementation": "Dans processCall.js, avant sauvegarde, consolider produits identiques",
+      "effort": "faible",
+      "dependances": []
+    },
+    {
+      "id": "AMEL-013",
+      "titre": "Améliorer prompt avec exemples négatifs pour éviter commandes fantômes",
+      "priorite": "moderee",
+      "description": "Ajouter exemples clairs de cas où NE PAS créer order (ex: 'je regarde le menu', 'quels sont vos horaires')",
+      "impact": "Réduit commandes fantômes",
+      "implementation": "Dans extractCallData.js, ajouter section 'EXEMPLES NÉGATIFS' dans le prompt",
+      "effort": "faible",
+      "dependances": []
+    },
+    {
+      "id": "AMEL-014",
+      "titre": "Valider cohérence type_demande vs commandes",
+      "priorite": "moderee",
+      "description": "Si type_demande === 'Commande à emporter', commandes[] ne doit pas être vide",
+      "impact": "Évite incohérences métier",
+      "implementation": "Dans callDataValidation.js, ajouter validation cohérence type_demande",
+      "effort": "faible",
+      "dependances": []
+    }
+  ],
+  "priorite": {
+    "critique": [
+      "AMEL-001: Service de validation produit centralisé",
+      "AMEL-002: Recalcul systématique des prix depuis catalogue",
+      "AMEL-003: Matching flexible pour noms de produits",
+      "AMEL-004: Validation personnalisations tacos",
+      "AMEL-010: Validation disponibilité produits"
+    ],
+    "moderee": [
+      "AMEL-005: Retry avec backoff exponentiel",
+      "AMEL-006: Extracteur rule-based de secours",
+      "AMEL-007: Validation heures contre horaires",
+      "AMEL-008: Optimisation prompt GPT",
+      "AMEL-013: Améliorer prompt avec exemples négatifs",
+      "AMEL-014: Validation cohérence type_demande"
+    ],
+    "faible": [
+      "AMEL-009: Versioning prompts GPT",
+      "AMEL-011: Validation quantités",
+      "AMEL-012: Consolidation produits identiques"
+    ]
+  },
+  "strategies_verification": [
+    {
+      "zone": "Noms de produits",
+      "strategie": "Validation stricte avec matching flexible",
+      "implementation": "ProductValidationService.validateProductName() avec cascade : exact → case-insensitive → sans accents → partiel → null",
+      "rejet_si": "Produit non trouvé après toutes les tentatives de matching",
+      "correction_auto": "Tenter matching flexible, si échec → rejeter ou utiliser produit générique avec flag"
+    },
+    {
+      "zone": "Prix unitaires",
+      "strategie": "Ignorer complètement les prix GPT, recalculer depuis catalogue",
+      "implementation": "Après validation produit, remplacer prixUnitaire par produit.prix du catalogue",
+      "rejet_si": "Produit non trouvé (impossible de recalculer)",
+      "correction_auto": "Toujours recalculer, pas de rejet si produit valide"
+    },
+    {
+      "zone": "Personnalisations tacos",
+      "strategie": "Validation stricte contre options disponibles",
+      "implementation": "ProductValidationService.validateTacosPersonalization() : valider viandes[], sauce, nombre viandes vs maxViandes",
+      "rejet_si": "Option invalide (viande/sauce non disponible) OU nombre viandes incohérent",
+      "correction_auto": "Si option invalide → utiliser option par défaut du produit. Si nombre viandes incohérent → corriger automatiquement"
+    },
+    {
+      "zone": "Heures",
+      "strategie": "Validation format + horaires d'ouverture",
+      "implementation": "callDataValidation.js : validateTime() + validateTimeAgainstOpeningHours()",
+      "rejet_si": "Format invalide OU heure hors horaires d'ouverture",
+      "correction_auto": "Si format invalide → null. Si hors horaires → ajuster à l'heure d'ouverture la plus proche"
+    },
+    {
+      "zone": "Commandes fantômes",
+      "strategie": "Validation cohérence type_demande vs commandes",
+      "implementation": "callDataValidation.js : valider que si type_demande === 'Commande à emporter', commandes[] n'est pas vide",
+      "rejet_si": "Incohérence détectée",
+      "correction_auto": "Si incohérence → soit corriger type_demande, soit rejeter order"
+    }
+  ],
+  "recommandations_prompt": [
+    {
+      "section": "RÈGLE CRITIQUE : QUAND CRÉER UN ORDER ?",
+      "probleme": "Instruction 'SI TU HÉSITES → CRÉER L'ORDER quand même !' trop permissive",
+      "recommandation": "Remplacer par : 'SI TU HÉSITES → Analyse le contexte. Si mention d'un plat concret → ORDER. Si seulement questions/infos → ORDER = NULL'",
+      "exemples_negatifs": [
+        "Transcription : 'Vous êtes ouverts jusqu'à quelle heure ?' → ORDER = null",
+        "Transcription : 'Je regarde le menu' → ORDER = null",
+        "Transcription : 'Quels sont vos prix ?' → ORDER = null"
+      ]
+    },
+    {
+      "section": "HEURE (heure)",
+      "probleme": "Règle ambiguë pour heures ambiguës",
+      "recommandation": "Renforcer : 'Si heure ambiguë ET contexte insuffisant → mettre null (pas d'heuristique). Le backend validera'",
+      "exemples": [
+        "Transcription : '8h' sans contexte → heure: null (pas 20:00)",
+        "Transcription : '8h du matin' → heure: '08:00'",
+        "Transcription : 'vers 19h' → heure: '19:00'"
+      ]
+    },
+    {
+      "section": "PERSONNALISATION TACOS",
+      "probleme": "Pas assez d'exemples d'options invalides",
+      "recommandation": "Ajouter section : 'OPTIONS INVALIDES - Si le client mentionne une option non listée dans le menu, utilise l'option par défaut ou laisse null'",
+      "exemples": [
+        "Client dit 'sauce barbecue' mais menu propose ['Algérienne', 'Blanche', 'Samouraï'] → sauce: null ou option par défaut"
+      ]
+    }
+  ],
+  "metriques_surveillance": [
+    {
+      "metrique": "Taux d'échec extraction GPT",
+      "description": "Pourcentage d'extractions qui échouent (retour valeurs par défaut)",
+      "seuil_alerte": "> 5%",
+      "action": "Investigation prompt ou API OpenAI"
+    },
+    {
+      "metrique": "Taux de produits non trouvés",
+      "description": "Pourcentage de produits extraits qui ne sont pas trouvés dans le catalogue",
+      "seuil_alerte": "> 2%",
+      "action": "Améliorer matching ou prompt"
+    },
+    {
+      "metrique": "Taux de prix incorrects",
+      "description": "Pourcentage de prix GPT différents du catalogue (après recalcul)",
+      "seuil_alerte": "> 1%",
+      "action": "Vérifier prompt et recalcul"
+    },
+    {
+      "metrique": "Taux de personnalisations tacos invalides",
+      "description": "Pourcentage de tacos avec options invalides",
+      "seuil_alerte": "> 3%",
+      "action": "Améliorer prompt et validation"
+    },
+    {
+      "metrique": "Taille moyenne du prompt",
+      "description": "Nombre de tokens moyen du prompt enrichi",
+      "seuil_alerte": "> 40k tokens",
+      "action": "Optimiser prompt ou menu"
+    }
+  ],
+  "resume": {
+    "total_erreurs": 15,
+    "critiques": 5,
+    "moderees": 6,
+    "faibles": 4,
+    "total_ameliorations": 14,
+    "ameliorations_critiques": 5,
+    "ameliorations_moderees": 6,
+    "ameliorations_faibles": 3,
+    "priorites_action": {
+      "P0_immediat": [
+        "AMEL-001: Service de validation produit",
+        "AMEL-002: Recalcul prix",
+        "AMEL-003: Matching flexible",
+        "AMEL-004: Validation tacos"
+      ],
+      "P1_courte_periode": [
+        "AMEL-005: Retry extraction",
+        "AMEL-007: Validation horaires",
+        "AMEL-010: Validation disponibilité",
+        "AMEL-013: Améliorer prompt"
+      ],
+      "P2_long_terme": [
+        "AMEL-006: Extracteur rule-based",
+        "AMEL-008: Optimisation prompt",
+        "AMEL-009: Versioning",
+        "AMEL-011: Validation quantités",
+        "AMEL-012: Consolidation"
+      ]
+    }
+  }
+}
