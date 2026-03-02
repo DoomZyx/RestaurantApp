@@ -30,13 +30,7 @@ export default async function orderRoutes(fastify, options) {
           duree: { type: "integer", minimum: 30, maximum: 180 },
           type: {
             type: "string",
-            enum: [
-              "Commande à emporter",
-              "Livraison à domicile",
-              "Réservation de table",
-              "Dégustation",
-              "Événement privé"
-            ],
+            enum: ["Commande à emporter", "Réservation de table"],
           },
           modalite: {
             type: "string",
@@ -87,13 +81,7 @@ export default async function orderRoutes(fastify, options) {
           },
           type: {
             type: "string",
-            enum: [
-              "Commande à emporter",
-              "Livraison à domicile",
-              "Réservation de table",
-              "Dégustation",
-              "Événement privé"
-            ],
+            enum: ["Commande à emporter", "Réservation de table"],
           },
           modalite: {
             type: "string",
@@ -164,13 +152,7 @@ export default async function orderRoutes(fastify, options) {
           duree: { type: "integer", minimum: 30, maximum: 180 },
           type: {
             type: "string",
-            enum: [
-              "Commande à emporter",
-              "Livraison à domicile",
-              "Réservation de table",
-              "Dégustation",
-              "Événement privé"
-            ],
+            enum: ["Commande à emporter", "Réservation de table"],
           },
           modalite: {
             type: "string",
@@ -253,22 +235,13 @@ export default async function orderRoutes(fastify, options) {
         type: "object",
         required: ["clientPhone", "date", "time"],
         properties: {
-          clientPhone: { type: "string", minLength: 10 },
-          date: { type: "string", format: "date" },
-          time: {
-            type: "string",
-            pattern: "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$",
-          },
+          clientPhone: { type: "string", minLength: 1 },
+          date: { type: "string", minLength: 1 },
+          time: { type: "string", minLength: 1 },
           duration: { type: "integer", minimum: 30, maximum: 180 },
           type: {
             type: "string",
-            enum: [
-              "Commande à emporter",
-              "Livraison à domicile",
-              "Réservation de table",
-              "Dégustation",
-              "Événement privé"
-            ],
+            enum: ["Commande à emporter", "Réservation de table"],
           },
           description: { type: "string", maxLength: 500 },
         },

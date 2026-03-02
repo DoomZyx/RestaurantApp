@@ -12,7 +12,6 @@ const callSchema = new mongoose.Schema({
     required: true,
     enum: [
       "Commande à emporter",
-      "Livraison à domicile",
       "Réservation de table",
       "Information menu",
       "Réclamation",

@@ -327,3 +327,2555 @@
       }
    }
 }
+[2026-02-18 15:07:26] [ERROR] [app] [MZ1afdb8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-18 15:08:33] [ERROR] [app] [MZ1afdb8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-20 19:22:14] [ERROR] [app] [MZ711f59...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-20 19:22:16] [ERROR] [app] [MZ711f59...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-20 19:22:19] [ERROR] [app] [MZ711f59...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-20 19:23:21] [ERROR] [app] [MZ711f59...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-20 19:24:05] [ERROR] [app] [MZ711f59...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-20 19:24:39] [ERROR] [app] [MZ711f59...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:15:52] [ERROR] [app] [MZad1bbc...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:17:42] [ERROR] [app] [MZ20e0c8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:17:47] [ERROR] [app] [MZ20e0c8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:17:50] [ERROR] [app] [MZ20e0c8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:18:06] [ERROR] [app] [MZ20e0c8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:18:07] [ERROR] [app] [MZ20e0c8...] [ERROR] Unterminated string in JSON at position 57 (line 1 column 58)
+   Contexte: {
+  "error": "Unterminated string in JSON at position 57 (line 1 column 58)",
+  "context": "function_call_execution"
+}
+   Stack: SyntaxError: Unterminated string in JSON at position 57 (line 1 column 58)
+    at JSON.parse (<anonymous>)
+    at FunctionCallHandler.handleFunctionCallCompleted (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/FunctionCallHandler.js:36:25)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:112:34)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+[2026-02-26 21:18:07] [ERROR] [app] [MZ20e0c8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:18:16] [ERROR] [app] [MZ20e0c8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:18:33] [ERROR] [app] [MZ20e0c8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:19:06] [ERROR] [app] [MZ20e0c8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:19:14] [ERROR] [app] [MZ20e0c8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:28:12] [ERROR] [app] [MZ070886...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:28:48] [ERROR] [app] [MZ070886...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:28:58] [ERROR] [app] [MZ070886...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:29:05] [ERROR] [app] [MZ070886...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:29:08] [ERROR] [app] [MZ070886...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:29:08] [ERROR] [app] [MZ070886...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:37:49] [ERROR] [app] [MZ2ae055...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:38:00] [ERROR] [app] [MZ2ae055...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:38:46] [ERROR] [app] [MZ2ae055...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:38:50] [ERROR] [app] [MZ2ae055...] [ERROR] Unterminated string in JSON at position 142 (line 1 column 143)
+   Contexte: {
+  "error": "Unterminated string in JSON at position 142 (line 1 column 143)",
+  "context": "function_call_execution"
+}
+   Stack: SyntaxError: Unterminated string in JSON at position 142 (line 1 column 143)
+    at JSON.parse (<anonymous>)
+    at FunctionCallHandler.handleFunctionCallCompleted (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/FunctionCallHandler.js:36:25)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:112:34)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+[2026-02-26 21:38:53] [ERROR] [app] [MZ2ae055...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:46:26] [ERROR] [app] [MZ2600c2...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:46:34] [ERROR] [app] [MZ2600c2...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:47:03] [ERROR] [app] [MZ2600c2...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-26 21:47:14] [ERROR] [app] [MZ2600c2...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 14:54:33] [ERROR] [app] [MZ674445...] [ERROR] OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'session.turn_detection.prompt'.",
+    "param": "session.turn_detection.prompt",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 14:55:04] [ERROR] [app] [MZba7a7d...] [ERROR] OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'session.turn_detection.prompt'.",
+    "param": "session.turn_detection.prompt",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 14:58:21] [ERROR] [app] [MZ0bde32...] [ERROR] OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'session.turn_detection.prompt'.",
+    "param": "session.turn_detection.prompt",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:00:06] [ERROR] [app] [MZf079c5...] [ERROR] OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'session.turn_detection.prompt'.",
+    "param": "session.turn_detection.prompt",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'session.turn_detection.prompt'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:20:10] [ERROR] [app] [MZ890eff...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:32:54] [ERROR] [app] [MZ5b9e63...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:32:55] [ERROR] [app] [MZ5b9e63...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:38:02] [ERROR] [app] [MZ5aaee1...] [ERROR] OpenAI Error: Unknown parameter: 'session.turn_detection.speech_rate'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'session.turn_detection.speech_rate'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'session.turn_detection.speech_rate'.",
+    "param": "session.turn_detection.speech_rate",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'session.turn_detection.speech_rate'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:39:14] [ERROR] [app] [MZb1252a...] [ERROR] OpenAI Error: Unknown parameter: 'session.voice_settings'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'session.voice_settings'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'session.voice_settings'.",
+    "param": "session.voice_settings",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'session.voice_settings'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:43:53] [ERROR] [app] [MZc487b3...] [ERROR] OpenAI Error: Unknown parameter: 'response.audio'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'response.audio'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'response.audio'.",
+    "param": "response.audio",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'response.audio'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:50:59] [ERROR] [app] [MZcd0aa4...] [ERROR] OpenAI Error: Unknown parameter: 'session.voice_settings'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'session.voice_settings'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'session.voice_settings'.",
+    "param": "session.voice_settings",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'session.voice_settings'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:53:05] [ERROR] [app] [MZcb18d3...] [ERROR] OpenAI Error: Unknown parameter: 'response.audio'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'response.audio'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'response.audio'.",
+    "param": "response.audio",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'response.audio'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:55:07] [ERROR] [app] [MZec74d0...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 15:58:28] [ERROR] [app] [MZba0e5f...] [ERROR] OpenAI Error: Unknown parameter: 'response.voice_settings'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'response.voice_settings'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'response.voice_settings'.",
+    "param": "response.voice_settings",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'response.voice_settings'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 16:00:09] [ERROR] [app] [MZ403697...] [ERROR] OpenAI Error: Unknown parameter: 'response.audio'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'response.audio'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'response.audio'.",
+    "param": "response.audio",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'response.audio'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 16:49:11] [ERROR] [app] [MZ779232...] [ERROR] OpenAI Error: Unknown parameter: 'response.audio'.
+   Contexte: {
+  "error": "OpenAI Error: Unknown parameter: 'response.audio'.",
+  "errorType": "invalid_request_error",
+  "errorCode": "unknown_parameter",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "unknown_parameter",
+    "message": "Unknown parameter: 'response.audio'.",
+    "param": "response.audio",
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Unknown parameter: 'response.audio'.
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:00] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:01] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:02] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:03] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:22] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:23] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:23] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:23] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:23] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:23] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:25] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:26] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:27] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:42:29] [ERROR] [app] [MZ996c87...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:43:20] [ERROR] [app] [MZe9e943...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:43:33] [ERROR] [app] [MZe9e943...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-27 17:43:55] [ERROR] [app] [MZe9e943...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:16:55] [ERROR] [app] [MZ1d7dfa...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:17:11] [ERROR] [app] [MZ1d7dfa...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:17:12] [ERROR] [app] [MZ1d7dfa...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:17:17] [ERROR] [app] [MZ1d7dfa...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:17:20] [ERROR] [app] [MZ1d7dfa...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:18:07] [ERROR] [app] [MZ1d7dfa...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:18:09] [ERROR] [app] [MZ1d7dfa...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:18:10] [ERROR] [app] [MZ1d7dfa...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:18:37] [ERROR] [app] [MZ1d7dfa...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:34:13] [ERROR] [app] [MZb60a51...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:34:16] [ERROR] [app] [MZb60a51...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:34:17] [ERROR] [app] [MZb60a51...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:34:18] [ERROR] [app] [MZb60a51...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:34:39] [ERROR] [app] [MZb60a51...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:34:39] [ERROR] [app] [MZb60a51...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:34:47] [ERROR] [app] [MZb60a51...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:44:26] [ERROR] [app] [MZa8d272...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:44:30] [ERROR] [app] [MZa8d272...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:44:40] [ERROR] [app] [MZa8d272...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:44:53] [ERROR] [app] [MZa8d272...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:44:57] [ERROR] [app] [MZa8d272...] [ERROR] Unterminated string in JSON at position 37 (line 1 column 38)
+   Contexte: {
+  "error": "Unterminated string in JSON at position 37 (line 1 column 38)",
+  "context": "function_call_execution"
+}
+   Stack: SyntaxError: Unterminated string in JSON at position 37 (line 1 column 38)
+    at JSON.parse (<anonymous>)
+    at FunctionCallHandler.handleFunctionCallCompleted (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/FunctionCallHandler.js:36:25)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:112:34)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+[2026-02-28 09:44:57] [ERROR] [app] [MZa8d272...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:44:59] [ERROR] [app] [MZa8d272...] [ERROR] Unterminated string in JSON at position 136 (line 1 column 137)
+   Contexte: {
+  "error": "Unterminated string in JSON at position 136 (line 1 column 137)",
+  "context": "function_call_execution"
+}
+   Stack: SyntaxError: Unterminated string in JSON at position 136 (line 1 column 137)
+    at JSON.parse (<anonymous>)
+    at FunctionCallHandler.handleFunctionCallCompleted (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/FunctionCallHandler.js:36:25)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:112:34)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+[2026-02-28 09:44:59] [ERROR] [app] [MZa8d272...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:45:00] [ERROR] [app] [MZa8d272...] [ERROR] Unterminated string in JSON at position 57 (line 1 column 58)
+   Contexte: {
+  "error": "Unterminated string in JSON at position 57 (line 1 column 58)",
+  "context": "function_call_execution"
+}
+   Stack: SyntaxError: Unterminated string in JSON at position 57 (line 1 column 58)
+    at JSON.parse (<anonymous>)
+    at FunctionCallHandler.handleFunctionCallCompleted (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/FunctionCallHandler.js:36:25)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:112:34)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+[2026-02-28 09:45:41] [ERROR] [app] [MZa8d272...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:45:42] [ERROR] [app] [MZa8d272...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:45:44] [ERROR] [app] [MZa8d272...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-02-28 09:46:16] [ERROR] [app] [MZa8d272...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:23:23] [ERROR] [app] [MZ7469a1...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:23:38] [ERROR] [app] [MZ7469a1...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:28:14] [ERROR] [app] [MZbf71d8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:28:17] [ERROR] [app] [MZbf71d8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:28:18] [ERROR] [app] [MZbf71d8...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:34:20] [ERROR] [app] [MZ25071b...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:36:37] [ERROR] [app] [MZ016b75...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:37:09] [ERROR] [app] [MZ016b75...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:37:19] [ERROR] [app] [MZ016b75...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:37:56] [ERROR] [app] [MZ52e459...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:38:26] [ERROR] [app] [MZ52e459...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7
+[2026-03-01 15:43:44] [ERROR] [app] [MZf020e3...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///home/doomzy/Documents/RestaurantApp/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:519:28)
+    at Receiver.receiverOnMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/websocket.js:1220:20)
+    at Receiver.emit (node:events:519:28)
+    at Receiver.dataMessage (/home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:596:14)
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/receiver.js:530:12
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:309:9
+    at /home/doomzy/Documents/RestaurantApp/Backend/node_modules/.pnpm/ws@8.18.3/node_modules/ws/lib/permessage-deflate.js:392:7

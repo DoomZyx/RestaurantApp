@@ -26,13 +26,8 @@ export class OrderService {
 
     // Déterminer la modalité par défaut en fonction du type
     const typeCommande = appointmentData.type || "Commande à emporter";
-    let modaliteDefaut = "Sur place";
-    
-    if (typeCommande === "Commande à emporter") {
-      modaliteDefaut = "À emporter";
-    } else if (typeCommande === "Livraison à domicile") {
-      modaliteDefaut = "Livraison";
-    }
+    const modaliteDefaut =
+      typeCommande === "Commande à emporter" ? "À emporter" : "Sur place";
 
     // Créer la commande
     const createdOrder = await OrderModel.create({

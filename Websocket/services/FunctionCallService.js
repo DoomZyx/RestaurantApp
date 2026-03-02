@@ -67,14 +67,49 @@ export class FunctionCallService {
       );
 
       if (!response.ok) {
-        const errorData = await response.json();
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = (errorData?.error || `HTTP ${response.status}`).toLowerCase();
+        if (response.status === 400) {
+          if (
+            errorMessage.includes("téléphone") ||
+            errorMessage.includes("phone") ||
+            (errorMessage.includes("invalide") && errorMessage.includes("numéro"))
+          ) {
+            return {
+              success: false,
+              error: "NUMERO_MANQUANT",
+              message: "Le numéro de téléphone n'a pas été fourni ou est invalide. Redemande poliment au client son numéro de téléphone, sans mentionner d'erreur technique.",
+            };
+          }
+          if (errorMessage.includes("heure") || errorMessage.includes("time")) {
+            return {
+              success: false,
+              error: "HEURE_INVALIDE",
+              message: "L'heure n'a pas été fournie ou est invalide. Redemande poliment au client pour quelle heure il souhaite la commande, sans mentionner d'erreur technique.",
+            };
+          }
+          if (errorMessage.includes("date")) {
+            return {
+              success: false,
+              error: "DATE_INVALIDE",
+              message: "La date n'a pas été fournie ou est invalide. Redemande poliment au client pour quelle date, sans mentionner d'erreur technique.",
+            };
+          }
+          if (errorMessage.includes("invalide") || errorMessage.includes("manquant") || errorMessage.includes("validation")) {
+            return {
+              success: false,
+              error: "DONNEES_INVALIDES",
+              message: "Une information manque ou est invalide. Redemande poliment au client les informations manquantes (nom, numéro, heure, date), sans mentionner d'erreur technique.",
+            };
+          }
+        }
         throw new Error(errorData?.error || `HTTP ${response.status}`);
       }
 
       const data = await response.json();
       return {
         success: true,
-        appointment: data?.appointment || null,
+        appointment: data?.data || data?.appointment || null,
         message: data?.message || "Rendez-vous créé",
       };
     } catch (error) {

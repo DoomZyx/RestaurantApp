@@ -12,26 +12,29 @@ export class SessionHandler {
 
   /**
    * Gère la mise à jour de session (déclenche la salutation initiale)
+   * Envoie la phrase d'accueil : "Bonjour, [nom restaurant], je vous écoute"
    */
-  handleSessionUpdated(data) {
+  async handleSessionUpdated(data) {
     if (!this.state.initialGreetingSent && this.openAiWs && this.openAiWs.readyState === 1) {
       this.state.initialGreetingSent = true;
-      
-      this.callLogger.info(this.streamSid, "🎤 Envoi de la salutation automatique");
-      
-      // Forcer une réponse de l'assistant sans attendre l'utilisateur
+
+      let greetingInstruction = "Dis exactement : Bonjour, je vous écoute.";
+      try {
+        const { getRestaurantInfo } = await import("../../../Services/gptServices/pricingService.js");
+        const restaurantInfo = await getRestaurantInfo();
+        const nomRestaurant = restaurantInfo?.nom || "le restaurant";
+        greetingInstruction = `Dis exactement cette phrase d'accueil, rien d'autre : Bonjour, ${nomRestaurant}, je vous écoute.`;
+      } catch (_) {
+        // Fallback si erreur chargement config
+      }
+
+      this.callLogger.info(this.streamSid, "Envoi de la salutation automatique");
+
       this.openAiWs.send(JSON.stringify({
         type: "response.create",
         response: {
-          instructions: "Bonjour, je parle un peu plus vite !",
-          modalities: ["audio", "text"],
-          audio: {
-            voice: "ballad",
-            voice_settings: {
-              speech_rate: 1.2,  // 1.0 = normal, >1 = plus rapide
-              pitch: 0           // facultatif
-            }
-          }
+          instructions: greetingInstruction,
+          modalities: ["audio", "text"]
         }
       }));
     }

@@ -372,15 +372,59 @@ function digitsOnly(phone) {
   return String(phone).replace(/\D/g, "");
 }
 
+// Normalise l'heure en HH:MM (accepte 19h, 19h30, 19:00, 9h30, etc.)
+function normalizeTime(raw) {
+  if (raw == null || raw === "") return null;
+  const s = String(raw).trim().toLowerCase();
+  // Déjà au format HH:MM
+  const matchColon = s.match(/^(\d{1,2}):(\d{2})$/);
+  if (matchColon) {
+    const h = parseInt(matchColon[1], 10);
+    const m = parseInt(matchColon[2], 10);
+    if (h >= 0 && h <= 23 && m >= 0 && m <= 59) {
+      return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+    }
+  }
+  // Format 19h, 19h30, 9h00
+  const matchH = s.match(/^(\d{1,2})h(\d{0,2})?$/);
+  if (matchH) {
+    const h = parseInt(matchH[1], 10);
+    const m = matchH[2] ? parseInt(matchH[2], 10) : 0;
+    if (h >= 0 && h <= 23 && m >= 0 && m <= 59) {
+      return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+    }
+  }
+  return null;
+}
+
+// Types acceptés par le schéma Order (valeurs envoyées par l'agent)
+const ORDER_TYPE_VALID = new Set(["Commande à emporter", "Réservation de table"]);
+
 // Créer une commande depuis l'IA
 export async function createOrderFromAI(request, reply) {
   try {
     const orderData = request.body;
-    const rawPhone = orderData.clientPhone || orderData.telephone || "";
+    const rawPhone = String(orderData.clientPhone ?? orderData.telephone ?? "").trim();
     const phoneNormalized = digitsOnly(rawPhone);
     if (phoneNormalized.length < 10) {
       return reply.code(400).send({
         error: "Numéro de téléphone invalide ou manquant.",
+      });
+    }
+
+    const rawTime = orderData.time ?? orderData.heure ?? "";
+    const heureNormalized = normalizeTime(rawTime);
+    if (!heureNormalized) {
+      return reply.code(400).send({
+        error: "Heure invalide ou manquante.",
+      });
+    }
+
+    const rawDate = orderData.date;
+    const orderDate = rawDate ? new Date(rawDate) : null;
+    if (!orderDate || isNaN(orderDate.getTime())) {
+      return reply.code(400).send({
+        error: "Date invalide ou manquante.",
       });
     }
 
@@ -393,14 +437,17 @@ export async function createOrderFromAI(request, reply) {
       ],
     });
 
-    // Créer la commande : avec client si trouvé, sinon sans client (nom uniquement)
+    const rawType = orderData.type ?? null;
+    const orderType = ORDER_TYPE_VALID.has(rawType) ? rawType : null;
+
+    // Créer la commande : avec client si trouvé, sinon sans client (nom et téléphone uniquement)
     const order = await OrderModel.create({
       client: client?._id ?? null,
       nom: client ? null : (orderData.name || "Client").trim() || null,
-      date: new Date(orderData.date),
-      heure: orderData.time ?? orderData.heure,
+      date: orderDate,
+      heure: heureNormalized,
       duree: orderData.duration ?? orderData.duree ?? 60,
-      type: orderData.type ?? null,
+      type: orderType,
       modalite: orderData.modalite ?? null,
       description: orderData.description ?? null,
       statut: "confirme",

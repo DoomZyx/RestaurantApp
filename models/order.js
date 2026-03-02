@@ -32,13 +32,7 @@ const orderSchema = new mongoose.Schema({
   type: {
     type: String,
     required: false,
-    enum: [
-      "Commande à emporter",
-      "Livraison à domicile",
-      "Réservation de table",
-      "Dégustation",
-      "Événement privé"
-    ]
+    enum: ["Commande à emporter", "Réservation de table"],
   },
   modalite: {
     type: String,

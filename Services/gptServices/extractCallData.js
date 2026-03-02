@@ -48,8 +48,8 @@ STRUCTURE JSON À RETOURNER :
   "description": "Description claire de la demande",
   "statut": "nouveau",
   "order": {
-    "date": "2025-10-21 ou ASAP",
-    "heure": "19:00 ou ASAP",
+    "date": "ASAP",
+    "heure": "19:00",
     "duree": 60,
     "type": "Commande à emporter",
     "modalite": "À emporter",
@@ -79,7 +79,7 @@ CRÉER ORDER si :
 
 ORDER = NULL si :
 - Questions d'horaires uniquement
-- Questions sur le menu/ingrédients
+- Questions sur le menu/ingrédients sans demande de commande
 - Réclamations sans commande
 
 SI TU HÉSITES → CRÉER L'ORDER quand même !
@@ -89,7 +89,7 @@ CHAMPS À EXTRAIRE :
 ========================================
 
 NOM (nom) - RÈGLE CRITIQUE :
-→ CHERCHE LE NOM dans TOUTE la transcription (début, milieu, fin)
+→ CHERCHE LE NOM au millieu ou à la fin de la transcription (milieu, fin)
 → Variantes possibles : "Je m'appelle X", "C'est X", "X à l'appareil", "Pour X", "Nom : X"
 → Si prénom seul (ex: "Martin") : Accepte-le tel quel
 → Si nom complet (ex: "Jean Dupont") : Extrais-le complet
@@ -97,7 +97,7 @@ NOM (nom) - RÈGLE CRITIQUE :
 → Si flou/partiel : "Client" + initiale (ex: "Client M")
 → Si totalement absent : "Client inconnu"
 
-IMPORTANT : Le nom est souvent dit au MILIEU de la conversation, pas au début
+IMPORTANT : Le nom est souvent dit en fin de la conversation, pas au début
 Exemple : "Je veux une pizza... oui Martin... pour 19h"
 → Extrais : "Martin"
 
@@ -111,17 +111,17 @@ PATTERNS DE NOM À DÉTECTER :
 - "Nom: [NOM]" ou "Mon nom c'est [NOM]"
 
 TÉLÉPHONE (telephone) :
-→ Si donné : Extrais-le (format : 0612345678)
+→ Si donné : Extrais-le au format avec espaces entre paires de chiffres (ex: 07 86 87 67 89)
 → Si absent : "Non fourni"
 NE JAMAIS inventer un numéro
 
 TYPE_DEMANDE (type_demande) :
 Valeurs autorisées UNIQUEMENT :
-"Commande à emporter" | "Livraison à domicile" | "Réservation de table" | "Information menu" | "Réclamation" | "Facturation" | "Autre"
+"Commande à emporter" | "Réservation de table" | "Information menu" | "Réclamation" | "Facturation" | "Autre"
 
 SERVICES (services) :
 Valeurs autorisées UNIQUEMENT :
-"Pizzas" | "Burgers" | "Salades" | "Boissons" | "Desserts" | "Menus" | "Promotions" | "Autre"
+"Pizzas" | "Burgers" | "Salades" | "Plats" | "Tacos" | "Boissons" | "Desserts" | "Menus" | "Promotions" | "Autre"
 
 DESCRIPTION (description) :
 → Résumé clair de la demande du client
@@ -139,12 +139,13 @@ DATE (date) :
 
 HEURE (heure) :
 → Si heure mentionnée : Format HH:MM (ex: 19:00)
-→ Si AUCUNE heure : "ASAP"
+→ Si AUCUNE heure, ne jamais mettre "ASAP"
 → IMPORTANT : Si heure ambiguë (ex: "8h" sans "matin/soir"):
   * Fast-food ouvert midi (11h-15h) et soir (18h-23h)
   * "8h" = probablement 20:00 (soir)
   * "midi" ou "12h" = 12:00
   * Si contexte clair → adapte (ex: "8h du matin" = 08:00)
+  * Si pour les minutes tu ne comprends pas si la transcription est ambiguë, ne jamais mettre "ASAP" mais mettre 30 minutes si le client commande 15 ou 20 minutes avant 30 minutes.
 
 DURÉE (duree) :
 → Commande : 60
@@ -152,7 +153,7 @@ DURÉE (duree) :
 
 TYPE (type) :
 Valeurs autorisées :
-"Commande à emporter" | "Livraison à domicile" | "Réservation de table" | "Dégustation" | "Événement privé"
+"Commande à emporter" | "Réservation de table"
 Par défaut : "Commande à emporter"
 
 MODALITÉ (modalite) :
@@ -278,7 +279,7 @@ Transcription : "Bonjour, je voudrais commander 2 pizzas 4 fromages à emporter"
 JSON :
 {
   "nom": "Client inconnu",
-  "telephone": "Non fourni",
+  "telephone": "07 86 87 67 89", -> exemple de format avec espaces entre paires de chiffres
   "type_demande": "Commande à emporter",
   "services": "Pizzas",
   "description": "Commande de 2 pizzas 4 fromages à emporter",
@@ -446,7 +447,7 @@ JSON :
   "statut": "nouveau",
   "order": {
     "date": "ASAP",
-    "heure": "ASAP",
+    "heure": exemple "19:00",
     "duree": 60,
     "type": "Commande à emporter",
     "modalite": "À emporter",
@@ -484,6 +485,20 @@ JSON :
   "order": null
 }
 
+Exemple 6 - Réclamation (Pas de commandes) :
+Transcription : "Bonjour, Je voudrais parler à un responsable concernant : 
+Exemple : "La livraison a été retardée" ou "Le service a été mauvais" ou "Le plat a été mauvais" ou "Une intoxication alimentaire".
+
+JSON : 
+{
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Réclamation",
+  "services": "Autre",
+  "description": "Réclamation concernant la livraison ou le service ou le plat ou l'intoxication alimentaire",
+  "statut": "nouveau",
+  "order": null
+}
 ========================================
 RAPPEL FINAL - RÈGLES ABSOLUES
 ========================================
@@ -633,20 +648,10 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
         nomClient === "Non fourni") {
       nomClient = "Client inconnu";
     }
-    
-    
-    // Validation du téléphone (format français) - OPTIONNEL
-    const phoneRegex = /^(?:(?:\+|00)33|0)[1-9](?:[0-9]{8})$/;
-    let cleanedPhone = "Non fourni";
-    
-    if (extractedData.telephone && extractedData.telephone !== "Non fourni") {
-      const phoneTest = extractedData.telephone.replace(/[\s.-]/g, '');
-      if (phoneRegex.test(phoneTest)) {
-        cleanedPhone = phoneTest;
-      } else {
-        cleanedPhone = "Non fourni";
-      }
-    }
+    // Téléphone : aucune validation stricte, on garde ce que GPT a extrait
+    const cleanedPhone = (extractedData.telephone && extractedData.telephone.trim() !== "")
+      ? extractedData.telephone.trim()
+      : "Non fourni";
 
     // Normaliser la structure
     // IMPORTANT : GPT retourne "order" pas "appointment" donc on lit "order"

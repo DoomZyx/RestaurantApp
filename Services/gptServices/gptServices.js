@@ -22,13 +22,14 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
       type: "session.update",
       session: {
         
-        turn_detection: { 
+        turn_detection: {
           type: "server_vad",
-          threshold: 0.6,              // Plus sensible = détection parole plus rapide (0.5 = par défaut, risque faux positifs si trop bas)
-          prefix_padding_ms: 80,       // Réduit pour latence barge-in
-          silence_duration_ms: 200,     // Détection fin de tour plus réactive
-          create_response: true,        // CRITIQUE : Génère automatiquement une réponse après que l'utilisateur ait fini de parler
-          interrupt_response: true     // Permet d'interrompre la réponse en cours quand le client parle
+          threshold: 0.6,
+          prefix_padding_ms: 80,
+          // Légèrement plus long pour éviter de couper les phrases ou les chiffres en environnement bruité
+          silence_duration_ms: 140,
+          create_response: true,
+          interrupt_response: true,
         },
         input_audio_format: "g711_ulaw",
         output_audio_format: "g711_ulaw",
@@ -39,7 +40,14 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
         max_response_output_tokens: 812,  // Limite les monologues pour que l'interruption soit prise en compte plus tôt
         input_audio_transcription: {
           model: "whisper-1",
-          prompt: "Restaurant fast-food: nuggets, tacos, burgers, sauce Biggy, sauce Algérienne, sauce Samourai, frites, Coca-Cola, Ice Tea, menu simple, menu double, menu triple, crudités, poulet, bœuf, agneau"
+          prompt:
+            "Transcription d'appels téléphoniques pour un restaurant ou fast-food en français. " +
+            "Priorité ABSOLUE : bien entendre et transcrire les CHIFFRES, HEURES et NUMÉROS DE TÉLÉPHONE. " +
+            "Exemples d'heures : '18h', '18h30', 'dix-huit heures trente', 'vers 19h', 'à midi', 'midi', 'minuit'. " +
+            "Transcris les heures de façon cohérente dans le texte (18h, 18h30, 19h, etc.). " +
+            "Exemples de numéros : '06 72 88 62 55', '07 86 87 67 89'. " +
+            "Même s'il y a du bruit, privilégie la justesse des chiffres et des horaires. " +
+            "Vocabulaire du menu : nuggets, tacos, burgers, sauce Biggy, sauce Algérienne, sauce Samourai, frites, Coca-Cola, Ice Tea, menu simple, menu double, menu triple, crudités, poulet, bœuf, agneau."
         },
         tools: [
           {
@@ -72,7 +80,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                 },
                 clientPhone: {
                   type: "string",
-                  description: "Numéro de téléphone du client",
+                  description: "Numéro de téléphone au format avec espaces entre paires (ex: 07 86 87 67 89)",
                 },
                 date: {
                   type: "string",
@@ -91,15 +99,9 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                 },
                 type: {
                   type: "string",
-                  enum: [
-                    "Consultation initiale",
-                    "Présentation de devis",
-                    "Maintenance/Support",
-                    "Réunion projet",
-                    "Livraison/Présentation",
-                  ],
-                  default: "Consultation initiale",
-                  description: "Type de rendez-vous",
+                  enum: ["Commande à emporter", "Réservation de table"],
+                  default: "Commande à emporter",
+                  description: "Type : commande à emporter ou réservation de table",
                 },
                 description: {
                   type: "string",
