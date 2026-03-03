@@ -18,7 +18,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
   const [menuProducts, setMenuProducts] = useState([]); // produits depuis la config
   const [boissonsDisponibles, setBoissonsDisponibles] = useState([]); // boissons depuis la config
   const [selectedItems, setSelectedItems] = useState([
-    { id: Date.now(), productId: "", qty: 1, supplements: "", options: {} }
+    { id: Date.now(), productId: "", qty: 1, composition: "", options: {} }
   ]);
   const [searchFilter, setSearchFilter] = useState(""); // Pour filtrer les produits
   const [showProductSelection, setShowProductSelection] = useState(null); // ID de l'item en cours de sélection
@@ -153,7 +153,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
               categorie: prod?.categorie || "",
               quantite: it.qty && it.qty > 0 ? it.qty : 1,
               prixUnitaire: prod?.prixBase || 0,
-              supplements: it.supplements?.trim() || "",
+              composition: it.composition?.trim() || "",
               options: it.options || {} // Inclure les options sélectionnées
             };
           });
@@ -438,10 +438,10 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
                   {!hasOptions && (
                     <input
                       type="text"
-                      placeholder={t('createAppointment.supplementsPlaceholder')}
-                      value={item.supplements}
-                      onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, supplements: e.target.value } : it))}
-                      className="item-supplements"
+                      placeholder={t('createAppointment.compositionPlaceholder')}
+                      value={item.composition}
+                      onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, composition: e.target.value } : it))}
+                      className="item-composition"
                     />
                   )}
                 </div>
@@ -451,7 +451,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
               <button 
                 type="button" 
                 className="btn-secondary btn-add-item" 
-                onClick={() => setSelectedItems(prev => [...prev, { id: Date.now() + Math.random(), productId: "", qty: 1, supplements: "", options: {} }])}
+                onClick={() => setSelectedItems(prev => [...prev, { id: Date.now() + Math.random(), productId: "", qty: 1, composition: "", options: {} }])}
               >
                 {t('createAppointment.addDish')}
               </button>

@@ -97,8 +97,8 @@ export function AppointmentDetails({
                     {item.options && item.options.boisson && (
                       <span className="item-supplements">Boisson: {item.options.boisson}</span>
                     )}
-                    {item.supplements && (
-                      <span className="item-supplements">{t('appointmentDetails.extras')}: {item.supplements}</span>
+                    {item.composition && (
+                      <span className="item-composition">{t('appointmentDetails.composition')}: {item.composition}</span>
                     )}
                   </li>
                 ))}
