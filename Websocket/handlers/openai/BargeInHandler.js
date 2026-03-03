@@ -13,6 +13,7 @@ export class BargeInHandler {
     this.openAiWs = openAiWs;
     this.twilioConnection = twilioConnection; // Connexion Twilio pour envoyer 'clear'
     this.state = state; // Référence à l'état partagé
+    this.speedManager = null; // Sera défini par OpenAIHandler
     
     // LOG DE DIAGNOSTIC : Vérifier que la connexion est bien passée
     console.log(ts(), "🔍 [DIAGNOSTIC] BargeInHandler initialisé", {
@@ -22,6 +23,14 @@ export class BargeInHandler {
       twilioReadyState: twilioConnection?.readyState,
       hasSendMethod: typeof twilioConnection?.send === "function"
     });
+  }
+
+  /**
+   * Définit le gestionnaire de vitesse TTS
+   * @param {TTSSpeedManager} speedManager - Gestionnaire de vitesse TTS
+   */
+  setSpeedManager(speedManager) {
+    this.speedManager = speedManager;
   }
 
   /**
@@ -217,8 +226,13 @@ export class BargeInHandler {
    * L'audio de l'utilisateur a été commité (committed).
    * L'utilisateur a définitivement fini de parler, on peut réinitialiser shouldCancel.
    * CRITIQUE : On réinitialise aussi isInterrupted pour permettre à la nouvelle réponse de GPT de jouer.
+   * 
+   * GESTION MANUELLE DES RÉPONSES :
+   * Avec create_response: false, on doit créer manuellement la réponse après committed.
+   * Aucun JSON ne sera généré automatiquement pendant l'appel.
+   * La génération finale sera déclenchée uniquement à la détection de call_end.
    */
-  handleUserSpeechCommitted() {
+  async handleUserSpeechCommitted() {
     this.state.isUserSpeaking = false;
     this.state.shouldCancel = false;
     
@@ -228,6 +242,28 @@ export class BargeInHandler {
       this.state.isInterrupted = false;
       this.state._audioSuppressedLogged = false; // Réinitialiser pour permettre les logs de la prochaine réponse
       console.log(ts(), "🔓 [VAD] isInterrupted = false (utilisateur a fini de parler, audio GPT autorisé)");
+    }
+    
+    // GESTION MANUELLE : Créer la réponse manuellement après committed
+    // (create_response: false dans la configuration)
+    // CRITIQUE : Mettre à jour la vitesse TTS AVANT de créer la réponse
+    if (this.openAiWs && this.openAiWs.readyState === 1) {
+      try {
+        // Mettre à jour la vitesse TTS selon le contexte AVANT de créer la réponse
+        if (this.speedManager) {
+          await this.speedManager.updateSpeedForContext();
+        }
+        
+        // Créer la réponse après la mise à jour de vitesse
+        this.openAiWs.send(JSON.stringify({
+          type: "response.create"
+        }));
+        this.callLogger.debug(this.streamSid, "Réponse créée manuellement après committed");
+      } catch (error) {
+        this.callLogger.error(this.streamSid, error, {
+          context: "manual_response_create"
+        });
+      }
     }
     
     console.log(ts(), "✅ [VAD] speech_committed", {
