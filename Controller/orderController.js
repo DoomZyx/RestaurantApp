@@ -405,6 +405,15 @@ const ORDER_TYPE_VALID = new Set(["Commande à emporter", "Réservation de table
 export async function createOrderFromAI(request, reply) {
   try {
     const orderData = request.body;
+
+    // Logger les données reçues pour diagnostic
+    console.log("[createOrderFromAI] Données reçues:", {
+      orderData: JSON.stringify(orderData, null, 2),
+      hasCommandes: Array.isArray(orderData.commandes),
+      commandesCount: orderData.commandes ? orderData.commandes.length : 0,
+      commandes: orderData.commandes ? JSON.stringify(orderData.commandes, null, 2) : "[]",
+    });
+
     const rawPhone = String(orderData.clientPhone ?? orderData.telephone ?? "").trim();
     const phoneNormalized = digitsOnly(rawPhone);
     if (phoneNormalized.length < 10) {
@@ -442,22 +451,40 @@ export async function createOrderFromAI(request, reply) {
     const orderType = ORDER_TYPE_VALID.has(rawType) ? rawType : null;
 
     // Créer la commande : avec client si trouvé, sinon sans client (nom et téléphone uniquement)
-    const order = await OrderModel.create({
+    const orderToCreate = {
       client: client?._id ?? null,
       nom: client ? null : (orderData.name || "Client").trim() || null,
+      telephone: !client && rawPhone ? rawPhone.trim() : null,
       date: orderDate,
       heure: heureNormalized,
       duree: orderData.duration ?? orderData.duree ?? 60,
       type: orderType,
       modalite: orderData.modalite ?? null,
       description: orderData.description ?? null,
+      commandes: orderData.commandes || [],
       statut: "confirme",
       createdBy: "system",
+    };
+
+    // Logger la commande qui va être créée
+    console.log("[createOrderFromAI] Commande à créer:", {
+      orderToCreate: JSON.stringify(orderToCreate, null, 2),
+      commandesCount: orderToCreate.commandes.length,
+      commandes: JSON.stringify(orderToCreate.commandes, null, 2),
     });
+
+    const order = await OrderModel.create(orderToCreate);
 
     if (order.client) {
       await order.populate("client");
     }
+
+    // Logger la commande créée
+    console.log("[createOrderFromAI] Commande créée avec succès:", {
+      orderId: order._id,
+      commandesCount: order.commandes ? order.commandes.length : 0,
+      commandes: order.commandes ? JSON.stringify(order.commandes, null, 2) : "[]",
+    });
 
     return reply.code(201).send({
       success: true,

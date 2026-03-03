@@ -154,7 +154,7 @@ export function extractBasicProducts(transcription, catalog) {
           categorie: categorie,
           quantite: quantite,
           prixUnitaire: produit.prix || 0,
-          supplements: "",
+          composition: "",
           personnalisation: null
         });
       }

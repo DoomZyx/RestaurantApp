@@ -46,13 +46,6 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
         modalities: ["text", "audio"],
         temperature: 0.8,
         max_response_output_tokens: 812,
-        // Configuration STT avec Whisper
-        // NOTE : Cette transcription est utilisée uniquement pour la compréhension interne de GPT
-        // Elle n'est PAS utilisée pour l'extraction finale des données
-        // L'extraction utilise uniquement la transcription de ce que GPT répète (response.audio_transcript.delta)
-        // pour éviter les erreurs de transcription directe du client
-        // Attention : l'API ne supporte PAS le paramètre temperature ici
-        // Limite : prompt max 1024 caractères
         input_audio_transcription: {
           model: "whisper-1",
           language: "fr",
@@ -104,7 +97,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                   type: "string",
                   description: "Nom complet du client",
                 },
-                clientPhone: {
+                telephone: {
                   type: "string",
                   description: "Numéro de téléphone au format avec espaces entre paires (ex: 07 86 87 67 89)",
                 },
@@ -133,8 +126,47 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                   type: "string",
                   description: "Description du rendez-vous",
                 },
+                commandes: {
+                  type: "array",
+                  description: "Liste des plats commandés (pour les commandes à emporter). Chaque élément doit contenir au minimum 'nom' et 'quantite'.",
+                  items: {
+                    type: "object",
+                    properties: {
+                      produitId: {
+                        type: "string",
+                        description: "ID du produit si disponible",
+                      },
+                      nom: {
+                        type: "string",
+                        description: "Nom du plat (ex: 'Burger', 'Pizza Margherita', 'Tacos')",
+                      },
+                      categorie: {
+                        type: "string",
+                        description: "Catégorie du plat (ex: 'Burgers', 'Pizzas', 'Tacos')",
+                      },
+                      quantite: {
+                        type: "integer",
+                        minimum: 1,
+                        description: "Quantité commandée",
+                      },
+                      prixUnitaire: {
+                        type: "number",
+                        description: "Prix unitaire du plat",
+                      },
+                      composition: {
+                        type: "string",
+                        description: "Composition ou modifications (ex: 'Sans oignons', 'Extra sauce')",
+                      },
+                      options: {
+                        type: "object",
+                        description: "Options supplémentaires du plat",
+                      },
+                    },
+                    required: ["nom", "quantite"],
+                  },
+                },
               },
-              required: ["name", "clientPhone", "date", "time"],
+              required: ["name", "telephone", "date", "time", "type"],
             },
           },
         ],

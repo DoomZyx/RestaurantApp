@@ -84,7 +84,7 @@ const orderSchema = new mongoose.Schema({
       type: Number,
       required: false
     },
-    supplements: {
+    composition: {
       type: String,
       maxlength: 200
     },

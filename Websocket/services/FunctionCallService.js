@@ -52,23 +52,39 @@ export class FunctionCallService {
    */
   static async createAppointment(args) {
     try {
-      const response = await fetch(
-        `http://localhost:${
-          process.env.PORT || 8080
-        }/api/orders/ai/create`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": process.env.X_API_KEY,
-          },
-          body: JSON.stringify(args),
-        }
-      );
+      const requestBody = JSON.stringify(args);
+      const url = `http://localhost:${
+        process.env.PORT || 8080
+      }/api/orders/ai/create`;
+
+      // Logger le body envoyé
+      console.log("[FunctionCallService] Envoi requête createAppointment:", {
+        url,
+        body: requestBody,
+        commandesCount: args.commandes ? args.commandes.length : 0,
+        hasCommandes: Array.isArray(args.commandes) && args.commandes.length > 0,
+      });
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": process.env.X_API_KEY,
+        },
+        body: requestBody,
+      });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         const errorMessage = (errorData?.error || `HTTP ${response.status}`).toLowerCase();
+
+        // Logger l'erreur HTTP
+        console.error("[FunctionCallService] Erreur HTTP createAppointment:", {
+          status: response.status,
+          statusText: response.statusText,
+          errorData: JSON.stringify(errorData, null, 2),
+          requestBody: requestBody,
+        });
         if (response.status === 400) {
           if (
             errorMessage.includes("téléphone") ||
@@ -107,12 +123,27 @@ export class FunctionCallService {
       }
 
       const data = await response.json();
+
+      // Logger la réponse reçue
+      console.log("[FunctionCallService] Réponse reçue createAppointment:", {
+        status: response.status,
+        statusText: response.statusText,
+        responseData: JSON.stringify(data, null, 2),
+        orderId: data?.data?._id || data?.data?.id || null,
+        commandesCount: data?.data?.commandes ? data.data.commandes.length : 0,
+      });
+
       return {
         success: true,
         appointment: data?.data || data?.appointment || null,
         message: data?.message || "Rendez-vous créé",
       };
     } catch (error) {
+      console.error("[FunctionCallService] Erreur createAppointment:", {
+        error: error.message,
+        stack: error.stack,
+        args: JSON.stringify(args, null, 2),
+      });
       return {
         success: false,
         error: `Impossible de créer le rendez-vous: ${error.message}`,

@@ -73,7 +73,7 @@ STRUCTURE JSON À RETOURNER :
         "categorie": "Pizzas",
         "quantite": 2,
         "prixUnitaire": 12.50,
-        "supplements": "+fromage"
+        "composition": "+fromage"
       }
     ]
   }
@@ -190,7 +190,7 @@ COMMANDES (commandes) :
   "categorie": "Pizzas",
   "quantite": 2,
   "prixUnitaire": 12.50,
-  "supplements": "+fromage, +oignons",
+  "composition": "+fromage, +oignons",
   "personnalisation": null  // Pour les tacos personnalisés (voir ci-dessous)
 }
 
@@ -224,7 +224,7 @@ Exemple 1 - Tacos Simple (1 viande) :
   "categorie": "Tacos",
   "quantite": 1,
   "prixUnitaire": 7.50,
-  "supplements": "",
+  "composition": "",
   "personnalisation": {
     "viandes": ["Poulet"],  // 1 viande pour un simple
     "sauce": "Algérienne",
@@ -239,7 +239,7 @@ Exemple 2 - Tacos Double (2 viandes) :
   "categorie": "Tacos",
   "quantite": 1,
   "prixUnitaire": 9.50,
-  "supplements": "",
+  "composition": "",
   "personnalisation": {
     "viandes": ["Poulet", "Merguez"],  // 2 viandes pour un double
     "sauce": "Sauce Blanche",
@@ -282,7 +282,7 @@ Client dit : "Je veux un menu USA Beef Burger avec un coca"
   "categorie": "Menus",
   "quantite": 1,
   "prixUnitaire": 15.00,
-  "supplements": "",
+  "composition": "",
   "options": {
     "boisson": "Coca-Cola"
   }
@@ -360,7 +360,7 @@ JSON :
         "categorie": "Pizzas",
         "quantite": 2,
         "prixUnitaire": 12.50,
-        "supplements": ""
+        "composition": ""
       }
     ]
   }
@@ -414,7 +414,7 @@ JSON :
         "categorie": "Pizzas",
         "quantite": 1,
         "prixUnitaire": 12.50,
-        "supplements": ""
+        "composition": ""
       }
     ]
   }
@@ -445,7 +445,7 @@ JSON :
         "categorie": "Pizzas",
         "quantite": 2,
         "prixUnitaire": 12.50,
-        "supplements": ""
+        "composition": ""
       }
     ]
   }
@@ -476,21 +476,21 @@ JSON :
         "categorie": "Boissons",
         "quantite": 2,
         "prixUnitaire": 3.00,
-        "supplements": ""
+        "composition": ""
       },
       {
         "nom": "USA Beef Burger",
         "categorie": "Burgers",
         "quantite": 1,
         "prixUnitaire": 10.00,
-        "supplements": ""
+        "composition": ""
       },
       {
         "nom": "Frites",
         "categorie": "Accompagnements",
         "quantite": 1,
         "prixUnitaire": 4.00,
-        "supplements": ""
+        "composition": ""
       }
     ]
   }
@@ -521,7 +521,7 @@ JSON :
         "categorie": "Tacos",
         "quantite": 1,
         "prixUnitaire": 9.50,
-        "supplements": "",
+        "composition": "",
         "personnalisation": {
           "viandes": ["Poulet", "Merguez"],
           "sauce": "Algérienne",
@@ -626,7 +626,7 @@ const EXTRACTION_JSON_SCHEMA = {
               categorie: { type: "string" },
               quantite: { type: "number" },
               prixUnitaire: { type: "number" },
-              supplements: { type: "string" },
+              composition: { type: "string" },
               personnalisation: { type: ["object", "null"] },
               options: { type: ["object", "null"] }
             },

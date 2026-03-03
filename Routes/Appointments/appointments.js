@@ -51,7 +51,7 @@ export default async function orderRoutes(fastify, options) {
                 categorie: { type: "string" },
                 quantite: { type: "integer", minimum: 1 },
                 prixUnitaire: { type: "number" },
-                supplements: { type: "string", maxLength: 200 }
+                composition: { type: "string", maxLength: 200 }
               }
             }
           }
@@ -233,9 +233,9 @@ export default async function orderRoutes(fastify, options) {
     schema: {
       body: {
         type: "object",
-        required: ["clientPhone", "date", "time"],
+        required: ["telephone", "date", "time"],
         properties: {
-          clientPhone: { type: "string", minLength: 1 },
+          telephone: { type: "string", minLength: 1 },
           date: { type: "string", minLength: 1 },
           time: { type: "string", minLength: 1 },
           duration: { type: "integer", minimum: 30, maximum: 180 },
@@ -244,6 +244,21 @@ export default async function orderRoutes(fastify, options) {
             enum: ["Commande à emporter", "Réservation de table"],
           },
           description: { type: "string", maxLength: 500 },
+          commandes: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                produitId: { type: "string" },
+                nom: { type: "string" },
+                categorie: { type: "string" },
+                quantite: { type: "integer", minimum: 1 },
+                prixUnitaire: { type: "number" },
+                composition: { type: "string", maxLength: 200 },
+                options: { type: "object" },
+              },
+            },
+          },
         },
       },
     },

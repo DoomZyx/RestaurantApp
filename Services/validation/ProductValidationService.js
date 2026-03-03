@@ -416,7 +416,7 @@ export async function validateAllProducts(produits, streamSid = "unknown") {
         categorie: produit.categorie,
         quantite: Math.max(1, Math.min(100, produit.quantite || 1)), // Valider quantité (AMEL-011)
         prixUnitaire: nameValidation.produit.prix || nameValidation.produit.prixBase || 0,
-        supplements: produit.supplements || "",
+        composition: produit.composition || "",
         personnalisation: null,
         options: produit.options || null,
       };
@@ -548,7 +548,7 @@ export async function validateProduct(product, streamSid = "unknown") {
     categorie: product.categorie,
     quantite: product.quantite || 1,
     prixUnitaire: priceValidation.prix,
-    supplements: product.supplements || "",
+    composition: product.composition || "",
     personnalisation: personnalisationValidee,
     options: product.options || null
   };

@@ -35,6 +35,14 @@ export class FunctionCallHandler {
       const functionName = data.name;
       const args = JSON.parse(data.arguments || "{}");
 
+      // Logger le JSON parsé pour diagnostic
+      this.callLogger.info(this.streamSid, "Function call arguments parsed", {
+        functionName,
+        parsedArgs: JSON.stringify(args, null, 2),
+        commandesCount: args.commandes ? args.commandes.length : 0,
+        hasCommandes: Array.isArray(args.commandes) && args.commandes.length > 0,
+      });
+
       let result;
 
       switch (functionName) {
