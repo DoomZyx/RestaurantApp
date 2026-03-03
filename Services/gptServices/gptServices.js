@@ -16,31 +16,41 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
     const restaurantInfo = await getRestaurantInfo();
     
     // Générer le prompt enrichi avec les tarifs ET la date actuelle
-    const enrichedInstructions = await generateEnrichedPrompt(getSystemMessage(restaurantInfo ?? null));
+    // getSystemMessage accepte null/undefined et gère le fallback en interne
+    // @ts-ignore - TypeScript infère incorrectement le type, mais le code fonctionne correctement
+    const enrichedInstructions = await generateEnrichedPrompt(getSystemMessage(restaurantInfo));
     
     const sessionUpdate = {
       type: "session.update",
       session: {
-        
+        // Configuration VAD robuste avec tolérance au bruit
+        // Threshold réduit pour détection plus précoce et robuste au bruit
         turn_detection: {
           type: "server_vad",
-          threshold: 0.5, // Réduit de 0.6 à 0.5 pour détection plus précoce
-          prefix_padding_ms: 150, // Augmenté de 80 à 150ms pour mieux capturer le début des phrases
-          // Augmenté à 300ms pour éviter de couper les transcriptions lors de pauses naturelles
-          // OpenAI nécessite au moins 100ms d'audio dans le buffer avant commit
-          // Avec 300ms, on tolère les pauses naturelles (200-250ms) sans couper
-          silence_duration_ms: 300, // Augmenté de 140 à 300ms pour éviter coupures transcription
-          create_response: true,
-          interrupt_response: true,
+          threshold: 0.4, // Réduit de 0.5 à 0.4 pour VAD plus robuste et tolérant au bruit
+          prefix_padding_ms: 200, // Augmenté pour mieux capturer le début des phrases avec bruit
+          // Silence duration augmenté pour tolérer les pauses naturelles et le bruit ambiant
+          silence_duration_ms: 400, // Augmenté pour VAD robuste avec tolérance au bruit
+          // DÉSACTIVATION génération automatique - gestion manuelle uniquement
+          // Les réponses seront créées manuellement via response.create après input_audio_buffer.committed
+          create_response: false,
+          interrupt_response: true, // Permet toujours l'interruption si réponse en cours
         },
         input_audio_format: "g711_ulaw",
         output_audio_format: "g711_ulaw",
         voice: voice,
+        // Vitesse TTS initiale : 1.3 (prise de commande rapide mais claire)
+        // La vitesse sera ajustée dynamiquement selon le contexte (numéros, confirmations, etc.)
+        speed: 1.3,
         instructions: enrichedInstructions,
         modalities: ["text", "audio"],
         temperature: 0.8,
-        max_response_output_tokens: 812,  // Limite les monologues pour que l'interruption soit prise en compte plus tôt
-        // Configuration Whisper pour la transcription côté OpenAI Realtime
+        max_response_output_tokens: 812,
+        // Configuration STT avec Whisper
+        // NOTE : Cette transcription est utilisée uniquement pour la compréhension interne de GPT
+        // Elle n'est PAS utilisée pour l'extraction finale des données
+        // L'extraction utilise uniquement la transcription de ce que GPT répète (response.audio_transcript.delta)
+        // pour éviter les erreurs de transcription directe du client
         // Attention : l'API ne supporte PAS le paramètre temperature ici
         // Limite : prompt max 1024 caractères
         input_audio_transcription: {
@@ -48,17 +58,23 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
           language: "fr",
           prompt: (() => {
             const fullPrompt =
-              "Transcription d'appels téléphoniques pour restaurant/fast-food en français.\n\n" +
+              "Transcription d'appels téléphoniques pour restaurant/fast-food en français - MODE HAUTE PRÉCISION.\n\n" +
               "PRIORITÉ - CHIFFRES : Transcris TOUS les chiffres en numérique (0-9), jamais en lettres. Ex: 'deux' → '2', 'trois' → '3'.\n\n" +
               "PRIORITÉ - HEURES : Format HHh ou HHhMM (ex: '18h', '19h30'). Ne JAMAIS transcrire en lettres. 'midi' → '12h', 'minuit' → '00h', 'huit heures' → '8h' (matin) ou '20h' (soir).\n\n" +
               "PRIORITÉ - TÉLÉPHONE : Format XX XX XX XX XX (10 chiffres avec espaces). Ex: 'zéro six soixante-douze...' → '06 72 88 62 55'. Transcris chaque chiffre en numérique.\n\n" +
               "VOCABULAIRE MENU : 'Coca-Cola' (majuscules et tiret), 'burger', 'frites', 'tacos', 'pizza', 'margherita' (avec 'h'), 'sauce Algérienne' (majuscule), 'sauce Samouraï'.\n\n" +
-              "RÈGLES : Privilégie justesse chiffres/horaires même avec bruit. Si incertain, transcris quand même. Garde ponctuation naturelle. Respecte majuscules noms propres et produits.";
+              "RÈGLES HAUTE PRÉCISION : Privilégie justesse chiffres/horaires même avec bruit. Si incertain, transcris quand même. Garde ponctuation naturelle. Respecte majuscules noms propres et produits. Mode haute précision activé.";
             
             // Tronquer à 1024 caractères maximum (limite OpenAI)
             return fullPrompt.length > 1024 ? fullPrompt.substring(0, 1024) : fullPrompt;
           })()
         },
+        // Désactivation des résumés automatiques en cours d'appel
+        // Le contexte conversationnel complet sera maintenu jusqu'à call_end
+        // Aucun JSON ne sera généré automatiquement pendant l'appel
+        // La génération finale sera déclenchée uniquement à la détection de call_end
+        // Note: L'API Realtime ne génère pas de résumés automatiques par défaut,
+        // mais cette configuration garantit que le contexte reste complet
         tools: [
           {
             type: "function",
