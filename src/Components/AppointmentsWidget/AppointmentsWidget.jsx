@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
+import { createPortal } from "react-dom";
 import { useAppointments } from "../../Hooks/Appointments/useAppointments";
 import { useNavigate } from "react-router-dom";
+import { AppointmentDetails } from "../Appointments/AppointmentDetails";
 import "./AppointmentsWidget.scss";
 
 function AppointmentsWidget() {
@@ -9,8 +11,14 @@ function AppointmentsWidget() {
     todayAppointments,
     loading,
     error,
-    changeAppointmentStatus,
     getUpcomingAppointments,
+    handleViewDetails,
+    showModal,
+    selectedAppointment,
+    closeDetailsModal,
+    handleStatusChange,
+    handleDeleteAppointment,
+    handleEditAppointment,
   } = useAppointments();
 
   const navigate = useNavigate();
@@ -19,13 +27,6 @@ function AppointmentsWidget() {
     hour: "2-digit",
     minute: "2-digit",
   });
-
-  const handleStatusChange = async (appointmentId, newStatus) => {
-    try {
-      await changeAppointmentStatus(appointmentId, newStatus);
-    } catch (error) {
-    }
-  };
 
   const getStatusColor = (statut) => {
     switch (statut) {
@@ -61,18 +62,6 @@ function AppointmentsWidget() {
     }
   };
 
-  const getModalityIcon = (modalite) => {
-    switch (modalite) {
-      case "Bureau":
-        return "🏢";
-      case "Visioconférence":
-        return "💻";
-      case "Téléphonique":
-        return "📞";
-      default:
-        return "📅";
-    }
-  };
 
   if (loading) {
     return (
@@ -134,6 +123,8 @@ function AppointmentsWidget() {
                   <div
                     key={appointment._id}
                     className="appointment-card upcoming"
+                    onClick={() => handleViewDetails(appointment._id)}
+                    style={{ cursor: 'pointer' }}
                   >
                     <div className="appointment-time">
                       <span className="time">{appointment.heure}</span>
@@ -142,21 +133,17 @@ function AppointmentsWidget() {
                     <div className="appointment-details">
                       <div className="client-info">
                         <strong>
-                          {appointment.client?.prenom} {appointment.client?.nom}
+                          {appointment.client?.prenom || appointment.nom} {appointment.client?.nom || ''}
                         </strong>
                         <span className="phone">
-                          {appointment.client?.telephone}
+                          {appointment.client?.telephone || appointment.telephone || '-'}
                         </span>
                       </div>
                       <div className="appointment-type">
-                        <span className="modality">
-                          {getModalityIcon(appointment.modalite)}{" "}
-                          {appointment.modalite}
-                        </span>
                         <span className="type">{appointment.type}</span>
                       </div>
                     </div>
-                    <div className="appointment-actions">
+                    <div className="appointment-actions" onClick={(e) => e.stopPropagation()}>
                       <button
                         className="btn-start"
                         onClick={() =>
@@ -184,18 +171,17 @@ function AppointmentsWidget() {
                     className={`appointment-item ${getStatusColor(
                       appointment.statut
                     )}`}
+                    onClick={() => handleViewDetails(appointment._id)}
+                    style={{ cursor: 'pointer' }}
                   >
                     <div className="appointment-time">
                       <span className="time">{appointment.heure}</span>
                     </div>
                     <div className="appointment-info">
                       <div className="client-name">
-                        {appointment.client?.prenom} {appointment.client?.nom}
+                        {appointment.client?.prenom || appointment.nom} {appointment.client?.nom || ''}
                       </div>
                       <div className="appointment-meta">
-                        <span className="modality">
-                          {getModalityIcon(appointment.modalite)}
-                        </span>
                         <span className="type">{appointment.type}</span>
                       </div>
                     </div>
@@ -208,7 +194,7 @@ function AppointmentsWidget() {
                         {getStatusLabel(appointment.statut)}
                       </span>
                     </div>
-                    <div className="appointment-actions">
+                    <div className="appointment-actions" onClick={(e) => e.stopPropagation()}>
                       {appointment.statut === "confirme" && (
                         <button
                           className="btn-start"
@@ -254,6 +240,24 @@ function AppointmentsWidget() {
           {t('appointmentsWidget.newOrder')}
         </button>
       </div>
+
+      {/* Modal de détails de commande - rendu en dehors du widget via Portal */}
+      {showModal && selectedAppointment && createPortal(
+        <div className="modal-overlay" onClick={closeDetailsModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-body">
+              <AppointmentDetails
+                appointment={selectedAppointment}
+                onEdit={handleEditAppointment}
+                onStatusChange={handleStatusChange}
+                onDelete={(id) => handleDeleteAppointment(id, t)}
+                onClose={closeDetailsModal}
+              />
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

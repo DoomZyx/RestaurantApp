@@ -66,7 +66,11 @@ export function AppointmentDetails({
           <h3>{t('appointmentDetails.clientInfo')}</h3>
           <div className="client-details">
             <p><strong>{t('appointmentDetails.name')}:</strong> {getClientFullName(appointment.client, appointment)}</p>
-            <p><strong>{t('appointmentDetails.phone')}:</strong> {getClientPhone(appointment.client)}</p>
+            <p><strong>{t('appointmentDetails.phone')}:</strong> {
+              appointment.client 
+                ? getClientPhone(appointment.client) 
+                : (appointment.telephone || 'Non fourni')
+            }</p>
           </div>
         </div>
 

@@ -52,7 +52,7 @@ function AppointmentsPage() {
   const filteredAppointments = useMemo(() => {
     return appointments.filter(apt => {
       // Filtrer uniquement les commandes à emporter
-      if (apt.modalite !== "À emporter") return false;
+      if (apt.type !== "Commande à emporter") return false;
       
       // Filtrer par service (midi ou soir)
       const service = getServiceFromTime(apt.heure);
