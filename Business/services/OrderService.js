@@ -12,7 +12,7 @@ export class OrderService {
    * @returns {Promise<Object|null>} Commande créée ou null
    */
   static async createOrderFromAppointment(appointmentData, options = {}) {
-    const { client, callId, nom, description } = options;
+    const { client, callId, nom, telephone, description } = options;
 
     
     if (appointmentData.nombrePersonnes) {
@@ -33,6 +33,7 @@ export class OrderService {
     const createdOrder = await OrderModel.create({
       client: client?._id || null,
       nom: !client ? (nom || "Client Inconnu") : null,
+      telephone: !client && telephone && telephone !== "Non fourni" ? telephone : null,
       date: orderDate,
       heure: orderHeure,
       duree: appointmentData.duree || 60,

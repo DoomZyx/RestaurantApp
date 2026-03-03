@@ -7,6 +7,7 @@ import { OpenAIHandler } from "./handlers/OpenAIHandler.js";
 import { TwilioHandler } from "./handlers/TwilioHandler.js";
 import { TranscriptionHandler } from "./handlers/TranscriptionHandler.js";
 import { cleanAudio, checkRNNoiseAvailability } from "../Services/audioProcessing/audioCleaningService.js";
+import { recordAudioChunk } from "../Services/audioProcessing/audioRecordingService.js";
 
 dotenv.config();
 
@@ -45,6 +46,8 @@ export async function handleWebSocketConnection(connection, request) {
     let openAIHandler = null;
     let twilioHandler = null;
     let transcriptionHandler = null;
+    let audioChunkCount = 0;
+    let audioChunkCountCleaned = 0;
     
     const rnnoiseAvailable = await getRnnoiseAvailable();
 
@@ -90,10 +93,34 @@ export async function handleWebSocketConnection(connection, request) {
 
         // Événement MEDIA : Nettoyer et transférer l'audio à OpenAI (même avant "start")
         if (data.event === "media" && openAiWs && openAiWs.readyState === WebSocket.OPEN) {
+          // Enregistrer l'audio brut pour diagnostic
+          const currentStreamSid = streamSid || "unknown";
+          audioChunkCount++;
+          
+          if (audioChunkCount === 1) {
+            callLogger.info(currentStreamSid, "Premier chunk audio reçu - début enregistrement", {
+              event: "audio_recording_started",
+              rnnoiseAvailable
+            });
+          }
+          
+          // Enregistrer l'audio brut (tous les 10 chunks pour éviter surcharge)
+          if (audioChunkCount % 10 === 0 || audioChunkCount <= 5) {
+            await recordAudioChunk(currentStreamSid, data.media.payload, false);
+          }
+          
           // Nettoyer l'audio avec RNNoise si disponible
           const audioPayload = rnnoiseAvailable 
             ? await cleanAudio(data.media.payload)
             : data.media.payload;
+          
+          // Enregistrer l'audio nettoyé si différent
+          if (rnnoiseAvailable && audioPayload !== data.media.payload) {
+            audioChunkCountCleaned++;
+            if (audioChunkCountCleaned % 10 === 0 || audioChunkCountCleaned <= 5) {
+              await recordAudioChunk(currentStreamSid, audioPayload, true);
+            }
+          }
           
           openAiWs.send(
             JSON.stringify({
@@ -161,6 +188,17 @@ export async function handleWebSocketConnection(connection, request) {
       
       const totalDuration = Date.now() - callStartTime;
       callLogger.callCompleted(streamSid, totalDuration);
+      
+      // Log récapitulatif audio
+      if (audioChunkCount > 0) {
+        callLogger.info(streamSid, "Récapitulatif enregistrement audio", {
+          event: "audio_recording_summary",
+          totalChunks: audioChunkCount,
+          cleanedChunks: audioChunkCountCleaned,
+          rnnoiseUsed: rnnoiseAvailable,
+          duration: totalDuration
+        });
+      }
 
       // Fermer proprement la connexion OpenAI
       if (openAiWs.readyState === WebSocket.OPEN) {

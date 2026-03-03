@@ -24,10 +24,12 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
         
         turn_detection: {
           type: "server_vad",
-          threshold: 0.6,
-          prefix_padding_ms: 80,
-          // Légèrement plus long pour éviter de couper les phrases ou les chiffres en environnement bruité
-          silence_duration_ms: 140,
+          threshold: 0.5, // Réduit de 0.6 à 0.5 pour détection plus précoce
+          prefix_padding_ms: 150, // Augmenté de 80 à 150ms pour mieux capturer le début des phrases
+          // Augmenté à 300ms pour éviter de couper les transcriptions lors de pauses naturelles
+          // OpenAI nécessite au moins 100ms d'audio dans le buffer avant commit
+          // Avec 300ms, on tolère les pauses naturelles (200-250ms) sans couper
+          silence_duration_ms: 300, // Augmenté de 140 à 300ms pour éviter coupures transcription
           create_response: true,
           interrupt_response: true,
         },

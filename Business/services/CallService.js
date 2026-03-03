@@ -65,6 +65,7 @@ export class CallService {
           client,
           callId: call._id,
           nom,
+          telephone,
           description
         });
 

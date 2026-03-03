@@ -29525,3 +29525,3729 @@
     }
   }
 }
+[2026-03-02 21:22:13] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected"
+  }
+}
+[2026-03-02 21:22:13] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-02 21:22:13] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-02 21:22:13] [INFO] [MZd40520...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZd405207eaa272ec2f030fb9ff4baf425",
+      "callSid": "CAac7399eb5f81f9e959bc6cd43d0a8852",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-02T20:22:13.382Z"
+  }
+}
+[2026-03-02 21:22:13] [INFO] [MZd40520...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZd405207eaa272ec2f030fb9ff4baf425",
+      "callSid": "CAac7399eb5f81f9e959bc6cd43d0a8852",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-02T20:22:13.383Z"
+  }
+}
+[2026-03-02 21:22:14] [INFO] [MZd40520...] Envoi de la salutation automatique
+[2026-03-02 21:22:15] [INFO] [MZd40520...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-02 21:22:25] [INFO] [MZd40520...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Oui, bonjour, je vous appelle pour faire une comma..."
+}
+[2026-03-02 21:22:26] [INFO] [MZd40520...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, un mafé boeuf avec un coca cherry. Pour quelle heure vous souhaitez la commande ?..."
+  }
+}
+[2026-03-02 21:22:36] [INFO] [MZd40520...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Je l'avouerai pour 21h45...."
+}
+[2026-03-02 21:22:38] [INFO] [MZd40520...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Désolé, on ferme à 23h, donc 21h45 c'est possible. Je note ça. J’aurais besoin de votre nom et de vo..."
+  }
+}
+[2026-03-02 21:22:51] [INFO] [MZd40520...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-02 21:22:52] [INFO] [MZd40520...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Bien sûr, mettez au nom de Kévin au......"
+}
+[2026-03-02 21:22:52] [ERROR] [app] [MZd40520...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:22:53] [INFO] [MZd40520...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Je n'ai pas bien..."
+  }
+}
+[2026-03-02 21:22:59] [ERROR] [app] [MZd40520...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:23:01] [INFO] [MZd40520...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "ÉTSAGE DE LA TRANSCRIPTION 102 00 00 00 00 00 00 0..."
+}
+[2026-03-02 21:23:03] [INFO] [MZd40520...] Function call completed
+   {
+  "name": "create_appointment",
+  "arguments": "{\"name\":\"Kévin\",\"clientPhone\":\"06 12 24 88\",\"date\":\"2026-03-02\",\"time\":\"21:45\",\"description\":\"Mafé boeuf avec un coca cherry.\"}"
+}
+[2026-03-02 21:23:03] [INFO] [MZd40520...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, donc Kévin, numéro 06 12 24 88. C’est noté pour 21h45. À tout à l’heure !..."
+  }
+}
+[2026-03-02 21:23:15] [INFO] [MZd40520...] Function call completed
+   {
+  "name": "create_appointment",
+  "arguments": "{\"name\":\"Kévin\",\"clientPhone\":\"06 12 24 88 74\",\"date\":\"2026-03-02\",\"time\":\"21:45\",\"description\":\"Mafé boeuf avec un coca cherry.\"}"
+}
+[2026-03-02 21:23:15] [INFO] [MZd40520...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-02 21:23:15] [INFO] [MZd40520...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "« Vous avez oublié un truc, attendez, c'est le 06 ..."
+}
+[2026-03-02 21:23:24] [INFO] [MZd40520...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Oui, c’est bon. Tout est noté ! À tout à l’heure Kévin !..."
+  }
+}
+[2026-03-02 21:23:24] [INFO] [MZd40520...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "C'est bon ?..."
+}
+[2026-03-02 21:23:29] [INFO] [MZd40520...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "À tout à l’heure..."
+  }
+}
+[2026-03-02 21:23:29] [INFO] [MZd40520...] Événement stop détecté - fin d'appel
+[2026-03-02 21:23:29] [INFO] [MZd40520...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-02 21:23:29] [INFO] [MZd40520...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 499
+}
+[2026-03-02 21:23:29] [INFO] [MZd40520...] Transcription normalisée
+   {
+  "originalLength": 499,
+  "normalizedLength": 494,
+  "preview": "Appel démarré - StreamSid: MZd405207eaa272ec2f030fb9ff4baf425\n\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à emporter, alors il me faudrait juste 1 maf et d'œufs, avec 1 Coca-Cola-Sher"
+}
+[2026-03-02 21:23:29] [INFO] [MZd40520...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-02 21:23:29] [INFO] [unknown...] Traitement de la transcription
+   {
+  "transcriptionLength": 494,
+  "preview": "Appel démarré - StreamSid: MZd405207eaa272ec2f030fb9ff4baf425\n\nClient: Oui, bonjour, je vous appelle..."
+}
+[2026-03-02 21:23:29] [INFO] [unknown...] [TRANSCRIPTION_RAW] Transcription brute reçue
+   {
+  "transcriptionLength": 494,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZd405207eaa272ec2f030fb9ff4baf425\n\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à emporter, alors il me faudrait juste 1 maf et d'œufs, avec 1 Coca-Cola-Sher...",
+  "promptVersion": "2.0"
+}
+[2026-03-02 21:23:30] [INFO] [MZd40520...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "77523ms"
+}
+[2026-03-02 21:23:30] [INFO] [MZd40520...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "À tout à l'heure...."
+}
+[2026-03-02 21:23:31] [INFO] [MZd40520...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-02 21:23:31] [INFO] [MZd40520...] Connexion OpenAI fermée
+[2026-03-02 21:23:35] [INFO] [unknown...] [JSON_EXTRACTED] JSON extrait par GPT
+   {
+  "extractedData": "{\"nom\":\"Kévin\",\"telephone\":\"06 12 24 88 74\",\"type_demande\":\"Commande à emporter\",\"services\":\"Plats\",\"description\":\"Commande d'un Mafé boeuf et d'un Coca-Cola\",\"statut\":\"nouveau\",\"order\":{\"date\":\"ASAP\",\"heure\":\"21:45\",\"duree\":60,\"type\":\"Commande à emporter\",\"modalite\":\"À emporter\",\"nombrePersonnes\":null,\"description\":\"\",\"commandes\":[{\"nom\":\"Mafé boeuf\",\"categorie\":\"Plats\",\"quantite\":1,\"prixUnitaire\":19,\"supplements\":\"\"},{\"nom\":\"Coca-Cola\",\"categorie\":\"Boissons\",\"quantite\":1,\"prixUnitaire\":2,\"supplements\":\"\"}]}}"
+}
+[2026-03-02 21:23:35] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Mafé boeuf",
+  "categorie": "Plats"
+}
+[2026-03-02 21:23:35] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Coca-Cola",
+  "categorie": "Boissons"
+}
+[2026-03-02 21:23:35] [WARN] [unknown...] [PRODUCT_VALIDATION_ERRORS] Erreurs de validation produits
+   {
+  "errors": [
+    {
+      "produit": "Mafé boeuf",
+      "categorie": "Plats",
+      "errors": [
+        "Produit \"Mafé boeuf\" non trouvé dans la catégorie \"Plats\""
+      ]
+    },
+    {
+      "produit": "Coca-Cola",
+      "categorie": "Boissons",
+      "errors": [
+        "Produit \"Coca-Cola\" non trouvé dans la catégorie \"Boissons\""
+      ]
+    }
+  ]
+}
+[2026-03-02 21:23:35] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "6101ms"
+}
+[2026-03-02 21:23:35] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Kévin",
+    "telephone": "0612248874",
+    "type_demande": "Commande à emporter",
+    "services": "Plats",
+    "description": "Commande d'un Mafé boeuf et d'un Coca-Cola",
+    "statut": "nouveau",
+    "date": "2026-03-02T20:23:35.841Z",
+    "appointment": {
+      "date": "ASAP",
+      "heure": "21:45",
+      "duree": 60,
+      "type": "Commande à emporter",
+      "modalite": "À emporter",
+      "nombrePersonnes": null,
+      "description": "",
+      "commandes": [
+        {
+          "nom": "Mafé boeuf",
+          "categorie": "Plats",
+          "quantite": 1,
+          "prixUnitaire": 19,
+          "supplements": ""
+        },
+        {
+          "nom": "Coca-Cola",
+          "categorie": "Boissons",
+          "quantite": 1,
+          "prixUnitaire": 2,
+          "supplements": ""
+        }
+      ]
+    }
+  }
+}
+[2026-03-02 21:23:35] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/callsdata"
+}
+[2026-03-02 21:23:35] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA terminé",
+    "message": "Appel traité avec succès pour Kévin",
+    "details": {
+      "callId": "69a5f1c7dc158890aed5199a",
+      "orderId": "69a5f1c7dc158890aed5199c",
+      "client": "Kévin",
+      "telephone": "0612248874",
+      "type_demande": "Commande à emporter",
+      "services": "Plats",
+      "description": "Commande d'un Mafé boeuf et d'un Coca-Cola",
+      "duration": "N/A"
+    },
+    "priority": "success"
+  }
+}
+[2026-03-02 21:23:35] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "115ms"
+}
+[2026-03-02 21:23:36] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-02 21:23:36] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "6222ms"
+}
+[2026-03-02 21:23:36] [INFO] [MZd40520...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "6235ms"
+}
+[2026-03-02 21:23:36] [INFO] [MZd40520...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-02 21:23:36] [INFO] [MZd40520...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité et sauvegardé avec succès via API",
+    "data": {
+      "call": {
+        "type_demande": "Commande à emporter",
+        "services": "Plats",
+        "description": "Commande d'un Mafé boeuf et d'un Coca-Cola",
+        "date": "2026-03-02T20:23:35.841Z",
+        "statut": "nouveau",
+        "_id": "69a5f1c7dc158890aed5199a",
+        "__v": 0,
+        "related_order": "69a5f1c7dc158890aed5199c"
+      },
+      "order": {
+        "client": null,
+        "nom": "Kévin",
+        "telephone": "0612248874",
+        "date": "2026-03-02T20:23:35.937Z",
+        "heure": "21:45",
+        "duree": 60,
+        "type": "Commande à emporter",
+        "modalite": "À emporter",
+        "description": "Commande d'un Mafé boeuf et d'un Coca-Cola",
+        "nombrePersonnes": null,
+        "commandes": [
+          {
+            "nom": "Mafé boeuf",
+            "categorie": "Plats",
+            "quantite": 1,
+            "prixUnitaire": 19,
+            "supplements": "",
+            "_id": "69a5f1c7dc158890aed5199d"
+          },
+          {
+            "nom": "Coca-Cola",
+            "categorie": "Boissons",
+            "quantite": 1,
+            "prixUnitaire": 2,
+            "supplements": "",
+            "_id": "69a5f1c7dc158890aed5199e"
+          }
+        ],
+        "statut": "confirme",
+        "createdBy": "system",
+        "rappel_envoye": {
+          "email": false,
+          "sms": false
+        },
+        "related_call": "69a5f1c7dc158890aed5199a",
+        "_id": "69a5f1c7dc158890aed5199c",
+        "createdAt": "2026-03-02T20:23:35.942Z",
+        "updatedAt": "2026-03-02T20:23:35.942Z",
+        "__v": 0
+      }
+    }
+  }
+}
+[2026-03-02 21:30:03] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected"
+  }
+}
+[2026-03-02 21:30:03] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-02 21:30:03] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-02 21:30:03] [INFO] [MZ800754...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ800754332d640cffad0197348e9be75d",
+      "callSid": "CA854128313ee0d0b32a7f7759cc71954f",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-02T20:30:03.240Z"
+  }
+}
+[2026-03-02 21:30:03] [INFO] [MZ800754...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ800754332d640cffad0197348e9be75d",
+      "callSid": "CA854128313ee0d0b32a7f7759cc71954f",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-02T20:30:03.241Z"
+  }
+}
+[2026-03-02 21:30:03] [INFO] [MZ800754...] Envoi de la salutation automatique
+[2026-03-02 21:30:04] [INFO] [MZ800754...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-02 21:30:14] [INFO] [MZ800754...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-02 21:30:15] [INFO] [MZ800754...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Oui, bonjour, je vous appelle pour faire une comma..."
+}
+[2026-03-02 21:30:15] [ERROR] [app] [MZ800754...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:30:18] [INFO] [MZ800754...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Du coup, avec un Coca-Sherry dans le menu...."
+}
+[2026-03-02 21:30:19] [INFO] [MZ800754...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, donc un menu USA Beef Burger avec un Coca Cherry. Pour quelle heure souhaitez-vous la comma..."
+  }
+}
+[2026-03-02 21:30:27] [INFO] [MZ800754...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Pour 21h45...."
+}
+[2026-03-02 21:30:29] [INFO] [MZ800754...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "C'est noté pour 21h45. Il me faudrait votre nom s'il vous plaît ?..."
+  }
+}
+[2026-03-02 21:30:35] [INFO] [MZ800754...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Alors, Alex......"
+}
+[2026-03-02 21:30:36] [INFO] [MZ800754...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Merci Alex. Je peux avoir votre numéro de téléphone s'il vous plaît ?..."
+  }
+}
+[2026-03-02 21:30:41] [INFO] [MZ800754...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Super, tout est not..."
+  }
+}
+[2026-03-02 21:30:41] [ERROR] [app] [MZ800754...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:30:42] [INFO] [MZ800754...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-02 21:30:45] [INFO] [MZ800754...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Ex.: 62 88 62 et 45...."
+}
+[2026-03-02 21:30:46] [INFO] [MZ800754...] Function call completed
+   {
+  "name": "create_appointment",
+  "arguments": "{\"name\":\"Alex\",\"clientPhone\":\"06 72 88 62 45\",\"date\":\"2026-03-02\",\"time\":\"21:45\",\"description\":\"Menu USA Beef Burger avec Coca Cherry\"}"
+}
+[2026-03-02 21:30:46] [INFO] [MZ800754...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-02 21:30:50] [INFO] [MZ800754...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Valo?..."
+}
+[2026-03-02 21:30:51] [INFO] [MZ800754...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Nickel, tout est noté ! À tout à l'heure !..."
+  }
+}
+[2026-03-02 21:30:55] [INFO] [MZ800754...] Événement stop détecté - fin d'appel
+[2026-03-02 21:30:55] [INFO] [MZ800754...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-02 21:30:55] [INFO] [MZ800754...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 323
+}
+[2026-03-02 21:30:55] [INFO] [MZ800754...] Transcription normalisée
+   {
+  "originalLength": 323,
+  "normalizedLength": 319,
+  "preview": "Appel démarré - StreamSid: MZ800754332d640cffad0197348e9be75d\n\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à reporter. Alors, il me faudrait... 1 menu USA Beef Burger.\nClient: Du coup,"
+}
+[2026-03-02 21:30:55] [INFO] [MZ800754...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-02 21:30:55] [INFO] [unknown...] Traitement de la transcription
+   {
+  "transcriptionLength": 319,
+  "preview": "Appel démarré - StreamSid: MZ800754332d640cffad0197348e9be75d\n\nClient: Oui, bonjour, je vous appelle..."
+}
+[2026-03-02 21:30:55] [INFO] [unknown...] [TRANSCRIPTION_RAW] Transcription brute reçue
+   {
+  "transcriptionLength": 319,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ800754332d640cffad0197348e9be75d\n\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à reporter. Alors, il me faudrait... 1 menu USA Beef Burger.\nClient: Du coup,...",
+  "promptVersion": "2.0"
+}
+[2026-03-02 21:30:56] [INFO] [MZ800754...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "53335ms"
+}
+[2026-03-02 21:30:57] [INFO] [MZ800754...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-02 21:30:57] [INFO] [MZ800754...] Connexion OpenAI fermée
+[2026-03-02 21:31:01] [INFO] [unknown...] [JSON_EXTRACTED] JSON extrait par GPT
+   {
+  "extractedData": "{\"nom\":\"Alex\",\"telephone\":\"06 28 86 24 45\",\"type_demande\":\"Commande à emporter\",\"services\":\"Burgers\",\"description\":\"Commande d'un menu USA Beef Burger avec un Coca-Cola Cherry pour 21h45\",\"statut\":\"nouveau\",\"order\":{\"date\":\"ASAP\",\"heure\":\"21:45\",\"duree\":60,\"type\":\"Commande à emporter\",\"modalite\":\"À emporter\",\"nombrePersonnes\":null,\"description\":\"\",\"commandes\":[{\"nom\":\"Menu USA Beef Burger\",\"categorie\":\"Menus\",\"quantite\":1,\"prixUnitaire\":15,\"supplements\":\"\",\"options\":{\"boisson\":\"Coca-Cola\"}}]}}"
+}
+[2026-03-02 21:31:01] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Menu USA Beef Burger",
+  "categorie": "Menus"
+}
+[2026-03-02 21:31:01] [WARN] [unknown...] [PRODUCT_VALIDATION_ERRORS] Erreurs de validation produits
+   {
+  "errors": [
+    {
+      "produit": "Menu USA Beef Burger",
+      "categorie": "Menus",
+      "errors": [
+        "Produit \"Menu USA Beef Burger\" non trouvé dans la catégorie \"Menus\""
+      ]
+    }
+  ]
+}
+[2026-03-02 21:31:01] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "5710ms"
+}
+[2026-03-02 21:31:01] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Alex",
+    "telephone": "0628862445",
+    "type_demande": "Commande à emporter",
+    "services": "Burgers",
+    "description": "Commande d'un menu USA Beef Burger avec un Coca-Cola Cherry pour 21h45",
+    "statut": "nouveau",
+    "date": "2026-03-02T20:31:01.113Z",
+    "appointment": {
+      "date": "ASAP",
+      "heure": "21:45",
+      "duree": 60,
+      "type": "Commande à emporter",
+      "modalite": "À emporter",
+      "nombrePersonnes": null,
+      "description": "",
+      "commandes": [
+        {
+          "nom": "Menu USA Beef Burger",
+          "categorie": "Menus",
+          "quantite": 1,
+          "prixUnitaire": 15,
+          "supplements": "",
+          "options": {
+            "boisson": "Coca-Cola"
+          }
+        }
+      ]
+    }
+  }
+}
+[2026-03-02 21:31:01] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/callsdata"
+}
+[2026-03-02 21:31:01] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA terminé",
+    "message": "Appel traité avec succès pour Alex",
+    "details": {
+      "callId": "69a5f385d6462dc46a749b4f",
+      "orderId": "69a5f385d6462dc46a749b51",
+      "client": "Alex",
+      "telephone": "0628862445",
+      "type_demande": "Commande à emporter",
+      "services": "Burgers",
+      "description": "Commande d'un menu USA Beef Burger avec un Coca-Cola Cherry pour 21h45",
+      "duration": "N/A"
+    },
+    "priority": "success"
+  }
+}
+[2026-03-02 21:31:01] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "121ms"
+}
+[2026-03-02 21:31:01] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-02 21:31:01] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "5836ms"
+}
+[2026-03-02 21:31:01] [INFO] [MZ800754...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "5846ms"
+}
+[2026-03-02 21:31:01] [INFO] [MZ800754...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-02 21:31:01] [INFO] [MZ800754...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité et sauvegardé avec succès via API",
+    "data": {
+      "call": {
+        "type_demande": "Commande à emporter",
+        "services": "Burgers",
+        "description": "Commande d'un menu USA Beef Burger avec un Coca-Cola Cherry pour 21h45",
+        "date": "2026-03-02T20:31:01.113Z",
+        "statut": "nouveau",
+        "_id": "69a5f385d6462dc46a749b4f",
+        "__v": 0,
+        "related_order": "69a5f385d6462dc46a749b51"
+      },
+      "order": {
+        "client": null,
+        "nom": "Alex",
+        "telephone": "0628862445",
+        "date": "2026-03-02T20:31:01.230Z",
+        "heure": "21:45",
+        "duree": 60,
+        "type": "Commande à emporter",
+        "modalite": "À emporter",
+        "description": "Commande d'un menu USA Beef Burger avec un Coca-Cola Cherry pour 21h45",
+        "nombrePersonnes": null,
+        "commandes": [
+          {
+            "nom": "Menu USA Beef Burger",
+            "categorie": "Menus",
+            "quantite": 1,
+            "prixUnitaire": 15,
+            "supplements": "",
+            "options": {
+              "boisson": "Coca-Cola"
+            },
+            "_id": "69a5f385d6462dc46a749b52"
+          }
+        ],
+        "statut": "confirme",
+        "createdBy": "system",
+        "rappel_envoye": {
+          "email": false,
+          "sms": false
+        },
+        "related_call": "69a5f385d6462dc46a749b4f",
+        "_id": "69a5f385d6462dc46a749b51",
+        "createdAt": "2026-03-02T20:31:01.236Z",
+        "updatedAt": "2026-03-02T20:31:01.236Z",
+        "__v": 0
+      }
+    }
+  }
+}
+[2026-03-02 21:42:18] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected"
+  }
+}
+[2026-03-02 21:42:18] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-02 21:42:18] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-02 21:42:18] [INFO] [MZ82feba...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ82febaddb83395b0b75b3d9c3d96f76a",
+      "callSid": "CA874123f376ebfcd157ac680957314d04",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-02T20:42:18.919Z"
+  }
+}
+[2026-03-02 21:42:18] [INFO] [MZ82feba...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ82febaddb83395b0b75b3d9c3d96f76a",
+      "callSid": "CA874123f376ebfcd157ac680957314d04",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-02T20:42:18.920Z"
+  }
+}
+[2026-03-02 21:42:19] [INFO] [MZ82feba...] Envoi de la salutation automatique
+[2026-03-02 21:42:21] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-02 21:42:28] [INFO] [MZ82feba...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Oui, bonjour, je vous appelle pour faire une comma..."
+}
+[2026-03-02 21:42:28] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, qu’est-ce qui vous ferait plaisir ?..."
+  }
+}
+[2026-03-02 21:42:34] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-02 21:42:35] [INFO] [MZ82feba...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Alors, il me faudrait deux menus. USA, beef burger..."
+}
+[2026-03-02 21:42:35] [ERROR] [app] [MZ82feba...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:42:38] [INFO] [MZ82feba...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Avec un, un Coca-Sherry, et l'autre un Ice-Tea-Pea..."
+}
+[2026-03-02 21:42:40] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, donc deux menus USA Beef Burger, un avec un Coca Cherry et l'autre avec un Ice Tea Pêche. P..."
+  }
+}
+[2026-03-02 21:42:48] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-02 21:42:51] [ERROR] [app] [MZ82feba...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:42:53] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Pour 22h, ça marche. Je peux avoir votre nom s’il vous plaît ?..."
+  }
+}
+[2026-03-02 21:42:53] [INFO] [MZ82feba...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Continuez à lire...."
+}
+[2026-03-02 21:43:00] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-02 21:43:01] [INFO] [MZ82feba...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Mettez au nom de......"
+}
+[2026-03-02 21:43:01] [ERROR] [app] [MZ82feba...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:43:01] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-02 21:43:02] [INFO] [MZ82feba...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Sous-titres réalisés para la communauté d'Amara.or..."
+}
+[2026-03-02 21:43:02] [ERROR] [app] [MZ82feba...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:43:03] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, et je peux avoir votre numéro de téléphone s’il vous plaît ?..."
+  }
+}
+[2026-03-02 21:43:05] [INFO] [MZ82feba...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Sous-titres réalisés par la communauté d'Amara.org..."
+}
+[2026-03-02 21:43:14] [INFO] [MZ82feba...] Function call completed
+   {
+  "name": "create_appointment",
+  "arguments": "{\"name\":\"Matteo\",\"clientPhone\":\"06 80 24 72 68\",\"date\":\"2026-03-02\",\"time\":\"22:00\",\"description\":\"Deux menus USA Beef Burger : un avec Coca Cherry, un avec Ice Tea Pêche.\"}"
+}
+[2026-03-02 21:43:14] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-02 21:43:15] [INFO] [MZ82feba...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Alors, 06, 80, 24, 72, 68...."
+}
+[2026-03-02 21:43:19] [INFO] [MZ82feba...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Puis à l'eau...."
+}
+[2026-03-02 21:43:20] [INFO] [MZ82feba...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Oui, c’est noté ! Deux menus USA Beef Burger pour 22h. Merci Matteo, à tout à l’heure !..."
+  }
+}
+[2026-03-02 21:43:26] [INFO] [MZ82feba...] Événement stop détecté - fin d'appel
+[2026-03-02 21:43:26] [INFO] [MZ82feba...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-02 21:43:26] [INFO] [MZ82feba...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 486
+}
+[2026-03-02 21:43:26] [INFO] [MZ82feba...] Transcription normalisée
+   {
+  "originalLength": 486,
+  "normalizedLength": 484,
+  "preview": "Appel démarré - StreamSid: MZ82febaddb83395b0b75b3d9c3d96f76a\n\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à portée.\nClient: Alors, il me faudrait 2 menus. USA, beef burger.\nClient: Av"
+}
+[2026-03-02 21:43:26] [INFO] [MZ82feba...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-02 21:43:26] [INFO] [unknown...] Traitement de la transcription
+   {
+  "transcriptionLength": 484,
+  "preview": "Appel démarré - StreamSid: MZ82febaddb83395b0b75b3d9c3d96f76a\n\nClient: Oui, bonjour, je vous appelle..."
+}
+[2026-03-02 21:43:26] [INFO] [unknown...] [TRANSCRIPTION_RAW] Transcription brute reçue
+   {
+  "transcriptionLength": 484,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ82febaddb83395b0b75b3d9c3d96f76a\n\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à portée.\nClient: Alors, il me faudrait 2 menus. USA, beef burger.\nClient: Av...",
+  "promptVersion": "2.0"
+}
+[2026-03-02 21:43:27] [INFO] [MZ82feba...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "69067ms"
+}
+[2026-03-02 21:43:28] [INFO] [MZ82feba...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-02 21:43:29] [INFO] [MZ82feba...] Connexion OpenAI fermée
+[2026-03-02 21:43:33] [INFO] [unknown...] [JSON_EXTRACTED] JSON extrait par GPT
+   {
+  "extractedData": "{\"nom\":\"Client inconnu\",\"telephone\":\"06 80 24 72 68\",\"type_demande\":\"Commande à emporter\",\"services\":\"Menus\",\"description\":\"Commande de 2 menus USA Beef Burger avec un Coca-Cola et un Ice Tea Pêche\",\"statut\":\"nouveau\",\"order\":{\"date\":\"ASAP\",\"heure\":\"ASAP\",\"duree\":60,\"type\":\"Commande à emporter\",\"modalite\":\"À emporter\",\"nombrePersonnes\":null,\"description\":\"\",\"commandes\":[{\"nom\":\"Menu USA Beef Burger\",\"categorie\":\"Menus\",\"quantite\":1,\"prixUnitaire\":15,\"supplements\":\"\",\"options\":{\"boisson\":\"Coca-Cola\"}},{\"nom\":\"Menu USA Beef Burger\",\"categorie\":\"Menus\",\"quantite\":1,\"prixUnitaire\":15,\"supplements\":\"\",\"options\":{\"boisson\":\"Ice tea Pêche\"}}]}}"
+}
+[2026-03-02 21:43:33] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Menu USA Beef Burger",
+  "categorie": "Menus"
+}
+[2026-03-02 21:43:33] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Menu USA Beef Burger",
+  "categorie": "Menus"
+}
+[2026-03-02 21:43:33] [WARN] [unknown...] [PRODUCT_VALIDATION_ERRORS] Erreurs de validation produits
+   {
+  "errors": [
+    {
+      "produit": "Menu USA Beef Burger",
+      "categorie": "Menus",
+      "errors": [
+        "Produit \"Menu USA Beef Burger\" non trouvé dans la catégorie \"Menus\""
+      ]
+    },
+    {
+      "produit": "Menu USA Beef Burger",
+      "categorie": "Menus",
+      "errors": [
+        "Produit \"Menu USA Beef Burger\" non trouvé dans la catégorie \"Menus\""
+      ]
+    }
+  ]
+}
+[2026-03-02 21:43:33] [WARN] [unknown...] [VALIDATION_ERRORS] Erreurs de validation détectées
+   {
+  "validationReport": {
+    "isValid": false,
+    "errors": [
+      {
+        "field": "heure",
+        "original": "ASAP",
+        "reason": "Format invalide (doit être HH:MM)"
+      }
+    ],
+    "emptyStringsConverted": [],
+    "originalPhone": "06 80 24 72 68",
+    "validatedPhone": "0680247268",
+    "originalTime": "ASAP",
+    "validatedTime": null
+  }
+}
+[2026-03-02 21:43:33] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "6841ms"
+}
+[2026-03-02 21:43:33] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Client inconnu",
+    "telephone": "0680247268",
+    "type_demande": "Commande à emporter",
+    "services": "Menus",
+    "description": "Commande de 2 menus USA Beef Burger avec un Coca-Cola et un Ice Tea Pêche",
+    "statut": "nouveau",
+    "date": "2026-03-02T20:43:33.704Z",
+    "appointment": {
+      "date": "ASAP",
+      "heure": null,
+      "duree": 60,
+      "type": "Commande à emporter",
+      "modalite": "À emporter",
+      "nombrePersonnes": null,
+      "description": "",
+      "commandes": [
+        {
+          "nom": "Menu USA Beef Burger",
+          "categorie": "Menus",
+          "quantite": 2,
+          "prixUnitaire": 15,
+          "supplements": "",
+          "options": {
+            "boisson": "Coca-Cola"
+          }
+        }
+      ]
+    }
+  }
+}
+[2026-03-02 21:43:33] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/callsdata"
+}
+[2026-03-02 21:43:33] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA terminé",
+    "message": "Appel traité avec succès pour Client inconnu",
+    "details": {
+      "callId": "69a5f67576ccd9f16f00a7f4",
+      "client": "Client inconnu",
+      "telephone": "0680247268",
+      "type_demande": "Commande à emporter",
+      "services": "Menus",
+      "description": "Commande de 2 menus USA Beef Burger avec un Coca-Cola et un Ice Tea Pêche",
+      "duration": "N/A"
+    },
+    "priority": "success"
+  }
+}
+[2026-03-02 21:43:33] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "51ms"
+}
+[2026-03-02 21:43:33] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-02 21:43:33] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "6897ms"
+}
+[2026-03-02 21:43:33] [INFO] [MZ82feba...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "6913ms"
+}
+[2026-03-02 21:43:33] [INFO] [MZ82feba...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-02 21:43:33] [INFO] [MZ82feba...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité et sauvegardé avec succès via API",
+    "data": {
+      "call": {
+        "type_demande": "Commande à emporter",
+        "services": "Menus",
+        "description": "Commande de 2 menus USA Beef Burger avec un Coca-Cola et un Ice Tea Pêche",
+        "date": "2026-03-02T20:43:33.704Z",
+        "statut": "nouveau",
+        "_id": "69a5f67576ccd9f16f00a7f4",
+        "__v": 0
+      },
+      "order": null
+    }
+  }
+}
+[2026-03-03 10:25:04] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected"
+  }
+}
+[2026-03-03 10:25:04] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-03 10:25:04] [INFO] [MZ55917f...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ55917fa0041d39f29e34f14768e9f366",
+      "callSid": "CA80c9d708c7564ff490ce0b056510e3e6",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-03T09:25:04.422Z"
+  }
+}
+[2026-03-03 10:25:04] [INFO] [MZ55917f...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ55917fa0041d39f29e34f14768e9f366",
+      "callSid": "CA80c9d708c7564ff490ce0b056510e3e6",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-03T09:25:04.423Z"
+  }
+}
+[2026-03-03 10:25:05] [INFO] [MZ55917f...] Envoi de la salutation automatique
+[2026-03-03 10:25:07] [INFO] [MZ55917f...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-03 10:25:14] [INFO] [MZ55917f...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Oui, bonjour, je voudrais faire une réservation...."
+}
+[2026-03-03 10:25:14] [INFO] [MZ55917f...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, pour combien de personnes ?..."
+  }
+}
+[2026-03-03 10:25:19] [INFO] [MZ55917f...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D'accord,..."
+  }
+}
+[2026-03-03 10:25:20] [INFO] [MZ55917f...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Voilà, pour quatre personnes...."
+}
+[2026-03-03 10:25:20] [ERROR] [app] [MZ55917f...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:25:21] [INFO] [MZ55917f...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Pour quelle heure vous souhaitez réserver ?..."
+  }
+}
+[2026-03-03 10:25:21] [INFO] [MZ55917f...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "❤️ par SousTitreur.com..."
+}
+[2026-03-03 10:25:26] [INFO] [MZ55917f...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, je note pour 12h00. Quel est votre nom ?..."
+  }
+}
+[2026-03-03 10:25:27] [INFO] [MZ55917f...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Vers midi...."
+}
+[2026-03-03 10:25:35] [INFO] [MZ55917f...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Mettez au nom de CELA...."
+}
+[2026-03-03 10:25:36] [INFO] [MZ55917f...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Super, et je peux avoir votre numéro de téléphone s’il vous plaît ?..."
+  }
+}
+[2026-03-03 10:25:46] [INFO] [MZ55917f...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Ex.: 06, 72, 88, 62 et 45...."
+}
+[2026-03-03 10:25:46] [INFO] [MZ55917f...] Function call completed
+   {
+  "name": "create_appointment",
+  "arguments": "{\"name\":\"Cella\",\"clientPhone\":\"06 72 88 62 45\",\"date\":\"2026-03-03\",\"time\":\"12:00\",\"type\":\"Réservation de table\",\"description\":\"Réservation pour 4 personnes à midi.\"}"
+}
+[2026-03-03 10:25:46] [INFO] [MZ55917f...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Nickel, tout est noté ! À tout à l’heure !..."
+  }
+}
+[2026-03-03 10:25:50] [INFO] [MZ55917f...] Événement stop détecté - fin d'appel
+[2026-03-03 10:25:50] [INFO] [MZ55917f...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-03 10:25:50] [INFO] [MZ55917f...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 273
+}
+[2026-03-03 10:25:50] [INFO] [MZ55917f...] Transcription normalisée
+   {
+  "originalLength": 273,
+  "normalizedLength": 260,
+  "preview": "Appel démarré - StreamSid: MZ55917fa0041d39f29e34f14768e9f366\n\nClient: Oui, bonjour, je voudrais faire 1 réservation.\nClient: Voilà, pour 4 personnes.\nClient: ❤️ par SousTitreur.com\nClient: 12h.\nClien"
+}
+[2026-03-03 10:25:50] [INFO] [MZ55917f...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-03 10:25:50] [INFO] [unknown...] Traitement de la transcription
+   {
+  "transcriptionLength": 260,
+  "preview": "Appel démarré - StreamSid: MZ55917fa0041d39f29e34f14768e9f366\n\nClient: Oui, bonjour, je voudrais fai..."
+}
+[2026-03-03 10:25:50] [INFO] [unknown...] [TRANSCRIPTION_RAW] Transcription brute reçue
+   {
+  "transcriptionLength": 260,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ55917fa0041d39f29e34f14768e9f366\n\nClient: Oui, bonjour, je voudrais faire 1 réservation.\nClient: Voilà, pour 4 personnes.\nClient: ❤️ par SousTitreur.com\nClient: 12h.\nClien...",
+  "promptVersion": "2.0"
+}
+[2026-03-03 10:25:51] [INFO] [MZ55917f...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "47687ms"
+}
+[2026-03-03 10:25:52] [INFO] [MZ55917f...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-03 10:25:53] [INFO] [MZ55917f...] Connexion OpenAI fermée
+[2026-03-03 10:25:59] [INFO] [unknown...] [JSON_EXTRACTED] JSON extrait par GPT
+   {
+  "extractedData": "{\"nom\":\"CELA\",\"telephone\":\"06 72 88 62 45\",\"type_demande\":\"Réservation de table\",\"services\":\"Autre\",\"description\":\"Réservation pour 4 personnes\",\"statut\":\"nouveau\",\"order\":{\"date\":\"ASAP\",\"heure\":\"12:00\",\"duree\":90,\"type\":\"Réservation de table\",\"modalite\":\"Sur place\",\"nombrePersonnes\":4,\"description\":\"Table pour 4 personnes\",\"commandes\":[]}}"
+}
+[2026-03-03 10:25:59] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "8740ms"
+}
+[2026-03-03 10:25:59] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "CELA",
+    "telephone": "0672886245",
+    "type_demande": "Réservation de table",
+    "services": "Autre",
+    "description": "Réservation pour 4 personnes",
+    "statut": "nouveau",
+    "date": "2026-03-03T09:25:59.683Z",
+    "appointment": {
+      "date": "ASAP",
+      "heure": "12:00",
+      "duree": 90,
+      "type": "Réservation de table",
+      "modalite": "Sur place",
+      "nombrePersonnes": 4,
+      "description": "Table pour 4 personnes",
+      "commandes": []
+    }
+  }
+}
+[2026-03-03 10:25:59] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/callsdata"
+}
+[2026-03-03 10:25:59] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA terminé",
+    "message": "Appel traité avec succès pour CELA",
+    "details": {
+      "callId": "69a6a92776ccd9f16f00a886",
+      "orderId": "69a6a92776ccd9f16f00a888",
+      "client": "CELA",
+      "telephone": "0672886245",
+      "type_demande": "Réservation de table",
+      "services": "Autre",
+      "description": "Réservation pour 4 personnes",
+      "duration": "N/A"
+    },
+    "priority": "success"
+  }
+}
+[2026-03-03 10:25:59] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "81ms"
+}
+[2026-03-03 10:25:59] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-03 10:25:59] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "8823ms"
+}
+[2026-03-03 10:25:59] [INFO] [MZ55917f...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "8838ms"
+}
+[2026-03-03 10:25:59] [INFO] [MZ55917f...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-03 10:25:59] [INFO] [MZ55917f...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité et sauvegardé avec succès via API",
+    "data": {
+      "call": {
+        "type_demande": "Réservation de table",
+        "services": "Autre",
+        "description": "Réservation pour 4 personnes",
+        "date": "2026-03-03T09:25:59.683Z",
+        "statut": "nouveau",
+        "_id": "69a6a92776ccd9f16f00a886",
+        "__v": 0,
+        "related_order": "69a6a92776ccd9f16f00a888"
+      },
+      "order": {
+        "client": null,
+        "nom": "CELA",
+        "telephone": "0672886245",
+        "date": "2026-03-03T09:25:59.757Z",
+        "heure": "12:00",
+        "duree": 90,
+        "type": "Réservation de table",
+        "modalite": "Sur place",
+        "description": "Table pour 4 personnes",
+        "nombrePersonnes": 4,
+        "commandes": [],
+        "statut": "confirme",
+        "createdBy": "system",
+        "rappel_envoye": {
+          "email": false,
+          "sms": false
+        },
+        "related_call": "69a6a92776ccd9f16f00a886",
+        "_id": "69a6a92776ccd9f16f00a888",
+        "createdAt": "2026-03-03T09:25:59.759Z",
+        "updatedAt": "2026-03-03T09:25:59.759Z",
+        "__v": 0
+      }
+    }
+  }
+}
+[2026-03-03 10:29:04] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected"
+  }
+}
+[2026-03-03 10:29:04] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-03 10:29:04] [INFO] [MZc79a48...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZc79a482277878f72ac18b39a2e7d4634",
+      "callSid": "CAc07c94b1a889c93e4362ccfee14f3a96",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-03T09:29:04.714Z"
+  }
+}
+[2026-03-03 10:29:04] [INFO] [MZc79a48...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZc79a482277878f72ac18b39a2e7d4634",
+      "callSid": "CAc07c94b1a889c93e4362ccfee14f3a96",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-03T09:29:04.714Z"
+  }
+}
+[2026-03-03 10:29:05] [INFO] [MZc79a48...] Envoi de la salutation automatique
+[2026-03-03 10:29:06] [INFO] [MZc79a48...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-03 10:29:13] [INFO] [MZc79a48...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Oui, bonjour, je voudrais faire une commande à rep..."
+}
+[2026-03-03 10:29:13] [INFO] [MZc79a48...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, vous souhaitez quoi comme produits ?..."
+  }
+}
+[2026-03-03 10:29:28] [INFO] [MZc79a48...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Ok super,..."
+  }
+}
+[2026-03-03 10:29:29] [INFO] [MZc79a48...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "MENU USA BEEF BURGER, COCA-SHERRY, MENU DOUBLE TAC..."
+}
+[2026-03-03 10:29:29] [ERROR] [app] [MZc79a48...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:29:30] [INFO] [MZc79a48...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Sans créditer...."
+}
+[2026-03-03 10:29:33] [INFO] [MZc79a48...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, donc récapitulons le menu double tacos : poulet, tenders, sauce Biggy, sans crudités. Et un..."
+  }
+}
+[2026-03-03 10:29:48] [INFO] [MZc79a48...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Moi, je vais la récupérer vers midi...."
+}
+[2026-03-03 10:29:49] [INFO] [MZc79a48...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D’accord, donc pour 12h c’est ça ? Quel est votre nom s’il vous plaît ?..."
+  }
+}
+[2026-03-03 10:29:54] [INFO] [MZc79a48...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Oui, c'est ça...."
+}
+[2026-03-03 10:29:54] [INFO] [MZc79a48...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, et je peux..."
+  }
+}
+[2026-03-03 10:29:54] [ERROR] [app] [MZc79a48...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:29:56] [INFO] [MZc79a48...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Mettez au nom d'Axel...."
+}
+[2026-03-03 10:29:57] [INFO] [MZc79a48...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Super Axel ! Je peux..."
+  }
+}
+[2026-03-03 10:29:57] [ERROR] [app] [MZc79a48...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:29:58] [INFO] [MZc79a48...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Sous-titres réalisés para la communauté d'Amara.or..."
+}
+[2026-03-03 10:29:58] [INFO] [MZc79a48...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Je peux avoir votre numéro de téléphone s’il vous plaît ?..."
+  }
+}
+[2026-03-03 10:30:06] [INFO] [MZc79a48...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Ex.: 06 72 88 62 45...."
+}
+[2026-03-03 10:30:07] [INFO] [MZc79a48...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Nickel, tout est noté ! On vous attend à 12h. À tout à l’heure !..."
+  }
+}
+[2026-03-03 10:30:12] [INFO] [MZc79a48...] Événement stop détecté - fin d'appel
+[2026-03-03 10:30:12] [INFO] [MZc79a48...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-03 10:30:12] [INFO] [MZc79a48...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 445
+}
+[2026-03-03 10:30:12] [INFO] [MZc79a48...] Transcription normalisée
+   {
+  "originalLength": 445,
+  "normalizedLength": 442,
+  "preview": "Appel démarré - StreamSid: MZc79a482277878f72ac18b39a2e7d4634\n\nClient: Oui, bonjour, je voudrais faire 1 commande à reporter.\nClient: MENU USA BEEF BURGER, Coca-Cola-SHERRY, MENU DOUBLE tacos, POULET "
+}
+[2026-03-03 10:30:12] [INFO] [MZc79a48...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-03 10:30:12] [INFO] [unknown...] Traitement de la transcription
+   {
+  "transcriptionLength": 442,
+  "preview": "Appel démarré - StreamSid: MZc79a482277878f72ac18b39a2e7d4634\n\nClient: Oui, bonjour, je voudrais fai..."
+}
+[2026-03-03 10:30:12] [INFO] [unknown...] [TRANSCRIPTION_RAW] Transcription brute reçue
+   {
+  "transcriptionLength": 442,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZc79a482277878f72ac18b39a2e7d4634\n\nClient: Oui, bonjour, je voudrais faire 1 commande à reporter.\nClient: MENU USA BEEF BURGER, Coca-Cola-SHERRY, MENU DOUBLE tacos, POULET ...",
+  "promptVersion": "2.0"
+}
+[2026-03-03 10:30:13] [INFO] [MZc79a48...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "69218ms"
+}
+[2026-03-03 10:30:14] [INFO] [MZc79a48...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-03 10:30:14] [INFO] [MZc79a48...] Connexion OpenAI fermée
+[2026-03-03 10:30:26] [INFO] [unknown...] [JSON_EXTRACTED] JSON extrait par GPT
+   {
+  "extractedData": "{\"nom\":\"Axel\",\"telephone\":\"06 72 88 62 45\",\"type_demande\":\"Commande à emporter\",\"services\":\"Burgers\",\"description\":\"Commande d'un Menu USA Beef Burger et d'un Menu Double Tacos avec Coca-Cola Cherry, poulet tenders, sauce Biggy et sauce fromagère.\",\"statut\":\"nouveau\",\"order\":{\"date\":\"ASAP\",\"heure\":\"12:00\",\"duree\":60,\"type\":\"Commande à emporter\",\"modalite\":\"À emporter\",\"nombrePersonnes\":null,\"description\":\"\",\"commandes\":[{\"nom\":\"Menu USA Beef Burger\",\"categorie\":\"Menus\",\"quantite\":1,\"prixUnitaire\":15,\"supplements\":\"\",\"options\":{\"boisson\":\"Coca-Cola Cherry\"}},{\"nom\":\"Menu Double Tacos\",\"categorie\":\"Menus\",\"quantite\":1,\"prixUnitaire\":15,\"supplements\":\"\",\"options\":{\"viandes\":[\"Poulet\",\"Tenders\"],\"sauce\":\"Biggy\"}}]}}"
+}
+[2026-03-03 10:30:26] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Menu USA Beef Burger",
+  "categorie": "Menus"
+}
+[2026-03-03 10:30:26] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Menu Double Tacos",
+  "categorie": "Menus"
+}
+[2026-03-03 10:30:26] [WARN] [unknown...] [PRODUCT_VALIDATION_ERRORS] Erreurs de validation produits
+   {
+  "errors": [
+    {
+      "produit": "Menu USA Beef Burger",
+      "categorie": "Menus",
+      "errors": [
+        "Produit \"Menu USA Beef Burger\" non trouvé dans la catégorie \"Menus\""
+      ]
+    },
+    {
+      "produit": "Menu Double Tacos",
+      "categorie": "Menus",
+      "errors": [
+        "Produit \"Menu Double Tacos\" non trouvé dans la catégorie \"Menus\""
+      ]
+    }
+  ]
+}
+[2026-03-03 10:30:26] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "13386ms"
+}
+[2026-03-03 10:30:26] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Axel",
+    "telephone": "0672886245",
+    "type_demande": "Commande à emporter",
+    "services": "Burgers",
+    "description": "Commande d'un Menu USA Beef Burger et d'un Menu Double Tacos avec Coca-Cola Cherry, poulet tenders, sauce Biggy et sauce fromagère.",
+    "statut": "nouveau",
+    "date": "2026-03-03T09:30:26.151Z",
+    "appointment": {
+      "date": "ASAP",
+      "heure": "12:00",
+      "duree": 60,
+      "type": "Commande à emporter",
+      "modalite": "À emporter",
+      "nombrePersonnes": null,
+      "description": "",
+      "commandes": [
+        {
+          "nom": "Menu USA Beef Burger",
+          "categorie": "Menus",
+          "quantite": 1,
+          "prixUnitaire": 15,
+          "supplements": "",
+          "options": {
+            "boisson": "Coca-Cola Cherry"
+          }
+        },
+        {
+          "nom": "Menu Double Tacos",
+          "categorie": "Menus",
+          "quantite": 1,
+          "prixUnitaire": 15,
+          "supplements": "",
+          "options": {
+            "viandes": [
+              "Poulet",
+              "Tenders"
+            ],
+            "sauce": "Biggy"
+          }
+        }
+      ]
+    }
+  }
+}
+[2026-03-03 10:30:26] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/callsdata"
+}
+[2026-03-03 10:30:26] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA terminé",
+    "message": "Appel traité avec succès pour Axel",
+    "details": {
+      "callId": "69a6aa3276ccd9f16f00a894",
+      "orderId": "69a6aa3276ccd9f16f00a896",
+      "client": "Axel",
+      "telephone": "0672886245",
+      "type_demande": "Commande à emporter",
+      "services": "Burgers",
+      "description": "Commande d'un Menu USA Beef Burger et d'un Menu Double Tacos avec Coca-Cola Cherry, poulet tenders, sauce Biggy et sauce fromagère.",
+      "duration": "N/A"
+    },
+    "priority": "success"
+  }
+}
+[2026-03-03 10:30:26] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "92ms"
+}
+[2026-03-03 10:30:26] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-03 10:30:26] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "13482ms"
+}
+[2026-03-03 10:30:26] [INFO] [MZc79a48...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "13491ms"
+}
+[2026-03-03 10:30:26] [INFO] [MZc79a48...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-03 10:30:26] [INFO] [MZc79a48...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité et sauvegardé avec succès via API",
+    "data": {
+      "call": {
+        "type_demande": "Commande à emporter",
+        "services": "Burgers",
+        "description": "Commande d'un Menu USA Beef Burger et d'un Menu Double Tacos avec Coca-Cola Cherry, poulet tenders, sauce Biggy et sauce fromagère.",
+        "date": "2026-03-03T09:30:26.151Z",
+        "statut": "nouveau",
+        "_id": "69a6aa3276ccd9f16f00a894",
+        "__v": 0,
+        "related_order": "69a6aa3276ccd9f16f00a896"
+      },
+      "order": {
+        "client": null,
+        "nom": "Axel",
+        "telephone": "0672886245",
+        "date": "2026-03-03T09:30:26.228Z",
+        "heure": "12:00",
+        "duree": 60,
+        "type": "Commande à emporter",
+        "modalite": "À emporter",
+        "description": "Commande d'un Menu USA Beef Burger et d'un Menu Double Tacos avec Coca-Cola Cherry, poulet tenders, sauce Biggy et sauce fromagère.",
+        "nombrePersonnes": null,
+        "commandes": [
+          {
+            "nom": "Menu USA Beef Burger",
+            "categorie": "Menus",
+            "quantite": 1,
+            "prixUnitaire": 15,
+            "supplements": "",
+            "options": {
+              "boisson": "Coca-Cola Cherry"
+            },
+            "_id": "69a6aa3276ccd9f16f00a897"
+          },
+          {
+            "nom": "Menu Double Tacos",
+            "categorie": "Menus",
+            "quantite": 1,
+            "prixUnitaire": 15,
+            "supplements": "",
+            "options": {
+              "viandes": [
+                "Poulet",
+                "Tenders"
+              ],
+              "sauce": "Biggy"
+            },
+            "_id": "69a6aa3276ccd9f16f00a898"
+          }
+        ],
+        "statut": "confirme",
+        "createdBy": "system",
+        "rappel_envoye": {
+          "email": false,
+          "sms": false
+        },
+        "related_call": "69a6aa3276ccd9f16f00a894",
+        "_id": "69a6aa3276ccd9f16f00a896",
+        "createdAt": "2026-03-03T09:30:26.231Z",
+        "updatedAt": "2026-03-03T09:30:26.231Z",
+        "__v": 0
+      }
+    }
+  }
+}
+[2026-03-03 10:41:38] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected"
+  }
+}
+[2026-03-03 10:41:38] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-03 10:41:38] [INFO] [MZ2b69b7...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ2b69b74fc06f6bc0346819c88b3a2b34",
+      "callSid": "CAa0f3371df9682d1ce24b6967262a3fbb",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-03T09:41:38.759Z"
+  }
+}
+[2026-03-03 10:41:38] [INFO] [MZ2b69b7...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ2b69b74fc06f6bc0346819c88b3a2b34",
+      "callSid": "CAa0f3371df9682d1ce24b6967262a3fbb",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-03T09:41:38.760Z"
+  }
+}
+[2026-03-03 10:41:39] [INFO] [MZ2b69b7...] Envoi de la salutation automatique
+[2026-03-03 10:41:40] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-03 10:41:41] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 10:41:42] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "❤️ par SousTitreur.com..."
+}
+[2026-03-03 10:41:42] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:41:42] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "❤️ par SousTitreur.com..."
+}
+[2026-03-03 10:41:43] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, pour quelle heure vous souhaitez la commande ?..."
+  }
+}
+[2026-03-03 10:41:49] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "20h...."
+}
+[2026-03-03 10:41:49] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, vous voulez quoi comme tacos ? Et combien de viandes ?..."
+  }
+}
+[2026-03-03 10:41:53] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "À SUIVRE......"
+}
+[2026-03-03 10:41:54] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, un tacos simple donc une..."
+  }
+}
+[2026-03-03 10:41:54] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:41:56] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Tacos 3 viandes...."
+}
+[2026-03-03 10:41:57] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Super, pour le triple tacos, vous voulez quelles viandes ?..."
+  }
+}
+[2026-03-03 10:42:02] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 10:42:06] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:42:06] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 10:42:06] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Cordon Bleu...."
+}
+[2026-03-03 10:42:09] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D’accord pour merguez et poulet. On n’a pas cordon bleu, vous préférez tenders, nuggets, bœuf ou via..."
+  }
+}
+[2026-03-03 10:42:09] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Garde ponctuation naturelle...."
+}
+[2026-03-03 10:42:09] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:42:13] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "❤️ par SousTitreur.com..."
+}
+[2026-03-03 10:42:15] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, donc merguez, poulet et viande hachée. Et pour la sauce, vous choisissez quoi ?..."
+  }
+}
+[2026-03-03 10:42:24] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Endors, mon double, je préfère avoir le degrèczé d..."
+}
+[2026-03-03 10:42:26] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "On n'a pas andalouse, désolé. On a algérienne, blanche, samouraï, harissa, ketchup, mayonnaise, bigg..."
+  }
+}
+[2026-03-03 10:42:36] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Samouraï...."
+}
+[2026-03-03 10:42:36] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien,..."
+  }
+}
+[2026-03-03 10:42:36] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:42:38] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Samouraï...."
+}
+[2026-03-03 10:42:40] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, et pour les crudités, vous voulez salade, tomates, oignons, cornichons ?..."
+  }
+}
+[2026-03-03 10:42:47] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Pas de crédité...."
+}
+[2026-03-03 10:42:48] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D’accord, pas de crudités. Et pour la boisson avec le menu, vous prenez quoi ?..."
+  }
+}
+[2026-03-03 10:42:56] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Coca...."
+}
+[2026-03-03 10:42:58] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Super, donc menu triple tacos avec merguez, poulet, viande hachée, sauce samouraï, sans crudités, et..."
+  }
+}
+[2026-03-03 10:43:10] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "20h...."
+}
+[2026-03-03 10:43:10] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Ok noté pour 13h. Je peux avoir votre nom s’il vous plaît ?..."
+  }
+}
+[2026-03-03 10:43:16] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "C'est tout...."
+}
+[2026-03-03 10:43:18] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Merci Philippe ! Et votre numéro de téléphone s’il vous plaît ?..."
+  }
+}
+[2026-03-03 10:43:25] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Ex.: 06 32 84 46 25...."
+}
+[2026-03-03 10:43:26] [INFO] [MZ2b69b7...] Function call completed
+   {
+  "name": "create_appointment",
+  "arguments": "{\"name\":\"Philippe\",\"clientPhone\":\"06 32 84 46 25\",\"date\":\"2026-03-03\",\"time\":\"13:00\",\"type\":\"Commande à emporter\",\"description\":\"Menu triple tacos : merguez, poulet, viande hachée, sauce samouraï, sans crudités, coca.\"}"
+}
+[2026-03-03 10:43:26] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 10:43:33] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 10:43:34] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "La fabriquée...."
+}
+[2026-03-03 10:43:34] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:35] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait..."
+  }
+}
+[2026-03-03 10:43:36] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Téléphone...."
+}
+[2026-03-03 10:43:36] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:37] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Il n'a pas pris...."
+}
+[2026-03-03 10:43:38] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Si si, j’ai bien noté votre numéro : 06 32 84 46 25...."
+  }
+}
+[2026-03-03 10:43:38] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:39] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 10:43:40] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Et après, voilà...."
+}
+[2026-03-03 10:43:40] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:40] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 10:43:41] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Au revoir...."
+}
+[2026-03-03 10:43:41] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:41] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "D'accord ?..."
+}
+[2026-03-03 10:43:42] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 10:43:42] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:43] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Allô ?..."
+}
+[2026-03-03 10:43:44] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Oui, c’est bien noté Philippe ! Tout est bon, on vous attend à 13h. À tout à l’heure !..."
+  }
+}
+[2026-03-03 10:43:45] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 10:43:48] [INFO] [MZ2b69b7...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 10:43:48] [INFO] [MZ2b69b7...] Événement stop détecté - fin d'appel
+[2026-03-03 10:43:48] [INFO] [MZ2b69b7...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-03 10:43:48] [INFO] [MZ2b69b7...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 642
+}
+[2026-03-03 10:43:48] [INFO] [MZ2b69b7...] Transcription normalisée
+   {
+  "originalLength": 642,
+  "normalizedLength": 647,
+  "preview": "Appel démarré - StreamSid: MZ2b69b74fc06f6bc0346819c88b3a2b34\n\nClient: ❤️ par SousTitreur.com\nClient: ❤️ par SousTitreur.com\nClient: 20h.\nClient: À SUIVRE...\nClient: tacos 3 viandes.\nClient: Cordon Bl"
+}
+[2026-03-03 10:43:48] [INFO] [MZ2b69b7...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-03 10:43:48] [INFO] [unknown...] Traitement de la transcription
+   {
+  "transcriptionLength": 647,
+  "preview": "Appel démarré - StreamSid: MZ2b69b74fc06f6bc0346819c88b3a2b34\n\nClient: ❤️ par SousTitreur.com\nClient..."
+}
+[2026-03-03 10:43:48] [INFO] [unknown...] [TRANSCRIPTION_RAW] Transcription brute reçue
+   {
+  "transcriptionLength": 647,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ2b69b74fc06f6bc0346819c88b3a2b34\n\nClient: ❤️ par SousTitreur.com\nClient: ❤️ par SousTitreur.com\nClient: 20h.\nClient: À SUIVRE...\nClient: tacos 3 viandes.\nClient: Cordon Bl...",
+  "promptVersion": "2.0"
+}
+[2026-03-03 10:43:48] [INFO] [MZ2b69b7...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Non c'est bon, non c'est bon. Des fois ils coupent..."
+}
+[2026-03-03 10:43:48] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:49] [INFO] [MZ2b69b7...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "131123ms"
+}
+[2026-03-03 10:43:50] [INFO] [MZ2b69b7...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-03 10:43:50] [INFO] [MZ2b69b7...] Connexion OpenAI fermée
+[2026-03-03 10:43:54] [INFO] [unknown...] [JSON_EXTRACTED] JSON extrait par GPT
+   {
+  "extractedData": "{\"nom\":\"Client inconnu\",\"telephone\":\"06 32 84 46 25\",\"type_demande\":\"Commande à emporter\",\"services\":\"Tacos\",\"description\":\"Commande d'un tacos triple avec sauce samouraï et un Coca-Cola\",\"statut\":\"nouveau\",\"order\":{\"date\":\"ASAP\",\"heure\":\"20:00\",\"duree\":60,\"type\":\"Commande à emporter\",\"modalite\":\"À emporter\",\"nombrePersonnes\":null,\"description\":\"\",\"commandes\":[{\"nom\":\"Triple Tacos\",\"categorie\":\"Tacos\",\"quantite\":1,\"prixUnitaire\":17,\"supplements\":\"\",\"personnalisation\":{\"viandes\":[\"Poulet\",\"Bœuf\",\"Tenders\"],\"sauce\":\"Samouraï\",\"sansIngredients\":[],\"extras\":[]}},{\"nom\":\"Coca-Cola\",\"categorie\":\"Boissons\",\"quantite\":1,\"prixUnitaire\":2,\"supplements\":\"\"}]}}"
+}
+[2026-03-03 10:43:54] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Triple Tacos",
+  "categorie": "Tacos"
+}
+[2026-03-03 10:43:54] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Coca-Cola",
+  "categorie": "Boissons"
+}
+[2026-03-03 10:43:54] [WARN] [unknown...] [PRODUCT_VALIDATION_ERRORS] Erreurs de validation produits
+   {
+  "errors": [
+    {
+      "produit": "Triple Tacos",
+      "categorie": "Tacos",
+      "errors": [
+        "Produit \"Triple Tacos\" non trouvé dans la catégorie \"Tacos\""
+      ]
+    },
+    {
+      "produit": "Coca-Cola",
+      "categorie": "Boissons",
+      "errors": [
+        "Produit \"Coca-Cola\" non trouvé dans la catégorie \"Boissons\""
+      ]
+    }
+  ]
+}
+[2026-03-03 10:43:54] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "5738ms"
+}
+[2026-03-03 10:43:54] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Client inconnu",
+    "telephone": "0632844625",
+    "type_demande": "Commande à emporter",
+    "services": "Tacos",
+    "description": "Commande d'un tacos triple avec sauce samouraï et un Coca-Cola",
+    "statut": "nouveau",
+    "date": "2026-03-03T09:43:54.455Z",
+    "appointment": {
+      "date": "ASAP",
+      "heure": "20:00",
+      "duree": 60,
+      "type": "Commande à emporter",
+      "modalite": "À emporter",
+      "nombrePersonnes": null,
+      "description": "",
+      "commandes": [
+        {
+          "nom": "Triple Tacos",
+          "categorie": "Tacos",
+          "quantite": 1,
+          "prixUnitaire": 17,
+          "supplements": "",
+          "personnalisation": {
+            "viandes": [
+              "Poulet",
+              "Bœuf",
+              "Tenders"
+            ],
+            "sauce": "Samouraï",
+            "sansIngredients": [],
+            "extras": []
+          }
+        },
+        {
+          "nom": "Coca-Cola",
+          "categorie": "Boissons",
+          "quantite": 1,
+          "prixUnitaire": 2,
+          "supplements": ""
+        }
+      ]
+    }
+  }
+}
+[2026-03-03 10:43:54] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/callsdata"
+}
+[2026-03-03 10:43:54] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA terminé",
+    "message": "Appel traité avec succès pour Client inconnu",
+    "details": {
+      "callId": "69a6ad5a76ccd9f16f00a8a7",
+      "orderId": "69a6ad5a76ccd9f16f00a8a9",
+      "client": "Client inconnu",
+      "telephone": "0632844625",
+      "type_demande": "Commande à emporter",
+      "services": "Tacos",
+      "description": "Commande d'un tacos triple avec sauce samouraï et un Coca-Cola",
+      "duration": "N/A"
+    },
+    "priority": "success"
+  }
+}
+[2026-03-03 10:43:54] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "79ms"
+}
+[2026-03-03 10:43:54] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-03 10:43:54] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "5821ms"
+}
+[2026-03-03 10:43:54] [INFO] [MZ2b69b7...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "5827ms"
+}
+[2026-03-03 10:43:54] [INFO] [MZ2b69b7...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-03 10:43:54] [INFO] [MZ2b69b7...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité et sauvegardé avec succès via API",
+    "data": {
+      "call": {
+        "type_demande": "Commande à emporter",
+        "services": "Tacos",
+        "description": "Commande d'un tacos triple avec sauce samouraï et un Coca-Cola",
+        "date": "2026-03-03T09:43:54.455Z",
+        "statut": "nouveau",
+        "_id": "69a6ad5a76ccd9f16f00a8a7",
+        "__v": 0,
+        "related_order": "69a6ad5a76ccd9f16f00a8a9"
+      },
+      "order": {
+        "client": null,
+        "nom": "Client inconnu",
+        "telephone": "0632844625",
+        "date": "2026-03-03T09:43:54.528Z",
+        "heure": "20:00",
+        "duree": 60,
+        "type": "Commande à emporter",
+        "modalite": "À emporter",
+        "description": "Commande d'un tacos triple avec sauce samouraï et un Coca-Cola",
+        "nombrePersonnes": null,
+        "commandes": [
+          {
+            "nom": "Triple Tacos",
+            "categorie": "Tacos",
+            "quantite": 1,
+            "prixUnitaire": 17,
+            "supplements": "",
+            "_id": "69a6ad5a76ccd9f16f00a8aa"
+          },
+          {
+            "nom": "Coca-Cola",
+            "categorie": "Boissons",
+            "quantite": 1,
+            "prixUnitaire": 2,
+            "supplements": "",
+            "_id": "69a6ad5a76ccd9f16f00a8ab"
+          }
+        ],
+        "statut": "confirme",
+        "createdBy": "system",
+        "rappel_envoye": {
+          "email": false,
+          "sms": false
+        },
+        "related_call": "69a6ad5a76ccd9f16f00a8a7",
+        "_id": "69a6ad5a76ccd9f16f00a8a9",
+        "createdAt": "2026-03-03T09:43:54.530Z",
+        "updatedAt": "2026-03-03T09:43:54.530Z",
+        "__v": 0
+      }
+    }
+  }
+}
+[2026-03-03 13:33:44] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected"
+  }
+}
+[2026-03-03 13:33:44] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-03 13:33:44] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-03 13:33:44] [INFO] [MZ2db300...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ2db300d5f0fe006e2f9a99cb3b2a8de0",
+      "callSid": "CAd37e07857007b38fce185fa798ad1206",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-03T12:33:44.230Z"
+  }
+}
+[2026-03-03 13:33:44] [INFO] [MZ2db300...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ2db300d5f0fe006e2f9a99cb3b2a8de0",
+      "callSid": "CAd37e07857007b38fce185fa798ad1206",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-03T12:33:44.231Z"
+  }
+}
+[2026-03-03 13:33:44] [INFO] [MZ2db300...] [AUDIO_RECORDING_STARTED] Premier chunk audio reçu - début enregistrement
+   {
+  "rnnoiseAvailable": true
+}
+[2026-03-03 13:33:45] [INFO] [MZ2db300...] Envoi de la salutation automatique
+[2026-03-03 13:33:46] [INFO] [MZ2db300...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-03 13:33:52] [INFO] [MZ2db300...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Oui, bonjour, je voudrais faire une commande à hau..."
+}
+[2026-03-03 13:33:53] [INFO] [MZ2db300...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien ! Qu'est-ce qui vous ferait plaisir ?..."
+  }
+}
+[2026-03-03 13:34:00] [INFO] [MZ2db300...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Alors, il me faudrait un menu USA Beef Burger...."
+}
+[2026-03-03 13:34:01] [INFO] [MZ2db300...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Super choix ! Pour quelle heure vous souhaitez la commande ?..."
+  }
+}
+[2026-03-03 13:34:08] [INFO] [MZ2db300...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Je vous écoute, pour quelle..."
+  }
+}
+[2026-03-03 13:34:08] [INFO] [MZ2db300...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "C'est ce que je voudrais pour......"
+}
+[2026-03-03 13:34:08] [ERROR] [app] [MZ2db300...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:34:12] [INFO] [MZ2db300...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "13h30. Est-ce que c'est possible ?..."
+}
+[2026-03-03 13:34:13] [INFO] [MZ2db300...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Alors, on ouvre à 18 heures ce soir. Je peux vous proposer à partir de 18h30, ça vous irait ?..."
+  }
+}
+[2026-03-03 13:34:28] [INFO] [MZ2db300...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Mais vous n'êtes pas ouvert à midi, il me semble q..."
+}
+[2026-03-03 13:34:30] [INFO] [MZ2db300...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Je suis désolé, aujourd'hui on est exceptionnellement fermé à midi. Mais on sera bien ouvert ce soir..."
+  }
+}
+[2026-03-03 13:34:43] [INFO] [MZ2db300...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Je..."
+  }
+}
+[2026-03-03 13:34:43] [INFO] [MZ2db300...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "C'est bizarre quand même. Attendez, je vais regard..."
+}
+[2026-03-03 13:34:43] [ERROR] [app] [MZ2db300...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:34:44] [INFO] [MZ2db300...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 13:34:44] [INFO] [MZ2db300...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Bah ouais !..."
+}
+[2026-03-03 13:34:44] [ERROR] [app] [MZ2db300...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:34:48] [INFO] [MZ2db300...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Ah oui, vous avez raison pour les horaires habituels. Mais aujourd..."
+  }
+}
+[2026-03-03 13:34:49] [INFO] [MZ2db300...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Mardi, de 11h à 14h, vous êtes ouvert...."
+}
+[2026-03-03 13:34:49] [ERROR] [app] [MZ2db300...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:34:50] [INFO] [MZ2db300...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 13:34:51] [INFO] [MZ2db300...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Et en plus......"
+}
+[2026-03-03 13:34:51] [ERROR] [app] [MZ2db300...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:34:53] [INFO] [MZ2db300...] Événement stop détecté - fin d'appel
+[2026-03-03 13:34:53] [INFO] [MZ2db300...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-03 13:34:53] [INFO] [MZ2db300...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 592
+}
+[2026-03-03 13:34:53] [INFO] [MZ2db300...] [TRANSCRIPTION_FULL_RECEIVED] Transcription brute complète reçue
+   {
+  "length": 592,
+  "preview": "Appel démarré - StreamSid: MZ2db300d5f0fe006e2f9a99cb3b2a8de0\n\nClient: Oui, bonjour, je voudrais faire une commande à haut portier.\nClient: Alors, il me faudrait un menu USA Beef Burger.\nClient: C'est ce que je voudrais pour...\nClient: 13h30. Est-ce que c'est possible ?\nClient: Mais vous n'êtes pas ...",
+  "fullContent": "Appel démarré - StreamSid: MZ2db300d5f0fe006e2f9a99cb3b2a8de0\n\nClient: Oui, bonjour, je voudrais faire une commande à haut portier.\nClient: Alors, il me faudrait un menu USA Beef Burger.\nClient: C'est ce que je voudrais pour...\nClient: 13h30. Est-ce que c'est possible ?\nClient: Mais vous n'êtes pas ouvert à midi, il me semble que si. J'ai regardé sur les horaires et pourtant vous êtes bien ouvert.\nClient: C'est bizarre quand même. Attendez, je vais regarder les horaires, mais il y a un problème là.\nClient: Bah ouais !\nClient: Mardi, de 11h à 14h, vous êtes ouvert.\nClient: Et en plus..."
+}
+[2026-03-03 13:34:53] [INFO] [MZ2db300...] [TRANSCRIPTION_NORMALIZED] Transcription normalisée
+   {
+  "originalLength": 592,
+  "normalizedLength": 587,
+  "preview": "Appel démarré - StreamSid: MZ2db300d5f0fe006e2f9a99cb3b2a8de0\n\nClient: Oui, bonjour, je voudrais faire 1 commande à haut portier.\nClient: Alors, il me faudrait 1 menu USA Beef Burger.\nClient: C'est ce que je voudrais pour...\nClient: 13h30. Est-ce que c'est possible ?\nClient: Mais vous n'êtes pas ouv...",
+  "changes": {
+    "original": "Appel démarré - StreamSid: MZ2db300d5f0fe006e2f9a99cb3b2a8de0\n\nClient: Oui, bonjour, je voudrais faire une commande à haut portier.\nClient: Alors, il me faudrait un menu USA Beef Burger.\nClient: C'est",
+    "normalized": "Appel démarré - StreamSid: MZ2db300d5f0fe006e2f9a99cb3b2a8de0\n\nClient: Oui, bonjour, je voudrais faire 1 commande à haut portier.\nClient: Alors, il me faudrait 1 menu USA Beef Burger.\nClient: C'est ce"
+  }
+}
+[2026-03-03 13:34:53] [INFO] [MZ2db300...] [TRANSCRIPTION_READY_FOR_GPT] Transcription normalisée complète - prête pour GPT
+   {
+  "length": 587,
+  "fullContent": "Appel démarré - StreamSid: MZ2db300d5f0fe006e2f9a99cb3b2a8de0\n\nClient: Oui, bonjour, je voudrais faire 1 commande à haut portier.\nClient: Alors, il me faudrait 1 menu USA Beef Burger.\nClient: C'est ce que je voudrais pour...\nClient: 13h30. Est-ce que c'est possible ?\nClient: Mais vous n'êtes pas ouvert à 12h, il me semble que si. J'ai regardé sur les horaires et pourtant vous êtes bien ouvert.\nClient: C'est bizarre quand même. Attendez, je vais regarder les horaires, mais il y a 1 problème là.\nClient: Bah ouais !\nClient: Mardi, de 11h à 14h, vous êtes ouvert.\nClient: Et en plus..."
+}
+[2026-03-03 13:34:53] [INFO] [MZ2db300...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-03 13:34:53] [INFO] [unknown...] Traitement de la transcription
+   {
+  "transcriptionLength": 587,
+  "preview": "Appel démarré - StreamSid: MZ2db300d5f0fe006e2f9a99cb3b2a8de0\n\nClient: Oui, bonjour, je voudrais fai..."
+}
+[2026-03-03 13:34:53] [INFO] [unknown...] [TRANSCRIPTION_RAW_FOR_GPT] Transcription brute reçue pour extraction GPT
+   {
+  "transcriptionLength": 587,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ2db300d5f0fe006e2f9a99cb3b2a8de0\n\nClient: Oui, bonjour, je voudrais faire 1 commande à haut portier.\nClient: Alors, il me faudrait 1 menu USA Beef Burger.\nClient: C'est ce que je voudrais pour...\nClient: 13h30. Est-ce que c'est possible ?\nClient: Mais vous n'êtes pas ouvert à 12h, il me semble que si. J'ai regardé sur les horaires et pourtant vous êtes bien ouvert.\nClient: C'est bizarre quand même. Attendez, je vais regarder les horaires, mais il y a 1 problème là.\nC...",
+  "transcriptionFull": "Appel démarré - StreamSid: MZ2db300d5f0fe006e2f9a99cb3b2a8de0\n\nClient: Oui, bonjour, je voudrais faire 1 commande à haut portier.\nClient: Alors, il me faudrait 1 menu USA Beef Burger.\nClient: C'est ce que je voudrais pour...\nClient: 13h30. Est-ce que c'est possible ?\nClient: Mais vous n'êtes pas ouvert à 12h, il me semble que si. J'ai regardé sur les horaires et pourtant vous êtes bien ouvert.\nClient: C'est bizarre quand même. Attendez, je vais regarder les horaires, mais il y a 1 problème là.\nClient: Bah ouais !\nClient: Mardi, de 11h à 14h, vous êtes ouvert.\nClient: Et en plus...",
+  "promptVersion": "2.0"
+}
+[2026-03-03 13:34:54] [INFO] [MZ2db300...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "70754ms"
+}
+[2026-03-03 13:34:54] [INFO] [MZ2db300...] [AUDIO_RECORDING_SUMMARY] Récapitulatif enregistrement audio
+   {
+  "totalChunks": 3449,
+  "cleanedChunks": 3449,
+  "rnnoiseUsed": true,
+  "duration": 70754
+}
+[2026-03-03 13:34:55] [INFO] [MZ2db300...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-03 13:34:56] [INFO] [MZ2db300...] Connexion OpenAI fermée
+[2026-03-03 13:35:01] [INFO] [unknown...] [GPT_RAW_RESPONSE] Réponse brute GPT reçue
+   {
+  "responseLength": 597,
+  "responsePreview": "{\n  \"nom\": \"Client inconnu\",\n  \"telephone\": \"Non fourni\",\n  \"type_demande\": \"Commande à emporter\",\n  \"services\": \"Burgers\",\n  \"description\": \"Commande d'un menu USA Beef Burger pour 13h30\",\n  \"statut\": \"nouveau\",\n  \"order\": {\n    \"date\": \"ASAP\",\n    \"heure\": \"13:30\",\n    \"duree\": 60,\n    \"type\": \"Commande à emporter\",\n    \"modalite\": \"À emporter\",\n    \"nombrePersonnes\": null,\n    \"description\": \"\",\n    \"commandes\": [\n      {\n        \"nom\": \"Menu USA Beef Burger\",\n        \"categorie\": \"Menus\",\n  ...",
+  "responseFull": "{\n  \"nom\": \"Client inconnu\",\n  \"telephone\": \"Non fourni\",\n  \"type_demande\": \"Commande à emporter\",\n  \"services\": \"Burgers\",\n  \"description\": \"Commande d'un menu USA Beef Burger pour 13h30\",\n  \"statut\": \"nouveau\",\n  \"order\": {\n    \"date\": \"ASAP\",\n    \"heure\": \"13:30\",\n    \"duree\": 60,\n    \"type\": \"Commande à emporter\",\n    \"modalite\": \"À emporter\",\n    \"nombrePersonnes\": null,\n    \"description\": \"\",\n    \"commandes\": [\n      {\n        \"nom\": \"Menu USA Beef Burger\",\n        \"categorie\": \"Menus\",\n        \"quantite\": 1,\n        \"prixUnitaire\": 15.00,\n        \"supplements\": \"\"\n      }\n    ]\n  }\n}"
+}
+[2026-03-03 13:35:01] [INFO] [unknown...] [JSON_EXTRACTED_COMPARISON] JSON extrait par GPT - comparaison avec transcription
+   {
+  "extractedData": "{\n  \"nom\": \"Client inconnu\",\n  \"telephone\": \"Non fourni\",\n  \"type_demande\": \"Commande à emporter\",\n  \"services\": \"Burgers\",\n  \"description\": \"Commande d'un menu USA Beef Burger pour 13h30\",\n  \"statut\": \"nouveau\",\n  \"order\": {\n    \"date\": \"ASAP\",\n    \"heure\": \"13:30\",\n    \"duree\": 60,\n    \"type\": \"Commande à emporter\",\n    \"modalite\": \"À emporter\",\n    \"nombrePersonnes\": null,\n    \"description\": \"\",\n    \"commandes\": [\n      {\n        \"nom\": \"Menu USA Beef Burger\",\n        \"categorie\": \"Menus\",\n        \"quantite\": 1,\n        \"prixUnitaire\": 15,\n        \"supplements\": \"\"\n      }\n    ]\n  }\n}",
+  "extractedDataCompact": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Commande à emporter\",\"services\":\"Burgers\",\"description\":\"Commande d'un menu USA Beef Burger pour 13h30\",\"statut\":\"nouveau\",\"order\":{\"date\":\"ASAP\",\"heure\":\"13:30\",\"duree\":60,\"type\":\"Commande à emporter\",\"modalite\":\"À emporter\",\"nombrePersonnes\":null,\"description\":\"\",\"commandes\":[{\"nom\":\"Menu USA Beef Burger\",\"categorie\":\"Menus\",\"quantite\":1,\"prixUnitaire\":15,\"supplements\":\"\"}]}}",
+  "transcriptionOriginal": "Appel démarré - StreamSid: MZ2db300d5f0fe006e2f9a99cb3b2a8de0\n\nClient: Oui, bonjour, je voudrais faire 1 commande à haut portier.\nClient: Alors, il me faudrait 1 menu USA Beef Burger.\nClient: C'est ce que je voudrais pour...\nClient: 13h30. Est-ce que c'est possible ?\nClient: Mais vous n'êtes pas ouvert à 12h, il me semble que si. J'ai regardé sur les horaires et pourtant vous êtes bien ouvert.\nClient: C'est bizarre quand même. Attendez, je vais regarder les horaires, mais il y a 1 problème là.\nClient: Bah ouais !\nClient: Mardi, de 11h à 14h, vous êtes ouvert.\nClient: Et en plus...",
+  "transcriptionLength": 587,
+  "extractedDataKeys": [
+    "nom",
+    "telephone",
+    "type_demande",
+    "services",
+    "description",
+    "statut",
+    "order"
+  ],
+  "hasOrder": true,
+  "hasCommandes": true,
+  "commandesCount": 1,
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Commande à emporter"
+}
+[2026-03-03 13:35:01] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Menu USA Beef Burger",
+  "categorie": "Menus"
+}
+[2026-03-03 13:35:01] [WARN] [unknown...] [PRODUCT_VALIDATION_ERRORS] Erreurs de validation produits
+   {
+  "errors": [
+    {
+      "produit": "Menu USA Beef Burger",
+      "categorie": "Menus",
+      "errors": [
+        "Produit \"Menu USA Beef Burger\" non trouvé dans la catégorie \"Menus\""
+      ]
+    }
+  ]
+}
+[2026-03-03 13:35:01] [WARN] [unknown...] [VALIDATION_ERRORS] Erreurs de validation détectées
+   {
+  "validationReport": {
+    "isValid": false,
+    "errors": [
+      {
+        "field": "telephone",
+        "original": "Non fourni",
+        "reason": "Numéro invalide (doit contenir exactement 10 chiffres)"
+      }
+    ],
+    "emptyStringsConverted": [],
+    "originalPhone": "Non fourni",
+    "validatedPhone": null,
+    "originalTime": "13:30",
+    "validatedTime": "13:30"
+  }
+}
+[2026-03-03 13:35:01] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "7882ms"
+}
+[2026-03-03 13:35:01] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Client inconnu",
+    "telephone": "Non fourni",
+    "type_demande": "Commande à emporter",
+    "services": "Burgers",
+    "description": "Commande d'un menu USA Beef Burger pour 13h30",
+    "statut": "nouveau",
+    "date": "2026-03-03T12:35:01.720Z",
+    "appointment": {
+      "date": "ASAP",
+      "heure": "13:30",
+      "duree": 60,
+      "type": "Commande à emporter",
+      "modalite": "À emporter",
+      "nombrePersonnes": null,
+      "description": "",
+      "commandes": [
+        {
+          "nom": "Menu USA Beef Burger",
+          "categorie": "Menus",
+          "quantite": 1,
+          "prixUnitaire": 15,
+          "supplements": ""
+        }
+      ]
+    }
+  }
+}
+[2026-03-03 13:35:01] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/callsdata"
+}
+[2026-03-03 13:35:01] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA terminé",
+    "message": "Appel traité avec succès pour Client inconnu",
+    "details": {
+      "callId": "69a6d575544f9400c66a0d2c",
+      "orderId": "69a6d575544f9400c66a0d2e",
+      "client": "Client inconnu",
+      "telephone": "Non fourni",
+      "type_demande": "Commande à emporter",
+      "services": "Burgers",
+      "description": "Commande d'un menu USA Beef Burger pour 13h30",
+      "duration": "N/A"
+    },
+    "priority": "success"
+  }
+}
+[2026-03-03 13:35:01] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "91ms"
+}
+[2026-03-03 13:35:01] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-03 13:35:01] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "7976ms"
+}
+[2026-03-03 13:35:01] [INFO] [MZ2db300...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "8001ms"
+}
+[2026-03-03 13:35:01] [INFO] [MZ2db300...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-03 13:35:01] [INFO] [MZ2db300...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité et sauvegardé avec succès via API",
+    "data": {
+      "call": {
+        "type_demande": "Commande à emporter",
+        "services": "Burgers",
+        "description": "Commande d'un menu USA Beef Burger pour 13h30",
+        "date": "2026-03-03T12:35:01.720Z",
+        "statut": "nouveau",
+        "_id": "69a6d575544f9400c66a0d2c",
+        "__v": 0,
+        "related_order": "69a6d575544f9400c66a0d2e"
+      },
+      "order": {
+        "client": null,
+        "nom": "Client inconnu",
+        "telephone": null,
+        "date": "2026-03-03T12:35:01.795Z",
+        "heure": "13:30",
+        "duree": 60,
+        "type": "Commande à emporter",
+        "modalite": "À emporter",
+        "description": "Commande d'un menu USA Beef Burger pour 13h30",
+        "nombrePersonnes": null,
+        "commandes": [
+          {
+            "nom": "Menu USA Beef Burger",
+            "categorie": "Menus",
+            "quantite": 1,
+            "prixUnitaire": 15,
+            "supplements": "",
+            "_id": "69a6d575544f9400c66a0d2f"
+          }
+        ],
+        "statut": "confirme",
+        "createdBy": "system",
+        "rappel_envoye": {
+          "email": false,
+          "sms": false
+        },
+        "related_call": "69a6d575544f9400c66a0d2c",
+        "_id": "69a6d575544f9400c66a0d2e",
+        "createdAt": "2026-03-03T12:35:01.801Z",
+        "updatedAt": "2026-03-03T12:35:01.801Z",
+        "__v": 0
+      }
+    }
+  }
+}
+[2026-03-03 13:35:08] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected"
+  }
+}
+[2026-03-03 13:35:09] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-03 13:35:09] [INFO] [MZ6d1c14...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff",
+      "callSid": "CAfdddf192b3c6925180a41f62e978f5ca",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-03T12:35:09.082Z"
+  }
+}
+[2026-03-03 13:35:09] [INFO] [MZ6d1c14...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff",
+      "callSid": "CAfdddf192b3c6925180a41f62e978f5ca",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-03T12:35:09.083Z"
+  }
+}
+[2026-03-03 13:35:09] [INFO] [MZ6d1c14...] [AUDIO_RECORDING_STARTED] Premier chunk audio reçu - début enregistrement
+   {
+  "rnnoiseAvailable": true
+}
+[2026-03-03 13:35:09] [INFO] [MZ6d1c14...] Envoi de la salutation automatique
+[2026-03-03 13:35:11] [INFO] [MZ6d1c14...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-03 13:35:16] [INFO] [MZ6d1c14...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-03 13:35:16] [INFO] [MZ6d1c14...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Sous-titres réalisés para la communauté d'Amara.or..."
+}
+[2026-03-03 13:35:16] [ERROR] [app] [MZ6d1c14...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:35:20] [INFO] [MZ6d1c14...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Oui, bonjour, je vous appelle pour faire une comma..."
+}
+[2026-03-03 13:35:20] [INFO] [MZ6d1c14...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien ! Qu’est-ce qui vous ferait plaisir ?..."
+  }
+}
+[2026-03-03 13:35:28] [INFO] [MZ6d1c14...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Alors, je voudrais un menu USA BEEF BURGER...."
+}
+[2026-03-03 13:35:28] [INFO] [MZ6d1c14...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, le menu USA Beef Burger inclut une boisson. Vous souhaitez quoi comme boisson ?..."
+  }
+}
+[2026-03-03 13:35:37] [INFO] [MZ6d1c14...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Super, un menu USA Beef Burger avec Coca Cherry. Pour quelle heure la commande ?..."
+  }
+}
+[2026-03-03 13:35:41] [INFO] [MZ6d1c14...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "eh bien, Coca-Shérie......"
+}
+[2026-03-03 13:35:47] [INFO] [MZ6d1c14...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "« Bah écoutez, pour 13h50... »..."
+}
+[2026-03-03 13:35:48] [INFO] [MZ6d1c14...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "OK, noté pour 13h50. Il me faudrait juste votre nom s’il vous plaît ?..."
+  }
+}
+[2026-03-03 13:35:57] [INFO] [MZ6d1c14...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Merci Mathis ! Et je peux avoir votre numéro de téléphone s’il vous plaît ?..."
+  }
+}
+[2026-03-03 13:35:58] [INFO] [MZ6d1c14...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Mettez au nom de Mathis...."
+}
+[2026-03-03 13:36:06] [INFO] [MZ6d1c14...] Transcription client reçue d'OpenAI
+   {
+  "transcript": "Oui, alors c'est le 06, 72, 88, 72 et 42...."
+}
+[2026-03-03 13:36:07] [INFO] [MZ6d1c14...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Nickel, tout est noté ! À tout à l’heure pour 13h50 !..."
+  }
+}
+[2026-03-03 13:36:15] [INFO] [MZ6d1c14...] Événement stop détecté - fin d'appel
+[2026-03-03 13:36:15] [INFO] [MZ6d1c14...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-03 13:36:15] [INFO] [MZ6d1c14...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 402
+}
+[2026-03-03 13:36:15] [INFO] [MZ6d1c14...] [TRANSCRIPTION_FULL_RECEIVED] Transcription brute complète reçue
+   {
+  "length": 402,
+  "preview": "Appel démarré - StreamSid: MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff\n\nClient: Sous-titres réalisés para la communauté d'Amara.org\nClient: Oui, bonjour, je vous appelle pour faire une commande à reporter.\nClient: Alors, je voudrais un menu USA BEEF BURGER.\nClient: eh bien, Coca-Shérie...\nClient: « Bah écout...",
+  "fullContent": "Appel démarré - StreamSid: MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff\n\nClient: Sous-titres réalisés para la communauté d'Amara.org\nClient: Oui, bonjour, je vous appelle pour faire une commande à reporter.\nClient: Alors, je voudrais un menu USA BEEF BURGER.\nClient: eh bien, Coca-Shérie...\nClient: « Bah écoutez, pour 13h50... »\nClient: Mettez au nom de Mathis.\nClient: Oui, alors c'est le 06, 72, 88, 72 et 42."
+}
+[2026-03-03 13:36:15] [INFO] [MZ6d1c14...] [TRANSCRIPTION_NORMALIZED] Transcription normalisée
+   {
+  "originalLength": 402,
+  "normalizedLength": 399,
+  "preview": "Appel démarré - StreamSid: MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff\n\nClient: Sous-titres réalisés para la communauté d'Amara.org\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à reporter.\nClient: Alors, je voudrais 1 menu USA BEEF BURGER.\nClient: eh bien, Coca-Cola-Shérie...\nClient: « Bah éco...",
+  "changes": {
+    "original": "Appel démarré - StreamSid: MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff\n\nClient: Sous-titres réalisés para la communauté d'Amara.org\nClient: Oui, bonjour, je vous appelle pour faire une commande à reporter.\nCli",
+    "normalized": "Appel démarré - StreamSid: MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff\n\nClient: Sous-titres réalisés para la communauté d'Amara.org\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à reporter.\nClien"
+  }
+}
+[2026-03-03 13:36:15] [INFO] [MZ6d1c14...] [TRANSCRIPTION_READY_FOR_GPT] Transcription normalisée complète - prête pour GPT
+   {
+  "length": 399,
+  "fullContent": "Appel démarré - StreamSid: MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff\n\nClient: Sous-titres réalisés para la communauté d'Amara.org\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à reporter.\nClient: Alors, je voudrais 1 menu USA BEEF BURGER.\nClient: eh bien, Coca-Cola-Shérie...\nClient: « Bah écoutez, 13h50... »\nClient: Mettez au nom de Mathis.\nClient: Oui, alors c'est le 06, 72, 88, 72 et 42."
+}
+[2026-03-03 13:36:15] [INFO] [MZ6d1c14...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-03 13:36:15] [INFO] [unknown...] Traitement de la transcription
+   {
+  "transcriptionLength": 399,
+  "preview": "Appel démarré - StreamSid: MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff\n\nClient: Sous-titres réalisés para la ..."
+}
+[2026-03-03 13:36:15] [INFO] [unknown...] [TRANSCRIPTION_RAW_FOR_GPT] Transcription brute reçue pour extraction GPT
+   {
+  "transcriptionLength": 399,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff\n\nClient: Sous-titres réalisés para la communauté d'Amara.org\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à reporter.\nClient: Alors, je voudrais 1 menu USA BEEF BURGER.\nClient: eh bien, Coca-Cola-Shérie...\nClient: « Bah écoutez, 13h50... »\nClient: Mettez au nom de Mathis.\nClient: Oui, alors c'est le 06, 72, 88, 72 et 42.",
+  "transcriptionFull": "Appel démarré - StreamSid: MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff\n\nClient: Sous-titres réalisés para la communauté d'Amara.org\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à reporter.\nClient: Alors, je voudrais 1 menu USA BEEF BURGER.\nClient: eh bien, Coca-Cola-Shérie...\nClient: « Bah écoutez, 13h50... »\nClient: Mettez au nom de Mathis.\nClient: Oui, alors c'est le 06, 72, 88, 72 et 42.",
+  "promptVersion": "2.0"
+}
+[2026-03-03 13:36:16] [INFO] [MZ6d1c14...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "67288ms"
+}
+[2026-03-03 13:36:16] [INFO] [MZ6d1c14...] [AUDIO_RECORDING_SUMMARY] Récapitulatif enregistrement audio
+   {
+  "totalChunks": 3276,
+  "cleanedChunks": 3276,
+  "rnnoiseUsed": true,
+  "duration": 67288
+}
+[2026-03-03 13:36:17] [INFO] [MZ6d1c14...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-03 13:36:17] [INFO] [MZ6d1c14...] Connexion OpenAI fermée
+[2026-03-03 13:36:21] [INFO] [unknown...] [GPT_RAW_RESPONSE] Réponse brute GPT reçue
+   {
+  "responseLength": 663,
+  "responsePreview": "{\n  \"nom\": \"Mathis\",\n  \"telephone\": \"06 72 88 72 42\",\n  \"type_demande\": \"Commande à emporter\",\n  \"services\": \"Menus\",\n  \"description\": \"Commande d'un menu USA Beef Burger avec un Coca-Cola\",\n  \"statut\": \"nouveau\",\n  \"order\": {\n    \"date\": \"ASAP\",\n    \"heure\": \"13:50\",\n    \"duree\": 60,\n    \"type\": \"Commande à emporter\",\n    \"modalite\": \"À emporter\",\n    \"nombrePersonnes\": null,\n    \"description\": \"\",\n    \"commandes\": [\n      {\n        \"nom\": \"Menu USA Beef Burger\",\n        \"categorie\": \"Menus\",\n ...",
+  "responseFull": "{\n  \"nom\": \"Mathis\",\n  \"telephone\": \"06 72 88 72 42\",\n  \"type_demande\": \"Commande à emporter\",\n  \"services\": \"Menus\",\n  \"description\": \"Commande d'un menu USA Beef Burger avec un Coca-Cola\",\n  \"statut\": \"nouveau\",\n  \"order\": {\n    \"date\": \"ASAP\",\n    \"heure\": \"13:50\",\n    \"duree\": 60,\n    \"type\": \"Commande à emporter\",\n    \"modalite\": \"À emporter\",\n    \"nombrePersonnes\": null,\n    \"description\": \"\",\n    \"commandes\": [\n      {\n        \"nom\": \"Menu USA Beef Burger\",\n        \"categorie\": \"Menus\",\n        \"quantite\": 1,\n        \"prixUnitaire\": 15.00,\n        \"supplements\": \"\",\n        \"options\": {\n          \"boisson\": \"Coca-Cola\"\n        }\n      }\n    ]\n  }\n}"
+}
+[2026-03-03 13:36:21] [INFO] [unknown...] [JSON_EXTRACTED_COMPARISON] JSON extrait par GPT - comparaison avec transcription
+   {
+  "extractedData": "{\n  \"nom\": \"Mathis\",\n  \"telephone\": \"06 72 88 72 42\",\n  \"type_demande\": \"Commande à emporter\",\n  \"services\": \"Menus\",\n  \"description\": \"Commande d'un menu USA Beef Burger avec un Coca-Cola\",\n  \"statut\": \"nouveau\",\n  \"order\": {\n    \"date\": \"ASAP\",\n    \"heure\": \"13:50\",\n    \"duree\": 60,\n    \"type\": \"Commande à emporter\",\n    \"modalite\": \"À emporter\",\n    \"nombrePersonnes\": null,\n    \"description\": \"\",\n    \"commandes\": [\n      {\n        \"nom\": \"Menu USA Beef Burger\",\n        \"categorie\": \"Menus\",\n        \"quantite\": 1,\n        \"prixUnitaire\": 15,\n        \"supplements\": \"\",\n        \"options\": {\n          \"boisson\": \"Coca-Cola\"\n        }\n      }\n    ]\n  }\n}",
+  "extractedDataCompact": "{\"nom\":\"Mathis\",\"telephone\":\"06 72 88 72 42\",\"type_demande\":\"Commande à emporter\",\"services\":\"Menus\",\"description\":\"Commande d'un menu USA Beef Burger avec un Coca-Cola\",\"statut\":\"nouveau\",\"order\":{\"date\":\"ASAP\",\"heure\":\"13:50\",\"duree\":60,\"type\":\"Commande à emporter\",\"modalite\":\"À emporter\",\"nombrePersonnes\":null,\"description\":\"\",\"commandes\":[{\"nom\":\"Menu USA Beef Burger\",\"categorie\":\"Menus\",\"quantite\":1,\"prixUnitaire\":15,\"supplements\":\"\",\"options\":{\"boisson\":\"Coca-Cola\"}}]}}",
+  "transcriptionOriginal": "Appel démarré - StreamSid: MZ6d1c1425121e48ba7cc6ac0d8cd5e9ff\n\nClient: Sous-titres réalisés para la communauté d'Amara.org\nClient: Oui, bonjour, je vous appelle pour faire 1 commande à reporter.\nClient: Alors, je voudrais 1 menu USA BEEF BURGER.\nClient: eh bien, Coca-Cola-Shérie...\nClient: « Bah écoutez, 13h50... »\nClient: Mettez au nom de Mathis.\nClient: Oui, alors c'est le 06, 72, 88, 72 et 42.",
+  "transcriptionLength": 399,
+  "extractedDataKeys": [
+    "nom",
+    "telephone",
+    "type_demande",
+    "services",
+    "description",
+    "statut",
+    "order"
+  ],
+  "hasOrder": true,
+  "hasCommandes": true,
+  "commandesCount": 1,
+  "nom": "Mathis",
+  "telephone": "06 72 88 72 42",
+  "type_demande": "Commande à emporter"
+}
+[2026-03-03 13:36:21] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Menu USA Beef Burger",
+  "categorie": "Menus"
+}
+[2026-03-03 13:36:21] [WARN] [unknown...] [PRODUCT_VALIDATION_ERRORS] Erreurs de validation produits
+   {
+  "errors": [
+    {
+      "produit": "Menu USA Beef Burger",
+      "categorie": "Menus",
+      "errors": [
+        "Produit \"Menu USA Beef Burger\" non trouvé dans la catégorie \"Menus\""
+      ]
+    }
+  ]
+}
+[2026-03-03 13:36:21] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "5886ms"
+}
+[2026-03-03 13:36:21] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Mathis",
+    "telephone": "0672887242",
+    "type_demande": "Commande à emporter",
+    "services": "Menus",
+    "description": "Commande d'un menu USA Beef Burger avec un Coca-Cola",
+    "statut": "nouveau",
+    "date": "2026-03-03T12:36:21.095Z",
+    "appointment": {
+      "date": "ASAP",
+      "heure": "13:50",
+      "duree": 60,
+      "type": "Commande à emporter",
+      "modalite": "À emporter",
+      "nombrePersonnes": null,
+      "description": "",
+      "commandes": [
+        {
+          "nom": "Menu USA Beef Burger",
+          "categorie": "Menus",
+          "quantite": 1,
+          "prixUnitaire": 15,
+          "supplements": "",
+          "options": {
+            "boisson": "Coca-Cola"
+          }
+        }
+      ]
+    }
+  }
+}
+[2026-03-03 13:36:21] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/callsdata"
+}
+[2026-03-03 13:36:21] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA terminé",
+    "message": "Appel traité avec succès pour Mathis",
+    "details": {
+      "callId": "69a6d5c5544f9400c66a0d3a",
+      "orderId": "69a6d5c5544f9400c66a0d3c",
+      "client": "Mathis",
+      "telephone": "0672887242",
+      "type_demande": "Commande à emporter",
+      "services": "Menus",
+      "description": "Commande d'un menu USA Beef Burger avec un Coca-Cola",
+      "duration": "N/A"
+    },
+    "priority": "success"
+  }
+}
+[2026-03-03 13:36:21] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "80ms"
+}
+[2026-03-03 13:36:21] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-03 13:36:21] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "5969ms"
+}
+[2026-03-03 13:36:21] [INFO] [MZ6d1c14...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "5979ms"
+}
+[2026-03-03 13:36:21] [INFO] [MZ6d1c14...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-03 13:36:21] [INFO] [MZ6d1c14...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité et sauvegardé avec succès via API",
+    "data": {
+      "call": {
+        "type_demande": "Commande à emporter",
+        "services": "Menus",
+        "description": "Commande d'un menu USA Beef Burger avec un Coca-Cola",
+        "date": "2026-03-03T12:36:21.095Z",
+        "statut": "nouveau",
+        "_id": "69a6d5c5544f9400c66a0d3a",
+        "__v": 0,
+        "related_order": "69a6d5c5544f9400c66a0d3c"
+      },
+      "order": {
+        "client": null,
+        "nom": "Mathis",
+        "telephone": "0672887242",
+        "date": "2026-03-03T12:36:21.166Z",
+        "heure": "13:50",
+        "duree": 60,
+        "type": "Commande à emporter",
+        "modalite": "À emporter",
+        "description": "Commande d'un menu USA Beef Burger avec un Coca-Cola",
+        "nombrePersonnes": null,
+        "commandes": [
+          {
+            "nom": "Menu USA Beef Burger",
+            "categorie": "Menus",
+            "quantite": 1,
+            "prixUnitaire": 15,
+            "supplements": "",
+            "options": {
+              "boisson": "Coca-Cola"
+            },
+            "_id": "69a6d5c5544f9400c66a0d3d"
+          }
+        ],
+        "statut": "confirme",
+        "createdBy": "system",
+        "rappel_envoye": {
+          "email": false,
+          "sms": false
+        },
+        "related_call": "69a6d5c5544f9400c66a0d3a",
+        "_id": "69a6d5c5544f9400c66a0d3c",
+        "createdAt": "2026-03-03T12:36:21.167Z",
+        "updatedAt": "2026-03-03T12:36:21.167Z",
+        "__v": 0
+      }
+    }
+  }
+}

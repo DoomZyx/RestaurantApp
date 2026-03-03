@@ -3212,3 +3212,723 @@
     at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
     at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
     at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:22:52] [ERROR] [app] [MZd40520...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:22:59] [ERROR] [app] [MZd40520...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:30:15] [ERROR] [app] [MZ800754...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:30:41] [ERROR] [app] [MZ800754...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:42:35] [ERROR] [app] [MZ82feba...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:42:51] [ERROR] [app] [MZ82feba...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:43:01] [ERROR] [app] [MZ82feba...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-02 21:43:02] [ERROR] [app] [MZ82feba...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:25:20] [ERROR] [app] [MZ55917f...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:29:29] [ERROR] [app] [MZc79a48...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:29:54] [ERROR] [app] [MZc79a48...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:29:57] [ERROR] [app] [MZc79a48...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:41:42] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:41:54] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:42:06] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:42:09] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:42:36] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:34] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:36] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:38] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:40] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:41] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:42] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 10:43:48] [ERROR] [app] [MZ2b69b7...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:135:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:34:08] [ERROR] [app] [MZ2db300...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:34:43] [ERROR] [app] [MZ2db300...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:34:44] [ERROR] [app] [MZ2db300...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:34:49] [ERROR] [app] [MZ2db300...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:34:51] [ERROR] [app] [MZ2db300...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-03 13:35:16] [ERROR] [app] [MZ6d1c14...] [ERROR] OpenAI Error: Cancellation failed: no active response found
+   Contexte: {
+  "error": "OpenAI Error: Cancellation failed: no active response found",
+  "errorType": "invalid_request_error",
+  "errorCode": "response_cancel_not_active",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "response_cancel_not_active",
+    "message": "Cancellation failed: no active response found",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Cancellation failed: no active response found
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:16:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:116:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:162:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7

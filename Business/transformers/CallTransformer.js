@@ -57,6 +57,7 @@ export class CallTransformer {
       id: order._id,
       client: order.client ? this.transformClient(order.client) : null,
       nom: order.nom,
+      telephone: order.telephone,
       date: order.date,
       heure: order.heure,
       duree: order.duree,

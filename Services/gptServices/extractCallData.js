@@ -269,7 +269,12 @@ Le menu INCLUT DEJA : plat + boisson + accompagnement (frites).
 → NE PAS extraire séparément le burger/tacos, la boisson et les frites
 → La boisson choisie va dans le champ "options" comme objet structuré
 
-Exemple Menu :
+⚠️ RÈGLE ABSOLUE - BOISSONS DANS LES MENUS :
+- Si plusieurs menus sont commandés, CHAQUE menu doit avoir sa boisson dans options
+- La boisson est DÉJÀ incluse dans le prix du menu → NE JAMAIS l'ajouter comme produit séparé
+- Si le client dit "un menu burger et un coca en plus" → c'est 1 menu (avec boisson dans options) + 1 coca séparé
+
+Exemple Menu simple :
 Client dit : "Je veux un menu USA Beef Burger avec un coca"
 → Extrais comme 1 seul item :
 {
@@ -282,6 +287,45 @@ Client dit : "Je veux un menu USA Beef Burger avec un coca"
     "boisson": "Coca-Cola"
   }
 }
+
+Exemple Plusieurs menus :
+Client dit : "Je veux 2 menus burger, un avec coca et l'autre avec sprite"
+→ Extrais comme 2 items (un par menu avec sa boisson) :
+[
+  {
+    "nom": "Menu USA Beef Burger",
+    "categorie": "Menus",
+    "quantite": 1,
+    "prixUnitaire": 15.00,
+    "options": { "boisson": "Coca-Cola" }
+  },
+  {
+    "nom": "Menu USA Beef Burger",
+    "categorie": "Menus",
+    "quantite": 1,
+    "prixUnitaire": 15.00,
+    "options": { "boisson": "Sprite" }
+  }
+]
+
+Exemple Menu + boisson supplémentaire :
+Client dit : "Un menu burger avec coca et un coca en plus"
+→ Extrais comme 2 items :
+[
+  {
+    "nom": "Menu USA Beef Burger",
+    "categorie": "Menus",
+    "quantite": 1,
+    "prixUnitaire": 15.00,
+    "options": { "boisson": "Coca-Cola" }
+  },
+  {
+    "nom": "Coca-Cola",
+    "categorie": "Boissons",
+    "quantite": 1,
+    "prixUnitaire": 3.00
+  }
+]
 
 Si le client ne précise pas la boisson, mets "options": null ou "options": { "boisson": "Non précisée" }
 
@@ -610,11 +654,13 @@ export async function extractCallData(transcription, streamSid = "unknown") {
     }
 
     // Log transcription brute et version du prompt (AMEL-009)
-    callLogger.info(streamSid, "Transcription brute reçue", {
+    callLogger.info(streamSid, "Transcription brute reçue pour extraction GPT", {
       transcriptionLength: transcription.length,
-      transcriptionPreview: transcription.substring(0, 200) + (transcription.length > 200 ? "..." : ""),
+      transcriptionPreview: transcription.substring(0, 500) + (transcription.length > 500 ? "..." : ""),
+      transcriptionFull: transcription,
       promptVersion: PROMPT_VERSION,
-      event: "transcription_raw"
+      event: "transcription_raw_for_gpt",
+      timestamp: new Date().toISOString()
     });
 
     // Récupérer le menu configuré
@@ -802,8 +848,23 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
     const rawResponse = completion.choices?.[0]?.message?.content?.trim();
 
     if (!rawResponse) {
+      callLogger.error(streamSid, new Error("Aucune réponse de l'API OpenAI"), {
+        source: "extractCallData",
+        context: "gpt_no_response",
+        completion: JSON.stringify(completion).substring(0, 500),
+        event: "gpt_empty_response"
+      });
       throw new Error("Aucune réponse de l'API OpenAI");
     }
+
+    // Log réponse brute GPT
+    callLogger.info(streamSid, "Réponse brute GPT reçue", {
+      event: "gpt_raw_response",
+      responseLength: rawResponse.length,
+      responsePreview: rawResponse.substring(0, 500) + (rawResponse.length > 500 ? "..." : ""),
+      responseFull: rawResponse,
+      timestamp: new Date().toISOString()
+    });
 
     // Avec json_schema, la réponse est déjà du JSON valide, pas besoin de nettoyer le markdown
     let extractedData;
@@ -814,15 +875,29 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       callLogger.error(streamSid, new Error("Erreur parsing JSON extrait"), {
         source: "extractCallData",
         context: "json_parsing",
-        rawResponse: rawResponse.substring(0, 500),
+        rawResponse: rawResponse.substring(0, 1000),
+        rawResponseFull: rawResponse,
+        parseError: parseError.message,
+        event: "json_parsing_error"
       });
       throw new Error("Impossible de parser les données extraites");
     }
 
-    // Log JSON extrait
-    callLogger.info(streamSid, "JSON extrait par GPT", {
-      extractedData: JSON.stringify(extractedData),
-      event: "json_extracted"
+    // Log JSON extrait avec comparaison transcription
+    callLogger.info(streamSid, "JSON extrait par GPT - comparaison avec transcription", {
+      event: "json_extracted_comparison",
+      extractedData: JSON.stringify(extractedData, null, 2),
+      extractedDataCompact: JSON.stringify(extractedData),
+      transcriptionOriginal: transcription,
+      transcriptionLength: transcription.length,
+      extractedDataKeys: Object.keys(extractedData),
+      hasOrder: !!extractedData.order,
+      hasCommandes: !!(extractedData.order?.commandes?.length),
+      commandesCount: extractedData.order?.commandes?.length || 0,
+      nom: extractedData.nom,
+      telephone: extractedData.telephone,
+      type_demande: extractedData.type_demande,
+      timestamp: new Date().toISOString()
     });
 
     // Vérifier si GPT a retourné une erreur (données non fournies)

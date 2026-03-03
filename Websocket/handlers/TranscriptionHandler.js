@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import notificationService from "../../Services/notificationService.js";
 import { ValidationService } from "../services/ValidationService.js";
 import { normalizeTranscription } from "../../Services/transcription/transcriptionNormalizer.js";
+import { recordTranscription } from "../../Services/audioProcessing/audioRecordingService.js";
 
 dotenv.config();
 
@@ -34,6 +35,21 @@ export class TranscriptionHandler {
         transcription.length
       );
 
+      // ✅ LOG TRANSCRIPTION BRUTE COMPLÈTE
+      this.callLogger.info(
+        this.streamSid,
+        "Transcription brute complète reçue",
+        {
+          event: "transcription_full_received",
+          length: transcription.length,
+          preview: transcription.substring(0, 300) + (transcription.length > 300 ? "..." : ""),
+          fullContent: transcription
+        }
+      );
+      
+      // Enregistrer la transcription brute dans testAudio
+      await recordTranscription(this.streamSid, transcription);
+      
       // ✅ NORMALISATION : Améliorer la qualité de la transcription
       const normalizedTranscription = normalizeTranscription(transcription);
       
@@ -42,12 +58,28 @@ export class TranscriptionHandler {
           this.streamSid,
           "Transcription normalisée",
           {
+            event: "transcription_normalized",
             originalLength: transcription.length,
             normalizedLength: normalizedTranscription.length,
-            preview: normalizedTranscription.substring(0, 200)
+            preview: normalizedTranscription.substring(0, 300) + (normalizedTranscription.length > 300 ? "..." : ""),
+            changes: {
+              original: transcription.substring(0, 200),
+              normalized: normalizedTranscription.substring(0, 200)
+            }
           }
         );
       }
+      
+      // ✅ LOG TRANSCRIPTION NORMALISÉE COMPLÈTE
+      this.callLogger.info(
+        this.streamSid,
+        "Transcription normalisée complète - prête pour GPT",
+        {
+          event: "transcription_ready_for_gpt",
+          length: normalizedTranscription.length,
+          fullContent: normalizedTranscription
+        }
+      );
 
       // ✅ VALIDATION : Vérifier si la transcription est exploitable
       const validation = ValidationService.validateTranscription(normalizedTranscription);

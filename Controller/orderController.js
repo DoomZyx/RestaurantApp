@@ -19,6 +19,7 @@ export async function createOrder(request, reply) {
     const order = await OrderModel.create({
       client: clientId,
       nom: !clientId ? orderData.nom || null : null,
+      telephone: !clientId && orderData.telephone ? orderData.telephone : null,
       date: orderData.date,
       heure: orderData.heure,
       duree: orderData.duree,

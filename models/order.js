@@ -11,6 +11,11 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  // Téléphone de l'appelant (si pas de client associé)
+  telephone: {
+    type: String,
+    required: false
+  },
   // Informations de la commande
   date: {
     type: Date,
