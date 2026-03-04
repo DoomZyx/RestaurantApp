@@ -119,8 +119,12 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                 type: {
                   type: "string",
                   enum: ["Commande à emporter", "Réservation de table"],
-                  default: "Commande à emporter",
-                  description: "Type : commande à emporter ou réservation de table",
+                  description: "Type : commande à emporter ou réservation de table. DOIT être explicitement spécifié.",
+                },
+                modalite: {
+                  type: "string",
+                  enum: ["À emporter", "Sur place", "Livraison"],
+                  description: "Modalite: À emporter si type est Commande à emporter, Sur place si type est Réservation de table, ou Livraison pour livraison"
                 },
                 description: {
                   type: "string",

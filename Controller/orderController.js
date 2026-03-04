@@ -398,6 +398,25 @@ function normalizeTime(raw) {
   return null;
 }
 
+// Normalise la modalité pour correspondre aux valeurs attendues par le modèle
+function normalizeModalite(raw) {
+  if (raw == null || raw === "") return null;
+  const s = String(raw).trim();
+  
+  // Valeurs acceptées par le modèle : ["Sur place", "À emporter", "Livraison"]
+  const modaliteMap = {
+    "a emporter": "À emporter",
+    "à emporter": "À emporter",
+    "À emporter": "À emporter",
+    "sur place": "Sur place",
+    "Sur place": "Sur place",
+    "livraison": "Livraison",
+    "Livraison": "Livraison"
+  };
+  
+  return modaliteMap[s.toLowerCase()] || null;
+}
+
 // Types acceptés par le schéma Order (valeurs envoyées par l'agent)
 const ORDER_TYPE_VALID = new Set(["Commande à emporter", "Réservation de table"]);
 
@@ -450,6 +469,10 @@ export async function createOrderFromAI(request, reply) {
     const rawType = orderData.type ?? null;
     const orderType = ORDER_TYPE_VALID.has(rawType) ? rawType : null;
 
+    // Normaliser la modalité pour correspondre aux valeurs du modèle
+    const rawModalite = orderData.modalite ?? null;
+    const normalizedModalite = normalizeModalite(rawModalite);
+
     // Créer la commande : avec client si trouvé, sinon sans client (nom et téléphone uniquement)
     const orderToCreate = {
       client: client?._id ?? null,
@@ -459,7 +482,7 @@ export async function createOrderFromAI(request, reply) {
       heure: heureNormalized,
       duree: orderData.duration ?? orderData.duree ?? 60,
       type: orderType,
-      modalite: orderData.modalite ?? null,
+      modalite: normalizedModalite,
       description: orderData.description ?? null,
       commandes: orderData.commandes || [],
       statut: "confirme",
