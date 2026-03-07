@@ -57523,3 +57523,99 @@
   "clientIp": "127.0.0.1",
   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
 }
+[2026-03-07 22:58:17] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-07 22:58:17] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-07 22:58:17] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+}
+[2026-03-07 22:58:17] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-07 22:58:18] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-07 22:58:18] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-07 22:58:18] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+}
+[2026-03-07 23:02:52] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-07 23:02:55] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-07 23:02:55] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-07 23:02:55] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+}
+[2026-03-07 23:03:00] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 1
+}
+[2026-03-07 23:03:00] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 2,
+  "connectionId": "unknown"
+}
+[2026-03-07 23:03:00] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+}
+[2026-03-07 23:19:43] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 1
+}
+[2026-03-07 23:19:43] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-07 23:19:44] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-07 23:19:44] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-07 23:19:44] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+}

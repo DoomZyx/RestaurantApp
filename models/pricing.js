@@ -48,6 +48,8 @@ const pricingSchema = new mongoose.Schema({
   },
 
   // Tarifs des produits par catégorie (utilise Mixed pour permettre des catégories dynamiques)
+  // Chaque catégorie a { nom: String, produits: Array }. Chaque produit peut avoir :
+  // nom, description, prixBase, disponible (Boolean, true = proposé à l'agent vocal et au client)
   menuPricing: {
     type: mongoose.Schema.Types.Mixed,
     default: {

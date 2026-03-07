@@ -409,3 +409,17 @@
 2026-03-07T21:39:39.114Z [NOTIF] Connexion ajoutee total=1
 2026-03-07T21:39:46.648Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
 2026-03-07T21:39:46.653Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:58:17.133Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:58:17.137Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:58:17.335Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:58:18.171Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:58:18.174Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T22:02:52.316Z [NOTIF] Connexion supprimee total=0
+2026-03-07T22:02:55.605Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T22:02:55.608Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T22:03:00.606Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=1
+2026-03-07T22:03:00.607Z [NOTIF] Connexion ajoutee total=2
+2026-03-07T22:19:43.887Z [NOTIF] Connexion supprimee total=1
+2026-03-07T22:19:43.890Z [NOTIF] Connexion supprimee total=0
+2026-03-07T22:19:44.620Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T22:19:44.623Z [NOTIF] Connexion ajoutee total=1
