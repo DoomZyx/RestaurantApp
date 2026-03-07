@@ -13,31 +13,26 @@ const NotificationCenter = () => {
   const navigate = useNavigate();
   const { isConnected, lastError, reconnect } = useWebSocket();
 
-  // Gérer le clic sur une notification
+  // Gérer le clic sur une notification : naviguer puis la page ouvrira la modale détail via orderid en URL
   const handleNotificationClick = (notification) => {
-    // Marquer comme lue
     notificationService.markAsRead(notification.id);
-    
-    
-    // Naviguer selon le type de notification
-    if (notification.notificationType === "call_completed") {
-      // Si on a un ID de commande, aller vers les rendez-vous avec l'ID
-      if (notification.details?.orderId) {
-        navigate(`/orders?orderid=${notification.details.orderId}`);
-      } else {
-        // Sinon aller vers les appels (la route s'appelle /calls-list)
+    const orderId = notification.details?.orderId;
+    const appointmentType = notification.details?.appointmentType;
+
+    if (notification.notificationType === "call_completed" || notification.notificationType === "new_order") {
+      if (orderId) {
+        if (appointmentType === "reservation") {
+          navigate(`/reservations?orderid=${orderId}`);
+        } else {
+          navigate(`/orders?orderid=${orderId}`);
+        }
+      } else if (notification.notificationType === "call_completed") {
         navigate("/calls-list");
-      }
-    } else if (notification.notificationType === "new_order") {
-      // Aller à la page des rendez-vous avec l'ID si disponible
-      if (notification.details?.orderId) {
-        navigate(`/orders?orderid=${notification.details.orderId}`);
       } else {
         navigate("/orders");
       }
     }
-    
-    // Fermer le panneau
+
     setShowNotifications(false);
   };
 
@@ -93,9 +88,7 @@ const NotificationCenter = () => {
   };
 
   useEffect(() => {
-    console.log("[NotificationCenter] souscription au service, init:", notificationService.notifications.length);
     const unsubscribe = notificationService.subscribe((newNotifications) => {
-      console.log("[NotificationCenter] liste mise a jour:", newNotifications?.length ?? 0, "notifs");
       setNotifications(newNotifications);
     });
     setNotifications([...notificationService.notifications]);
@@ -122,7 +115,9 @@ const NotificationCenter = () => {
         className="notification-toggle"
         onClick={() => setShowNotifications(!showNotifications)}
         title={
-          isConnected ? t('notificationCenter.activeNotifications') : t('notificationCenter.disconnectedNotifications')
+          isConnected
+            ? t("notificationCenter.activeNotifications")
+            : t("notificationCenter.disconnectedNotifications")
         }
       >
         <i
@@ -137,14 +132,22 @@ const NotificationCenter = () => {
       {showNotifications && (
         <div className="notification-panel">
           <div className="notification-header">
-            <h3>{t('notifications.title')}</h3>
+            <h3>{t("notifications.title")}</h3>
           </div>
           {!isConnected && (
             <div className="notification-ws-status">
-              <span className="ws-status-text">{t('notificationCenter.disconnectedNotifications')}</span>
-              {lastError && <span className="ws-status-error">{lastError}</span>}
-              <button type="button" className="ws-reconnect-btn" onClick={reconnect}>
-                {t('notificationCenter.reconnect')}
+              <span className="ws-status-text">
+                {t("notificationCenter.disconnectedNotifications")}
+              </span>
+              {lastError && (
+                <span className="ws-status-error">{lastError}</span>
+              )}
+              <button
+                type="button"
+                className="ws-reconnect-btn"
+                onClick={reconnect}
+              >
+                {t("notificationCenter.reconnect")}
               </button>
             </div>
           )}
@@ -152,22 +155,22 @@ const NotificationCenter = () => {
             {notifications.length === 0 ? (
               <div className="empty-notifications">
                 <i className="bi bi-bell-slash"></i>
-                <p>{t('notifications.noNotifications')}</p>
+                <p>{t("notifications.noNotifications")}</p>
               </div>
             ) : (
               notifications.map((notification) => (
                 <div
                   key={notification.id}
                   className={`notification-item ${getNotificationClass(
-                    notification.priority
-                  )} ${notification.read ? 'read' : 'unread'}`}
+                    notification.priority,
+                  )} ${notification.read ? "read" : "unread"}`}
                   onClick={() => handleNotificationClick(notification)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div className="notification-icon">
                     <i
                       className={`bi ${getNotificationIcon(
-                        notification.notificationType
+                        notification.notificationType,
                       )}`}
                     ></i>
                   </div>
@@ -178,6 +181,15 @@ const NotificationCenter = () => {
 
                     {notification.details && (
                       <div className="notification-details">
+                        {(notification.details.heure || notification.details.duration) && (
+                          <span className="detail-item">
+                            <i className="bi bi-clock"></i>
+                            {notification.details.heure ||
+                              (notification.details.duration
+                                ? formatDuration(notification.details.duration)
+                                : "")}
+                          </span>
+                        )}
                         {notification.details.client && (
                           <span className="detail-item">
                             <i className="bi bi-person"></i>
@@ -190,30 +202,33 @@ const NotificationCenter = () => {
                             {notification.details.telephone}
                           </span>
                         )}
-                        {notification.details.duration && (
-                          <span className="detail-item">
-                            <i className="bi bi-clock"></i>
-                            {formatDuration(notification.details.duration)}
-                          </span>
-                        )}
-                        {notification.details.type_demande && (
+                        {(notification.details.callTypeLabel ||
+                          notification.details.type_demande) && (
                           <span className="detail-item">
                             <i className="bi bi-tag"></i>
-                            {notification.details.type_demande}
+                            {notification.details.callTypeLabel ||
+                              notification.details.type_demande}
                           </span>
                         )}
                       </div>
                     )}
-                    
+
                     <small className="notification-hint">
-                      {notification.read ? '' : <><EmojiText>👆</EmojiText> {t('notificationCenter.clickToSeeDetails')}</>}
+                      {notification.read ? (
+                        ""
+                      ) : (
+                        <>
+                          <EmojiText>👆</EmojiText>{" "}
+                          {t("notificationCenter.clickToSeeDetails")}
+                        </>
+                      )}
                     </small>
                   </div>
 
                   <button
                     className="remove-btn"
                     onClick={(e) => removeNotification(notification.id, e)}
-                    title={t('notificationCenter.deleteNotification')}
+                    title={t("notificationCenter.deleteNotification")}
                   >
                     <i className="bi bi-x"></i>
                   </button>
@@ -228,7 +243,7 @@ const NotificationCenter = () => {
                 className="clear-all-btn"
                 onClick={() => notificationService.clearAllNotifications()}
               >
-                {t('notificationCenter.clearAll')}
+                {t("notificationCenter.clearAll")}
               </button>
             </div>
           )}

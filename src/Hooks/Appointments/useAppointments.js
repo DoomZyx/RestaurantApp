@@ -401,18 +401,29 @@ export function useAppointments(mode = "orders") {
     loadAppointments(1, 50, filterParams);
   }, [loadAppointments, filtersHook.filters]);
 
-  // Détecter l'orderId dans l'URL et ouvrir automatiquement le détail
+  // Détecter l'orderId dans l'URL et ouvrir la modale détail (ex. clic sur une notif commande/resa)
+  const hasTriedRefetchForOrderIdRef = useRef(false);
   useEffect(() => {
-    const orderId = searchParams.get('orderid');
-    if (orderId && appointments.length > 0 && !modalHook.showModal) {
-      const appointment = appointments.find(a => a._id === orderId);
-      if (appointment) {
-        modalHook.openDetailsModal(appointment);
-        setSearchParams({});
-      } else {
-      }
+    const orderId = searchParams.get("orderid");
+    if (!orderId) {
+      hasTriedRefetchForOrderIdRef.current = false;
+      return;
     }
-  }, [searchParams, appointments, modalHook, setSearchParams]);
+    if (modalHook.showModal) return;
+
+    const appointment = appointments.find((a) => a._id === orderId);
+    if (appointment) {
+      modalHook.openDetailsModal(appointment);
+      setSearchParams({});
+      hasTriedRefetchForOrderIdRef.current = false;
+      return;
+    }
+
+    if (appointments.length > 0 && !hasTriedRefetchForOrderIdRef.current) {
+      hasTriedRefetchForOrderIdRef.current = true;
+      loadAppointments(1, 50, filtersHook.filters);
+    }
+  }, [searchParams, appointments, modalHook, setSearchParams, loadAppointments, filtersHook.filters]);
 
   // Wrappers pour les actions avec confirmation
   const handleStatusChange = useCallback(async (appointmentId, newStatus) => {

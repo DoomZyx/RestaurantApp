@@ -68,17 +68,22 @@ class NotificationService {
    * @param {Object} notificationData - Données de la notification
    */
   addNotification(notificationData) {
+    const payload = notificationData && typeof notificationData === "object" ? notificationData : {};
     const newNotification = {
       id: Date.now() + Math.random(),
-      ...notificationData,
+      title: payload.title ?? "Notification",
+      message: payload.message ?? "",
+      priority: payload.priority ?? "info",
+      details: payload.details && typeof payload.details === "object" ? payload.details : {},
+      notificationType: payload.notificationType ?? "call_completed",
       timestamp: new Date(),
-      read: false, // Marquer comme non lue
+      read: false,
     };
 
-    // Ajouter au début de la liste (max 20 pour garder plus d'historique)
     this.notifications = [newNotification, ...this.notifications.slice(0, 19)];
-    console.log("[Notifications] addNotification:", this.notifications.length, "total, titre:", newNotification.title);
-    // Notifier les écouteurs
+    if (typeof import.meta !== "undefined" && import.meta.env?.DEV) {
+      console.log("[NOTIF] addNotification liste length=" + this.notifications.length + " title=" + (newNotification.title || ""));
+    }
     this.notifyListeners();
 
     return newNotification;
@@ -131,8 +136,8 @@ class NotificationService {
    */
   notifyListeners() {
     const snapshot = [...this.notifications];
-    if (this.listeners.length > 0) {
-      console.log("[Notifications] notifyListeners:", this.listeners.length, "listeners,", snapshot.length, "notifs");
+    if (typeof import.meta !== "undefined" && import.meta.env?.DEV) {
+      console.log("[NOTIF] notifyListeners listeners=" + this.listeners.length + " notifications=" + snapshot.length);
     }
     this.listeners.forEach(listener => listener(snapshot));
   }
@@ -142,19 +147,29 @@ class NotificationService {
    * @param {Object} notificationData - Données de notification du WebSocket
    */
   async triggerSystemNotification(notificationData) {
+    if (typeof import.meta !== "undefined" && import.meta.env?.DEV) {
+      console.log("[NOTIF] triggerSystemNotification appele", notificationData?.title || notificationData?.notificationType || "?");
+    }
     if (!notificationData || typeof notificationData !== "object") {
-      console.warn("[Notifications] triggerSystemNotification ignore: donnees invalides", notificationData);
+      if (typeof import.meta !== "undefined" && import.meta.env?.DEV) console.warn("[NOTIF] triggerSystemNotification ignore (donnees invalides)");
       return;
     }
 
-    const { title, message, priority, details } = notificationData;
-    console.log("[Notifications] triggerSystemNotification:", title ?? "(sans titre)");
-    // Mise à jour de l'UI en premier pour que la liste s'affiche même si son/desktop échoue
-    this.addNotification(notificationData);
+    const title = notificationData.title ?? notificationData.details?.callTypeLabel ?? "Appel IA";
+    const message = notificationData.message ?? notificationData.details?.type_demande ?? "Nouvelle notification";
+    const payload = {
+      ...notificationData,
+      title,
+      message,
+    };
+    this.addNotification(payload);
 
     if (!this.isInitialized) {
       await this.initialize();
     }
+
+    const priority = notificationData.priority ?? "info";
+    const details = notificationData.details && typeof notificationData.details === "object" ? notificationData.details : {};
 
     try {
       const soundType =

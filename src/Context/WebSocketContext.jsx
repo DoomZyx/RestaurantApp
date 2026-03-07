@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState, useCallback } from "react";
 import notificationService from "../Services/notificationService.js";
 
-console.log("[WS] Module WebSocketContext charge");
+const isDev = import.meta.env.DEV;
 const WebSocketContext = createContext(null);
 
 const PING_INTERVAL_MS = 25000;
@@ -14,7 +14,7 @@ function getWebSocketUrl() {
   if (explicit && typeof explicit === "string" && explicit.trim()) {
     return explicit.trim();
   }
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8080/";
+  const apiUrl = import.meta.env.VITE_API_URL;
   const base = apiUrl.replace(/\/$/, "");
   if (base.startsWith("https://")) {
     return base.replace(/^https:\/\//, "wss://") + "/ws/notifications";
@@ -27,11 +27,6 @@ export function WebSocketProvider({ children }) {
   const [lastError, setLastError] = useState(null);
   const [lastOrderNotificationAt, setLastOrderNotificationAt] = useState(null);
   const wsRef = useRef(null);
-  const hasLoggedMount = useRef(false);
-  if (!hasLoggedMount.current) {
-    hasLoggedMount.current = true;
-    console.log("[WS] WebSocketProvider monte");
-  }
   const reconnectTimeoutRef = useRef(null);
   const reconnectAttemptsRef = useRef(0);
   const maxReconnectAttempts = 5;
@@ -56,93 +51,99 @@ export function WebSocketProvider({ children }) {
     try {
       isConnectingRef.current = true;
       const wsUrl = getWebSocketUrl();
-      console.log("[WS] Connexion:", wsUrl);
+      if (isDev) console.log("[WS] Connexion:", wsUrl);
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 
       ws.onopen = () => {
-        console.log("[WS] Connecte");
-        setIsConnected(true);
-        setLastError(null);
+        if (isDev) console.log("[WS] Connecte");
         reconnectAttemptsRef.current = 0;
         isConnectingRef.current = false;
         notificationService.connectToWebSocket(ws);
-
-        if (pingIntervalRef.current) {
-          clearInterval(pingIntervalRef.current);
-        }
+        if (pingIntervalRef.current) clearInterval(pingIntervalRef.current);
         pingIntervalRef.current = setInterval(() => {
           if (wsRef.current?.readyState === WebSocket.OPEN) {
             wsRef.current.send(JSON.stringify({ type: "ping" }));
           }
         }, PING_INTERVAL_MS);
+        queueMicrotask(() => {
+          setLastError(null);
+          setIsConnected(true);
+        });
       };
 
-      ws.onmessage = async (event) => {
+      ws.onmessage = (event) => {
+        let data;
         try {
           const raw = typeof event.data === "string" ? event.data : event.data?.toString?.();
           if (!raw) return;
-          const data = JSON.parse(raw);
+          data = JSON.parse(raw);
+        } catch (error) {
+          setLastError(error.message || "Erreur traitement message");
+          if (isDev) console.warn("[WS] onmessage parse error:", error);
+          return;
+        }
 
-          if (data.type === "connected") {
-            console.log("[WS] Message serveur: connected");
-            return;
-          }
+        if (isDev) console.log("[WS] Message recu type=" + (data.type || "?") + (data.notificationType ? " notificationType=" + data.notificationType : ""));
 
-          if (data.type === "notification") {
-            const notificationType = data.notificationType ?? data.type;
-            const notificationData = data.data != null ? data.data : data;
-            console.log("[WS] Notification recue:", notificationType, notificationData?.title ?? "(sans titre)");
+        if (data.type === "connected") {
+          if (isDev) console.log("[WS] Message serveur: connected");
+          return;
+        }
 
-            // 1. Toujours afficher la notif dans la cloche, peu importe la page
-            const enrichedNotificationData = {
-              ...notificationData,
-              notificationType,
-            };
-            await notificationService.triggerSystemNotification(enrichedNotificationData);
+        if (data.type !== "notification") {
+          if (isDev && data.type !== "pong") console.log("[WS] Message ignore (type != notification):", data.type);
+          return;
+        }
 
-            // 2. Declencher refetch listes (commandes / reservations) si nouvelle commande ou resa
-            const hasOrderOrResa = notificationData.hasOrder === true || (notificationData.details?.orderId != null);
-            const onCallCount = callbacksRef.current.onNewCall.length;
-            const onOrderCount = callbacksRef.current.onNewOrder.length;
-            console.log("[WS] Callbacks: onNewCall=" + onCallCount + ", onNewOrder=" + onOrderCount);
+        const notificationType = data.notificationType ?? data.data?.notificationType ?? "call_completed";
+        const inner = data.data && typeof data.data === "object" ? data.data : data;
+        const notificationData = {
+          title: inner.title ?? inner.details?.callTypeLabel ?? "Appel IA",
+          message: inner.message ?? inner.details?.type_demande ?? "Nouvelle notification",
+          hasOrder: inner.hasOrder === true,
+          priority: inner.priority ?? "info",
+          details: inner.details && typeof inner.details === "object" ? inner.details : {},
+          notificationType,
+        };
 
-            if (notificationType === "call_completed" && hasOrderOrResa) {
-              setLastOrderNotificationAt(Date.now());
-            } else if (notificationType === "new_order" || notificationType === "new_reservation") {
-              setLastOrderNotificationAt(Date.now());
-            }
+        const hasOrderOrResa = notificationData.hasOrder === true || (notificationData.details?.orderId != null && String(notificationData.details.orderId).trim() !== "");
+        const callbacks = callbacksRef.current;
+
+        queueMicrotask(() => {
+          if (isDev) console.log("[WS] Traitement notification:", notificationType, notificationData.title);
+          notificationService.triggerSystemNotification(notificationData).catch((err) => {
+            setLastError(err?.message || "Erreur notification");
+            if (isDev) console.warn("[WS] triggerSystemNotification error:", err);
+          }).then(() => {
+            if (notificationType === "call_completed" && hasOrderOrResa) setLastOrderNotificationAt(Date.now());
+            else if (notificationType === "new_order" || notificationType === "new_reservation") setLastOrderNotificationAt(Date.now());
 
             switch (notificationType) {
               case "call_completed":
-                callbacksRef.current.onNewCall.forEach(cb => cb(notificationData));
-                if (hasOrderOrResa) {
-                  callbacksRef.current.onNewOrder.forEach(cb => cb(notificationData));
-                }
+                callbacks.onNewCall.forEach(cb => cb(notificationData));
+                if (hasOrderOrResa) callbacks.onNewOrder.forEach(cb => cb(notificationData));
                 break;
               case "new_order":
               case "new_reservation":
-                callbacksRef.current.onNewOrder.forEach(cb => cb(notificationData));
+                callbacks.onNewOrder.forEach(cb => cb(notificationData));
                 break;
               default:
                 break;
             }
-          }
-        } catch (error) {
-          setLastError(error.message || "Erreur traitement message");
-          console.warn("[WS] onmessage parse error:", error);
-        }
+          });
+        });
       };
 
       ws.onerror = () => {
-        console.warn("[WS] Erreur connexion");
+        if (isDev) console.warn("[WS] Erreur connexion");
         setIsConnected(false);
         isConnectingRef.current = false;
         setLastError("Erreur de connexion WebSocket");
       };
 
       ws.onclose = (event) => {
-        console.log("[WS] Ferme code=" + event.code + " wasClean=" + event.wasClean);
+        if (isDev) console.log("[WS] Ferme code=" + event.code + " wasClean=" + event.wasClean);
         setIsConnected(false);
         isConnectingRef.current = false;
         if (pingIntervalRef.current) {
@@ -163,7 +164,7 @@ export function WebSocketProvider({ children }) {
       setIsConnected(false);
       isConnectingRef.current = false;
       setLastError(error.message || "Impossible de se connecter");
-      console.warn("[WS] connect error:", error);
+      if (isDev) console.warn("[WS] connect error:", error);
     }
   }, []);
 
@@ -182,7 +183,6 @@ export function WebSocketProvider({ children }) {
   }, [connectWebSocket]);
 
   useEffect(() => {
-    console.log("[WS] useEffect connectWebSocket");
     connectWebSocket();
     return () => {
       if (pingIntervalRef.current) {
