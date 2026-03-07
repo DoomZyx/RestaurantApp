@@ -15,28 +15,33 @@ export class FunctionCallService {
    */
   static async checkAvailability(date) {
     try {
-      const response = await fetch(
-        `http://localhost:${
-          process.env.PORT || 8080
-        }/api/orders/ai/available-slots?date=${date}`,
-        {
-          headers: {
-            "x-api-key": process.env.X_API_KEY,
-          },
-        }
-      );
+      const baseUrl = `http://localhost:${process.env.PORT || 8080}`;
+      const headers = { "x-api-key": process.env.X_API_KEY };
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+      const [ordersResponse, reservationsResponse] = await Promise.all([
+        fetch(`${baseUrl}/api/orders/ai/available-slots?date=${date}`, { headers }),
+        fetch(`${baseUrl}/api/reservations/ai/available-slots?date=${date}`, { headers }),
+      ]);
+
+      if (!ordersResponse.ok) {
+        throw new Error(`HTTP ${ordersResponse.status}`);
       }
 
-      const data = await response.json();
-      return {
+      const ordersData = await ordersResponse.json();
+      const result = {
         success: true,
         date,
-        slots: data.availableSlots || [],
-        message: data.message || "Disponibilités récupérées",
+        slots: ordersData.availableSlots || [],
+        message: ordersData.message || "Disponibilités récupérées",
       };
+
+      if (reservationsResponse.ok) {
+        const resaData = await reservationsResponse.json();
+        if (resaData.remainingCoversMidi != null) result.remainingCoversMidi = resaData.remainingCoversMidi;
+        if (resaData.remainingCoversSoir != null) result.remainingCoversSoir = resaData.remainingCoversSoir;
+      }
+
+      return result;
     } catch (error) {
       return {
         success: false,

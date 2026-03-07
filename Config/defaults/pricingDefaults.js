@@ -62,7 +62,8 @@ export const VALID_SIZES = {
 export function getDefaultPricingConfig() {
   return {
     restaurantInfo: DEFAULT_RESTAURANT_INFO,
-    menuPricing: DEFAULT_MENU
+    menuPricing: DEFAULT_MENU,
+    phoneLineEnabled: true
   };
 }
 

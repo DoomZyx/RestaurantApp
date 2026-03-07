@@ -49,6 +49,7 @@ export class PricingService {
 
     // Recharger pour retourner des données propres
     const updated = await PricingModel.findOne();
+    if (!updated) throw new Error("Configuration non trouvée après sauvegarde");
     return updated.toObject();
   }
 
@@ -125,6 +126,35 @@ export class PricingService {
     });
 
     return gptData;
+  }
+
+  /**
+   * Récupère l'état de la ligne téléphonique (activée ou non)
+   * @returns {Promise<boolean>}
+   */
+  static async getPhoneLineEnabled() {
+    const pricing = await PricingModel.findOne();
+    if (!pricing) return true;
+    return pricing.phoneLineEnabled !== false;
+  }
+
+  /**
+   * Met à jour l'état de la ligne téléphonique
+   * @param {boolean} enabled
+   * @returns {Promise<Object>} Configuration mise à jour
+   */
+  static async updatePhoneLineEnabled(enabled) {
+    let pricing = await PricingModel.findOne();
+    if (!pricing) {
+      const defaultConfig = getDefaultPricingConfig();
+      pricing = await PricingModel.create({ ...defaultConfig, phoneLineEnabled: !!enabled });
+    } else {
+      pricing.phoneLineEnabled = !!enabled;
+      pricing.derniereModification = new Date();
+      await pricing.save();
+    }
+    const updated = await PricingModel.findOne();
+    return updated.toObject();
   }
 }
 

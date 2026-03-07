@@ -47,7 +47,7 @@ export class TranscriptionHandler {
    * Stocke la transcription pour le fallback humain et déclenche un transfert si demande explicite.
    * NOTE : Cette transcription n'est plus utilisée pour l'extraction.
    */
-  handleUserTranscription(data) {
+  async handleUserTranscription(data) {
     if (data.transcript) {
       this.state.lastUserTranscript = data.transcript;
 
@@ -60,11 +60,19 @@ export class TranscriptionHandler {
         }
       );
 
-      // Fallback humain : demande explicite d'un humain -> transfert immédiat
-      if (detectHumanRequest(data.transcript)) {
+      // Fallback humain : demande explicite d'un humain -> transfert immédiat (une seule fois)
+      if (
+        !this.state.transferTriggered &&
+        detectHumanRequest(data.transcript)
+      ) {
         const callSid = getCallSid(this.streamSid);
         if (callSid) {
-          transferToHuman(callSid, data.transcript, "human_request");
+          const ok = await transferToHuman(
+            callSid,
+            data.transcript,
+            "human_request"
+          );
+          if (ok) this.state.transferTriggered = true;
         }
       }
     }

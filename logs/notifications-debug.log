@@ -1,0 +1,411 @@
+2026-03-07T17:59:52.250Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T17:59:52.254Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:01:50.238Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:01:50.242Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:09:38.746Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:09:38.751Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:09:44.749Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:09:44.757Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:09:49.246Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:09:49.255Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:24:53.330Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:25:04.944Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:25:04.947Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:26:23.218Z [NOTIF] requireApiKey: requete recue x-api-key=present
+2026-03-07T18:26:23.218Z [NOTIF] requireApiKey: rejet 401
+2026-03-07T18:26:43.140Z [NOTIF] requireApiKey: requete recue x-api-key=present
+2026-03-07T18:26:43.141Z [NOTIF] POST /api/notifications/test recu type=call_completed
+2026-03-07T18:26:43.142Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-07T18:26:43.143Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T18:32:35.254Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:32:35.258Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:32:54.243Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:32:54.248Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:33:01.748Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:33:01.753Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:33:07.241Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:33:07.245Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:38:51.048Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:38:51.664Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:38:51.667Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:42:37.955Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:42:38.634Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:42:38.638Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:48:16.963Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:48:17.696Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:48:17.697Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:48:22.936Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:48:23.586Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:48:23.588Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:48:23.934Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:48:24.584Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:48:24.585Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:48:25.921Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:48:26.500Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:48:26.501Z [NOTIF] Connexion ajoutee total=1 2026-03-07T18:54:48.929Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:54:49.627Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:54:49.629Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:54:53.945Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:54:54.615Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:54:54.617Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:54:55.941Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:54:56.545Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:54:56.546Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:54:56.942Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:54:57.461Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:54:57.463Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:54:58.943Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:54:59.532Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:54:59.534Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:54:59.944Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:55:00.532Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:55:00.534Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:55:00.945Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:55:01.548Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:55:01.550Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:55:02.949Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:55:03.525Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:55:03.527Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:55:03.939Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:55:04.537Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:55:04.538Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:55:05.943Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:55:06.488Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:55:06.490Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:55:06.953Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:55:07.497Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:55:07.499Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:55:12.693Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:55:13.179Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:55:13.181Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:55:28.234Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:55:28.239Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T18:57:45.389Z [NOTIF] Connexion supprimee total=0
+2026-03-07T18:57:46.005Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T18:57:46.007Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:01:39.961Z [NOTIF] Connexion supprimee total=0
+2026-03-07T19:01:40.876Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:01:40.878Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:01:52.947Z [NOTIF] Connexion supprimee total=0
+2026-03-07T19:01:53.860Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:01:53.861Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:03:11.896Z [NOTIF] Connexion supprimee total=0
+2026-03-07T19:03:12.505Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:03:12.508Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:03:13.790Z [NOTIF] Connexion supprimee total=0
+2026-03-07T19:03:14.422Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:03:14.425Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:03:18.501Z [NOTIF] Connexion supprimee total=0
+2026-03-07T19:03:19.100Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:03:19.102Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:03:20.926Z [NOTIF] Connexion supprimee total=0
+2026-03-07T19:03:22.515Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:03:22.517Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:03:23.927Z [NOTIF] Connexion supprimee total=0
+2026-03-07T19:03:24.534Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:03:24.535Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:03:42.924Z [NOTIF] Connexion supprimee total=0
+2026-03-07T19:03:44.556Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:03:44.557Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:05:28.246Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:05:28.251Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:05:37.249Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:05:37.253Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:05:47.234Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:05:47.239Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:05:54.246Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:05:54.251Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:09:17.240Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:09:17.245Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:09:56.246Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:09:56.250Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:10:30.247Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:10:30.251Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:10:47.249Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:10:47.254Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:10:50.749Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:10:50.755Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:10:56.736Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:10:56.740Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:12:05.968Z [NOTIF] TranscriptionHandler: validation echouee -> pas d'appel process-call raison=Aucune interaction client détectée - Client n'a probablement rien dit
+2026-03-07T19:12:44.251Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:12:44.255Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:13:51.683Z [NOTIF] TranscriptionHandler: validation echouee -> pas d'appel process-call raison=Aucune interaction client détectée - Client n'a probablement rien dit
+2026-03-07T19:15:23.731Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:15:23.736Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:16:40.668Z [NOTIF] TranscriptionHandler: validation echouee -> pas d'appel process-call raison=Aucune interaction client détectée - Client n'a probablement rien dit
+2026-03-07T19:18:59.746Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:18:59.750Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:19:24.225Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:19:24.230Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:19:27.738Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:19:27.742Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:19:38.236Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T19:19:38.241Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T19:21:18.858Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=545
+2026-03-07T19:21:18.859Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-07T19:21:18.864Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-07T19:21:18.866Z [NOTIF] [process-call] 2. Transcription presente length=545
+2026-03-07T19:21:18.867Z [NOTIF] process-call: envoi notif call_received
+2026-03-07T19:21:18.868Z [NOTIF] sendNotification appele type=call_received connexions=1
+2026-03-07T19:21:18.869Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T19:21:18.870Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-07T19:21:29.513Z [NOTIF] process-call: extractCallData ok nom=Alex type_demande=Réservation de table
+2026-03-07T19:21:29.515Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-07T19:21:29.518Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-07T19:21:29.523Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-07T19:21:29.526Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-07T19:21:29.527Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T19:21:29.529Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-07T20:02:33.232Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:02:33.237Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:02:39.731Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:02:39.737Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:04:53.653Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=434
+2026-03-07T20:04:53.654Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-07T20:04:53.661Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-07T20:04:53.663Z [NOTIF] [process-call] 2. Transcription presente length=434
+2026-03-07T20:04:53.664Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-07T20:05:01.237Z [NOTIF] process-call: extractCallData ok nom=Yanis type_demande=Réservation de table
+2026-03-07T20:05:01.239Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-07T20:05:01.241Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-07T20:05:01.244Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-07T20:05:01.247Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-07T20:05:01.248Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T20:05:01.250Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-07T20:07:11.891Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:07:11.897Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:11:11.693Z [NOTIF] Connexion supprimee total=0
+2026-03-07T20:11:12.404Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:11:12.406Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:12:56.006Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=650
+2026-03-07T20:12:56.006Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-07T20:12:56.013Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-07T20:12:56.014Z [NOTIF] [process-call] 2. Transcription presente length=650
+2026-03-07T20:12:56.015Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-07T20:13:01.937Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Commande à emporter
+2026-03-07T20:13:01.938Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-07T20:13:01.939Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-07T20:13:01.943Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-07T20:13:01.945Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-07T20:13:01.946Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T20:13:01.947Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-07T20:13:30.121Z [NOTIF] Connexion supprimee total=0
+2026-03-07T20:13:36.246Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:13:36.251Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:14:49.984Z [NOTIF] Connexion supprimee total=0
+2026-03-07T20:14:50.536Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:14:50.538Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:17:30.925Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=917
+2026-03-07T20:17:30.925Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-07T20:17:30.931Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-07T20:17:30.933Z [NOTIF] [process-call] 2. Transcription presente length=917
+2026-03-07T20:17:30.934Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-07T20:17:36.506Z [NOTIF] process-call: extractCallData ok nom=Alain type_demande=Commande à emporter
+2026-03-07T20:17:36.508Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-07T20:17:36.509Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-07T20:17:36.513Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-07T20:17:36.514Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-07T20:17:36.515Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T20:17:36.517Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-07T20:18:01.721Z [NOTIF] Connexion supprimee total=0
+2026-03-07T20:18:05.754Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:18:05.759Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:18:57.422Z [NOTIF] Connexion supprimee total=0
+2026-03-07T20:18:58.094Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:18:58.097Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:19:44.250Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:19:44.255Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:19:49.264Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:19:49.268Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:19:59.235Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:19:59.240Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:22:11.951Z [NOTIF] Connexion supprimee total=0
+2026-03-07T20:22:12.765Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:22:12.767Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:23:50.642Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:23:50.653Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:23:58.688Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:23:58.693Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:25:59.672Z [NOTIF] Connexion supprimee total=0
+2026-03-07T20:26:00.261Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:26:00.263Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:26:17.523Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:26:17.528Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:26:28.133Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:26:28.140Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:37:59.772Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:37:59.778Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:38:14.752Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:38:14.758Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:38:21.747Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:38:21.751Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:39:53.598Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=340
+2026-03-07T20:39:53.599Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-07T20:39:53.607Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-07T20:39:53.609Z [NOTIF] [process-call] 2. Transcription presente length=340
+2026-03-07T20:39:53.610Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-07T20:40:01.966Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Réservation de table
+2026-03-07T20:40:01.968Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-07T20:40:01.969Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-07T20:40:01.973Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-07T20:40:01.975Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-07T20:40:01.977Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T20:40:01.978Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-07T20:41:31.252Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:41:31.256Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:43:14.168Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=782
+2026-03-07T20:43:14.168Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-07T20:43:14.176Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-07T20:43:14.177Z [NOTIF] [process-call] 2. Transcription presente length=782
+2026-03-07T20:43:14.178Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-07T20:43:22.636Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Réservation de table
+2026-03-07T20:43:22.639Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-07T20:43:22.640Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-07T20:43:22.643Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-07T20:43:22.646Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-07T20:43:22.647Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T20:43:22.648Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-07T20:44:21.246Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:44:21.250Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:45:05.654Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=302
+2026-03-07T20:45:05.654Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-07T20:45:05.663Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-07T20:45:05.666Z [NOTIF] [process-call] 2. Transcription presente length=302
+2026-03-07T20:45:05.668Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-07T20:45:10.740Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Réservation de table
+2026-03-07T20:45:10.743Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-07T20:45:10.744Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-07T20:45:10.748Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-07T20:45:10.750Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-07T20:45:10.751Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T20:45:10.752Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-07T20:46:18.887Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=553
+2026-03-07T20:46:18.888Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-07T20:46:18.898Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-07T20:46:18.900Z [NOTIF] [process-call] 2. Transcription presente length=553
+2026-03-07T20:46:18.902Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-07T20:46:26.208Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Réservation de table
+2026-03-07T20:46:26.209Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-07T20:46:26.210Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-07T20:46:26.213Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-07T20:46:26.215Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-07T20:46:26.216Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T20:46:26.217Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-07T20:48:13.188Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=853
+2026-03-07T20:48:13.189Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-07T20:48:13.193Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-07T20:48:13.194Z [NOTIF] [process-call] 2. Transcription presente length=853
+2026-03-07T20:48:13.195Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-07T20:48:16.780Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Réservation de table
+2026-03-07T20:48:16.782Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-07T20:48:16.783Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-07T20:48:16.785Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-07T20:48:16.786Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-07T20:48:16.787Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-07T20:48:16.788Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-07T20:50:10.237Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:50:10.241Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:50:19.249Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:50:19.253Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:50:37.229Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:50:37.233Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:50:41.241Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:50:41.246Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:51:09.029Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:51:09.036Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T20:52:17.428Z [NOTIF] TranscriptionHandler: validation KO -> pas d'appel process-call raison=Transcription incomplète - Mot coupé
+2026-03-07T20:59:46.235Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T20:59:46.239Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:02:46.982Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:02:47.547Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:02:47.549Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:04:43.933Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:04:45.243Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:04:45.245Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:04:47.228Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=1
+2026-03-07T21:04:47.229Z [NOTIF] Connexion ajoutee total=2
+2026-03-07T21:05:02.954Z [NOTIF] Connexion supprimee total=1
+2026-03-07T21:05:02.959Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:05:03.581Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:05:03.582Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:05:03.943Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:05:04.462Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:05:04.463Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:05:04.947Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:05:05.454Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:05:05.455Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:05:23.945Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:05:24.457Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:05:24.458Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:05:31.945Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:05:32.437Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:05:32.439Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:05:33.940Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:05:34.455Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:05:34.457Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:05:38.943Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:05:39.493Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:05:39.494Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:05:42.950Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:05:43.453Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:05:43.455Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:20:28.077Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:20:28.086Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:20:37.261Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:20:37.265Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:20:42.256Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:20:42.261Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:20:50.738Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:20:50.743Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:20:54.753Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:20:54.758Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:21:10.932Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:21:14.230Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:21:14.232Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:22:22.266Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:22:22.270Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:22:27.258Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:22:27.263Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:22:35.270Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:22:35.274Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:22:47.241Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:22:47.249Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:22:51.723Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=1
+2026-03-07T21:22:51.725Z [NOTIF] Connexion ajoutee total=2
+2026-03-07T21:22:52.542Z [NOTIF] Connexion supprimee total=1
+2026-03-07T21:22:52.549Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:22:53.174Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:22:53.177Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:26:17.581Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:26:17.587Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:26:32.578Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:26:32.587Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:27:04.549Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:27:05.179Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:27:05.181Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:30:18.240Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:30:18.244Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:30:36.389Z [NOTIF] Connexion supprimee total=0
+2026-03-07T21:30:37.043Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:30:37.045Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:32:59.230Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:32:59.234Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:35:36.737Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:35:36.741Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:35:43.243Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:35:43.247Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:35:55.244Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:35:55.248Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:36:12.751Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:36:12.756Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:37:37.243Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:37:37.247Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:38:09.746Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:38:09.751Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:38:23.235Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:38:23.239Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:39:39.110Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:39:39.114Z [NOTIF] Connexion ajoutee total=1
+2026-03-07T21:39:46.648Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-07T21:39:46.653Z [NOTIF] Connexion ajoutee total=1

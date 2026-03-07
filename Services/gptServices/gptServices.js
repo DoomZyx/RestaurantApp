@@ -73,7 +73,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
             type: "function",
             name: "check_availability",
             description:
-              "Vérifier les créneaux disponibles pour une date donnée. IMPORTANT: Il existe 2 services - SERVICE MIDI (11h-15h) et SERVICE SOIR (18h-00h). Chaque commande/réservation appartient à UN seul service.",
+              "Vérifier les créneaux disponibles pour une date donnée. La réponse peut contenir remainingCoversMidi et remainingCoversSoir (nombre de places restantes par service). Utilise ces infos pour les réservations : indique au client combien de places restent pour le midi et le soir. IMPORTANT: Il existe 2 services - SERVICE MIDI (11h-15h) et SERVICE SOIR (18h-00h). Chaque commande/réservation appartient à UN seul service.",
             parameters: {
               type: "object",
               properties: {

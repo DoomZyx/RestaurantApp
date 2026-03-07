@@ -313,10 +313,41 @@ export async function getAvailableSlots(request, reply) {
       (slot) => !occupiedSlots.includes(slot),
     );
 
+    const heureMinutes = (h) => {
+      const [hh, mm] = (h || "00:00").split(":").map(Number);
+      return (hh || 0) * 60 + (mm || 0);
+    };
+    const inRange = (heureStr, debut, fin) => {
+      if (!debut || !fin) return false;
+      const m = heureMinutes(heureStr);
+      const d = heureMinutes(debut);
+      const f = heureMinutes(fin);
+      return m >= d && m < f;
+    };
+    let remainingCoversMidi = null;
+    let remainingCoversSoir = null;
+    const maxCouverts = pricing?.restaurantInfo?.nombreCouverts;
+    if (maxCouverts != null && Number(maxCouverts) > 0 && horaire?.midi && horaire?.soir) {
+      const midiDebut = horaire.midi.ouverture;
+      const midiFin = horaire.midi.fermeture;
+      const soirDebut = horaire.soir.ouverture;
+      const soirFin = horaire.soir.fermeture;
+      const couvertsMidi = occupiedReservations
+        .filter((r) => inRange(r.heure, midiDebut, midiFin))
+        .reduce((sum, r) => sum + (Number(r.nombrePersonnes) || 0), 0);
+      const couvertsSoir = occupiedReservations
+        .filter((r) => inRange(r.heure, soirDebut, soirFin))
+        .reduce((sum, r) => sum + (Number(r.nombrePersonnes) || 0), 0);
+      remainingCoversMidi = Math.max(0, maxCouverts - couvertsMidi);
+      remainingCoversSoir = Math.max(0, maxCouverts - couvertsSoir);
+    }
+
     return reply.send({
       success: true,
       availableSlots,
       occupiedSlots,
+      remainingCoversMidi,
+      remainingCoversSoir,
     });
   } catch (error) {
     console.error("Erreur créneaux disponibles réservations:", error);
@@ -364,17 +395,20 @@ export async function createReservationFromAI(request, reply) {
         ? data.nombrePersonnes
         : parseInt(data.nombrePersonnes, 10) || 1;
 
-    // Vérification capacité (max couverts) par service (midi / soir)
+    // Vérification capacité (max couverts) : toujours appliquée si maxCouverts configuré
     const PricingModel = (await import("../models/pricing.js")).default;
     const pricing = await PricingModel.findOne();
     const maxCouverts = pricing?.restaurantInfo?.nombreCouverts;
-    if (maxCouverts != null && Number(maxCouverts) > 0 && pricing?.restaurantInfo?.horairesOuverture) {
-      const requestDate = new Date(reservationDate);
-      const joursFr = [
-        "dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi",
-      ];
-      const jour = joursFr[requestDate.getDay()];
-      const horaire = pricing.restaurantInfo.horairesOuverture[jour];
+    if (maxCouverts != null && Number(maxCouverts) > 0) {
+      const startDate = new Date(reservationDate);
+      startDate.setHours(0, 0, 0, 0);
+      const endDate = new Date(reservationDate);
+      endDate.setDate(endDate.getDate() + 1);
+      const reservationsDuJour = await ReservationModel.find({
+        date: { $gte: startDate, $lt: endDate },
+        statut: { $nin: ["annule", "termine"] },
+      });
+
       const heureMinutes = (h) => {
         const [hh, mm] = (h || "00:00").split(":").map(Number);
         return (hh || 0) * 60 + (mm || 0);
@@ -386,7 +420,14 @@ export async function createReservationFromAI(request, reply) {
         const f = heureMinutes(fin);
         return m >= d && m < f;
       };
-      const heureMin = heureMinutes(heureNormalized);
+
+      const horaire = pricing?.restaurantInfo?.horairesOuverture
+        ? pricing.restaurantInfo.horairesOuverture[
+            ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"][
+              new Date(reservationDate).getDay()
+            ]
+          ]
+        : null;
       let serviceDebut = null;
       let serviceFin = null;
       if (horaire?.midi?.ouverture && horaire?.midi?.fermeture && inRange(heureNormalized, horaire.midi.ouverture, horaire.midi.fermeture)) {
@@ -396,27 +437,21 @@ export async function createReservationFromAI(request, reply) {
         serviceDebut = horaire.soir.ouverture;
         serviceFin = horaire.soir.fermeture;
       }
-      if (serviceDebut != null && serviceFin != null) {
-        const startDate = new Date(reservationDate);
-        startDate.setHours(0, 0, 0, 0);
-        const endDate = new Date(reservationDate);
-        endDate.setDate(endDate.getDate() + 1);
-        const reservationsDuJour = await ReservationModel.find({
-          date: { $gte: startDate, $lt: endDate },
-          statut: { $nin: ["annule", "termine"] },
+
+      const couvertsReserves =
+        serviceDebut != null && serviceFin != null
+          ? reservationsDuJour
+              .filter((r) => inRange(r.heure, serviceDebut, serviceFin))
+              .reduce((sum, r) => sum + (Number(r.nombrePersonnes) || 0), 0)
+          : reservationsDuJour.reduce((sum, r) => sum + (Number(r.nombrePersonnes) || 0), 0);
+      const couvertsRestants = maxCouverts - couvertsReserves;
+      if (nombrePersonnes > couvertsRestants) {
+        return reply.code(400).send({
+          error: "Capacité insuffisante.",
+          message: `Il ne reste que ${couvertsRestants} place(s) pour ce service. Impossible de réserver pour ${nombrePersonnes} personne(s).`,
+          remainingCovers: couvertsRestants,
+          requestedCovers: nombrePersonnes,
         });
-        const couvertsReservesService = reservationsDuJour
-          .filter((r) => inRange(r.heure, serviceDebut, serviceFin))
-          .reduce((sum, r) => sum + (Number(r.nombrePersonnes) || 0), 0);
-        const couvertsRestants = maxCouverts - couvertsReservesService;
-        if (nombrePersonnes > couvertsRestants) {
-          return reply.code(400).send({
-            error: "Capacité insuffisante.",
-            message: `Il ne reste que ${couvertsRestants} place(s) pour ce service. Impossible de réserver pour ${nombrePersonnes} personne(s).`,
-            remainingCovers: couvertsRestants,
-            requestedCovers: nombrePersonnes,
-          });
-        }
       }
     }
 

@@ -1,4 +1,8 @@
-import { isRepeatRequestResponse, transferToHuman } from "../../../utils/humanTransfer.js";
+import {
+  isRepeatRequestResponse,
+  isAssistantTransferIntent,
+  transferToHuman,
+} from "../../../utils/humanTransfer.js";
 import { getCallSid } from "../../../Services/streamRegistry.js";
 
 /** Timestamp ISO pour logs barge-in (diagnostic temps réel) */
@@ -76,13 +80,34 @@ export class ResponseHandler {
   async handleResponseCompleted(data) {
     const remainingText = this.state.currentResponseText.trim();
 
+    // Fallback humain : si l'IA dit qu'elle transfère, exécuter le transfert réel (une seule fois)
+    if (
+      !this.state.transferTriggered &&
+      isAssistantTransferIntent(remainingText)
+    ) {
+      const callSid = getCallSid(this.streamSid);
+      if (callSid) {
+        const ok = await transferToHuman(
+          callSid,
+          this.state.transcription,
+          "ai_transfer_intent"
+        );
+        if (ok) this.state.transferTriggered = true;
+      }
+    }
+
     // Fallback humain : compter les échecs de compréhension (IA demande de répéter)
     if (isRepeatRequestResponse(remainingText)) {
       this.state.consecutiveFailures = (this.state.consecutiveFailures || 0) + 1;
-      if (this.state.consecutiveFailures >= 2) {
+      if (this.state.consecutiveFailures >= 2 && !this.state.transferTriggered) {
         const callSid = getCallSid(this.streamSid);
         if (callSid) {
-          await transferToHuman(callSid, this.state.transcription, "ai_failure");
+          const ok = await transferToHuman(
+            callSid,
+            this.state.transcription,
+            "ai_failure"
+          );
+          if (ok) this.state.transferTriggered = true;
         }
       }
     } else {

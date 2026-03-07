@@ -1,10 +1,11 @@
 /**
  * Fallback humain : détection de demande d'humain, seuil d'échecs, transfert Twilio.
- * Utilisé par l'agent vocal pour transférer l'appel vers le restaurant.
+ * Utilisé par l'agent vocal pour transférer l'appel vers le numéro saisi dans les infos du restaurant.
  */
 
 import twilio from "twilio";
 import { callLogger } from "../Services/logging/logger.js";
+import { PhoneLineService } from "../Business/services/PhoneLineService.js";
 
 /** Mots-clés indiquant une demande explicite d'un humain (insensible à la casse) */
 const HUMAN_REQUEST_KEYWORDS = [
@@ -28,6 +29,17 @@ const REPEAT_INDICATOR_PHRASES = [
   "pouvez vous repeter",
   "je n'ai pas compris",
   "je n ai pas compris",
+];
+
+/** Phrases indiquant que l'IA annonce un transfert (on exécute le transfert Twilio) */
+const ASSISTANT_TRANSFER_PHRASES = [
+  "je vais vous transférer",
+  "je vais te transférer",
+  "transférer vers quelqu'un",
+  "transférer vers un humain",
+  "transfert vers le restaurant",
+  "transfère vers",
+  "patienter un instant",
 ];
 
 const FAILURE_THRESHOLD = 3;
@@ -75,6 +87,20 @@ export function shouldTransferToHuman(conversationState) {
 }
 
 /**
+ * Détecte si le texte de l'assistant annonce un transfert vers un humain (on exécute le transfert Twilio).
+ * @param {string} assistantText - Texte de la dernière réponse de l'assistant
+ * @returns {boolean}
+ */
+export function isAssistantTransferIntent(assistantText) {
+  if (!assistantText || typeof assistantText !== "string") return false;
+  const normalized = assistantText.toLowerCase().trim();
+  for (const phrase of ASSISTANT_TRANSFER_PHRASES) {
+    if (normalized.includes(phrase)) return true;
+  }
+  return false;
+}
+
+/**
  * Détecte si le texte de l'assistant indique une demande de répéter (échec de compréhension).
  * @param {string} assistantText - Texte de la dernière réponse de l'assistant
  * @returns {boolean}
@@ -90,11 +116,11 @@ export function isRepeatRequestResponse(assistantText) {
 
 /**
  * Construit le TwiML pour annoncer le transfert et appeler le numéro du restaurant.
+ * @param {string|null} restaurantNumber - Numéro E.164 (infos du restaurant)
  * @returns {string} TwiML XML
  */
-function buildTransferTwiml() {
-  const restaurantNumber = process.env.RESTAURANT_PHONE_NUMBER || "";
-  const dialNumber = restaurantNumber.trim();
+function buildTransferTwiml(restaurantNumber) {
+  const dialNumber = restaurantNumber?.trim() || "";
   if (!dialNumber) {
     return `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
@@ -106,7 +132,7 @@ function buildTransferTwiml() {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Play>https://doomzyx.github.io/VoiceTransfert/voiceTransfert.mp3</Play>
-  <Dial>${escapeXmlText(dialNumber)}</Dial>
+  <Dial><Number>${escapeXmlText(dialNumber)}</Number></Dial>
 </Response>`;
 }
 
@@ -124,12 +150,13 @@ function escapeXmlText(str) {
  * Log l'événement TRANSFER_TO_HUMAN_TRIGGERED.
  * @param {string} callSid - SID de l'appel Twilio
  * @param {string} transcript - Dernière transcription ou contexte (pour le log)
- * @param {"human_request"|"ai_failure"|"conversation_blocked"} reason - Raison du transfert
+ * @param {"human_request"|"ai_failure"|"conversation_blocked"|"ai_transfer_intent"} reason - Raison du transfert
  * @returns {Promise<boolean>} true si le transfert a été envoyé, false sinon
  */
 export async function transferToHuman(callSid, transcript, reason) {
   if (!callSid) return false;
-  const twiml = buildTransferTwiml();
+  const transferNumber = await PhoneLineService.getTransferNumber();
+  const twiml = buildTransferTwiml(transferNumber);
   const client = getTwilioClient();
   if (!client) {
     callLogger.warn(

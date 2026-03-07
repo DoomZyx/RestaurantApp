@@ -1,16 +1,18 @@
 // @ts-nocheck
 
-import { generateTwiml } from "../../Services/twilioServices/twilioServices.js";
-import { config } from "../../Config/env.js";
-
-// Route permettant de lier twilio au serveur 
+import { generateTwiml, generateTwimlTransferToRestaurant } from "../../Services/twilioServices/twilioServices.js";
+import { PricingService } from "../../Business/services/PricingService.js";
+import { PhoneLineService } from "../../Business/services/PhoneLineService.js";
 
 export default async function callRoutes(fastify) {
   fastify.all("/incoming-call", async (request, reply) => {
-    // Pour les appels entrants, utiliser le host de la requête Twilio
-    // (qui correspond à l'URL configurée dans Twilio Dashboard)
+    const lineEnabled = await PricingService.getPhoneLineEnabled();
+    if (!lineEnabled) {
+      const transferNumber = await PhoneLineService.getTransferNumber();
+      return reply.type("text/xml").send(generateTwimlTransferToRestaurant(transferNumber));
+    }
     const host = request.headers.host;
     const xml = generateTwiml(host);
-    reply.type("text/xml").send(xml);
+    return reply.type("text/xml").send(xml);
   });
 }

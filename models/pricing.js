@@ -75,6 +75,9 @@ const pricingSchema = new mongoose.Schema({
   },
 
 
+  // Ligne téléphonique (appels entrants acceptés ou non)
+  phoneLineEnabled: { type: Boolean, default: true },
+
   // Métadonnées
   version: { type: String, default: "1.0" },
   derniereModification: { type: Date, default: Date.now },

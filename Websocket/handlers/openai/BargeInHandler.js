@@ -236,14 +236,24 @@ export class BargeInHandler {
 
     const callSid = getCallSid(this.streamSid);
 
-    // Fallback humain : avant toute réponse, vérifier demande explicite ou seuil d'échecs
-    if (callSid) {
+    // Fallback humain : avant toute réponse, vérifier demande explicite ou seuil d'échecs (une seule fois)
+    if (callSid && !this.state.transferTriggered) {
       if (detectHumanRequest(this.state.lastUserTranscript)) {
-        await transferToHuman(callSid, this.state.lastUserTranscript, "human_request");
+        const ok = await transferToHuman(
+          callSid,
+          this.state.lastUserTranscript,
+          "human_request"
+        );
+        if (ok) this.state.transferTriggered = true;
         return;
       }
       if (shouldTransferToHuman(this.state)) {
-        await transferToHuman(callSid, this.state.lastUserTranscript || this.state.transcription, "ai_failure");
+        const ok = await transferToHuman(
+          callSid,
+          this.state.lastUserTranscript || this.state.transcription,
+          "ai_failure"
+        );
+        if (ok) this.state.transferTriggered = true;
         return;
       }
     }

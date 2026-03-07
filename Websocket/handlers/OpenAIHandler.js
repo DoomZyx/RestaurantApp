@@ -29,9 +29,10 @@ export class OpenAIHandler {
       _audioDeltaLogged: false,
       _audioSuppressedLogged: false,
       initialGreetingSent: false,
-      // Fallback humain : compteur d'échecs de compréhension et dernière transcription client
+      // Fallback humain : compteur d'échecs, dernière transcription client, garde contre double transfert
       consecutiveFailures: 0,
       lastUserTranscript: "",
+      transferTriggered: false,
     };
 
     // Initialisation des handlers spécialisés

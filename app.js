@@ -14,8 +14,8 @@ import notificationRoutes from "./Routes/Ws/notifications.js";
 import orderRoutes from "./Routes/Appointments/order.js";
 import reservationRoutes from "./Routes/Appointments/reservation.js";
 import pricingRoutes from "./Routes/Pricing/pricing.js";
+import phoneLineRoutes from "./Routes/PhoneLine/phoneLine.js";
 import pingRoutes from "./Routes/Ping/ping.js";
-import { supplierOrderPublicRoutes, supplierOrderProtectedRoutes } from "./Routes/SupplierOrders/supplierOrders.js";
 import { AuthService } from "./Business/services/AuthService.js";
 import dotenv from "dotenv";
 dotenv.config();
@@ -100,10 +100,6 @@ fastify.register(reservationRoutes, { prefix: "/api" });
 // Routes pricing publiques (système custom)
 fastify.register(pricingRoutes, { prefix: "/api" });
 
-// Routes publiques pour webhooks Twilio (supplier orders)
-// Les webhooks /supplier-call et /supplier-stream doivent être publics
-fastify.register(supplierOrderPublicRoutes);
-
 fastify.register(async (instance) => {
   instance.addHook("onRequest", async (request, reply) => {
     const apiKey = String(request.headers["x-api-key"] ?? "").trim();
@@ -116,8 +112,8 @@ fastify.register(async (instance) => {
   });
 
   instance.register(processCallRoutes, { prefix: "/api" });
+  instance.register(phoneLineRoutes, { prefix: "/api" });
   instance.register(authRoutes, { prefix: "/api/auth" });
-  instance.register(supplierOrderProtectedRoutes, { prefix: "/api" });
 });
 
 // Gestion globale des erreurs
