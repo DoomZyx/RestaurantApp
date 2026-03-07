@@ -11,11 +11,9 @@ import wsRoutes from "./Routes/Ws/ws.js";
 import callDataRoutes from "./Routes/CallData/callData.js";
 import processCallRoutes from "./Routes/CallData/processCall.js";
 import authRoutes from "./Routes/Auth/auth.js";
-import statsRoutes from "./Routes/Auth/stats.js";
-import logsRoutes from "./Routes/Auth/logs.js";
-import maintenanceRoutes from "./Routes/Auth/maintenance.js";
 import notificationRoutes from "./Routes/Ws/notifications.js";
-import orderRoutes from "./Routes/Appointments/appointments.js";
+import orderRoutes from "./Routes/Appointments/order.js";
+import reservationRoutes from "./Routes/Appointments/reservation.js";
 import pricingRoutes from "./Routes/Pricing/pricing.js";
 import pingRoutes from "./Routes/Ping/ping.js";
 import { supplierOrderPublicRoutes, supplierOrderProtectedRoutes } from "./Routes/SupplierOrders/supplierOrders.js";
@@ -96,8 +94,9 @@ fastify.register(notificationRoutes);
 // Routes ping publiques (pour maintenir le backend actif)
 fastify.register(pingRoutes, { prefix: "/api" });
 
-// Routes orders publiques (système custom)
+// Routes orders et réservations (système custom)
 fastify.register(orderRoutes, { prefix: "/api" });
+fastify.register(reservationRoutes, { prefix: "/api" });
 
 // Routes pricing publiques (système custom)
 fastify.register(pricingRoutes, { prefix: "/api" });
@@ -120,9 +119,6 @@ fastify.register(async (instance) => {
   instance.register(callDataRoutes, { prefix: "/api" });
   instance.register(processCallRoutes, { prefix: "/api" });
   instance.register(authRoutes, { prefix: "/api/auth" });
-  instance.register(statsRoutes, { prefix: "/api/auth" });
-  instance.register(logsRoutes, { prefix: "/api/auth" });
-  instance.register(maintenanceRoutes, { prefix: "/api/auth" });
   instance.register(supplierOrderProtectedRoutes, { prefix: "/api" });
 });
 

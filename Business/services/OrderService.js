@@ -1,57 +1,59 @@
 import OrderModel from "../../models/order.js";
+import ReservationModel from "../../models/reservation.js";
 
 /**
- * Service de gestion des commandes
- * Logique métier pour les rendez-vous et commandes
+ * Service de gestion des commandes et réservations
  */
 export class OrderService {
   /**
-   * Crée une commande depuis les données d'un appel
-   * @param {Object} appointmentData - Données du rendez-vous
-   * @param {Object} options - Options (client, call, description)
-   * @returns {Promise<Object|null>} Commande créée ou null
+   * Crée une réservation depuis les données extraites (structure modèle Reservation)
+   * @param {Object} reservationData - Données réservation (nom, telephone, date, heure, description, nombrePersonnes, etc.)
+   * @param {Object} options - Options (callId)
+   * @returns {Promise<Object|null>} Réservation créée ou null
    */
-  static async createOrderFromAppointment(appointmentData, options = {}) {
-    const { client, callId, nom, telephone, description } = options;
-
-    
-    if (appointmentData.nombrePersonnes) {
-    }
-
-    // Gérer les valeurs "ASAP" pour date/heure
+  static async createReservationFromData(reservationData, options = {}) {
+    const { callId } = options;
     const { orderDate, orderHeure } = this._handleAsapDateTime(
-      appointmentData.date, 
-      appointmentData.heure
+      reservationData.date,
+      reservationData.heure
     );
-
-    // Déterminer la modalité par défaut en fonction du type
-    const typeCommande = appointmentData.type || "Commande à emporter";
-    const modaliteDefaut =
-      typeCommande === "Commande à emporter" ? "À emporter" : "Sur place";
-
-    // Créer la commande
-    const createdOrder = await OrderModel.create({
-      client: client?._id || null,
-      nom: !client ? (nom || "Client Inconnu") : null,
-      telephone: !client && telephone && telephone !== "Non fourni" ? telephone : null,
+    const created = await ReservationModel.create({
+      nom: reservationData.nom || "Client inconnu",
+      telephone: reservationData.telephone && reservationData.telephone !== "Non fourni" ? reservationData.telephone : null,
       date: orderDate,
       heure: orderHeure,
-      duree: appointmentData.duree || 60,
-      type: typeCommande,
-      modalite: appointmentData.modalite || modaliteDefaut,
-      nombrePersonnes: appointmentData.nombrePersonnes,
-      description: appointmentData.description || description,
-      commandes: appointmentData.commandes || [],
-      statut: "confirme",
+      description: reservationData.description || "",
+      nombrePersonnes: typeof reservationData.nombrePersonnes === "number" ? reservationData.nombrePersonnes : 1,
+      notes_internes: reservationData.notes_internes || "",
+      statut: reservationData.statut || "confirme",
       createdBy: "system",
-      related_call: callId
+      related_call: callId || null,
     });
+    return created;
+  }
 
-    
-    if (client) {
-    } else {
-    }
-
+  /**
+   * Crée une commande à emporter depuis les données extraites (structure modèle Order)
+   * @param {Object} orderData - Données commande (nom, telephone, date, heure, commandes, etc.)
+   * @param {Object} options - Options (client, callId, nom, telephone)
+   * @returns {Promise<Object|null>} Commande créée ou null
+   */
+  static async createOrderFromAppointment(orderData, options = {}) {
+    const { client, callId, nom, telephone } = options;
+    const { orderDate, orderHeure } = this._handleAsapDateTime(
+      orderData.date,
+      orderData.heure
+    );
+    const createdOrder = await OrderModel.create({
+      nom: !client ? (nom || orderData.nom || "Client Inconnu") : null,
+      telephone: !client && (telephone || orderData.telephone) && (telephone || orderData.telephone) !== "Non fourni" ? (telephone || orderData.telephone) : null,
+      date: orderDate,
+      heure: orderHeure,
+      commandes: orderData.commandes || [],
+      statut: orderData.statut || "confirme",
+      createdBy: "system",
+      related_call: callId || null,
+    });
     return createdOrder;
   }
 

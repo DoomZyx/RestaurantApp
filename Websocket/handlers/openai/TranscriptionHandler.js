@@ -1,3 +1,6 @@
+import { detectHumanRequest, transferToHuman } from "../../../utils/humanTransfer.js";
+import { getCallSid } from "../../../Services/streamRegistry.js";
+
 /**
  * Gestionnaire de transcription OpenAI
  * Gère les événements de transcription (response.audio_transcript.delta, response.text.delta, conversation.item.input_audio_transcription.completed)
@@ -41,15 +44,13 @@ export class TranscriptionHandler {
 
   /**
    * Réception de transcription utilisateur
-   * NOTE : Cette transcription n'est plus utilisée pour l'extraction
-   * On utilise uniquement la transcription de ce que GPT répète (response.audio_transcript.delta)
-   * pour éviter les erreurs de transcription directe du client
+   * Stocke la transcription pour le fallback humain et déclenche un transfert si demande explicite.
+   * NOTE : Cette transcription n'est plus utilisée pour l'extraction.
    */
   handleUserTranscription(data) {
     if (data.transcript) {
-      // NE PAS ajouter la transcription utilisateur à la transcription finale
-      // On utilise uniquement ce que GPT répète pour l'extraction
-      
+      this.state.lastUserTranscript = data.transcript;
+
       this.callLogger.info(
         this.streamSid,
         "Transcription client reçue d'OpenAI (non utilisée pour extraction)",
@@ -58,8 +59,14 @@ export class TranscriptionHandler {
           note: "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
         }
       );
-      
-      // Avec server_vad activé, OpenAI déclenche automatiquement une réponse
+
+      // Fallback humain : demande explicite d'un humain -> transfert immédiat
+      if (detectHumanRequest(data.transcript)) {
+        const callSid = getCallSid(this.streamSid);
+        if (callSid) {
+          transferToHuman(callSid, data.transcript, "human_request");
+        }
+      }
     }
   }
 

@@ -3,6 +3,8 @@
 import { generateTwiml } from "../../Services/twilioServices/twilioServices.js";
 import { config } from "../../Config/env.js";
 
+// Route permettant de lier twilio au serveur 
+
 export default async function callRoutes(fastify) {
   fastify.all("/incoming-call", async (request, reply) => {
     // Pour les appels entrants, utiliser le host de la requête Twilio

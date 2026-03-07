@@ -14,8 +14,8 @@ export class CallController {
    */
   static async saveCallData(data) {
     try {
-      const { call, order } = await CallService.saveCall(data);
-      return { call, order };
+      const { call, order, reservation } = await CallService.saveCall(data);
+      return { call, order, reservation };
     } catch (error) {
       console.error("❌ Erreur saveCallData:", error);
       throw error;

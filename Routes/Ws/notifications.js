@@ -2,6 +2,14 @@
 import notificationService from "../../Services/notificationService.js";
 import { callLogger } from "../../Services/logging/logger.js";
 
+function requireApiKey(request, reply, done) {
+  const apiKey = String(request.headers["x-api-key"] ?? "").trim();
+  if (!apiKey || apiKey !== process.env.X_API_KEY) {
+    return reply.code(401).send({ error: "Clé API manquante ou invalide" });
+  }
+  done();
+}
+
 export default async function notificationRoutes(fastify, options) {
   fastify.get("/ws/notifications", { websocket: true }, (connection, req) => {
     // Ajouter la connexion au service de notification
@@ -47,8 +55,8 @@ export default async function notificationRoutes(fastify, options) {
     });
   });
 
-  // Route pour envoyer une notification de test (admin seulement)
-  fastify.post("/api/notifications/test", async (request, reply) => {
+  // Route pour envoyer une notification de test (protégée par x-api-key)
+  fastify.post("/api/notifications/test", { preHandler: requireApiKey }, async (request, reply) => {
     try {
       const { type = "call_completed", data = {} } = request.body;
 
@@ -92,8 +100,8 @@ export default async function notificationRoutes(fastify, options) {
     }
   });
 
-  // Route simple pour tester les connexions
-  fastify.get("/api/notifications/status", async (request, reply) => {
+  // Route simple pour tester les connexions (protégée par x-api-key)
+  fastify.get("/api/notifications/status", { preHandler: requireApiKey }, async (request, reply) => {
     return reply.send({
       success: true,
       connections: notificationService.connections.size,

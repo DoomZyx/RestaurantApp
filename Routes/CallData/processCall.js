@@ -31,34 +31,33 @@ export default async function processCallRoutes(fastify, options) {
 
       callLogger.extractionCompleted(streamSid, extractedData);
 
-      // ✅ VALIDATION SUPPLÉMENTAIRE : Vérifier si les données extraites sont exploitables
-      const isUseless = 
-        (!extractedData.order || extractedData.order === null) && // Pas de commande
-        (extractedData.nom === "Client inconnu") && // Pas de nom
-        (extractedData.telephone === "Non fourni") && // Pas de téléphone
-        (extractedData.type_demande === "Information menu" || extractedData.type_demande === "Autre"); // Juste des infos
-      
+      // Validation : données exploitables si au moins une résa ou une commande
+      const hasReservationOrOrder = (extractedData.reservation && extractedData.reservation !== null) || (extractedData.order && extractedData.order !== null);
+      const isUseless =
+        !hasReservationOrOrder &&
+        (extractedData.nom === "Client inconnu") &&
+        (extractedData.telephone === "Non fourni") &&
+        (extractedData.type_demande === "Information menu" || extractedData.type_demande === "Autre");
+
       if (isUseless) {
         callLogger.info(
           streamSid,
-          "⏭️ Appel ignoré : Aucune information utile extraite (pas de nom, pas de commande, pas de téléphone)",
+          "Appel ignoré : Aucune information utile extraite (pas de nom, pas de téléphone, pas de résa ni commande)",
           {
             extractedData: {
               nom: extractedData.nom,
               telephone: extractedData.telephone,
               type_demande: extractedData.type_demande,
-              order: extractedData.order,
+              reservation: !!extractedData.reservation,
+              order: !!extractedData.order,
             },
           }
         );
-        
-        
-        // Ne pas sauvegarder ni notifier
         return reply.code(200).send({
           success: true,
           ignored: true,
           message: "Appel ignoré - Aucune information utile",
-          reason: "Pas de nom, pas de téléphone, pas de commande",
+          reason: "Pas de nom, pas de téléphone, pas de réservation ni commande",
         });
       }
 

@@ -52,14 +52,16 @@ export class FunctionCallService {
    */
   static async createAppointment(args) {
     try {
+      const baseUrl = `http://localhost:${process.env.PORT || 8080}`;
+      const isReservation = args.type === "Réservation de table";
+      const url = isReservation
+        ? `${baseUrl}/api/reservations/ai/create`
+        : `${baseUrl}/api/orders/ai/create`;
       const requestBody = JSON.stringify(args);
-      const url = `http://localhost:${
-        process.env.PORT || 8080
-      }/api/orders/ai/create`;
 
-      // Logger le body envoyé
       console.log("[FunctionCallService] Envoi requête createAppointment:", {
         url,
+        type: args.type,
         body: requestBody,
         commandesCount: args.commandes ? args.commandes.length : 0,
         hasCommandes: Array.isArray(args.commandes) && args.commandes.length > 0,

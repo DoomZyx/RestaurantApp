@@ -1,3 +1,6 @@
+import { detectHumanRequest, shouldTransferToHuman, transferToHuman } from "../../../utils/humanTransfer.js";
+import { getCallSid } from "../../../Services/streamRegistry.js";
+
 /** Timestamp ISO pour logs barge-in (diagnostic temps réel) */
 const ts = () => new Date().toISOString();
 
@@ -224,37 +227,40 @@ export class BargeInHandler {
 
   /**
    * L'audio de l'utilisateur a été commité (committed).
-   * L'utilisateur a définitivement fini de parler, on peut réinitialiser shouldCancel.
-   * CRITIQUE : On réinitialise aussi isInterrupted pour permettre à la nouvelle réponse de GPT de jouer.
-   * 
-   * GESTION MANUELLE DES RÉPONSES :
-   * Avec create_response: false, on doit créer manuellement la réponse après committed.
-   * Aucun JSON ne sera généré automatiquement pendant l'appel.
-   * La génération finale sera déclenchée uniquement à la détection de call_end.
+   * Avant toute réponse de l'IA : vérifier demande humain et seuil d'échecs -> transfert si besoin.
+   * Sinon réinitialiser shouldCancel/isInterrupted et créer la réponse manuellement.
    */
   async handleUserSpeechCommitted() {
     this.state.isUserSpeaking = false;
     this.state.shouldCancel = false;
-    
+
+    const callSid = getCallSid(this.streamSid);
+
+    // Fallback humain : avant toute réponse, vérifier demande explicite ou seuil d'échecs
+    if (callSid) {
+      if (detectHumanRequest(this.state.lastUserTranscript)) {
+        await transferToHuman(callSid, this.state.lastUserTranscript, "human_request");
+        return;
+      }
+      if (shouldTransferToHuman(this.state)) {
+        await transferToHuman(callSid, this.state.lastUserTranscript || this.state.transcription, "ai_failure");
+        return;
+      }
+    }
+
     // CRITIQUE : Réinitialiser isInterrupted pour permettre à la nouvelle réponse de GPT de jouer
-    // L'utilisateur a fini de parler, on peut maintenant accepter l'audio de GPT
     if (this.state.isInterrupted) {
       this.state.isInterrupted = false;
-      this.state._audioSuppressedLogged = false; // Réinitialiser pour permettre les logs de la prochaine réponse
+      this.state._audioSuppressedLogged = false;
       console.log(ts(), "🔓 [VAD] isInterrupted = false (utilisateur a fini de parler, audio GPT autorisé)");
     }
-    
+
     // GESTION MANUELLE : Créer la réponse manuellement après committed
-    // (create_response: false dans la configuration)
-    // CRITIQUE : Mettre à jour la vitesse TTS AVANT de créer la réponse
     if (this.openAiWs && this.openAiWs.readyState === 1) {
       try {
-        // Mettre à jour la vitesse TTS selon le contexte AVANT de créer la réponse
         if (this.speedManager) {
           await this.speedManager.updateSpeedForContext();
         }
-        
-        // Créer la réponse après la mise à jour de vitesse
         this.openAiWs.send(JSON.stringify({
           type: "response.create"
         }));
@@ -265,7 +271,7 @@ export class BargeInHandler {
         });
       }
     }
-    
+
     console.log(ts(), "✅ [VAD] speech_committed", {
       shouldCancel: "reset to false",
       isInterrupted: this.state.isInterrupted

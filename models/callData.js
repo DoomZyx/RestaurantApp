@@ -31,10 +31,16 @@ const callSchema = new mongoose.Schema({
     default: "nouveau",
   },
 
-  // Lien vers une commande si planifiée
+  // Lien vers une commande à emporter si créée
   related_order: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Order",
+    required: false,
+  },
+  // Lien vers une réservation si créée
+  related_reservation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Reservation",
     required: false,
   },
 });

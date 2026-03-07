@@ -28,7 +28,10 @@ export class OpenAIHandler {
       isUserSpeaking: false,
       _audioDeltaLogged: false,
       _audioSuppressedLogged: false,
-      initialGreetingSent: false
+      initialGreetingSent: false,
+      // Fallback humain : compteur d'échecs de compréhension et dernière transcription client
+      consecutiveFailures: 0,
+      lastUserTranscript: "",
     };
 
     // Initialisation des handlers spécialisés

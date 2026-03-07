@@ -16,7 +16,6 @@ export class CallService {
    */
   static async saveCall(data) {
     const {
-      prenom,
       nom,
       telephone,
       type_demande,
@@ -24,25 +23,20 @@ export class CallService {
       description,
       date,
       statut,
-      appointment,
+      reservation,
+      order,
     } = data;
 
-    // Validation des données
     const validation = CallValidator.validateCallData(data);
     if (!validation.isValid) {
       throw new Error(`Validation échouée: ${validation.errors.join(', ')}`);
     }
 
-    // 1. Rechercher le client existant
     let client = null;
     if (telephone && telephone !== "Non fourni") {
       client = await ClientService.findClientByPhone(telephone);
     }
 
-    if (appointment && !client) {
-    }
-
-    // 2. Créer l'appel
     const callData = {
       type_demande,
       services,
@@ -50,48 +44,55 @@ export class CallService {
       date,
       statut,
     };
-
     if (client) {
       callData.client = client._id;
     }
 
     const call = await CallModel.create(callData);
 
-    // 3. Créer la commande si présente
+    let createdReservation = null;
     let createdOrder = null;
-    if (CallValidator.validateAppointment(appointment)) {
+
+    if (reservation && CallValidator.validateAppointment(reservation)) {
       try {
-        createdOrder = await OrderService.createOrderFromAppointment(appointment, {
+        createdReservation = await OrderService.createReservationFromData(reservation, {
+          callId: call._id,
+        });
+        call.related_reservation = createdReservation._id;
+        await call.save();
+      } catch (err) {
+        console.error("Erreur création réservation:", err);
+      }
+    }
+
+    if (order && CallValidator.validateAppointment(order)) {
+      try {
+        createdOrder = await OrderService.createOrderFromAppointment(order, {
           client,
           callId: call._id,
           nom,
           telephone,
-          description
         });
-
-        // Lier la commande à l'appel
         call.related_order = createdOrder._id;
         await call.save();
-      } catch (orderError) {
-        console.error("❌ Erreur lors de la création de la commande:", orderError);
+      } catch (err) {
+        console.error("Erreur création commande:", err);
       }
     }
 
-    // 4. Envoyer notification WebSocket
     try {
       const notificationData = this._prepareNotificationData(
-        call, 
-        createdOrder, 
-        client, 
+        call,
+        createdOrder || createdReservation,
+        client,
         { nom, telephone, type_demande, services, description }
       );
-      
       notificationService.notifyCallCompleted(notificationData);
     } catch (notifError) {
-      console.error("⚠️ Erreur envoi notification WebSocket:", notifError);
+      console.error("Erreur envoi notification WebSocket:", notifError);
     }
 
-    return { call, order: createdOrder };
+    return { call, order: createdOrder, reservation: createdReservation };
   }
 
   /**

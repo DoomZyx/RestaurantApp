@@ -65,3 +65,6 @@ Le système détecte automatiquement le contexte et ajuste la vitesse :
 
 Voir `backend/Docs/TTS_SPEED_MANAGEMENT.md` pour la documentation détaillée.
 
+
+
+

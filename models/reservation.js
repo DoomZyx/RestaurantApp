@@ -21,40 +21,20 @@ const orderSchema = new mongoose.Schema({
     required: true,
     match: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/ // Format HH:MM
   },
-
-  // Commandes (plats commandés pour les commandes à emporter)
-  commandes: [{
-    produitId: {
-      type: String,
-      required: false
-    },
-    nom: {
-      type: String,
-      required: false
-    },
-    categorie: {
-      type: String,
-      required: false
-    },
-    quantite: {
-      type: Number,
-      min: 1,
-      default: 1
-    },
-    prixUnitaire: {
-      type: Number,
-      required: false
-    },
-    composition: {
-      type: String,
-      maxlength: 200
-    },
-    options: {
-      type: mongoose.Schema.Types.Mixed,
-      default: {}
-    }
-  }],
-
+  // Détails
+  description: {
+    type: String,
+    maxlength: 500
+  },
+  nombrePersonnes: {
+    type: Number,
+    min: 1,
+    max: 100
+  },
+  notes_internes: {
+    type: String,
+    maxlength: 1000
+  },
   // Statut
   statut: {
     type: String,
@@ -156,6 +136,6 @@ orderSchema.methods.getEndTime = function() {
   return `${endHours.toString().padStart(2, '0')}:${endMins.toString().padStart(2, '0')}`;
 };
 
-const OrderModel = mongoose.model("Order", orderSchema);
+const ReservationModel = mongoose.model("Reservation", orderSchema);
 
-export default OrderModel; 
+export default ReservationModel; 

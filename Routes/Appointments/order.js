@@ -12,14 +12,12 @@ import {
 } from "../../Controller/orderController.js";
 
 export default async function orderRoutes(fastify, options) {
-  // Créer un nouveau rendez-vous
   fastify.post("/orders", {
     schema: {
       body: {
         type: "object",
         required: ["date", "heure", "type"],
         properties: {
-          // Client optionnel: soit client (ObjectId), soit nom (String)
           client: { type: "string", minLength: 24, maxLength: 24 },
           nom: { type: "string", minLength: 1, maxLength: 120 },
           date: { type: "string", format: "date" },
@@ -39,8 +37,6 @@ export default async function orderRoutes(fastify, options) {
           nombrePersonnes: { type: "integer", minimum: 1, maximum: 100 },
           description: { type: "string", maxLength: 500 },
           notes_internes: { type: "string", maxLength: 1000 },
-          related_call: { type: "string", minLength: 24, maxLength: 24 },
-          // Commandes (pour les commandes à emporter)
           commandes: {
             type: "array",
             items: {
@@ -51,17 +47,16 @@ export default async function orderRoutes(fastify, options) {
                 categorie: { type: "string" },
                 quantite: { type: "integer", minimum: 1 },
                 prixUnitaire: { type: "number" },
-                composition: { type: "string", maxLength: 200 }
-              }
-            }
-          }
+                composition: { type: "string", maxLength: 200 },
+              },
+            },
+          },
         },
       },
     },
     handler: createOrder,
   });
 
-  // Récupérer tous les rendez-vous avec filtres et pagination
   fastify.get("/orders", {
     schema: {
       querystring: {
@@ -95,10 +90,8 @@ export default async function orderRoutes(fastify, options) {
     handler: getOrders,
   });
 
-  // Récupérer les rendez-vous du jour (pour le widget homepage)
   fastify.get("/orders/today", getTodayOrders);
 
-  // Vérifier la disponibilité d'un créneau
   fastify.get("/orders/availability", {
     schema: {
       querystring: {
@@ -117,7 +110,6 @@ export default async function orderRoutes(fastify, options) {
     handler: checkAvailability,
   });
 
-  // Récupérer un rendez-vous par ID (doit être après les routes spécifiques)
   fastify.get("/orders/:id", {
     schema: {
       params: {
@@ -131,7 +123,6 @@ export default async function orderRoutes(fastify, options) {
     handler: getOrderById,
   });
 
-  // Mettre à jour un rendez-vous complet
   fastify.put("/orders/:id", {
     schema: {
       params: {
@@ -178,7 +169,6 @@ export default async function orderRoutes(fastify, options) {
     handler: updateOrder,
   });
 
-  // Mettre à jour seulement le statut d'un rendez-vous
   fastify.patch("/orders/:id/status", {
     schema: {
       params: {
@@ -209,12 +199,19 @@ export default async function orderRoutes(fastify, options) {
     handler: updateOrderStatus,
   });
 
-  // Supprimer un rendez-vous
-  fastify.delete("/orders/:id", deleteOrder);
+  fastify.delete("/orders/:id", {
+    schema: {
+      params: {
+        type: "object",
+        properties: {
+          id: { type: "string", minLength: 24, maxLength: 24 },
+        },
+        required: ["id"],
+      },
+    },
+    handler: deleteOrder,
+  });
 
-  // Routes spéciales pour l'IA
-
-  // Récupérer les créneaux disponibles (pour l'IA)
   fastify.get("/orders/ai/available-slots", {
     schema: {
       querystring: {
@@ -228,7 +225,6 @@ export default async function orderRoutes(fastify, options) {
     handler: getAvailableSlots,
   });
 
-  // Créer un rendez-vous depuis l'IA
   fastify.post("/orders/ai/create", {
     schema: {
       body: {
@@ -238,11 +234,7 @@ export default async function orderRoutes(fastify, options) {
           telephone: { type: "string", minLength: 1 },
           date: { type: "string", minLength: 1 },
           time: { type: "string", minLength: 1 },
-          duration: { type: "integer", minimum: 30, maximum: 180 },
-          type: {
-            type: "string",
-            enum: ["Commande à emporter", "Réservation de table"],
-          },
+          type: { type: "string", enum: ["Commande à emporter"] },
           description: { type: "string", maxLength: 500 },
           commandes: {
             type: "array",

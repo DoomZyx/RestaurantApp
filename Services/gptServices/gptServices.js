@@ -89,7 +89,7 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
           {
             type: "function",
             name: "create_appointment",
-            description: "Créer un rendez-vous pour un client. IMPORTANT: Il existe 2 services - SERVICE MIDI (11h-15h) et SERVICE SOIR (18h-00h). Choisis l'heure en fonction du service demandé par le client.",
+            description: "Créer un rendez-vous pour un client. IMPORTANT: Il existe 2 services - SERVICE MIDI (11h-15h) et SERVICE SOIR (18h-00h). Choisis l'heure en fonction du service demandé. Deux structures distinctes : (1) Réservation de table = même base que le modèle Reservation : nombrePersonnes obligatoire, commandes = [] ; (2) Commande à emporter = même base que le modèle Order : commandes = liste des plats.",
             parameters: {
               type: "object",
               properties: {
@@ -130,9 +130,14 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                   type: "string",
                   description: "Description du rendez-vous",
                 },
+                nombrePersonnes: {
+                  type: "integer",
+                  minimum: 1,
+                  description: "OBLIGATOIRE pour Réservation de table (nombre de couverts). Ne pas remplir pour Commande à emporter.",
+                },
                 commandes: {
                   type: "array",
-                  description: "Liste des plats commandés (pour les commandes à emporter). Chaque élément doit contenir au minimum 'nom' et 'quantite'.",
+                  description: "Réservation : laisser [] (structure Reservation = pas de plats). Commande à emporter : liste des plats (structure Order), chaque élément au minimum 'nom' et 'quantite'.",
                   items: {
                     type: "object",
                     properties: {

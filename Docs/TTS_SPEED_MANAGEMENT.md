@@ -222,3 +222,6 @@ export const TTS_SPEED_CONFIG = {
 - [OpenAI Realtime API Documentation](https://platform.openai.com/docs/guides/realtime)
 - Paramètre `speed` : Plage 0.25 - 1.5, valeur par défaut 1.0
 
+
+
+

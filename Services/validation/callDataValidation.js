@@ -184,22 +184,36 @@ export function validateCallData(extractedData) {
     description: cleanString(extractedData.description) || "Aucune description fournie",
     statut: cleanString(extractedData.statut) || "nouveau",
     date: new Date(),
-    appointment: /** @type {any} */ (null),
+    reservation: /** @type {any} */ (null),
+    order: /** @type {any} */ (null),
   };
 
-  // Valider l'objet order si présent
-  if (extractedData.order && typeof extractedData.order === "object") {
-    const order = extractedData.order;
+  // Réservation : structure modèle Reservation
+  if (extractedData.reservation && typeof extractedData.reservation === "object") {
+    const r = extractedData.reservation;
+    validated.reservation = {
+      nom: cleanString(r.nom) || validated.nom,
+      telephone: validated.telephone ? String(validated.telephone).replace(/(\d{2})(?=\d)/g, "$1 ") : "Non fourni",
+      date: cleanString(r.date) || "ASAP",
+      heure: validateTime(r.heure),
+      description: cleanString(r.description) || "",
+      nombrePersonnes: typeof r.nombrePersonnes === "number" ? r.nombrePersonnes : 1,
+      notes_internes: cleanString(r.notes_internes) || "",
+      statut: cleanString(r.statut) || "confirme",
+    };
+  }
 
-    validated.appointment = {
-      date: cleanString(order.date) || "ASAP",
-      heure: validateTime(order.heure),
-      duree: typeof order.duree === "number" ? order.duree : (order.type === "Réservation de table" ? 90 : 60),
-      type: cleanString(order.type) || "Commande à emporter",
-      modalite: cleanString(order.modalite) || "À emporter",
-      nombrePersonnes: typeof order.nombrePersonnes === "number" ? order.nombrePersonnes : null,
-      description: cleanString(order.description) || "",
-      commandes: Array.isArray(order.commandes) ? order.commandes : [],
+  // Commande à emporter : structure modèle Order
+  if (extractedData.order && typeof extractedData.order === "object") {
+    const o = extractedData.order;
+    validated.order = {
+      nom: cleanString(o.nom) || validated.nom,
+      telephone: validated.telephone ? String(validated.telephone).replace(/(\d{2})(?=\d)/g, "$1 ") : "Non fourni",
+      date: cleanString(o.date) || "ASAP",
+      heure: validateTime(o.heure),
+      description: cleanString(o.description) || "",
+      statut: cleanString(o.statut) || "confirme",
+      commandes: Array.isArray(o.commandes) ? o.commandes : [],
     };
   }
 
@@ -247,11 +261,13 @@ export function getValidationReport(extractedData, validatedData) {
     });
   }
 
-  // Erreur heure
-  if (extractedData.order?.heure && !validatedData.appointment?.heure) {
+  // Erreur heure (reservation ou order)
+  const rawHeure = extractedData.reservation?.heure ?? extractedData.order?.heure;
+  const validatedHeure = validatedData.reservation?.heure ?? validatedData.order?.heure;
+  if (rawHeure && !validatedHeure) {
     errors.push({
       field: "heure",
-      original: extractedData.order.heure,
+      original: rawHeure,
       reason: "Format invalide (doit être HH:MM)",
     });
   }
@@ -271,8 +287,8 @@ export function getValidationReport(extractedData, validatedData) {
     emptyStringsConverted: emptyStrings,
     originalPhone: extractedData.telephone,
     validatedPhone: validatedData.telephone,
-    originalTime: extractedData.order?.heure,
-    validatedTime: validatedData.appointment?.heure,
+    originalTime: rawHeure,
+    validatedTime: validatedHeure,
   };
 }
 

@@ -1,3 +1,6 @@
+import { isRepeatRequestResponse, transferToHuman } from "../../../utils/humanTransfer.js";
+import { getCallSid } from "../../../Services/streamRegistry.js";
+
 /** Timestamp ISO pour logs barge-in (diagnostic temps réel) */
 const ts = () => new Date().toISOString();
 
@@ -72,7 +75,20 @@ export class ResponseHandler {
    */
   async handleResponseCompleted(data) {
     const remainingText = this.state.currentResponseText.trim();
-    
+
+    // Fallback humain : compter les échecs de compréhension (IA demande de répéter)
+    if (isRepeatRequestResponse(remainingText)) {
+      this.state.consecutiveFailures = (this.state.consecutiveFailures || 0) + 1;
+      if (this.state.consecutiveFailures >= 2) {
+        const callSid = getCallSid(this.streamSid);
+        if (callSid) {
+          await transferToHuman(callSid, this.state.transcription, "ai_failure");
+        }
+      }
+    } else {
+      this.state.consecutiveFailures = 0;
+    }
+
     this.callLogger.extractionCompleted(this.streamSid, {
       output_text: remainingText ? remainingText.substring(0, 100) + "..." : "Déjà streamé",
     });

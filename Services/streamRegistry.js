@@ -14,6 +14,17 @@ export function unregisterStream(streamSid) {
   activeStreams.delete(streamSid);
 }
 
+/**
+ * Récupère le callSid associé à un stream (pour transfert humain Twilio).
+ * @param {string} streamSid - SID du stream Twilio
+ * @returns {string|null} callSid ou null
+ */
+export function getCallSid(streamSid) {
+  if (!streamSid) return null;
+  const entry = activeStreams.get(streamSid);
+  return entry ? entry.callSid : null;
+}
+
 export function stopStream(streamSid, reason = "Stopped by API") {
   const entry = activeStreams.get(streamSid);
   if (!entry) return false;
@@ -31,6 +42,7 @@ export default {
   registerStream,
   unregisterStream,
   stopStream,
+  getCallSid,
 };
 
 

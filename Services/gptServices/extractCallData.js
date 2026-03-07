@@ -27,6 +27,31 @@ import circuitBreaker from "./circuitBreaker.js";
 
 dotenv.config();
 
+/** Convertit un objet appointment (fallback rule-based) en reservation + order pour compatibilité. */
+function appointmentToReservationOrder(appointment, nom, telephone) {
+  if (!appointment || typeof appointment !== "object") {
+    return { reservation: null, order: null };
+  }
+  const base = {
+    nom: nom || "Client inconnu",
+    telephone: telephone || "Non fourni",
+    date: appointment.date || "ASAP",
+    heure: appointment.heure || null,
+    description: appointment.description || "",
+    statut: "confirme",
+  };
+  if (appointment.type === "Réservation de table") {
+    return {
+      reservation: { ...base, nombrePersonnes: typeof appointment.nombrePersonnes === "number" ? appointment.nombrePersonnes : 1, notes_internes: "" },
+      order: null,
+    };
+  }
+  return {
+    reservation: null,
+    order: { ...base, commandes: Array.isArray(appointment.commandes) ? appointment.commandes : [] },
+  };
+}
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -49,58 +74,62 @@ Extraire les informations d'un appel téléphonique de RESTAURANT
 Utilise les NOMS EXACTS du menu fourni ci-dessous, pas la transcription brute.
 
 ========================================
-STRUCTURE JSON À RETOURNER :
+STRUCTURE JSON À RETOURNER (2 COLLECTIONS DISTINCTES) :
 ========================================
 
+Une seule des deux clés est renseignée selon le type de demande. L'autre est null.
+
+--- RÉSERVATION DE TABLE → clé "reservation" (structure = modèle Reservation) ---
+Si type_demande = "Réservation de table" : renvoyer "reservation" avec la structure du modèle reservation.js.
+→ reservation = { nom, telephone, date, heure, description?, nombrePersonnes, notes_internes?, statut? }
+→ order = null
+Pas de champ "commandes" dans une réservation.
+
+--- COMMANDE À EMPORTER → clé "order" (structure = modèle Order) ---
+Si type_demande = "Commande à emporter" : renvoyer "order" avec la structure du modèle order.js.
+→ order = { nom, telephone, date, heure, commandes[], statut? }
+→ reservation = null
+Chaque élément de commandes = { nom, categorie?, quantite, prixUnitaire?, composition?, options? }
+
+Exemple COMMANDE À EMPORTER :
 {
   "nom": "Nom du client",
-  "telephone": "0123456789 ou Non fourni",
+  "telephone": "07 86 87 67 89",
   "type_demande": "Commande à emporter",
   "services": "Pizzas",
-  "description": "Description claire de la demande",
+  "description": "Description de la demande",
   "statut": "nouveau",
+  "reservation": null,
   "order": {
+    "nom": "Nom du client",
+    "telephone": "07 86 87 67 89",
     "date": "ASAP",
     "heure": "19:00",
-    "duree": 60,
-    "type": "Commande à emporter",
-    "modalite": "À emporter",
-    "nombrePersonnes": null,
     "description": "",
+    "statut": "confirme",
     "commandes": [
-      {
-        "nom": "Pizza Margherita",
-        "categorie": "Pizzas",
-        "quantite": 2,
-        "prixUnitaire": 12.50,
-        "composition": "+fromage"
-      }
+      { "nom": "Pizza Margherita", "categorie": "Pizzas", "quantite": 2, "prixUnitaire": 12.50, "composition": "+fromage" }
     ]
   }
 }
 
 ========================================
-RÈGLE CRITIQUE : QUAND CRÉER UN ORDER ?
+RÈGLE CRITIQUE : QUAND CRÉER reservation OU order ?
 ========================================
 
-CRÉER ORDER si :
+CRÉER reservation (et order = null) si :
+- Le client dit "réserver une table", "réserver pour X personnes", "table pour ce soir"
+- Pas de plats commandés, uniquement créneau + nombre de personnes
+
+CRÉER order (et reservation = null) si :
 - Le client mentionne UN PLAT (pizza, burger, salade, etc.)
-- Le client dit "je veux commander"
-- Le client dit "livraison" ou "à emporter"
-- Le client dit "réserver une table"
+- Le client dit "je veux commander", "à emporter", "livraison"
 
-ORDER = NULL si :
-- Questions d'horaires uniquement
-- Questions sur le menu/ingrédients sans demande de commande
-- Réclamations sans commande
-- Le client dit "je regarde le menu" ou "je consulte le menu"
-- Le client demande seulement des informations (prix, horaires, adresse)
-- Le client dit "je vais réfléchir" ou "je vais voir"
+reservation = null ET order = null si :
+- Questions d'horaires uniquement, menu, réclamations sans commande/résa
+- "Je regarde le menu", "je vais réfléchir"
 
-SI TU HÉSITES → Analyse le contexte :
-- Si mention d'un PLAT CONCRET (nom de pizza, burger, etc.) → CRÉER ORDER
-- Si seulement questions/infos sans mention de plat → ORDER = NULL
-- En cas de doute, privilégie ORDER = NULL plutôt que créer une commande fantôme
+SI TU HÉSITES : plat concret mentionné → order ; uniquement table/couverts → reservation
 
 ========================================
 CHAMPS À EXTRAIRE :
@@ -148,42 +177,20 @@ STATUT (statut) :
 → Toujours "nouveau"
 
 ========================================
-🛒 OBJET ORDER (SI COMMANDE/RÉSERVATION) :
+OBJET reservation (modèle Reservation) - SI RÉSERVATION DE TABLE :
 ========================================
+Champs : nom, telephone, date, heure, description (optionnel), nombrePersonnes (OBLIGATOIRE), notes_internes (optionnel), statut.
+→ date : YYYY-MM-DD ou "ASAP"
+→ heure : HH:MM (ex: 20:00). Si ambiguë : "8h" = 20:00 (soir), "midi" = 12:00
+→ Pas de champ "commandes"
 
-DATE (date) :
-→ Si date mentionnée : Format YYYY-MM-DD
-→ Si AUCUNE date : "ASAP"
-
-HEURE (heure) :
-→ Si heure mentionnée : Format HH:MM (ex: 19:00)
-→ Si AUCUNE heure, ne jamais mettre "ASAP"
-→ IMPORTANT : Si heure ambiguë (ex: "8h" sans "matin/soir"):
-  * Fast-food ouvert midi (11h-15h) et soir (18h-23h)
-  * "8h" = probablement 20:00 (soir)
-  * "midi" ou "12h" = 12:00
-  * Si contexte clair → adapte (ex: "8h du matin" = 08:00)
-  * Si pour les minutes tu ne comprends pas si la transcription est ambiguë, ne jamais mettre "ASAP" mais mettre 30 minutes si le client commande 15 ou 20 minutes avant 30 minutes.
-
-DURÉE (duree) :
-→ Commande : 60
-→ Réservation : 90
-
-TYPE (type) :
-Valeurs autorisées :
-"Commande à emporter" | "Réservation de table"
-Par défaut : "Commande à emporter"
-
-MODALITÉ (modalite) :
-Valeurs autorisées :
-"Sur place" | "À emporter" | "Livraison"
-Par défaut : "À emporter"
-
-NOMBRE DE PERSONNES (nombrePersonnes) :
-→ SEULEMENT pour "Réservation de table"
-→ Sinon : null
-
-COMMANDES (commandes) :
+========================================
+OBJET order (modèle Order) - SI COMMANDE À EMPORTER :
+========================================
+Champs : nom, telephone, date, heure, description (optionnel), commandes[], statut.
+→ date : YYYY-MM-DD ou "ASAP"
+→ heure : HH:MM. Règles identiques ci-dessus
+→ commandes : tableau de plats { nom, categorie?, quantite, prixUnitaire?, composition?, options? }
 → Tableau d'objets pour chaque plat :
 {
   "nom": "Nom EXACT du produit tel qu'il apparaît dans le menu",
@@ -335,38 +342,32 @@ Si pas de personnalisation ou produit non-tacos → personnalisation: null
 EXEMPLES CONCRETS :
 ========================================
 
-Exemple 1 - Commande simple :
+Exemple 1 - Commande simple (structure Order) :
 Transcription : "Bonjour, je voudrais commander 2 pizzas 4 fromages à emporter"
 
 JSON :
 {
   "nom": "Client inconnu",
-  "telephone": "07 86 87 67 89", -> exemple de format avec espaces entre paires de chiffres
+  "telephone": "07 86 87 67 89",
   "type_demande": "Commande à emporter",
   "services": "Pizzas",
   "description": "Commande de 2 pizzas 4 fromages à emporter",
   "statut": "nouveau",
+  "reservation": null,
   "order": {
+    "nom": "Client inconnu",
+    "telephone": "07 86 87 67 89",
     "date": "ASAP",
     "heure": "ASAP",
-    "duree": 60,
-    "type": "Commande à emporter",
-    "modalite": "À emporter",
-    "nombrePersonnes": null,
     "description": "",
+    "statut": "confirme",
     "commandes": [
-      {
-        "nom": "Pizza 4 Fromages",
-        "categorie": "Pizzas",
-        "quantite": 2,
-        "prixUnitaire": 12.50,
-        "composition": ""
-      }
+      { "nom": "Pizza 4 Fromages", "categorie": "Pizzas", "quantite": 2, "prixUnitaire": 12.50, "composition": "" }
     ]
   }
 }
 
-Exemple 2 - Réservation avec nom :
+Exemple 2 - Réservation (structure Reservation) :
 Transcription : "Je m'appelle Dupont, je voudrais réserver pour 4 personnes mardi prochain à 19h"
 
 JSON :
@@ -377,19 +378,20 @@ JSON :
   "services": "Autre",
   "description": "Réservation pour 4 personnes",
   "statut": "nouveau",
-  "order": {
+  "reservation": {
+    "nom": "Dupont",
+    "telephone": "Non fourni",
     "date": "2025-10-28",
     "heure": "19:00",
-    "duree": 90,
-    "type": "Réservation de table",
-    "modalite": "Sur place",
+    "description": "Réservation 4 personnes",
     "nombrePersonnes": 4,
-    "description": "Table pour 4 personnes",
-    "commandes": []
-  }
+    "notes_internes": "",
+    "statut": "confirme"
+  },
+  "order": null
 }
 
-Exemple 2B - Nom donné au milieu :
+Exemple 2B - Nom donné au milieu (structure Order) :
 Transcription : "Bonjour, je veux commander une pizza Margherita. C'est à quel nom ? Martin. Pour 19h s'il vous plaît."
 
 JSON :
@@ -400,27 +402,21 @@ JSON :
   "services": "Pizzas",
   "description": "Commande d'une pizza Margherita pour 19h",
   "statut": "nouveau",
+  "reservation": null,
   "order": {
+    "nom": "Martin",
+    "telephone": "Non fourni",
     "date": "ASAP",
     "heure": "19:00",
-    "duree": 60,
-    "type": "Commande à emporter",
-    "modalite": "À emporter",
-    "nombrePersonnes": null,
     "description": "",
+    "statut": "confirme",
     "commandes": [
-      {
-        "nom": "Pizza Margherita",
-        "categorie": "Pizzas",
-        "quantite": 1,
-        "prixUnitaire": 12.50,
-        "composition": ""
-      }
+      { "nom": "Pizza Margherita", "categorie": "Pizzas", "quantite": 1, "prixUnitaire": 12.50, "composition": "" }
     ]
   }
 }
 
-Exemple 2C - Nom avec variante :
+Exemple 2C - Nom avec variante (structure Order) :
 Transcription : "Oui bonjour, 2 pizzas 4 fromages. Pour Madame Dubois. À emporter."
 
 JSON :
@@ -431,27 +427,21 @@ JSON :
   "services": "Pizzas",
   "description": "Commande de 2 pizzas 4 fromages à emporter",
   "statut": "nouveau",
+  "reservation": null,
   "order": {
+    "nom": "Madame Dubois",
+    "telephone": "Non fourni",
     "date": "ASAP",
     "heure": "ASAP",
-    "duree": 60,
-    "type": "Commande à emporter",
-    "modalite": "À emporter",
-    "nombrePersonnes": null,
     "description": "",
+    "statut": "confirme",
     "commandes": [
-      {
-        "nom": "Pizza 4 Fromages",
-        "categorie": "Pizzas",
-        "quantite": 2,
-        "prixUnitaire": 12.50,
-        "composition": ""
-      }
+      { "nom": "Pizza 4 Fromages", "categorie": "Pizzas", "quantite": 2, "prixUnitaire": 12.50, "composition": "" }
     ]
   }
 }
 
-Exemple 3 - Correction transcription :
+Exemple 3 - Correction transcription (structure Order) :
 Transcription : "Je veux 2 copoins et un borger avec frittes"
 
 JSON :
@@ -462,41 +452,23 @@ JSON :
   "services": "Burgers",
   "description": "Commande de 2 Coca-Cola, 1 burger et frites",
   "statut": "nouveau",
+  "reservation": null,
   "order": {
+    "nom": "Client inconnu",
+    "telephone": "Non fourni",
     "date": "ASAP",
     "heure": "ASAP",
-    "duree": 60,
-    "type": "Commande à emporter",
-    "modalite": "À emporter",
-    "nombrePersonnes": null,
     "description": "",
+    "statut": "confirme",
     "commandes": [
-      {
-        "nom": "Coca-Cola",
-        "categorie": "Boissons",
-        "quantite": 2,
-        "prixUnitaire": 3.00,
-        "composition": ""
-      },
-      {
-        "nom": "USA Beef Burger",
-        "categorie": "Burgers",
-        "quantite": 1,
-        "prixUnitaire": 10.00,
-        "composition": ""
-      },
-      {
-        "nom": "Frites",
-        "categorie": "Accompagnements",
-        "quantite": 1,
-        "prixUnitaire": 4.00,
-        "composition": ""
-      }
+      { "nom": "Coca-Cola", "categorie": "Boissons", "quantite": 2, "prixUnitaire": 3.00, "composition": "" },
+      { "nom": "USA Beef Burger", "categorie": "Burgers", "quantite": 1, "prixUnitaire": 10.00, "composition": "" },
+      { "nom": "Frites", "categorie": "Accompagnements", "quantite": 1, "prixUnitaire": 4.00, "composition": "" }
     ]
   }
 }
 
-Exemple 4 - Tacos personnalisé :
+Exemple 4 - Tacos personnalisé (structure Order) :
 Transcription : "Je veux un tacos double. Poulet et merguez. Sauce algérienne. Sans oignons s'il vous plaît. C'est pour Martin."
 
 JSON :
@@ -507,14 +479,14 @@ JSON :
   "services": "Tacos",
   "description": "Commande d'un tacos double poulet-merguez sauce algérienne sans oignons",
   "statut": "nouveau",
+  "reservation": null,
   "order": {
+    "nom": "Martin",
+    "telephone": "Non fourni",
     "date": "ASAP",
-    "heure": exemple "19:00",
-    "duree": 60,
-    "type": "Commande à emporter",
-    "modalite": "À emporter",
-    "nombrePersonnes": null,
+    "heure": "19:00",
     "description": "",
+    "statut": "confirme",
     "commandes": [
       {
         "nom": "Tacos Double (2 viandes)",
@@ -522,18 +494,37 @@ JSON :
         "quantite": 1,
         "prixUnitaire": 9.50,
         "composition": "",
-        "personnalisation": {
-          "viandes": ["Poulet", "Merguez"],
-          "sauce": "Algérienne",
-          "sansIngredients": ["oignons"],
-          "extras": []
-        }
+        "personnalisation": { "viandes": ["Poulet", "Merguez"], "sauce": "Algérienne", "sansIngredients": ["oignons"], "extras": [] }
       }
     ]
   }
 }
 
-Exemple 5 - Info uniquement (PAS de commande) :
+Exemple 5 - Réservation (structure Reservation) :
+Transcription : "Bonjour, je voudrais réserver une table pour 4 personnes ce soir à 20h. C'est Martin, 07 86 87 67 89."
+
+JSON :
+{
+  "nom": "Martin",
+  "telephone": "07 86 87 67 89",
+  "type_demande": "Réservation de table",
+  "services": "Autre",
+  "description": "Réservation table 4 personnes à 20h",
+  "statut": "nouveau",
+  "reservation": {
+    "nom": "Martin",
+    "telephone": "07 86 87 67 89",
+    "date": "YYYY-MM-DD",
+    "heure": "20:00",
+    "description": "Réservation 4 personnes",
+    "nombrePersonnes": 4,
+    "notes_internes": "",
+    "statut": "confirme"
+  },
+  "order": null
+}
+
+Exemple 6 - Info uniquement (pas de résa ni commande) :
 Transcription : "Vous êtes ouverts jusqu'à quelle heure ?"
 
 JSON :
@@ -544,21 +535,22 @@ JSON :
   "services": "Autre",
   "description": "Demande d'informations sur les horaires",
   "statut": "nouveau",
+  "reservation": null,
   "order": null
 }
 
-Exemple 6 - Réclamation (Pas de commandes) :
-Transcription : "Bonjour, Je voudrais parler à un responsable concernant : 
-Exemple : "La livraison a été retardée" ou "Le service a été mauvais" ou "Le plat a été mauvais" ou "Une intoxication alimentaire".
+Exemple 7 - Réclamation (pas de résa ni commande) :
+Transcription : "La livraison a été retardée"
 
-JSON : 
+JSON :
 {
   "nom": "Client inconnu",
   "telephone": "Non fourni",
   "type_demande": "Réclamation",
   "services": "Autre",
-  "description": "Réclamation concernant la livraison ou le service ou le plat ou l'intoxication alimentaire",
+  "description": "Réclamation concernant la livraison",
   "statut": "nouveau",
+  "reservation": null,
   "order": null
 }
 ========================================
@@ -577,7 +569,7 @@ RAPPEL FINAL - RÈGLES ABSOLUES
    → ⚠️ Si le GPT vocal demande le nom ET le client répond → TU DOIS L'EXTRAIRE
    → Seulement si VRAIMENT absent ou client refuse = "Client inconnu"
 
-3. Créer ORDER dès qu'un plat est mentionné
+3. Résa → reservation (structure Reservation). Commande → order (structure Order). Un seul des deux non null.
 
 4. Utiliser les NOMS EXACTS du menu (fourni ci-dessous)
 
@@ -594,7 +586,7 @@ Exemple : "Une pizza... Martin... pour 19h" → Nom = "Martin"
 C'est parti !
 `;
 
-// Schéma JSON strict pour l'extraction
+// Schéma JSON strict : reservation (modèle Reservation) OU order (modèle Order)
 const EXTRACTION_JSON_SCHEMA = {
   type: "object",
   additionalProperties: false,
@@ -605,17 +597,31 @@ const EXTRACTION_JSON_SCHEMA = {
     services: { type: "string" },
     description: { type: "string" },
     statut: { type: "string" },
+    reservation: {
+      type: ["object", "null"],
+      additionalProperties: false,
+      properties: {
+        nom: { type: ["string", "null"] },
+        telephone: { type: ["string", "null"] },
+        date: { type: "string" },
+        heure: { type: ["string", "null"] },
+        description: { type: ["string", "null"] },
+        nombrePersonnes: { type: "number" },
+        notes_internes: { type: ["string", "null"] },
+        statut: { type: ["string", "null"] }
+      },
+      required: ["date", "heure", "nombrePersonnes"]
+    },
     order: {
       type: ["object", "null"],
       additionalProperties: false,
       properties: {
+        nom: { type: ["string", "null"] },
+        telephone: { type: ["string", "null"] },
         date: { type: "string" },
         heure: { type: ["string", "null"] },
-        duree: { type: "number" },
-        type: { type: "string" },
-        modalite: { type: "string" },
-        nombrePersonnes: { type: ["number", "null"] },
-        description: { type: "string" },
+        description: { type: ["string", "null"] },
+        statut: { type: ["string", "null"] },
         commandes: {
           type: "array",
           items: {
@@ -630,14 +636,14 @@ const EXTRACTION_JSON_SCHEMA = {
               personnalisation: { type: ["object", "null"] },
               options: { type: ["object", "null"] }
             },
-            required: ["nom", "categorie", "quantite", "prixUnitaire"]
+            required: ["nom", "quantite"]
           }
         }
       },
-      required: ["date", "duree", "type", "modalite", "commandes"]
+      required: ["date", "heure", "commandes"]
     }
   },
-  required: ["nom", "telephone", "type_demande", "services", "description", "statut"]
+  required: ["nom", "telephone", "type_demande", "services", "description", "statut", "reservation", "order"]
 };
 
 /**
@@ -730,8 +736,11 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       callLogger.info(streamSid, "Extraction rule-based effectuée (fallback)", {
         event: "rule_based_extraction",
       });
-
-      // Convertir au format attendu
+      const { reservation, order } = appointmentToReservationOrder(
+        ruleBasedData.appointment,
+        ruleBasedData.nom,
+        ruleBasedData.telephone
+      );
       return {
         nom: ruleBasedData.nom,
         telephone: ruleBasedData.telephone || "Non fourni",
@@ -740,7 +749,8 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
         description: ruleBasedData.description,
         statut: ruleBasedData.statut,
         date: ruleBasedData.date,
-        appointment: ruleBasedData.appointment,
+        reservation,
+        order,
         extraction_rule_based: true,
       };
     }
@@ -828,6 +838,11 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
         });
 
         const ruleBasedData = extractWithRules(transcription);
+        const { reservation, order } = appointmentToReservationOrder(
+          ruleBasedData.appointment,
+          ruleBasedData.nom,
+          ruleBasedData.telephone
+        );
         return {
           nom: ruleBasedData.nom,
           telephone: ruleBasedData.telephone || "Non fourni",
@@ -836,7 +851,8 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
           description: ruleBasedData.description,
           statut: ruleBasedData.statut,
           date: ruleBasedData.date,
-          appointment: ruleBasedData.appointment,
+          reservation,
+          order,
           extraction_rule_based: true,
         };
       }
@@ -891,6 +907,7 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       transcriptionOriginal: transcription,
       transcriptionLength: transcription.length,
       extractedDataKeys: Object.keys(extractedData),
+      hasReservation: !!extractedData.reservation,
       hasOrder: !!extractedData.order,
       hasCommandes: !!(extractedData.order?.commandes?.length),
       commandesCount: extractedData.order?.commandes?.length || 0,
@@ -953,47 +970,22 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
     const validationReport = getValidationReport(extractedData, validatedData);
     
     // ===== VALIDATION HEURES CONTRE HORAIRES (AMEL-007) =====
-    if (validatedData.appointment?.heure && validatedData.appointment?.date) {
+    const slotForTime = validatedData.reservation || validatedData.order;
+    if (slotForTime?.heure && slotForTime?.date) {
       const timeValidation = await validateTimeAgainstOpeningHours(
-        validatedData.appointment.heure,
-        validatedData.appointment.date
+        slotForTime.heure,
+        slotForTime.date
       );
-      
       if (!timeValidation.isValid) {
         callLogger.warn(streamSid, "Heure hors horaires d'ouverture", {
-          heure: validatedData.appointment.heure,
-          date: validatedData.appointment.date,
+          heure: slotForTime.heure,
+          date: slotForTime.date,
           reason: timeValidation.reason,
           adjustedTime: timeValidation.adjustedTime,
           event: "time_outside_hours"
         });
-        
-        // Ajuster l'heure si possible
         if (timeValidation.adjustedTime) {
-          validatedData.appointment.heure = timeValidation.adjustedTime;
-        }
-      }
-    }
-
-    // ===== VALIDATION HEURES CONTRE HORAIRES (AMEL-007) =====
-    if (validatedData.appointment?.heure) {
-      const timeValidation = await validateTimeAgainstOpeningHours(
-        validatedData.appointment.heure,
-        validatedData.appointment.date
-      );
-      
-      if (!timeValidation.isValid) {
-        callLogger.warn(streamSid, "Heure hors horaires d'ouverture", {
-          heure: validatedData.appointment.heure,
-          date: validatedData.appointment.date,
-          reason: timeValidation.reason,
-          adjustedTime: timeValidation.adjustedTime,
-          event: "time_outside_hours",
-        });
-        
-        // Ajuster l'heure si possible
-        if (timeValidation.adjustedTime) {
-          validatedData.appointment.heure = timeValidation.adjustedTime;
+          slotForTime.heure = timeValidation.adjustedTime;
         }
       }
     }
@@ -1001,13 +993,12 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
     // ===== VALIDATION COHÉRENCE TYPE_DEMANDE (AMEL-014) =====
     const consistencyValidation = validateTypeDemandeConsistency(
       validatedData.type_demande,
-      validatedData.appointment?.commandes || []
+      validatedData.order?.commandes || []
     );
-    
     if (!consistencyValidation.isValid) {
       callLogger.warn(streamSid, "Incohérence type_demande vs commandes", {
         type_demande: validatedData.type_demande,
-        nombreCommandes: validatedData.appointment?.commandes?.length || 0,
+        nombreCommandes: validatedData.order?.commandes?.length || 0,
         errors: consistencyValidation.errors,
         event: "type_demande_inconsistency",
       });
@@ -1082,7 +1073,23 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
         extractedData: fallbackData,
         event: "rule_based_extraction_used"
       });
-      return fallbackData;
+      const { reservation, order } = appointmentToReservationOrder(
+        fallbackData.appointment,
+        fallbackData.nom,
+        fallbackData.telephone
+      );
+      return {
+        nom: fallbackData.nom,
+        telephone: fallbackData.telephone || "Non fourni",
+        type_demande: fallbackData.type_demande,
+        services: fallbackData.services,
+        description: fallbackData.description,
+        statut: fallbackData.statut,
+        date: fallbackData.date,
+        reservation,
+        order,
+        extraction_rule_based: true,
+      };
     } catch (fallbackError) {
       callLogger.error(streamSid, new Error("Échec extraction rule-based également"), {
         error: fallbackError.message,
@@ -1098,7 +1105,8 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       description: "Erreur complète d'extraction",
       statut: "nouveau",
       date: new Date(),
-      appointment: null
+      reservation: null,
+      order: null
     };
   }
 }

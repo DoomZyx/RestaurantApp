@@ -23,6 +23,12 @@ class NotificationService {
     });
   }
 
+  // Lecture defensive : @fastify/websocket peut exposer le socket via .socket ou directement
+  _isConnectionOpen(connection) {
+    const state = connection?.socket?.readyState ?? connection?.readyState;
+    return state === 1;
+  }
+
   // Envoyer une notification à tous les clients connectés
   sendNotification(type, data) {
     const notification = {
@@ -35,8 +41,7 @@ class NotificationService {
     let sentCount = 0;
     this.connections.forEach((connection) => {
       try {
-        if (connection.readyState === 1) {
-          // WebSocket.OPEN
+        if (this._isConnectionOpen(connection)) {
           connection.send(JSON.stringify(notification));
           sentCount++;
         }
@@ -44,7 +49,7 @@ class NotificationService {
         callLogger.error(null, error, {
           source: "notificationService.js",
           context: "sendNotification_websocket",
-          connectionId: connection.id,
+          connectionId: connection?.id,
         });
       }
     });
@@ -150,8 +155,7 @@ class NotificationService {
   cleanupConnections() {
     const initialCount = this.connections.size;
     this.connections.forEach((connection) => {
-      if (connection.readyState !== 1) {
-        // Pas WebSocket.OPEN
+      if (!this._isConnectionOpen(connection)) {
         this.connections.delete(connection);
       }
     });

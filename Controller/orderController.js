@@ -1,41 +1,24 @@
 import OrderModel from "../models/order.js";
-import Client from "../models/client.js";
 
-// Créer une nouvelle commande
+// Créer une nouvelle commande (sans champ client : commandes à emporter uniquement)
 export async function createOrder(request, reply) {
   try {
     const orderData = request.body;
 
-    // Si un client est fourni, vérifier son existence. Sinon, accepter un nom libre
-    let clientId = null;
-    if (orderData.client) {
-      const client = await Client.findById(orderData.client);
-      if (!client) {
-        return reply.code(404).send({ error: "Client non trouvé" });
-      }
-      clientId = client._id;
-    }
-
+    const relatedCall =
+      orderData.related_call && String(orderData.related_call).length === 24
+        ? orderData.related_call
+        : null;
     const order = await OrderModel.create({
-      client: clientId,
-      nom: !clientId ? orderData.nom || null : null,
-      telephone: !clientId && orderData.telephone ? orderData.telephone : null,
+      nom: orderData.nom || null,
+      telephone: orderData.telephone || null,
       date: orderData.date,
       heure: orderData.heure,
-      duree: orderData.duree,
-      type: orderData.type,
-      modalite: orderData.modalite,
-      nombrePersonnes: orderData.nombrePersonnes,
-      description: orderData.description,
-      notes_internes: orderData.notes_internes,
-      commandes: orderData.commandes || [], // Ajouter le champ commandes
+      commandes: orderData.commandes || [],
       statut: orderData.statut || "confirme",
       createdBy: orderData.createdBy || "manual",
-      related_call: orderData.related_call || null,
+      related_call: relatedCall,
     });
-
-    // Populer les données du client pour la réponse
-    await order.populate("client");
 
     return reply.code(201).send({
       success: true,
@@ -72,7 +55,6 @@ export async function getOrders(request, reply) {
 
     // Récupérer les commandes avec pagination
     const orders = await OrderModel.find(filter)
-      .populate("client")
       .sort({ date: -1, heure: -1 })
       .skip(skip)
       .limit(parseInt(limit));
@@ -111,7 +93,6 @@ export async function getTodayOrders(request, reply) {
     const orders = await OrderModel.find({
       date: { $gte: today, $lt: tomorrow },
     })
-      .populate("client")
       .sort({ heure: 1 });
 
     return reply.send({
@@ -132,8 +113,7 @@ export async function getOrderById(request, reply) {
   try {
     const { id } = request.params;
 
-    const order = await OrderModel.findById(id)
-      .populate("client");
+    const order = await OrderModel.findById(id);
 
     if (!order) {
       return reply.code(404).send({
@@ -164,7 +144,7 @@ export async function updateOrder(request, reply) {
       id,
       updateData,
       { new: true, runValidators: true }
-    ).populate("client");
+    );
 
     if (!order) {
       return reply.code(404).send({
@@ -195,7 +175,7 @@ export async function updateOrderStatus(request, reply) {
       id,
       { statut },
       { new: true, runValidators: true }
-    ).populate("client");
+    );
 
     if (!order) {
       return reply.code(404).send({
@@ -417,21 +397,17 @@ function normalizeModalite(raw) {
   return modaliteMap[s.toLowerCase()] || null;
 }
 
-// Types acceptés par le schéma Order (valeurs envoyées par l'agent)
-const ORDER_TYPE_VALID = new Set(["Commande à emporter", "Réservation de table"]);
-
-// Créer une commande depuis l'IA
+// Créer une commande à emporter depuis l'IA (uniquement type "Commande à emporter")
 export async function createOrderFromAI(request, reply) {
   try {
     const orderData = request.body;
 
-    // Logger les données reçues pour diagnostic
-    console.log("[createOrderFromAI] Données reçues:", {
-      orderData: JSON.stringify(orderData, null, 2),
-      hasCommandes: Array.isArray(orderData.commandes),
-      commandesCount: orderData.commandes ? orderData.commandes.length : 0,
-      commandes: orderData.commandes ? JSON.stringify(orderData.commandes, null, 2) : "[]",
-    });
+    if (orderData.type === "Réservation de table") {
+      return reply.code(400).send({
+        error:
+          "Pour une réservation, utiliser l'endpoint /api/reservations/ai/create.",
+      });
+    }
 
     const rawPhone = String(orderData.clientPhone ?? orderData.telephone ?? "").trim();
     const phoneNormalized = digitsOnly(rawPhone);
@@ -457,57 +433,17 @@ export async function createOrderFromAI(request, reply) {
       });
     }
 
-    // Recherche client existant par téléphone (pas de création de contact en restauration rapide)
-    const client = await Client.findOne({
-      $or: [
-        { telephone: rawPhone.trim() },
-        { telephone: phoneNormalized },
-        { telephone: rawPhone.replace(/\s+/g, "").replace(/-/g, "") },
-      ],
-    });
-
-    const rawType = orderData.type ?? null;
-    const orderType = ORDER_TYPE_VALID.has(rawType) ? rawType : null;
-
-    // Normaliser la modalité pour correspondre aux valeurs du modèle
-    const rawModalite = orderData.modalite ?? null;
-    const normalizedModalite = normalizeModalite(rawModalite);
-
-    // Créer la commande : avec client si trouvé, sinon sans client (nom et téléphone uniquement)
     const orderToCreate = {
-      client: client?._id ?? null,
-      nom: client ? null : (orderData.name || "Client").trim() || null,
-      telephone: !client && rawPhone ? rawPhone.trim() : null,
+      nom: (orderData.name || "Client").trim() || null,
+      telephone: rawPhone.trim(),
       date: orderDate,
       heure: heureNormalized,
-      duree: orderData.duration ?? orderData.duree ?? 60,
-      type: orderType,
-      modalite: normalizedModalite,
-      description: orderData.description ?? null,
       commandes: orderData.commandes || [],
       statut: "confirme",
       createdBy: "system",
     };
 
-    // Logger la commande qui va être créée
-    console.log("[createOrderFromAI] Commande à créer:", {
-      orderToCreate: JSON.stringify(orderToCreate, null, 2),
-      commandesCount: orderToCreate.commandes.length,
-      commandes: JSON.stringify(orderToCreate.commandes, null, 2),
-    });
-
     const order = await OrderModel.create(orderToCreate);
-
-    if (order.client) {
-      await order.populate("client");
-    }
-
-    // Logger la commande créée
-    console.log("[createOrderFromAI] Commande créée avec succès:", {
-      orderId: order._id,
-      commandesCount: order.commandes ? order.commandes.length : 0,
-      commandes: order.commandes ? JSON.stringify(order.commandes, null, 2) : "[]",
-    });
 
     return reply.code(201).send({
       success: true,
