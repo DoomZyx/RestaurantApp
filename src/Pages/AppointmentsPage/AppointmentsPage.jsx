@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { useState, useMemo, useRef, useCallback } from "react";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import { useAppointments } from "../../Hooks/Appointments/useAppointments";
+import { useConfiguration } from "../../Hooks/Configuration/useConfiguration";
+import { getCurrentService } from "../../utils/serviceUtils";
 import AppLayout from "../../Components/Layout/AppLayout";
 import { AppointmentsFilters } from "../../Components/Appointments/AppointmentsFilters";
 import { AppointmentsList } from "../../Components/Appointments/AppointmentsList";
@@ -27,8 +29,16 @@ function getOrderTotal(appointment) {
 
 function AppointmentsPage() {
   const { t } = useTranslation();
+  const { pricing } = useConfiguration();
   const [activeService, setActiveService] = useState("midi"); // "midi" ou "soir"
   const [dragOverZone, setDragOverZone] = useState(null);
+
+  useEffect(() => {
+    const horaires = pricing?.restaurantInfo?.horairesOuverture;
+    if (!horaires) return;
+    const current = getCurrentService(horaires, new Date());
+    if (current?.service) setActiveService(current.service);
+  }, [pricing]);
   const [touchDraggingId, setTouchDraggingId] = useState(null);
   const [dragPreviewPosition, setDragPreviewPosition] = useState(null);
   const touchDragJustEndedRef = useRef(false);

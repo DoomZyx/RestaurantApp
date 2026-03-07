@@ -34,7 +34,7 @@ Séparer toute la logique métier (états, requêtes API, fonctions) des composa
 **Résultat** :
 - Composant : 92 lignes (pure rendu visuel)
 - Hook : Contient toute la logique + utilitaires
-- **Architecture modulaire** : Utilise 4 sous-hooks (useContactsSearch, useContactsModal, useContactsSelection, useOrderForm)
+- **Architecture modulaire** : (page Contacts/fournisseurs supprimée)
 
 ---
 

@@ -12,7 +12,6 @@ import Profile from "./Pages/Profile/Profile";
 import Admin from "./Pages/Admin/Admin";
 import AppointmentsPage from "./Pages/AppointmentsPage/AppointmentsPage";
 import ReservationsPage from "./Pages/ReservationsPage/ReservationsPage";
-import ContactsPage from "./Pages/ContactsPage/ContactsPage";
 import Configuration from "./Pages/Configuration/Configuration";
 
 function App() {
@@ -79,14 +78,6 @@ function App() {
           element={
             <ProtectedRoute>
               <ReservationsPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/contacts"
-          element={
-            <ProtectedRoute>
-              <ContactsPage />
             </ProtectedRoute>
           }
         />

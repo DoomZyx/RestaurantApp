@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchTodayOrders, fetchTodayReservations } from "../../API/Appointment/api";
 import { fetchPricing } from "../../API/Pricing/api";
+import { getCurrentService, filterItemsByCurrentService } from "../../utils/serviceUtils";
 
 const ORDER_STATUS_LABELS = {
   confirme: "Confirmée",
@@ -34,39 +35,6 @@ function mapReservationToActive(r) {
     guests: r.nombrePersonnes ?? 1,
     table: r.table ?? null,
   };
-}
-
-const JOURS_FR = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
-
-/**
- * Retourne le service en cours (midi ou soir) selon l'heure actuelle et les horaires du jour.
- * Si on est hors créneau, retourne null.
- */
-function getCurrentService(horairesOuverture, now) {
-  if (!horairesOuverture) return null;
-  const jour = JOURS_FR[now.getDay()];
-  const horaire = horairesOuverture[jour];
-  if (!horaire || horaire.ouvert === false) return null;
-
-  const nowMinutes = now.getHours() * 60 + now.getMinutes();
-
-  if (horaire.midi?.ouverture && horaire.midi?.fermeture) {
-    const [moH, moM] = horaire.midi.ouverture.split(":").map(Number);
-    const [mfH, mfM] = horaire.midi.fermeture.split(":").map(Number);
-    const midiStart = moH * 60 + moM;
-    const midiEnd = mfH * 60 + mfM;
-    if (nowMinutes >= midiStart && nowMinutes <= midiEnd) return { service: "midi", start: midiStart, end: midiEnd };
-  }
-
-  if (horaire.soir?.ouverture && horaire.soir?.fermeture) {
-    const [soH, soM] = horaire.soir.ouverture.split(":").map(Number);
-    const [sfH, sfM] = horaire.soir.fermeture.split(":").map(Number);
-    const soirStart = soH * 60 + soM;
-    const soirEnd = sfH * 60 + sfM;
-    if (nowMinutes >= soirStart && nowMinutes <= soirEnd) return { service: "soir", start: soirStart, end: soirEnd };
-  }
-
-  return null;
 }
 
 /**
@@ -162,21 +130,7 @@ export function useDashboard() {
           ? reservationsRes.value.data
           : [];
 
-      const activeOrderList = orders
-        .filter((o) => o.statut !== "annule")
-        .map(mapOrderToActive);
-      setActiveOrders(activeOrderList);
-
-      const activeResList = reservations
-        .filter((r) => r.statut !== "annule" && r.statut !== "termine")
-        .map(mapReservationToActive);
-      setActiveReservations(activeResList);
-
       const now = new Date();
-      const nowMinutes = now.getHours() * 60 + now.getMinutes();
-      const radar = buildRadarEvents(orders, reservations, nowMinutes, 60);
-      setRadarEvents(radar);
-
       let totalCapacity = 0;
       const horairesOuverture =
         pricingRes.status === "fulfilled" && pricingRes.value?.success
@@ -186,6 +140,27 @@ export function useDashboard() {
         totalCapacity = pricingRes.value.data?.restaurantInfo?.nombreCouverts ?? 0;
       }
       const currentService = getCurrentService(horairesOuverture, now);
+
+      const ordersForService = currentService
+        ? filterItemsByCurrentService(orders.filter((o) => o.statut !== "annule"), currentService)
+        : [];
+      const reservationsForService = currentService
+        ? filterItemsByCurrentService(
+            reservations.filter((r) => r.statut !== "annule" && r.statut !== "termine"),
+            currentService
+          )
+        : [];
+
+      const activeOrderList = ordersForService.map(mapOrderToActive);
+      setActiveOrders(activeOrderList);
+
+      const activeResList = reservationsForService.map(mapReservationToActive);
+      setActiveReservations(activeResList);
+
+      const nowMinutes = now.getHours() * 60 + now.getMinutes();
+      const radar = buildRadarEvents(ordersForService, reservationsForService, nowMinutes, 60);
+      setRadarEvents(radar);
+
       const occupied = Math.min(
         getOccupiedForCurrentService(reservations, currentService),
         totalCapacity

@@ -69,7 +69,7 @@ export function CallTable({
                     title="Cliquer pour voir les détails"
                   >
                     <td className="client-name">
-                      {call.client ? getClientFullName(call.client) : "Aucun fournisseur associé"}
+                      {call.client ? getClientFullName(call.client) : "Aucun client associé"}
                     </td>
                     <td className="phone-number">{call.client ? getClientPhone(call.client) : "-"}</td>
                     <td className="call-type">{call.type_demande}</td>

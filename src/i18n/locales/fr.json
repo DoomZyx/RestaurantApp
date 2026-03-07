@@ -50,7 +50,6 @@
     "dashboard": "TABLEAU DE BORD",
     "orders": "COMMANDES",
     "reservations": "RÉSERVATIONS",
-    "suppliers": "FOURNISSEURS",
     "configuration": "CONFIGURATION",
     "myAccount": "MON COMPTE",
     "adminPanel": "ADMIN",
@@ -243,37 +242,6 @@
       "phoneRequired": "Le téléphone est requis",
       "invalidPhone": "Format de téléphone invalide",
       "invalidEmail": "Format d'email invalide"
-    }
-  },
-  "contactsPage": {
-    "newSupplier": "Nouveau Fournisseur",
-    "statuses": {
-      "new": "Nouveau",
-      "inProgress": "En cours",
-      "completed": "Terminé",
-      "cancelled": "Annulé"
-    }
-  },
-  "contactsList": {
-    "supplierList": "Liste des fournisseurs"
-  },
-  "contactDetails": {
-    "selectSupplier": "Sélectionnez un fournisseur",
-    "selectSupplierDescription": "Cliquez sur un fournisseur dans la liste pour commander des ingrédients"
-  },
-  "contacts": {
-    "title": "Fournisseurs",
-    "searchPlaceholder": "Rechercher un fournisseur...",
-    "addContact": "Ajouter un fournisseur",
-    "noContacts": "Aucun fournisseur trouvé",
-    "loading": "Chargement des fournisseurs...",
-    "details": {
-      "name": "Nom",
-      "company": "Entreprise",
-      "phone": "Téléphone",
-      "email": "Email",
-      "address": "Adresse",
-      "notes": "Notes"
     }
   },
   "configuration": {

@@ -85,9 +85,6 @@ function Menu() {
             <Link to="/reservations" onClick={closeMenu}>
               <i className="bi bi-calendar-check"></i> <h3>{t('menu.reservations')}</h3>
             </Link>
-            <Link to="/contacts" onClick={closeMenu}>
-              <i className="bi bi-people"></i> <h3>{t('menu.suppliers')}</h3>
-            </Link>
             <Link to="/configuration" onClick={closeMenu}>
               <i className="bi bi-gear"></i> <h3>{t('menu.configuration')}</h3>
             </Link>

@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { useState, useMemo, useRef, useCallback } from "react";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import { useAppointments } from "../../Hooks/Appointments/useAppointments";
 import { useConfiguration } from "../../Hooks/Configuration/useConfiguration";
+import { getCurrentService } from "../../utils/serviceUtils";
 import AppLayout from "../../Components/Layout/AppLayout";
 import { AppointmentsFilters } from "../../Components/Appointments/AppointmentsFilters";
 import { AppointmentsList } from "../../Components/Appointments/AppointmentsList";
@@ -25,14 +26,21 @@ const ZONE_STATUS = {
 
 function ReservationsPage() {
   const { t } = useTranslation();
+  const { pricing } = useConfiguration();
   const [activeService, setActiveService] = useState("midi");
   const [dragOverZone, setDragOverZone] = useState(null);
+
+  useEffect(() => {
+    const horaires = pricing?.restaurantInfo?.horairesOuverture;
+    if (!horaires) return;
+    const current = getCurrentService(horaires, new Date());
+    if (current?.service) setActiveService(current.service);
+  }, [pricing]);
   const [touchDraggingId, setTouchDraggingId] = useState(null);
   const [dragPreviewPosition, setDragPreviewPosition] = useState(null);
   const touchDragJustEndedRef = useRef(false);
   const touchDraggingIdRef = useRef(null);
   const dragOverZoneRef = useRef(null);
-  const { pricing } = useConfiguration();
 
   function getZoneAtPoint(clientX, clientY) {
     const el = document.elementFromPoint(clientX, clientY);

@@ -50,7 +50,6 @@
     "dashboard": "DASHBOARD",
     "orders": "ORDERS",
     "reservations": "RESERVATIONS",
-    "suppliers": "SUPPLIERS",
     "configuration": "CONFIGURATION",
     "myAccount": "MY ACCOUNT",
     "adminPanel": "ADMIN",
@@ -246,37 +245,6 @@
       "phoneRequired": "Phone is required",
       "invalidPhone": "Invalid phone format",
       "invalidEmail": "Invalid email format"
-    }
-  },
-  "contactsPage": {
-    "newSupplier": "New Supplier",
-    "statuses": {
-      "new": "New",
-      "inProgress": "In progress",
-      "completed": "Completed",
-      "cancelled": "Cancelled"
-    }
-  },
-  "contactsList": {
-    "supplierList": "Supplier list"
-  },
-  "contactDetails": {
-    "selectSupplier": "Select a supplier",
-    "selectSupplierDescription": "Click on a supplier in the list to order ingredients"
-  },
-  "contacts": {
-    "title": "Suppliers",
-    "searchPlaceholder": "Search supplier...",
-    "addContact": "Add supplier",
-    "noContacts": "No suppliers found",
-    "loading": "Loading suppliers...",
-    "details": {
-      "name": "Name",
-      "company": "Company",
-      "phone": "Phone",
-      "email": "Email",
-      "address": "Address",
-      "notes": "Notes"
     }
   },
   "configuration": {
