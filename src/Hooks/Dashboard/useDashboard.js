@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchTodayOrders, fetchTodayReservations } from "../../API/Appointment/api";
-import { fetchCallsByDate } from "../../API/Calls/api";
 import { fetchPricing } from "../../API/Pricing/api";
 
 const ORDER_STATUS_LABELS = {
@@ -145,12 +144,10 @@ export function useDashboard() {
     try {
       setLoading(true);
       setError(null);
-      const today = new Date().toISOString().split("T")[0];
 
-      const [ordersRes, reservationsRes, callsRes, pricingRes] = await Promise.allSettled([
+      const [ordersRes, reservationsRes, pricingRes] = await Promise.allSettled([
         fetchTodayOrders(),
         fetchTodayReservations(),
-        fetchCallsByDate(),
         fetchPricing(),
       ]);
 
@@ -195,15 +192,8 @@ export function useDashboard() {
       );
       setCapacity({ occupied, total: totalCapacity });
 
-      let callsHandled = 0;
-      if (callsRes.status === "fulfilled" && callsRes.value?.data) {
-        const data = Array.isArray(callsRes.value.data) ? callsRes.value.data : [];
-        callsHandled = data
-          .filter((item) => item.date === today)
-          .reduce((sum, item) => sum + (item.count || 0), 0);
-      }
       setAgentStats({
-        callsHandled,
+        callsHandled: orders.length + reservations.length,
         ordersCreated: orders.length,
         reservationsCreated: reservations.length,
       });

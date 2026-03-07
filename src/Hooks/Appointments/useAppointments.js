@@ -331,6 +331,7 @@ export function useAppointments(mode = "orders") {
 
   // Callback pour rafraîchir quand une nouvelle commande arrive via WebSocket
   const handleNewOrder = useCallback((notificationData) => {
+    console.log("[useAppointments] handleNewOrder appele, refetch listes");
     if (loadAppointmentsRef.current) {
       loadAppointmentsRef.current(paginationRef.current.page, paginationRef.current.limit, filtersRef.current);
     }
@@ -340,12 +341,30 @@ export function useAppointments(mode = "orders") {
   }, []);
 
   // Connecter au WebSocket centralisé
-  const { isConnected, subscribe } = useWebSocket();
-  
+  const { isConnected, subscribe, lastOrderNotificationAt } = useWebSocket();
+  const lastRefetchedForNotifRef = useRef(null);
+
   useEffect(() => {
     const unsubscribe = subscribe("order", handleNewOrder);
+    console.log("[useAppointments] abonne au WS type=order");
     return () => unsubscribe();
   }, [subscribe, handleNewOrder]);
+
+  // Refetch quand une notif commande/resa arrive (meme si on n'etait pas sur la page au moment de la notif)
+  useEffect(() => {
+    if (lastOrderNotificationAt == null || lastOrderNotificationAt === lastRefetchedForNotifRef.current) return;
+    lastRefetchedForNotifRef.current = lastOrderNotificationAt;
+    console.log("[useAppointments] refetch suite a lastOrderNotificationAt");
+    const t = setTimeout(() => {
+      if (loadAppointmentsRef.current) {
+        loadAppointmentsRef.current(paginationRef.current.page, paginationRef.current.limit, filtersRef.current);
+      }
+      if (loadTodayAppointmentsRef.current) {
+        loadTodayAppointmentsRef.current();
+      }
+    }, 0);
+    return () => clearTimeout(t);
+  }, [lastOrderNotificationAt]);
 
   // Fonctions utilitaires
   const getAppointmentsByStatus = useCallback(

@@ -8,17 +8,17 @@
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: var(--color-text-primary);
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     cursor: pointer;
     padding: 0.625rem;
-    border-radius: 50%;
+    border-radius: 100%;
     transition: all var(--transition-fast);
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
     width: 42px;
-    height: 20px;
+    height: 42px;
 
     &:hover {
       background: rgba(255, 255, 255, 0.5);

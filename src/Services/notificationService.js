@@ -77,11 +77,9 @@ class NotificationService {
 
     // Ajouter au début de la liste (max 20 pour garder plus d'historique)
     this.notifications = [newNotification, ...this.notifications.slice(0, 19)];
-    
+    console.log("[Notifications] addNotification:", this.notifications.length, "total, titre:", newNotification.title);
     // Notifier les écouteurs
     this.notifyListeners();
-
-    // Plus d'auto-suppression, les notifications restent jusqu'à ce qu'on les supprime manuellement
 
     return newNotification;
   }
@@ -129,10 +127,14 @@ class NotificationService {
   }
 
   /**
-   * Notifie tous les écouteurs des changements
+   * Notifie tous les écouteurs des changements (copie du tableau pour forcer le re-render React)
    */
   notifyListeners() {
-    this.listeners.forEach(listener => listener(this.notifications));
+    const snapshot = [...this.notifications];
+    if (this.listeners.length > 0) {
+      console.log("[Notifications] notifyListeners:", this.listeners.length, "listeners,", snapshot.length, "notifs");
+    }
+    this.listeners.forEach(listener => listener(snapshot));
   }
 
   /**
@@ -140,17 +142,21 @@ class NotificationService {
    * @param {Object} notificationData - Données de notification du WebSocket
    */
   async triggerSystemNotification(notificationData) {
+    if (!notificationData || typeof notificationData !== "object") {
+      console.warn("[Notifications] triggerSystemNotification ignore: donnees invalides", notificationData);
+      return;
+    }
+
+    const { title, message, priority, details } = notificationData;
+    console.log("[Notifications] triggerSystemNotification:", title ?? "(sans titre)");
+    // Mise à jour de l'UI en premier pour que la liste s'affiche même si son/desktop échoue
+    this.addNotification(notificationData);
+
     if (!this.isInitialized) {
       await this.initialize();
     }
 
     try {
-      const { title, message, priority, details } = notificationData;
-
-      // Ajouter la notification à la liste pour l'UI
-      this.addNotification(notificationData);
-
-      // Jouer un son selon la priorité
       const soundType =
         priority === "error"
           ? "urgent"
@@ -158,15 +164,18 @@ class NotificationService {
           ? "success"
           : "normal";
       await this.playNotificationSound(soundType);
+    } catch (e) {
+      // Ignorer les erreurs son (politique navigateur, etc.)
+    }
 
-      // Afficher une notification desktop
-      await this.showDesktopNotification(title, message, {
+    try {
+      await this.showDesktopNotification(title || "Notification", message || "", {
         urgent: priority === "error",
         body: message,
         data: details,
       });
-
-    } catch (error) {
+    } catch (e) {
+      // Ignorer les erreurs desktop (permission refusée, etc.)
     }
   }
 

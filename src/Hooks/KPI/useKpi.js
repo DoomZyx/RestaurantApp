@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { fetchCallsByDate } from '../../API/Calls/api.js';
 import { fetchTodayReservations, fetchTodayOrders } from '../../API/Appointment/api.js';
 import { fetchPricing } from '../../API/Pricing/api.js';
-// import { getAllSupplierOrders } from '../../API/SupplierOrders/api.js'; // Désactivé : route non implémentée
 
 export function useKpi() {
   const [kpiData, setKpiData] = useState({
@@ -17,165 +15,103 @@ export function useKpi() {
     remainingSeats: null
   });
   const [todayOrders, setTodayOrders] = useState([]);
-  const [upcomingOrders, setUpcomingOrders] = useState([]); // Commandes dans les 15 prochaines minutes
+  const [upcomingOrders, setUpcomingOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const calculateKpiFromData = (callsData) => {
-    const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = yesterday.toISOString().split('T')[0];
-
-
-    // Initialisation des compteurs
-    const stats = {
-      totalNouveau: 0,
-      totalEnCours: 0,
-      totalTermine: 0,
-      totalAnnule: 0,
-      newToday: 0,
-      pendingOld: 0
-    };
-
-    callsData.forEach(item => {
-      
-      // Comptage UNIQUEMENT pour aujourd'hui
-      if (item.date === today) {
-        
-        switch(item.statut) {
-          case 'nouveau':
-            stats.totalNouveau += item.count;
-            break;
-          case 'en_cours':
-            stats.totalEnCours += item.count;
-            break;
-          case 'termine':
-            stats.totalTermine += item.count;
-            break;
-          case 'annule':
-            stats.totalAnnule += item.count;
-            break;
-        }
-        
-        // Toutes les nouvelles demandes d'aujourd'hui
-        stats.newToday += item.count;
-      } else {
-      }
-
-      // Demandes en cours depuis plus de 24h
-      if (item.statut === 'en_cours' && item.date < yesterdayStr) {
-        stats.pendingOld += item.count;
-      }
-    });
-
-    return stats;
-  };
 
   const loadKpiData = async () => {
     try {
       setLoading(true);
       setError(null);
-      
-      // Charger les données d'appels
-      const response = await fetchCallsByDate();
-      let calculatedKpi = {};
-      if (response.success) {
-        calculatedKpi = calculateKpiFromData(response.data);
-      } else {
-        throw new Error('Erreur lors du chargement des données');
+
+      const [reservationsRes, ordersRes, pricingRes] = await Promise.allSettled([
+        fetchTodayReservations(),
+        fetchTodayOrders(),
+        fetchPricing()
+      ]);
+
+      const reservations = (reservationsRes.status === 'fulfilled' && reservationsRes.value?.success && Array.isArray(reservationsRes.value.data))
+        ? reservationsRes.value.data.map(r => ({ ...r, type: 'Réservation de table', modalite: 'Sur place' }))
+        : [];
+      const ordersList = (ordersRes.status === 'fulfilled' && ordersRes.value?.success && Array.isArray(ordersRes.value.data))
+        ? ordersRes.value.data.map(o => ({ ...o, type: 'Commande à emporter', modalite: o.modalite || 'À emporter' }))
+        : [];
+      const orders = [...reservations, ...ordersList];
+      setTodayOrders(orders);
+
+      let capacity = null;
+      if (pricingRes.status === 'fulfilled' && pricingRes.value?.success) {
+        capacity = pricingRes.value.data?.restaurantInfo?.nombreCouverts ?? null;
       }
 
-      // Charger réservations + commandes du jour + capacité en parallèle
-      try {
-        const [reservationsRes, ordersRes, pricingRes] = await Promise.allSettled([
-          fetchTodayReservations(),
-          fetchTodayOrders(),
-          fetchPricing()
-        ]);
+      const takeAwayCount = orders.filter(o => o.type === 'Commande à emporter').length;
+      const reservationOrders = orders.filter(o =>
+        o.type === 'Réservation de table' &&
+        o.statut !== 'annule' &&
+        o.statut !== 'termine'
+      );
+      const reservationCount = reservationOrders.length;
+      const reservedSeats = reservationOrders
+        .map(o => Number(o.nombrePersonnes) || 0)
+        .reduce((a, b) => a + b, 0);
+      const remainingSeats = capacity == null ? null : Math.max(capacity - reservedSeats, 0);
 
-        const reservations = (reservationsRes.status === 'fulfilled' && reservationsRes.value?.success && Array.isArray(reservationsRes.value.data))
-          ? reservationsRes.value.data.map(r => ({ ...r, type: 'Réservation de table', modalite: 'Sur place' }))
-          : [];
-        const ordersList = (ordersRes.status === 'fulfilled' && ordersRes.value?.success && Array.isArray(ordersRes.value.data))
-          ? ordersRes.value.data.map(o => ({ ...o, type: 'Commande à emporter', modalite: o.modalite || 'À emporter' }))
-          : [];
-        const orders = [...reservations, ...ordersList];
-        setTodayOrders(orders);
+      const totalNouveau = orders.filter(o => o.statut === 'confirme' || o.statut === 'planifie').length;
+      const totalEnCours = orders.filter(o => o.statut === 'en_cours').length;
+      const totalTermine = orders.filter(o => o.statut === 'termine').length;
+      const totalAnnule = orders.filter(o => o.statut === 'annule').length;
 
-        // Capacité totale (nombre de couverts)
-        let capacity = null;
-        if (pricingRes.status === 'fulfilled' && pricingRes.value?.success) {
-          capacity = pricingRes.value.data?.restaurantInfo?.nombreCouverts ?? null;
-        }
+      const now = new Date();
+      const in15Minutes = new Date(now.getTime() + 15 * 60 * 1000);
 
-       // Calculer les métriques du jour
-       const takeAwayCount = orders.filter(o => o.type === 'Commande à emporter').length;
-       const reservationOrders = orders.filter(o => 
-         o.type === 'Réservation de table' && 
-         o.statut !== 'annule' && 
-         o.statut !== 'termine'
-       );
-       const reservationCount = reservationOrders.length;
-       const reservedSeats = reservationOrders
-         .map(o => Number(o.nombrePersonnes) || 0)
-         .reduce((a, b) => a + b, 0);
-       const remainingSeats = capacity == null ? null : Math.max(capacity - reservedSeats, 0);
+      const upcoming = orders
+        .filter(order => {
+          if (order.statut === 'annule' || order.statut === 'termine') return false;
+          const orderDateTime = new Date(order.date);
+          const [hours, minutes] = (order.heure || '').split(':').map(Number);
+          if (Number.isNaN(hours)) return false;
+          orderDateTime.setHours(hours, minutes, 0, 0);
+          return orderDateTime >= now && orderDateTime <= in15Minutes;
+        })
+        .sort((a, b) => {
+          const timeA = new Date(a.date);
+          const [hoursA, minutesA] = (a.heure || '').split(':').map(Number);
+          timeA.setHours(hoursA, minutesA, 0, 0);
+          const timeB = new Date(b.date);
+          const [hoursB, minutesB] = (b.heure || '').split(':').map(Number);
+          timeB.setHours(hoursB, minutesB, 0, 0);
+          return timeA - timeB;
+        })
+        .slice(0, 5);
 
-        // Calculer les commandes dans les 15 prochaines minutes
-        const now = new Date();
-        const in15Minutes = new Date(now.getTime() + 15 * 60 * 1000);
-        
-        const upcoming = orders
-          .filter(order => {
-            // Seulement les commandes confirmées ou en cours
-            if (order.statut === 'annule' || order.statut === 'termine') return false;
-            
-            // Construire la date/heure de la commande
-            const orderDateTime = new Date(order.date);
-            const [hours, minutes] = order.heure.split(':').map(Number);
-            orderDateTime.setHours(hours, minutes, 0, 0);
-            
-            // Vérifier si la commande est dans les 15 prochaines minutes
-            return orderDateTime >= now && orderDateTime <= in15Minutes;
-          })
-          .sort((a, b) => {
-            // Trier par heure
-            const timeA = new Date(a.date);
-            const [hoursA, minutesA] = a.heure.split(':').map(Number);
-            timeA.setHours(hoursA, minutesA, 0, 0);
-            
-            const timeB = new Date(b.date);
-            const [hoursB, minutesB] = b.heure.split(':').map(Number);
-            timeB.setHours(hoursB, minutesB, 0, 0);
-            
-            return timeA - timeB;
-          })
-          .slice(0, 5); // Limiter à 5 commandes max
-        
-        setUpcomingOrders(upcoming);
+      setUpcomingOrders(upcoming);
 
-        // Fusionner les métriques dans kpiData
-        setKpiData(prev => ({
-          ...calculatedKpi,
-          takeAwayCount,
-          reservationCount,
-          remainingSeats
-        }));
-      } catch (ordersErr) {
-        // Ne pas faire échouer tout le KPI si cette partie échoue
-        setTodayOrders([]);
-        setUpcomingOrders([]);
-        setKpiData(prev => ({
-          ...calculatedKpi,
-          takeAwayCount: 0,
-          reservationCount: 0,
-          remainingSeats: null
-        }));
-      }
-
+      setKpiData({
+        totalNouveau,
+        totalEnCours,
+        totalTermine,
+        totalAnnule,
+        newToday: orders.length,
+        pendingOld: 0,
+        takeAwayCount,
+        reservationCount,
+        remainingSeats
+      });
     } catch (err) {
-      setError(err.message);
+      setError(err?.message);
+      setTodayOrders([]);
+      setUpcomingOrders([]);
+      setKpiData({
+        totalNouveau: 0,
+        totalEnCours: 0,
+        totalTermine: 0,
+        totalAnnule: 0,
+        newToday: 0,
+        pendingOld: 0,
+        takeAwayCount: 0,
+        reservationCount: 0,
+        remainingSeats: null
+      });
     } finally {
       setLoading(false);
     }

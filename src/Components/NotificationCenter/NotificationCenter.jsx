@@ -93,19 +93,24 @@ const NotificationCenter = () => {
   };
 
   useEffect(() => {
-    // S'abonner aux notifications du service
+    console.log("[NotificationCenter] souscription au service, init:", notificationService.notifications.length);
     const unsubscribe = notificationService.subscribe((newNotifications) => {
+      console.log("[NotificationCenter] liste mise a jour:", newNotifications?.length ?? 0, "notifs");
       setNotifications(newNotifications);
     });
+    setNotifications([...notificationService.notifications]);
 
-    // Charger les notifications initiales
-    setNotifications(notificationService.notifications);
-
-    // Se désabonner au démontage
     return () => {
       unsubscribe();
     };
   }, []);
+
+  // Resynchroniser la liste avec le service à chaque reconnexion WebSocket
+  useEffect(() => {
+    if (isConnected) {
+      setNotifications([...notificationService.notifications]);
+    }
+  }, [isConnected]);
 
   // Compter les notifications non lues
   const unreadCount = notifications.filter(n => !n.read).length;
