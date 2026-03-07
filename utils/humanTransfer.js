@@ -145,6 +145,56 @@ function escapeXmlText(str) {
     .replace(/'/g, "&apos;");
 }
 
+/** Message joué avant raccrochage pour silence prolongé */
+const SILENCE_HANGUP_MESSAGE = "Nous n'avons pas détecté de réponse, au revoir.";
+
+/**
+ * TwiML pour jouer le message de fin puis raccrocher (silence prolongé).
+ * @returns {string} TwiML XML
+ */
+function buildSilenceHangupTwiml() {
+  const text = escapeXmlText(SILENCE_HANGUP_MESSAGE);
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say language="fr-FR">${text}</Say>
+  <Hangup/>
+</Response>`;
+}
+
+/**
+ * Raccroche l'appel après silence prolongé : joue un message court puis hangup.
+ * @param {string} callSid - SID de l'appel Twilio
+ * @returns {Promise<boolean>} true si la mise à jour a été envoyée, false sinon
+ */
+export async function hangupDueToSilence(callSid) {
+  if (!callSid) return false;
+  const twiml = buildSilenceHangupTwiml();
+  const client = getTwilioClient();
+  if (!client) {
+    callLogger.warn(null, "Raccrochage silence impossible : Twilio non configuré", {
+      callSid,
+      event: "SILENCE_HANGUP",
+    });
+    return false;
+  }
+  try {
+    await client.calls(callSid).update({ twiml });
+    callLogger.info(null, "SILENCE_HANGUP", {
+      callSid,
+      event: "SILENCE_HANGUP",
+      message: SILENCE_HANGUP_MESSAGE,
+    });
+    return true;
+  } catch (err) {
+    callLogger.error(null, err, {
+      callSid,
+      event: "SILENCE_HANGUP",
+      context: "hangupDueToSilence",
+    });
+    return false;
+  }
+}
+
 /**
  * Transfère l'appel vers le numéro du restaurant (TwiML Say + Dial).
  * Log l'événement TRANSFER_TO_HUMAN_TRIGGERED.

@@ -9,13 +9,19 @@ import { ErrorHandler } from "./openai/ErrorHandler.js";
 /**
  * Gestionnaire principal des messages OpenAI
  * Orchestre tous les handlers spécialisés pour traiter les événements du WebSocket OpenAI
+ * @param {string|null} streamSid
+ * @param {import("ws").WebSocket} connection
+ * @param {*} callLogger
+ * @param {import("ws").WebSocket} openAiWs
+ * @param {(() => void) | null} [onUserVoiceActivity] - Callback appelé à chaque activité vocale client (silence monitor)
  */
 export class OpenAIHandler {
-  constructor(streamSid, connection, callLogger, openAiWs) {
+  constructor(streamSid, connection, callLogger, openAiWs, onUserVoiceActivity) {
     this.streamSid = streamSid;
     this.connection = connection;
     this.callLogger = callLogger;
     this.openAiWs = openAiWs;
+    this.onUserVoiceActivity = typeof onUserVoiceActivity === "function" ? onUserVoiceActivity : null;
 
     // État partagé entre tous les handlers
     this.state = {
@@ -93,6 +99,7 @@ export class OpenAIHandler {
         break;
 
       case "input_audio_buffer.speech_started":
+        this.onUserVoiceActivity?.();
         this.bargeInHandler.handleUserSpeechStarted();
         break;
 
@@ -105,6 +112,7 @@ export class OpenAIHandler {
         break;
 
       case "conversation.item.input_audio_transcription.completed":
+        this.onUserVoiceActivity?.();
         this.transcriptionHandler.handleUserTranscription(data);
         break;
 

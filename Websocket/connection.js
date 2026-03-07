@@ -2,10 +2,12 @@ import { createOpenAiSession } from "../Services/gptServices/gptServices.js";
 import WebSocket from "ws";
 import dotenv from "dotenv";
 import { callLogger } from "../Services/logging/logger.js";
-import { registerStream, unregisterStream } from "../Services/streamRegistry.js";
+import { registerStream, unregisterStream, getCallSid } from "../Services/streamRegistry.js";
 import { OpenAIHandler } from "./handlers/OpenAIHandler.js";
 import { TwilioHandler } from "./handlers/TwilioHandler.js";
 import { TranscriptionHandler } from "./handlers/TranscriptionHandler.js";
+import { SilenceMonitor } from "./SilenceMonitor.js";
+import { hangupDueToSilence } from "../utils/humanTransfer.js";
 import { cleanAudio, checkRNNoiseAvailability } from "../Services/audioProcessing/audioCleaningService.js";
 import { recordAudioChunk } from "../Services/audioProcessing/audioRecordingService.js";
 
@@ -43,13 +45,30 @@ export async function handleWebSocketConnection(connection, request) {
     let streamSid = null;
     let closeTimeout = null;
     const callStartTime = Date.now();
+    const CALL_WARNING_AT_MS = 4 * 60 * 1000;  // 4 min : avertissement client
+    const CALL_MAX_DURATION_MS = 5 * 60 * 1000; // 5 min : raccrochage automatique
+    let callWarningTimeout = null;
+    let callHangupTimeout = null;
     let openAIHandler = null;
     let twilioHandler = null;
     let transcriptionHandler = null;
+    let silenceMonitor = null;
     let audioChunkCount = 0;
     let audioChunkCountCleaned = 0;
-    
+
     const rnnoiseAvailable = await getRnnoiseAvailable();
+
+    silenceMonitor = new SilenceMonitor({
+      getCallSid,
+      onSilenceTimeout: async (sid) => {
+        const callSid = getCallSid(sid);
+        if (callSid) {
+          callLogger.info(sid, "Silence prolongé détecté - raccrochage", { event: "SILENCE_TIMEOUT" });
+          await hangupDueToSilence(callSid);
+        }
+      },
+      silenceTimeoutMs: undefined,
+    });
 
 
 
@@ -61,7 +80,8 @@ export async function handleWebSocketConnection(connection, request) {
     );
 
     // Handlers créés dès la connexion (streamSid = null) pour recevoir media avant "start"
-    openAIHandler = new OpenAIHandler(null, connection, callLogger, openAiWs);
+    const onUserVoiceActivity = () => silenceMonitor?.onUserVoiceActivity();
+    openAIHandler = new OpenAIHandler(null, connection, callLogger, openAiWs, /** @type {(() => void) | null} */ (onUserVoiceActivity));
     twilioHandler = new TwilioHandler(
       null,
       callLogger,
@@ -86,9 +106,33 @@ export async function handleWebSocketConnection(connection, request) {
           openAIHandler.setStreamSid(streamSid);
           twilioHandler.setStreamSid(streamSid);
           transcriptionHandler.setStreamSid(streamSid);
+          silenceMonitor.start(streamSid);
           twilioHandler.handleMessage(data);
           const callSid = data.start?.callSid || null;
           registerStream(streamSid, connection, callSid);
+
+          // Limite de durée d'appel : avertissement à 4 min, raccrochage à 5 min
+          callWarningTimeout = setTimeout(() => {
+            if (connection.readyState === WebSocket.OPEN && openAiWs?.readyState === WebSocket.OPEN) {
+              callLogger.info(streamSid, "Limite 4 min atteinte - envoi avertissement au client");
+              openAiWs.send(JSON.stringify({
+                type: "response.create",
+                response: {
+                  instructions: "Dis exactement cette phrase, rien d'autre : L'appel sera terminé dans 1 minute.",
+                  modalities: ["audio", "text"]
+                }
+              }));
+            }
+            callWarningTimeout = null;
+          }, CALL_WARNING_AT_MS);
+
+          callHangupTimeout = setTimeout(() => {
+            if (connection.readyState === WebSocket.OPEN) {
+              callLogger.info(streamSid, "Limite duree atteinte (5 min) - raccrochage automatique");
+              connection.close(1000, "Call duration limit");
+            }
+            callHangupTimeout = null;
+          }, CALL_MAX_DURATION_MS);
         }
 
         // Événement MEDIA : Nettoyer et transférer l'audio à OpenAI (même avant "start")
@@ -175,12 +219,21 @@ export async function handleWebSocketConnection(connection, request) {
     });
 
     connection.on("close", (code, reason) => {
-      
+      if (silenceMonitor) {
+        silenceMonitor.stop();
+      }
+      if (callWarningTimeout) {
+        clearTimeout(callWarningTimeout);
+        callWarningTimeout = null;
+      }
+      if (callHangupTimeout) {
+        clearTimeout(callHangupTimeout);
+        callHangupTimeout = null;
+      }
       // Désenregistrer le stream
       if (streamSid) {
         unregisterStream(streamSid);
       }
-      
       // Nettoyer le heartbeat
       if (heartbeatInterval) {
         clearInterval(heartbeatInterval);
