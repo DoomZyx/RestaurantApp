@@ -13,23 +13,45 @@ class NotificationService {
   }
 
   /**
-   * Initialise le service de notification
+   * Initialise le service de notification (permissions uniquement).
+   * Ne crée pas l'AudioContext : il sera créé au premier son ou après un geste utilisateur (politique navigateur).
    */
   async initialize() {
     if (this.isInitialized) return;
 
     try {
-      // Demander la permission pour les notifications desktop
       if ("Notification" in window) {
-        const permission = await Notification.requestPermission();
+        await Notification.requestPermission();
       }
-
-      // Initialiser le contexte audio pour les sons
-      this.audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
-
       this.isInitialized = true;
     } catch (error) {
+      // Ignorer les erreurs de permission
+    }
+  }
+
+  /**
+   * Crée ou retourne l'AudioContext (création paresseuse).
+   */
+  _getAudioContext() {
+    if (this.audioContext) return this.audioContext;
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+    this.audioContext = new Ctx();
+    return this.audioContext;
+  }
+
+  /**
+   * Débloque l'audio après un geste utilisateur (clic, touche). À appeler une fois au premier clic.
+   */
+  async unlockAudio() {
+    const ctx = this._getAudioContext();
+    if (!ctx) return;
+    if (ctx.state === "suspended") {
+      try {
+        await ctx.resume();
+      } catch (e) {
+        // Réservation refusée sans geste utilisateur
+      }
     }
   }
 
@@ -149,12 +171,27 @@ class NotificationService {
   }
 
   /**
-   * Joue un son de notification
+   * Joue un son de notification. L'AudioContext est créé/repris à la volée ;
+   * si le navigateur le garde en "suspended" (pas de geste utilisateur), le son est ignoré.
    * @param {string} type - Type de son ('urgent', 'normal', 'success')
    */
   async playNotificationSound(type = "normal") {
     if (!this.isInitialized) {
       await this.initialize();
+    }
+
+    const ctx = this._getAudioContext();
+    if (!ctx) return;
+
+    try {
+      if (ctx.state === "suspended") {
+        await ctx.resume();
+      }
+      if (ctx.state !== "running") {
+        return;
+      }
+    } catch (e) {
+      return;
     }
 
     try {
@@ -167,28 +204,23 @@ class NotificationService {
       const freq = frequencies[type] || frequencies.normal;
 
       for (let i = 0; i < freq.length; i++) {
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
 
         oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
+        gainNode.connect(ctx.destination);
 
-        oscillator.frequency.setValueAtTime(
-          freq[i],
-          this.audioContext.currentTime
-        );
+        oscillator.frequency.setValueAtTime(freq[i], ctx.currentTime);
         oscillator.type = "sine";
 
-        gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(
-          0.01,
-          this.audioContext.currentTime + 0.3
-        );
+        gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
 
-        oscillator.start(this.audioContext.currentTime + i * 0.2);
-        oscillator.stop(this.audioContext.currentTime + i * 0.2 + 0.3);
+        oscillator.start(ctx.currentTime + i * 0.2);
+        oscillator.stop(ctx.currentTime + i * 0.2 + 0.3);
       }
     } catch (error) {
+      // Ignorer si le contexte a été fermé ou refusé
     }
   }
 

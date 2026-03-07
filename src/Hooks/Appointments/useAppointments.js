@@ -1,20 +1,42 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
-  fetchAppointments,
-  fetchTodayAppointments,
-  fetchAppointment,
-  createAppointment,
-  updateAppointment,
-  updateAppointmentStatus,
-  deleteAppointment,
-  checkAvailability,
+  fetchReservations,
+  fetchTodayReservations,
+  fetchReservation,
+  createReservation,
+  updateReservation,
+  updateReservationStatus,
+  deleteReservation,
+  checkReservationAvailability,
+  fetchOrders,
+  fetchTodayOrders,
+  fetchOrder,
+  createOrder,
+  updateOrder,
+  updateOrderStatus,
+  deleteOrder,
+  checkOrderAvailability,
 } from "../../API/Appointment/api";
 import { useAppointmentsFilters } from "./useAppointmentsFilters";
 import { useAppointmentsModal } from "./useAppointmentsModal";
 import { useWebSocket } from "../../Context/WebSocketContext";
 
-export function useAppointments() {
+const RESERVATION_TYPE = "Réservation de table";
+const ORDER_TYPE = "Commande à emporter";
+
+function normalizeReservation(item) {
+  if (!item) return item;
+  return { ...item, type: RESERVATION_TYPE, modalite: "Sur place" };
+}
+
+function normalizeOrder(item) {
+  if (!item) return item;
+  return { ...item, type: ORDER_TYPE, modalite: item.modalite || "À emporter" };
+}
+
+export function useAppointments(mode = "orders") {
+  const isReservations = mode === "reservations";
   const [searchParams, setSearchParams] = useSearchParams();
   
   // Hooks spécialisés
@@ -40,18 +62,24 @@ export function useAppointments() {
   const loadAppointmentsRef = useRef(null);
   const loadTodayAppointmentsRef = useRef(null);
 
-  // Récupérer tous les rendez-vous avec filtres
+  // Récupérer tous les rendez-vous avec filtres (réservations ou commandes selon mode)
   const loadAppointments = useCallback(
     async (page = 1, limit = 50, filters = {}) => {
       try {
         setLoading(true);
         setError(null);
 
-        const response = await fetchAppointments(page, limit, filters);
+        const apiFilters = isReservations
+          ? { date: filters.date, statut: filters.statut }
+          : { date: filters.date, statut: filters.statut, type: filters.type, modalite: filters.modalite };
+
+        const response = isReservations
+          ? await fetchReservations(page, limit, apiFilters)
+          : await fetchOrders(page, limit, apiFilters);
 
         if (response.success) {
-          // Trier les rendez-vous par statut : actifs d'abord, terminés après
-          const sortedAppointments = response.data.sort((a, b) => {
+          const normalize = isReservations ? normalizeReservation : normalizeOrder;
+          const sortedAppointments = response.data.map(normalize).sort((a, b) => {
             const statusOrder = {
               "planifie": 1,
               "confirme": 2,
@@ -59,13 +87,10 @@ export function useAppointments() {
               "termine": 4,
               "annule": 5
             };
-            
             const orderA = statusOrder[a.statut] || 999;
             const orderB = statusOrder[b.statut] || 999;
-            
             return orderA - orderB;
           });
-
           setAppointments(sortedAppointments);
           setPagination(response.pagination);
         }
@@ -75,34 +100,38 @@ export function useAppointments() {
         setLoading(false);
       }
     },
-    []
+    [isReservations]
   );
 
   // Récupérer les rendez-vous du jour
   const loadTodayAppointments = useCallback(async () => {
     try {
       setError(null);
-      const response = await fetchTodayAppointments();
-
+      const response = isReservations
+        ? await fetchTodayReservations()
+        : await fetchTodayOrders();
       if (response.success) {
-        setTodayAppointments(response.data);
+        const normalize = isReservations ? normalizeReservation : normalizeOrder;
+        setTodayAppointments((response.data || []).map(normalize));
       }
     } catch (err) {
       setError(err.message);
     }
-  }, []);
+  }, [isReservations]);
 
   // Récupérer un rendez-vous par ID
   const loadAppointment = useCallback(async (id) => {
     try {
       setLoading(true);
       setError(null);
-
-      const response = await fetchAppointment(id);
-
+      const response = isReservations
+        ? await fetchReservation(id)
+        : await fetchOrder(id);
       if (response.success) {
-        setCurrentAppointment(response.data);
-        return response.data;
+        const normalize = isReservations ? normalizeReservation : normalizeOrder;
+        const data = normalize(response.data);
+        setCurrentAppointment(data);
+        return data;
       }
     } catch (err) {
       setError(err.message);
@@ -110,22 +139,45 @@ export function useAppointments() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [isReservations]);
 
-  // Créer un nouveau rendez-vous
+  // Créer un nouveau rendez-vous ou une commande
   const addAppointment = useCallback(
     async (appointmentData) => {
       try {
         setLoading(true);
         setError(null);
 
-        const response = await createAppointment(appointmentData);
+        let response;
+        if (isReservations) {
+          const payload = {
+            nom: appointmentData.nom,
+            telephone: appointmentData.telephone,
+            date: appointmentData.date,
+            heure: appointmentData.heure,
+            description: appointmentData.description,
+            nombrePersonnes: appointmentData.nombrePersonnes,
+            notes_internes: appointmentData.notes_internes,
+            statut: appointmentData.statut,
+            createdBy: appointmentData.createdBy || "manual",
+            related_call: appointmentData.related_call || null,
+          };
+          response = await createReservation(payload);
+        } else {
+          const payload = {
+            ...appointmentData,
+            type: ORDER_TYPE,
+            modalite: appointmentData.modalite || "À emporter",
+          };
+          response = await createOrder(payload);
+        }
 
         if (response.success) {
-          // Rafraîchir la liste des rendez-vous
-          await loadAppointments(pagination.page, pagination.limit);
+          const normalize = isReservations ? normalizeReservation : normalizeOrder;
+          const data = normalize(response.data);
+          await loadAppointments(pagination.page, pagination.limit, filtersRef.current);
           await loadTodayAppointments();
-          return response.data;
+          return data;
         }
       } catch (err) {
         setError(err.message);
@@ -134,35 +186,50 @@ export function useAppointments() {
         setLoading(false);
       }
     },
-    [loadAppointments, loadTodayAppointments, pagination.page, pagination.limit]
+    [isReservations, loadAppointments, loadTodayAppointments, pagination.page, pagination.limit]
   );
 
-  // Mettre à jour un rendez-vous
+  // Mettre à jour un rendez-vous ou une commande
   const editAppointment = useCallback(
     async (id, appointmentData) => {
       try {
         setLoading(true);
         setError(null);
 
-        const response = await updateAppointment(id, appointmentData);
+        let response;
+        if (isReservations) {
+          const payload = {
+            nom: appointmentData.nom,
+            telephone: appointmentData.telephone,
+            date: appointmentData.date,
+            heure: appointmentData.heure,
+            description: appointmentData.description,
+            nombrePersonnes: appointmentData.nombrePersonnes,
+            notes_internes: appointmentData.notes_internes,
+            statut: appointmentData.statut,
+          };
+          response = await updateReservation(id, payload);
+        } else {
+          response = await updateOrder(id, {
+            ...appointmentData,
+            type: appointmentData.type || ORDER_TYPE,
+            modalite: appointmentData.modalite || "À emporter",
+          });
+        }
 
         if (response.success) {
-          // Mettre à jour le rendez-vous dans la liste
+          const normalize = isReservations ? normalizeReservation : normalizeOrder;
+          const data = normalize(response.data);
           setAppointments((prev) =>
-            prev.map((apt) => (apt._id === id ? response.data : apt))
+            prev.map((apt) => (apt._id === id ? data : apt))
           );
-
-          // Mettre à jour les rendez-vous du jour si nécessaire
           setTodayAppointments((prev) =>
-            prev.map((apt) => (apt._id === id ? response.data : apt))
+            prev.map((apt) => (apt._id === id ? data : apt))
           );
-
-          // Mettre à jour le rendez-vous courant si c'est celui-ci
           if (currentAppointment && currentAppointment._id === id) {
-            setCurrentAppointment(response.data);
+            setCurrentAppointment(data);
           }
-
-          return response.data;
+          return data;
         }
       } catch (err) {
         setError(err.message);
@@ -171,33 +238,27 @@ export function useAppointments() {
         setLoading(false);
       }
     },
-    [currentAppointment]
+    [isReservations, currentAppointment]
   );
 
-  // Mettre à jour le statut d'un rendez-vous
+  // Mettre à jour le statut
   const changeAppointmentStatus = useCallback(
     async (id, statut) => {
       try {
         setError(null);
-
-        const response = await updateAppointmentStatus(id, statut);
-
+        const response = isReservations
+          ? await updateReservationStatus(id, statut)
+          : await updateOrderStatus(id, statut);
         if (response.success) {
-          // Mettre à jour le statut dans la liste
           setAppointments((prev) =>
             prev.map((apt) => (apt._id === id ? { ...apt, statut } : apt))
           );
-
-          // Mettre à jour les rendez-vous du jour
           setTodayAppointments((prev) =>
             prev.map((apt) => (apt._id === id ? { ...apt, statut } : apt))
           );
-
-          // Mettre à jour le rendez-vous courant si c'est celui-ci
           if (currentAppointment && currentAppointment._id === id) {
             setCurrentAppointment((prev) => ({ ...prev, statut }));
           }
-
           return response.data;
         }
       } catch (err) {
@@ -205,28 +266,24 @@ export function useAppointments() {
         throw err;
       }
     },
-    [currentAppointment]
+    [isReservations, currentAppointment]
   );
 
-  // Supprimer un rendez-vous
+  // Supprimer un rendez-vous ou une commande
   const removeAppointment = useCallback(
     async (id) => {
       try {
         setLoading(true);
         setError(null);
-
-        const response = await deleteAppointment(id);
-
+        const response = isReservations
+          ? await deleteReservation(id)
+          : await deleteOrder(id);
         if (response.success) {
-          // Retirer le rendez-vous de la liste
           setAppointments((prev) => prev.filter((apt) => apt._id !== id));
           setTodayAppointments((prev) => prev.filter((apt) => apt._id !== id));
-
-          // Réinitialiser le rendez-vous courant si c'était celui-ci
           if (currentAppointment && currentAppointment._id === id) {
             setCurrentAppointment(null);
           }
-
           return true;
         }
       } catch (err) {
@@ -236,16 +293,16 @@ export function useAppointments() {
         setLoading(false);
       }
     },
-    [currentAppointment]
+    [isReservations, currentAppointment]
   );
 
   // Vérifier la disponibilité d'un créneau
   const verifyAvailability = useCallback(async (date, heure, duree) => {
     try {
       setError(null);
-
-      const response = await checkAvailability(date, heure, duree);
-
+      const response = isReservations
+        ? await checkReservationAvailability(date, heure, duree)
+        : await checkOrderAvailability(date, heure, duree);
       if (response.success) {
         return {
           available: response.available,
@@ -257,7 +314,7 @@ export function useAppointments() {
       setError(err.message);
       return { available: false, conflicts: 0 };
     }
-  }, []);
+  }, [isReservations]);
 
   // Charger les rendez-vous du jour au montage du composant
   useEffect(() => {

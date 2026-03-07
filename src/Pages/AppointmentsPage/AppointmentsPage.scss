@@ -270,6 +270,191 @@
     }
   }
 
+  /* KPI Couverts (page réservations) */
+  .reservations-kpi-covers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+
+    .kpi-covers-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 4rem;
+
+      .kpi-covers-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      .kpi-covers-value {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+
+  .reservations-covers-per-slot {
+    margin-bottom: 1rem;
+    padding: 0.65rem 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+
+    .covers-per-slot-title {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    .covers-per-slot-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+
+      .covers-per-slot-item {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.9);
+        strong { color: white; }
+      }
+    }
+  }
+
+  /* Styles de base .zone-title pour TOUTES les zones (y compris hors .appointments-section) */
+  .appointments-zone .zone-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0.65rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+
+    .zone-icon {
+      font-size: 1.5rem;
+    }
+
+    .zone-count {
+      margin-left: auto;
+      background: var(--color-accent);
+      color: white;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+      padding: 0.4rem 1rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.05);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  /* Ghost de la card qui suit le doigt pendant le drag tactile */
+  .reservation-drag-preview {
+    position: fixed;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -60%);
+    pointer-events: none;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.85rem;
+    min-height: 2.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    border: 2px solid rgba(99, 102, 241, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    color: #1a1a1a;
+    font-size: 0.95rem;
+    white-space: nowrap;
+
+    .reservation-drag-preview-time {
+      font-weight: 800;
+      min-width: 2.5rem;
+    }
+    .reservation-drag-preview-persons,
+    .reservation-drag-preview-amount {
+      font-weight: 700;
+      min-width: 1.25rem;
+    }
+    .reservation-drag-preview-amount {
+      min-width: 3.5rem;
+    }
+    .reservation-drag-preview-name {
+      font-weight: 600;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  /* Zone drop target : surbrillance au survol pendant un drag */
+  .appointments-zone.drag-over {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4);
+  }
+
+  .appointments-zone.arriving-soon-zone {
+    .zone-title { border-left: 4px solid #10b981; .zone-count { background: #10b981; } }
+    .arriving-soon-empty {
+      margin: 0;
+      padding: 0.75rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .arriving-soon-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      .arriving-soon-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+
+        &:hover { background: rgba(255, 255, 255, 0.15); }
+
+        .arriving-soon-time { font-weight: 800; min-width: 2.5rem; }
+        .arriving-soon-name { font-weight: 600; flex: 1; }
+        .arriving-soon-persons { font-size: 0.85rem; opacity: 0.9; }
+      }
+    }
+  }
+
   .error-message {
     background: rgba(220, 38, 38, 0.1);
     border: 1px solid rgba(220, 38, 38, 0.3);
@@ -373,56 +558,15 @@
       }
     }
 
-    // Zones de séparation des commandes
+    // Zones de séparation des commandes (compact pour optimiser l'espace vertical)
     .appointments-zone {
-      margin-bottom: 3rem;
+      margin-bottom: 1.5rem;
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 24px;
-      padding: 1.5rem;
+      border-radius: 16px;
+      padding: 1rem;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
-
-      .zone-title {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-        padding: 1.25rem 1.75rem;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(2px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 20px;
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
-        transition: all 0.3s ease;
-
-        .zone-icon {
-          font-size: 1.5rem;
-        }
-
-        .zone-count {
-          margin-left: auto;
-          background: var(--color-accent);
-          color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-          padding: 0.4rem 1rem;
-          border-radius: 12px;
-          font-size: 0.95rem;
-          font-weight: 700;
-          min-width: 40px;
-          text-align: center;
-        }
-
-        &:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 12px 48px rgba(0, 0, 0, 0.05);
-          border-color: rgba(255, 255, 255, 0.5);
-        }
-      }
 
       &.waiting-zone {
         .zone-title {
@@ -478,11 +622,184 @@
       }
     }
 
+    /* Liste compacte réservations : groupée par heure, heure dominante */
+    .appointments-list-reservations {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 0;
+
+      .reservations-time-group {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+      }
+
+      .reservations-time-header {
+        padding: 0.4rem 0.75rem;
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: white;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        background: rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .reservations-time-rows {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .reservation-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.4rem 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        transition: background 0.2s ease, opacity 0.2s ease;
+        min-height: 2.5rem;
+
+        &[draggable="true"] {
+          cursor: grab;
+          touch-action: none;
+          &:active { cursor: grabbing; }
+        }
+
+        &.is-dragging {
+          opacity: 0.5;
+          cursor: grabbing;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        &.status-in-progress {
+          border-left: 3px solid #f59e0b;
+        }
+        &.status-confirmed,
+        &.status-planned {
+          border-left: 3px solid #6366f1;
+        }
+        &.status-completed {
+          border-left: 3px solid #8b5cf6;
+        }
+        &.status-cancelled {
+          border-left: 3px solid #ef4444;
+          opacity: 0.75;
+        }
+      }
+
+      .reservation-row-main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem 1rem;
+        min-width: 0;
+        cursor: pointer;
+        flex-wrap: wrap;
+      }
+
+      .reservation-row-time {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: white;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        min-width: 3rem;
+        flex-shrink: 0;
+      }
+
+      .reservation-row-persons,
+      .reservation-row-amount {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.95);
+        min-width: 1.5rem;
+        text-align: center;
+      }
+
+      .reservation-row-name {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .reservation-row-created-by {
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 2px 6px;
+        border-radius: 6px;
+        flex-shrink: 0;
+        white-space: nowrap;
+
+        &.created-by-ai {
+          background: rgba(139, 92, 246, 0.25);
+          color: rgba(255, 255, 255, 0.95);
+        }
+        &.created-by-client {
+          background: rgba(255, 255, 255, 0.2);
+          color: rgba(255, 255, 255, 0.9);
+        }
+      }
+
+      .reservation-row-badge {
+        padding: 2px 8px;
+        border-radius: 8px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        flex-shrink: 0;
+
+        &.clickable {
+          cursor: pointer;
+          transition: opacity 0.2s, transform 0.15s;
+          &:hover { opacity: 0.9; transform: scale(1.02); }
+          &:active { transform: scale(0.98); }
+        }
+      }
+
+      .reservation-row-actions {
+        display: flex;
+        gap: 0.35rem;
+        flex-shrink: 0;
+
+        .btn-quick-action {
+          padding: 0.35rem 0.65rem;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 0.75rem;
+          cursor: pointer;
+          transition: all var(--transition-fast);
+
+          &.btn-start {
+            background: var(--color-success);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+          }
+          &.btn-complete {
+            background: var(--color-accent);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
+    }
+
     .appointments-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
 
       .appointment-card {
         background: rgba(255, 255, 255, 0.397);
@@ -742,17 +1059,28 @@ background: rgba(255, 255, 255, 0.397);
       .appointment-card-compact {
         background: rgba(255, 255, 255, 0.397);
         backdrop-filter: blur(2px);
-        border-radius: 16px;
+        border-radius: 12px;
         border: 1px solid rgba(255, 255, 255, 0.3);
-        padding: 1rem;
-        transition: all var(--transition-base);
+        padding: 0.65rem 0.85rem;
+        transition: all var(--transition-base), opacity 0.2s ease;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.01);
         position: relative;
-        min-height: 100px;
+        min-height: 72px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 0.75rem;
+        gap: 0.5rem;
+
+        &[draggable="true"] {
+          cursor: grab;
+          touch-action: none;
+          &:active { cursor: grabbing; }
+        }
+
+        &.is-dragging {
+          opacity: 0.5;
+          cursor: grabbing;
+        }
 
         &:hover {
           transform: translateY(-2px);
@@ -765,33 +1093,33 @@ background: rgba(255, 255, 255, 0.397);
           cursor: pointer;
 
           .client-name-compact {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
             color: white;
        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
           }
 
           .order-time-compact {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
 
             .time-label {
               font-weight: 600;
               color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+              text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             }
 
             .time-value {
               background: var(--color-accent);
               color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+              text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
               padding: 0.25rem 0.75rem;
               border-radius: 8px;
               font-weight: 700;
@@ -799,39 +1127,60 @@ background: rgba(255, 255, 255, 0.397);
             }
           }
 
-          .order-info {
-            font-size: 0.9rem;
+          .order-amount-compact {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
             color: white;
-       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
             font-weight: 500;
+
+            .amount-label {
+              font-weight: 600;
+              color: white;
+              text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            }
+
+            .amount-value {
+              font-weight: 700;
+              color: rgba(255, 255, 255, 0.95);
+            }
           }
         }
 
         .status-badge-compact {
           position: absolute;
-          top: 0.75rem;
-          right: 0.75rem;
-          padding: 4px 10px;
-          border-radius: 12px;
-          font-size: 0.7rem;
+          top: 0.5rem;
+          right: 0.5rem;
+          padding: 2px 8px;
+          border-radius: 8px;
+          font-size: 0.65rem;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.5px;
+
+          &.clickable {
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.15s;
+            &:hover { opacity: 0.9; transform: scale(1.02); }
+            &:active { transform: scale(0.98); }
+          }
         }
 
         .card-quick-actions {
           display: flex;
-          gap: 0.5rem;
-          padding-top: 0.5rem;
+          gap: 0.4rem;
+          padding-top: 0.35rem;
           border-top: 1px solid rgba(0, 0, 0, 0.06);
 
           .btn-quick-action {
             flex: 1;
-            padding: 0.6rem 1rem;
+            padding: 0.4rem 0.75rem;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all var(--transition-fast);
             display: flex;

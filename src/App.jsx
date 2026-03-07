@@ -67,7 +67,7 @@ function App() {
           }
         />
         <Route
-          path="/appointments"
+          path="/orders"
           element={
             <ProtectedRoute>
               <AppointmentsPage />

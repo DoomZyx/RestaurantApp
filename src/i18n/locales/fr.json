@@ -161,7 +161,14 @@
     "inProgressReservations": "Clients présents",
     "completedReservations": "Réservations terminées",
     "noReservations": "Aucune réservation",
-    "loading": "Chargement des réservations..."
+    "loading": "Chargement des réservations...",
+    "arrivingIn15": "Arrivent dans 15 min",
+    "noArrivingIn15": "Aucune réservation dans les 15 prochaines minutes",
+    "coversMax": "Couverts max",
+    "coversReserved": "Réservés",
+    "coversArrived": "Arrivés",
+    "coversRemaining": "Restants",
+    "coversPerSlot": "Couverts par créneau"
   },
   "createAppointment": {
     "title": "Créer une nouvelle commande",
@@ -375,7 +382,12 @@
     "startPreparation": "Démarrer la préparation",
     "markAsComplete": "Marquer comme terminé",
     "startBtn": "En cours",
-    "completeBtn": "Terminé"
+    "completeBtn": "Terminé",
+    "createdByAI": "Effectué par l'IA",
+    "createdByClient": "Réservation client",
+    "tapToChangeStatus": "Appuyer pour changer le statut",
+    "longPressToDrag": "Maintenir 0,8 s pour déplacer vers une zone",
+    "amount": "Montant"
   },
   "appointmentsFilters": {
     "modality": "Modalité",
@@ -388,6 +400,7 @@
     "name": "Nom",
     "phone": "Téléphone",
     "orderDetails": "Détails de la commande",
+    "reservationDetails": "Détails de la réservation",
     "orderedDishes": "Plats commandés",
     "extras": "Suppléments",
     "composition": "Composition",
@@ -447,7 +460,8 @@
     "disconnectedNotifications": "Notifications déconnectées",
     "clickToSeeDetails": "Cliquez pour voir les détails",
     "deleteNotification": "Supprimer cette notification",
-    "clearAll": "Effacer tout"
+    "clearAll": "Effacer tout",
+    "reconnect": "Reconnecter"
   },
   "notifications": {
     "title": "Notifications",

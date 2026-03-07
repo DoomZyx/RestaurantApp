@@ -13,6 +13,8 @@ export function AppointmentDetails({
   const { t } = useTranslation();
   if (!appointment) return null;
 
+  const isReservation = appointment.type === "Réservation de table";
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("fr-FR", {
       weekday: "long",
@@ -75,52 +77,54 @@ export function AppointmentDetails({
         </div>
 
         <div className="info-section">
-          <h3>{t('appointmentDetails.orderDetails')}</h3>
-          
-          {/* Affichage des plats commandés */}
-          {appointment.commandes && appointment.commandes.length > 0 ? (
-            <div className="commandes-list">
-              <h4>🍽️ {t('appointmentDetails.orderedDishes')} :</h4>
-              <ul className="items-list">
-                {appointment.commandes.map((item, index) => (
-                  <li key={index} className="commande-item">
-                    <div className="item-header">
-                      <span className="item-name">{item.nom}</span>
-                      <span className="item-quantity">x{item.quantite}</span>
-                      {item.prixUnitaire && (
-                        <span className="item-price">{(item.prixUnitaire * item.quantite).toFixed(2)}€</span>
-                      )}
-                    </div>
-                    {item.categorie && (
-                      <span className="item-category">{item.categorie}</span>
-                    )}
-                    {item.options && item.options.boisson && (
-                      <span className="item-supplements">Boisson: {item.options.boisson}</span>
-                    )}
-                    {item.composition && (
-                      <span className="item-composition">{t('appointmentDetails.composition')}: {item.composition}</span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-              
-              {/* Total de la commande */}
-              {appointment.commandes.some(item => item.prixUnitaire) && (
-                <div className="commande-total">
-                  <strong>{t('appointmentDetails.total')}: </strong>
-                  <span>
-                    {appointment.commandes
-                      .reduce((sum, item) => sum + (item.prixUnitaire || 0) * item.quantite, 0)
-                      .toFixed(2)}€
-                  </span>
-                </div>
-              )}
-            </div>
-          ) : appointment.type === "Commande à emporter" || appointment.type === "Livraison à domicile" ? (
-            <p className="no-items">{t('appointmentDetails.noDishSpecified')}</p>
-          ) : null}
+          <h3>{isReservation ? t('appointmentDetails.reservationDetails') : t('appointmentDetails.orderDetails')}</h3>
 
-          {/* Description (notes supplémentaires) */}
+          {/* Menu / plats commandés : uniquement pour les commandes à emporter ou livraison, pas pour les réservations */}
+          {!isReservation && (
+            <>
+              {appointment.commandes && appointment.commandes.length > 0 ? (
+                <div className="commandes-list">
+                  <h4>🍽️ {t('appointmentDetails.orderedDishes')} :</h4>
+                  <ul className="items-list">
+                    {appointment.commandes.map((item, index) => (
+                      <li key={index} className="commande-item">
+                        <div className="item-header">
+                          <span className="item-name">{item.nom}</span>
+                          <span className="item-quantity">x{item.quantite}</span>
+                          {item.prixUnitaire && (
+                            <span className="item-price">{(item.prixUnitaire * item.quantite).toFixed(2)}€</span>
+                          )}
+                        </div>
+                        {item.categorie && (
+                          <span className="item-category">{item.categorie}</span>
+                        )}
+                        {item.options && item.options.boisson && (
+                          <span className="item-supplements">Boisson: {item.options.boisson}</span>
+                        )}
+                        {item.composition && (
+                          <span className="item-composition">{t('appointmentDetails.composition')}: {item.composition}</span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                  {appointment.commandes.some(item => item.prixUnitaire) && (
+                    <div className="commande-total">
+                      <strong>{t('appointmentDetails.total')}: </strong>
+                      <span>
+                        {appointment.commandes
+                          .reduce((sum, item) => sum + (item.prixUnitaire || 0) * item.quantite, 0)
+                          .toFixed(2)}€
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ) : (appointment.type === "Commande à emporter" || appointment.type === "Livraison à domicile") ? (
+                <p className="no-items">{t('appointmentDetails.noDishSpecified')}</p>
+              ) : null}
+            </>
+          )}
+
+          {/* Description / notes supplémentaires (résa et commandes) */}
           {appointment.description && (
             <div className="commande-description">
               <h4>{t('appointmentDetails.additionalNotes')} :</h4>

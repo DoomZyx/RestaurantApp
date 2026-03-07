@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchCallsByDate } from '../../API/Calls/api.js';
-import { fetchTodayAppointments } from '../../API/Appointment/api.js';
+import { fetchTodayReservations, fetchTodayOrders } from '../../API/Appointment/api.js';
 import { fetchPricing } from '../../API/Pricing/api.js';
 // import { getAllSupplierOrders } from '../../API/SupplierOrders/api.js'; // Désactivé : route non implémentée
 
@@ -86,18 +86,21 @@ export function useKpi() {
         throw new Error('Erreur lors du chargement des données');
       }
 
-      // Charger les commandes d'aujourd'hui + la capacité du restaurant en parallèle
+      // Charger réservations + commandes du jour + capacité en parallèle
       try {
-        const [ordersRes, pricingRes] = await Promise.allSettled([
-          fetchTodayAppointments(),
+        const [reservationsRes, ordersRes, pricingRes] = await Promise.allSettled([
+          fetchTodayReservations(),
+          fetchTodayOrders(),
           fetchPricing()
         ]);
 
-        // Commandes d'aujourd'hui
-        let orders = [];
-        if (ordersRes.status === 'fulfilled' && ordersRes.value?.success) {
-          orders = Array.isArray(ordersRes.value.data) ? ordersRes.value.data : [];
-        }
+        const reservations = (reservationsRes.status === 'fulfilled' && reservationsRes.value?.success && Array.isArray(reservationsRes.value.data))
+          ? reservationsRes.value.data.map(r => ({ ...r, type: 'Réservation de table', modalite: 'Sur place' }))
+          : [];
+        const ordersList = (ordersRes.status === 'fulfilled' && ordersRes.value?.success && Array.isArray(ordersRes.value.data))
+          ? ordersRes.value.data.map(o => ({ ...o, type: 'Commande à emporter', modalite: o.modalite || 'À emporter' }))
+          : [];
+        const orders = [...reservations, ...ordersList];
         setTodayOrders(orders);
 
         // Capacité totale (nombre de couverts)

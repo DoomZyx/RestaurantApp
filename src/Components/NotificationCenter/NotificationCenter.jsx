@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import notificationService from "../../Services/notificationService.js";
+import { useWebSocket } from "../../Context/WebSocketContext.jsx";
 import EmojiText from "../Common/EmojiText";
 import "./NotificationCenter.scss";
 
@@ -10,10 +11,7 @@ const NotificationCenter = () => {
   const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const navigate = useNavigate();
-  
-  // Utiliser isConnected depuis le localStorage ou un state global si disponible
-  // Pour l'instant on suppose que c'est connecté si on a des notifications
-  const isConnected = true; // Simplifié pour l'instant
+  const { isConnected, lastError, reconnect } = useWebSocket();
 
   // Gérer le clic sur une notification
   const handleNotificationClick = (notification) => {
@@ -25,7 +23,7 @@ const NotificationCenter = () => {
     if (notification.notificationType === "call_completed") {
       // Si on a un ID de commande, aller vers les rendez-vous avec l'ID
       if (notification.details?.orderId) {
-        navigate(`/appointments?orderid=${notification.details.orderId}`);
+        navigate(`/orders?orderid=${notification.details.orderId}`);
       } else {
         // Sinon aller vers les appels (la route s'appelle /calls-list)
         navigate("/calls-list");
@@ -33,9 +31,9 @@ const NotificationCenter = () => {
     } else if (notification.notificationType === "new_order") {
       // Aller à la page des rendez-vous avec l'ID si disponible
       if (notification.details?.orderId) {
-        navigate(`/appointments?orderid=${notification.details.orderId}`);
+        navigate(`/orders?orderid=${notification.details.orderId}`);
       } else {
-        navigate("/appointments");
+        navigate("/orders");
       }
     }
     
@@ -136,7 +134,15 @@ const NotificationCenter = () => {
           <div className="notification-header">
             <h3>{t('notifications.title')}</h3>
           </div>
-
+          {!isConnected && (
+            <div className="notification-ws-status">
+              <span className="ws-status-text">{t('notificationCenter.disconnectedNotifications')}</span>
+              {lastError && <span className="ws-status-error">{lastError}</span>}
+              <button type="button" className="ws-reconnect-btn" onClick={reconnect}>
+                {t('notificationCenter.reconnect')}
+              </button>
+            </div>
+          )}
           <div className="notification-list">
             {notifications.length === 0 ? (
               <div className="empty-notifications">

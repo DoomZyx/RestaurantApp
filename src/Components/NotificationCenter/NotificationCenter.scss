@@ -89,6 +89,40 @@
       }
     }
 
+    .notification-ws-status {
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      background: rgba(255, 200, 200, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .ws-status-text {
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+      }
+
+      .ws-status-error {
+        font-size: 0.8rem;
+        color: var(--color-error, #c00);
+      }
+
+      .ws-reconnect-btn {
+        align-self: flex-start;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        border-radius: 6px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        background: var(--color-bg-primary, #fff);
+        cursor: pointer;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
+
     .notification-list {
       max-height: 350px;
       overflow-y: auto;

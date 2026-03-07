@@ -229,13 +229,13 @@ function AppointmentsWidget() {
       <div className="widget-footer">
         <button
           className="btn-view-all"
-          onClick={() => navigate("/appointments")}
+          onClick={() => navigate("/orders")}
         >
           {t('appointmentsWidget.viewAll')}
         </button>
         <button
           className="btn-add-appointment"
-          onClick={() => navigate("/appointments")}
+          onClick={() => navigate("/orders")}
         >
           {t('appointmentsWidget.newOrder')}
         </button>

@@ -79,7 +79,7 @@ function Menu() {
 
         <div className="handleCall-container">
           <div className="call-features-list">
-            <Link to="/appointments" onClick={closeMenu}>
+            <Link to="/orders" onClick={closeMenu}>
               <i className="bi bi-bag-check"></i> <h3>{t('menu.orders')}</h3>
             </Link>
             <Link to="/reservations" onClick={closeMenu}>
