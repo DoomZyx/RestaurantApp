@@ -21,7 +21,6 @@ $spacing: 1.5rem;
   &__message {
     margin: 0;
     color: rgba(255, 255, 255, 0.9);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   }
 
   &__retry {
@@ -59,7 +58,6 @@ $spacing: 1.5rem;
     font-size: 1rem;
     font-weight: 700;
     color: white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     letter-spacing: -0.02em;
   }
 
@@ -93,7 +91,6 @@ $spacing: 1.5rem;
     font-weight: 600;
     font-size: 0.9375rem;
     color: white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   }
 
   &__status {
@@ -165,7 +162,6 @@ $spacing: 1.5rem;
     font-size: 1.5rem;
     font-weight: 700;
     color: white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     margin-bottom: 0.25rem;
   }
 
@@ -187,7 +183,6 @@ $spacing: 1.5rem;
     font-size: 0.8125rem;
     font-weight: 600;
     color: #fef3c7;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 
     span[aria-hidden] {
       margin-right: 0.5rem;
@@ -252,7 +247,6 @@ $spacing: 1.5rem;
     font-weight: 600;
     font-size: 0.875rem;
     color: white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     min-width: 2.5rem;
   }
 
@@ -282,7 +276,6 @@ $spacing: 1.5rem;
   font-size: 1rem;
   font-weight: 600;
   color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .dashboard-capacity__remaining {

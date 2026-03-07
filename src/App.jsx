@@ -1,5 +1,5 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Twemoji from "react-twemoji";
 import "./Base/base.scss";
@@ -14,12 +14,30 @@ import AppointmentsPage from "./Pages/AppointmentsPage/AppointmentsPage";
 import ReservationsPage from "./Pages/ReservationsPage/ReservationsPage";
 import Configuration from "./Pages/Configuration/Configuration";
 
+const FLASH_ERROR_KEY = "app_flash_error";
+
 function App() {
   const [authChecked, setAuthChecked] = useState(false);
+  const [flashError, setFlashError] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     setAuthChecked(true);
   }, []);
+
+  useEffect(() => {
+    const msg = sessionStorage.getItem(FLASH_ERROR_KEY);
+    if (msg) {
+      sessionStorage.removeItem(FLASH_ERROR_KEY);
+      setFlashError(msg);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!flashError) return;
+    const t = setTimeout(() => setFlashError(null), 5000);
+    return () => clearTimeout(t);
+  }, [flashError]);
 
   // Composant pour protéger les routes
   const ProtectedRoute = ({ children, requireAdmin = false }) => {
@@ -30,6 +48,7 @@ function App() {
     }
 
     if (requireAdmin && !isAdmin()) {
+      sessionStorage.setItem(FLASH_ERROR_KEY, "Vous n'avez pas les privilèges pour accéder à cette page.");
       return <Navigate to="/" replace />;
     }
 
@@ -44,6 +63,12 @@ function App() {
         ext: '.svg'
       }}
     >
+      {flashError && (
+        <div className="notification-toast error-message" style={{ position: "fixed", top: "1rem", left: "50%", transform: "translateX(-50%)", zIndex: 9999 }}>
+          <i className="bi bi-exclamation-triangle-fill"></i>
+          <span className="message-content">{flashError}</span>
+        </div>
+      )}
       <Routes>
         {/* Route publique */}
         <Route path="/login" element={<Login />} />

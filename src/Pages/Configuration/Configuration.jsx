@@ -1,7 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import AppLayout from "../../Components/Layout/AppLayout";
-import PhoneToggle from "../../Components/PhoneToggle/PhoneToggle";
 import { useConfiguration } from "../../Hooks/Configuration/useConfiguration";
 import { ConfigurationRestaurant } from "../../Components/Configuration/ConfigurationRestaurant";
 import { ConfigurationLanguage } from "../../Components/Configuration/ConfigurationLanguage";
@@ -60,11 +59,6 @@ function Configuration() {
   return (
     <AppLayout>
       <div className="configuration-page">
-        <div className="config-toolbar">
-          <div className="toolbar-right">
-            <PhoneToggle />
-          </div>
-        </div>
         
         {error && (
           <div className="notification-toast error-message">
@@ -146,6 +140,7 @@ function Configuration() {
             />
           )}
         </div>
+
 
         {success && (
           <div className="notification-toast success-message">

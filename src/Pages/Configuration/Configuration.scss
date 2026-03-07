@@ -2,12 +2,6 @@
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
-
-  .config-toolbar {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 10px;
   }
 
   .page-header {
@@ -21,7 +15,6 @@
     h1 {
       margin: 0;
       color: white;
-     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       font-size: 2rem;
     }
 
@@ -39,7 +32,6 @@
       .btn-save {
         background: #007bff;
         color: white;
-     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         border: none;
         padding: 10px 20px;
         border-radius: 5px;
@@ -118,10 +110,6 @@
       transition: all 0.3s;
       position: relative;
 
-      &:hover {
-        background: #f8f9fa;
-      }
-
       &.active {
         border-bottom-color: #007bff;
         color: #007bff;
@@ -132,7 +120,6 @@
         display: inline-block;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         font-size: 0.65rem;
         font-weight: bold;
         padding: 2px 6px;
@@ -157,7 +144,6 @@
     h3 {
       margin-top: 0;
       color: white;
-     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       border-bottom: 2px solid rgba(255, 255, 255, 0.3);
       padding-bottom: 10px;
     }
@@ -240,7 +226,6 @@
     .save-btn {
       background: var(--color-accent);
       color: white;
-     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       border: none;
       padding: 1rem 2.5rem;
       border-radius: 16px;
@@ -310,7 +295,6 @@
       font-weight: 500;
     }
   }
-}
 
 @keyframes fadeIn {
   from {

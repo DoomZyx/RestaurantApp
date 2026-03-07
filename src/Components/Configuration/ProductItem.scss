@@ -30,11 +30,48 @@
         color: #007bff;
         font-size: 1.1rem;
       }
+
+      .product-availability-badge {
+        display: inline-block;
+        margin-top: 6px;
+        margin-left: 1rem;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+
+        &.available {
+          background: #d4edda;
+          color: #155724;
+        }
+
+        &.unavailable {
+          background: #f8d7da;
+          color: #721c24;
+        }
+      }
     }
 
     .product-actions {
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+
+      .btn-toggle-availability {
+        padding: 5px 10px;
+        border: 1px solid #6c757d;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        background: #f8f9fa;
+        color: #495057;
+
+        &:hover {
+          background: #e9ecef;
+          color: #212529;
+        }
+      }
 
       button {
         padding: 5px 10px;
@@ -45,7 +82,12 @@
         transition: all 0.3s;
         color: white;
 
-        &:first-child {
+        &.btn-toggle-availability {
+          color: #495057;
+          background: #f8f9fa;
+        }
+
+        &:nth-child(2) {
           background: #007bff;
 
           &:hover {
@@ -77,6 +119,19 @@
     flex-wrap: wrap;
     gap: 10px;
     align-items: center;
+
+    .product-disponible-edit {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+
+      input {
+        width: auto;
+        min-width: auto;
+      }
+    }
 
     input {
       flex: 1;

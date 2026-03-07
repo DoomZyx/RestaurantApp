@@ -52,6 +52,7 @@ export function ConfigurationRestaurant({ safePricing, handleInputChange }) {
           min="0"
           value={safePricing.restaurantInfo?.nombreCouverts || 0}
           onChange={(e) => handleInputChange("restaurantInfo.nombreCouverts", parseInt(e.target.value) || 0)}
+          onFocus={(e) => e.target.select()}
           placeholder="Ex: 50"
         />
         <small className="help-text">{t('configuration.restaurant.seatsHelp')}</small>

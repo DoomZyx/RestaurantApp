@@ -73,10 +73,11 @@ export function useConfiguration() {
 
   /**
    * Charger les données de pricing
+   * @param {boolean} silent - Si true, ne pas afficher l'écran de chargement (préserve le scroll après add/update)
    */
-  const loadPricing = async () => {
+  const loadPricing = async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       setError(null);
       const response = await fetchPricing();
       
@@ -120,7 +121,7 @@ export function useConfiguration() {
     } catch (err) {
       setError("Impossible de charger la configuration");
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
@@ -197,12 +198,11 @@ export function useConfiguration() {
         delete cleanedProduct.boissonsDisponibles;
       }
 
-      console.log('📤 Envoi produit:', cleanedProduct);
       const response = await addProduct(categorie, cleanedProduct);
       
       if (response.success) {
-        // Recharger les données depuis le serveur pour avoir les IDs corrects
-        await loadPricing();
+        // Recharger les données depuis le serveur pour avoir les IDs corrects (sans écran de chargement pour garder le scroll)
+        await loadPricing(true);
         
         setNewProduct({
           nom: "",
@@ -234,7 +234,7 @@ export function useConfiguration() {
       const response = await updateProduct(categorie, produitId, produitData);
       
       if (response.success) {
-        await loadPricing();
+        await loadPricing(true);
         setEditingProduct(null);
       } else {
         setError(response.error || "Erreur lors de la mise à jour");

@@ -38,9 +38,19 @@ export const ProductItem = ({
             placeholder={t('configuration.menu.price')}
             value={produit.prix || produit.prixBase}
             onChange={(e) => onChange('prixBase', parseFloat(e.target.value) || 0)}
+            onFocus={(e) => e.target.select()}
             min="0"
             step="0.01"
           />
+
+          <label className="product-disponible-edit">
+            <input
+              type="checkbox"
+              checked={produit.disponible !== false}
+              onChange={(e) => onChange('disponible', e.target.checked)}
+            />
+            {t('configuration.menu.productForm.available')}
+          </label>
 
           {/* Options personnalisables en mode édition - uniquement pour les Tacos */}
           {categorie.toLowerCase() === 'tacos' && (
@@ -64,6 +74,8 @@ export const ProductItem = ({
     );
   }
 
+  const isAvailable = produit.disponible !== false;
+
   return (
     <div className="product-item">
       <div className="product-display">
@@ -71,9 +83,20 @@ export const ProductItem = ({
           <h5>{produit.nom}</h5>
           <p>{produit.description}</p>
           <span className="price">{produit.prix || produit.prixBase}€</span>
+          <span className={`product-availability-badge ${isAvailable ? 'available' : 'unavailable'}`}>
+            {isAvailable ? t('configuration.menu.availableLabel') : t('configuration.menu.unavailableLabel')}
+          </span>
         </div>
         <div className="product-actions">
-          <button onClick={onStartEdit}>
+          <button
+            type="button"
+            className="btn-toggle-availability"
+            onClick={() => onChange('disponible', !isAvailable)}
+            title={isAvailable ? t('configuration.menu.markUnavailable') : t('configuration.menu.markAvailable')}
+          >
+            {isAvailable ? t('configuration.menu.markUnavailable') : t('configuration.menu.markAvailable')}
+          </button>
+          <button className="" onClick={onStartEdit}>
             {t('common.edit')}
           </button>
           <button 

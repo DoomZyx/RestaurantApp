@@ -243,6 +243,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
               name="nombrePersonnes"
               value={formData.nombrePersonnes}
               onChange={handleChange}
+              onFocus={(e) => e.target.select()}
               className={errors.nombrePersonnes ? "error" : ""}
               min="1"
               max="100"
@@ -305,6 +306,7 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
                       min={1}
                       value={item.qty}
                       onChange={(e) => setSelectedItems(prev => prev.map(it => it.id === item.id ? { ...it, qty: Math.max(1, parseInt(e.target.value || '1')) } : it))}
+                      onFocus={(e) => e.target.select()}
                       className="item-qty"
                       placeholder={t('createAppointment.qty')}
                     />

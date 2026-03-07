@@ -127,6 +127,25 @@ nav {
   }
 }
 
+.nav-phone-line {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.875rem;
+  padding: 0.875rem 1.4rem;
+  margin-top: 2rem;
+  .toolbar-icon {
+    font-size: 1.25rem;
+    color: white;
+    line-height: 1;
+  }
+
+  .ios-switch.on:hover,
+  .ios-switch.off:hover {
+    background: none !important;
+  }
+}
+
 .call-features-list,
 .stats-list,
 .featLinks-container {
@@ -158,7 +177,6 @@ nav {
       text-align: center;
       flex-shrink: 0;
       color: white;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     }
 
     h3 {
@@ -224,7 +242,6 @@ nav {
   i {
     font-size: 1.125rem;
     color: white;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
   }
 
   h3 {

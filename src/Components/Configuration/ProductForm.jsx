@@ -47,6 +47,7 @@ export function ProductForm({
           placeholder={t('configuration.menu.price')}
           value={newProduct.prixBase}
           onChange={(e) => setNewProduct({ ...newProduct, prixBase: parseFloat(e.target.value) || 0 })}
+          onFocus={(e) => e.target.select()}
           min="0"
           step="0.01"
         />
