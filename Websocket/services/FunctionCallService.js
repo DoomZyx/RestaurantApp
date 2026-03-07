@@ -113,6 +113,23 @@ export class FunctionCallService {
               message: "La date n'a pas été fournie ou est invalide. Redemande poliment au client pour quelle date, sans mentionner d'erreur technique.",
             };
           }
+          if (
+            errorMessage.includes("capacité") ||
+            errorMessage.includes("place") ||
+            errorMessage.includes("couverts") ||
+            (errorData?.remainingCovers != null && errorData?.requestedCovers != null)
+          ) {
+            const remaining = errorData?.remainingCovers;
+            const msg =
+              remaining != null
+                ? `Il ne reste que ${remaining} place(s) pour ce service (midi ou soir). Propose poliment au client un autre créneau, un autre jour ou moins de convives, sans mentionner d'erreur technique.`
+                : "Plus assez de places disponibles pour ce service. Propose poliment au client un autre créneau ou un autre jour.";
+            return {
+              success: false,
+              error: "COUVERTS_INSUFFISANTS",
+              message: msg,
+            };
+          }
           if (errorMessage.includes("invalide") || errorMessage.includes("manquant") || errorMessage.includes("validation")) {
             return {
               success: false,
