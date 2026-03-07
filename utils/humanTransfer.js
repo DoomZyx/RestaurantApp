@@ -10,11 +10,9 @@ import { callLogger } from "../Services/logging/logger.js";
 const HUMAN_REQUEST_KEYWORDS = [
   "humain",
   "quelqu'un",
-  "personne",
   "serveur",
   "patron",
   "responsable",
-  "restaurant",
   "parler a quelqu'un",
   "parler à quelqu'un",
   "je veux quelqu'un",

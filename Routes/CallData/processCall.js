@@ -1,58 +1,79 @@
 import { extractCallData } from "../../Services/gptServices/extractCallData.js";
-import fetch from "node-fetch";
+import { ProcessCallService } from "../../Business/services/ProcessCallService.js";
+import notificationService from "../../Services/notificationService.js";
 import { callLogger } from "../../Services/logging/logger.js";
-import { retryFetch } from "../../Services/utils/retryWithBackoff.js";
+import { notifDebugLog } from "../../Services/logging/notifDebugLog.js";
+import { retryWithBackoff } from "../../Services/utils/retryWithBackoff.js";
+
+function logStep(streamSid, step, detail = "") {
+  const msg = `[process-call] ${step}${detail ? " " + detail : ""}`;
+  notifDebugLog(msg);
+  callLogger.info(streamSid, "process-call: " + step, detail ? { detail } : {});
+}
+
+/**
+ * Appel considéré "inutile" : pas de résa/commande et infos par défaut (client inconnu, type info/autre).
+ */
+function isUselessCall(extractedData) {
+  const hasReservationOrOrder =
+    (extractedData.reservation != null) || (extractedData.order != null);
+  if (hasReservationOrOrder) return false;
+
+  const defaultNom = extractedData.nom === "Client inconnu";
+  const defaultPhone = extractedData.telephone === "Non fourni";
+  const typeInfoOrOther =
+    extractedData.type_demande === "Information menu" || extractedData.type_demande === "Autre";
+
+  return defaultNom && defaultPhone && typeInfoOrOther;
+}
 
 export default async function processCallRoutes(fastify, options) {
-  // Route pour traiter un appel terminé
   fastify.post("/process-call", async (request, reply) => {
     const startTime = Date.now();
     const streamSid = request.headers["x-stream-sid"] || "unknown";
 
+    logStep(streamSid, "1. Requete recue", "body keys=" + (request.body ? Object.keys(request.body).join(",") : "vide"));
+
     try {
       const { transcription } = request.body;
 
-      if (!transcription) {
-        callLogger.error(streamSid, new Error("Transcription manquante"), {
-          context: "validation",
-        });
-        return reply.code(400).send({
-          error: "Transcription manquante",
-        });
+      if (!transcription || typeof transcription !== "string") {
+        logStep(streamSid, "ERREUR: transcription manquante ou invalide");
+        callLogger.error(streamSid, new Error("Transcription manquante"), { context: "validation" });
+        return reply.code(400).send({ error: "Transcription manquante" });
       }
 
-      callLogger.info(streamSid, "Traitement de la transcription", {
-        transcriptionLength: transcription.length,
-        preview: transcription.substring(0, 100) + "...",
-      });
+      const transcriptionLen = transcription.trim().length;
+      logStep(streamSid, "2. Transcription presente", "length=" + transcriptionLen);
 
-      // Extraire les données avec GPT-4
-      const extractedData = await extractCallData(transcription, streamSid);
+      logStep(streamSid, "3. Appel extractCallData (GPT)");
+      let extractedData;
+      try {
+        extractedData = await extractCallData(transcription, streamSid);
+        notifDebugLog("process-call: extractCallData ok nom=" + (extractedData?.nom ?? "?") + " type_demande=" + (extractedData?.type_demande ?? "?"));
+      } catch (extractError) {
+        logStep(streamSid, "ERREUR: extractCallData a echoue", extractError?.message || String(extractError));
+        callLogger.error(streamSid, extractError, { context: "extractCallData" });
+        throw extractError;
+      }
 
       callLogger.extractionCompleted(streamSid, extractedData);
 
-      // Validation : données exploitables si au moins une résa ou une commande
-      const hasReservationOrOrder = (extractedData.reservation && extractedData.reservation !== null) || (extractedData.order && extractedData.order !== null);
-      const isUseless =
-        !hasReservationOrOrder &&
-        (extractedData.nom === "Client inconnu") &&
-        (extractedData.telephone === "Non fourni") &&
-        (extractedData.type_demande === "Information menu" || extractedData.type_demande === "Autre");
+      const useless = isUselessCall(extractedData);
+      logStep(streamSid, "4. Verif isUseless", "isUseless=" + useless + " hasResa=" + !!extractedData.reservation + " hasOrder=" + !!extractedData.order);
 
-      if (isUseless) {
-        callLogger.info(
-          streamSid,
-          "Appel ignoré : Aucune information utile extraite (pas de nom, pas de téléphone, pas de résa ni commande)",
-          {
-            extractedData: {
-              nom: extractedData.nom,
-              telephone: extractedData.telephone,
-              type_demande: extractedData.type_demande,
-              reservation: !!extractedData.reservation,
-              order: !!extractedData.order,
-            },
-          }
-        );
+      if (useless) {
+        logStep(streamSid, "5a. Branche ignoree -> envoi notif (ignored)");
+        callLogger.info(streamSid, "Appel ignoré : Aucune information utile extraite", {
+          nom: extractedData.nom,
+          telephone: extractedData.telephone,
+          type_demande: extractedData.type_demande,
+        });
+        try {
+          notificationService.notifyCallEnded(extractedData, {});
+        } catch (notifError) {
+          callLogger.error(streamSid, notifError, { context: "notifyCallEnded_ignored" });
+        }
         return reply.code(200).send({
           success: true,
           ignored: true,
@@ -61,61 +82,72 @@ export default async function processCallRoutes(fastify, options) {
         });
       }
 
-      // Appeler votre API POST /api/callsdata avec retry
-      const apiStartTime = Date.now();
-      const apiUrl = `http://localhost:${
-        process.env.PORT || 8080
-      }/api/callsdata`;
+      logStep(streamSid, "5b. Branche traitement -> ProcessCallService.process");
+      const saveStartTime = Date.now();
+      callLogger.apiCallStarted(streamSid, "ProcessCallService.process");
 
-      callLogger.apiCallStarted(streamSid, apiUrl);
+      let result;
+      try {
+        result = await retryWithBackoff(
+          () => ProcessCallService.process(extractedData),
+          {
+            maxRetries: 3,
+            baseDelay: 1000,
+            onRetry: (attempt, error, delay) => {
+              notifDebugLog("process-call: retry " + attempt + "/3 apres erreur " + (error?.message || error));
+              callLogger.warn(streamSid, "Tentative " + attempt + "/3 de sauvegarde après erreur", {
+                error: error?.message,
+                delay: delay + "ms",
+              });
+            },
+            shouldRetry: (err) => {
+              const msg = err?.message || String(err);
+              const retryable = /timeout|ECONNRESET|ETIMEDOUT|429|500|502|503|504/.test(msg) || err?.status >= 500;
+              notifDebugLog("process-call: shouldRetry " + retryable + " pour " + msg);
+              return retryable;
+            },
+          }
+        );
+      } catch (processError) {
+        logStep(streamSid, "ERREUR: ProcessCallService.process a echoue", processError?.message || String(processError));
+        callLogger.error(streamSid, processError, { context: "ProcessCallService.process" });
+        throw processError;
+      }
 
-      // Retry avec backoff exponentiel pour la sauvegarde
-      const apiResponse = await retryFetch(
-        () => fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": process.env.X_API_KEY,
-          },
-          body: JSON.stringify(extractedData),
-        }),
-        {
-          maxRetries: 3,
-          baseDelay: 1000,
-          onRetry: (attempt, error, delay) => {
-            callLogger.warn(streamSid, `Tentative ${attempt}/3 de sauvegarde après erreur`, {
-              error: error.message,
-              status: error.status,
-              delay: `${delay}ms`,
-              event: "api_save_retry",
-            });
-          },
-        }
-      );
+      callLogger.performance(streamSid, "api_save", Date.now() - saveStartTime);
+      callLogger.apiCallCompleted(streamSid, { status: 201 });
+      callLogger.performance(streamSid, "total_processing", Date.now() - startTime);
 
-      const apiDuration = Date.now() - apiStartTime;
-      callLogger.performance(streamSid, "api_save", apiDuration);
+      const orderId = result?.order?._id?.toString() ?? result?.reservation?._id?.toString() ?? null;
+      const appointmentType = result?.reservation ? "reservation" : result?.order ? "order" : null;
+      logStep(streamSid, "6. Succes -> envoi notif (processed)", "orderId=" + (orderId || "—"));
 
-      const savedCall = await apiResponse.json();
-      callLogger.apiCallCompleted(streamSid, apiResponse);
+      try {
+        notificationService.notifyCallEnded(extractedData, {
+          orderId,
+          appointmentType,
+          createdReservation: result.reservation,
+          createdOrder: result.order,
+        });
+      } catch (notifError) {
+        callLogger.error(streamSid, notifError, { context: "notifyCallEnded_processed" });
+      }
 
-      const totalDuration = Date.now() - startTime;
-      callLogger.performance(streamSid, "total_processing", totalDuration);
-
+      logStep(streamSid, "7. Reponse 201 envoyee");
       return reply.code(201).send({
         success: true,
-        message: "Appel traité et sauvegardé avec succès via API",
-        data: savedCall.data,
+        message: "Appel traité : réservation et/ou commande créée(s)",
+        data: { reservation: result.reservation, order: result.order },
       });
     } catch (error) {
+      logStep(streamSid, "ERREUR GLOBALE", error?.message || String(error));
       callLogger.error(streamSid, error, {
         context: "process_call",
         totalDuration: Date.now() - startTime,
       });
-
       return reply.code(500).send({
         error: "Erreur lors du traitement de l'appel",
-        details: error.message,
+        details: error?.message ?? "Erreur inconnue",
       });
     }
   });

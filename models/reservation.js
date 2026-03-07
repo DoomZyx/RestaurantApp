@@ -55,10 +55,9 @@ const orderSchema = new mongoose.Schema({
     sms: { type: Boolean, default: false }
   },
 
-  // Lien avec un appel si applicable
+  // Lien avec un appel (legacy, non utilisé depuis refactor restaurant)
   related_call: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "CallsData",
     required: false
   }
 }, {

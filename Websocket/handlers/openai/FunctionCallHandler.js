@@ -13,13 +13,11 @@ export class FunctionCallHandler {
   }
 
   /**
-   * Réception de delta d'arguments de function call
+   * Réception de delta d'arguments de function call (streaming).
+   * Pas de log par delta pour éviter le spam ; le détail est dans handleFunctionCallCompleted.
    */
-  async handleFunctionCallDelta(data) {
-    this.callLogger.debug(this.streamSid, "Function call delta received", {
-      name: data.name,
-      arguments: data.arguments,
-    });
+  async handleFunctionCallDelta(_data) {
+    // NOP : accumulation côté API jusqu'à response.function_call_arguments.done
   }
 
   /**
@@ -56,7 +54,7 @@ export class FunctionCallHandler {
           result = { error: `Fonction inconnue: ${functionName}` };
       }
 
-      // Envoyer le résultat à OpenAI
+      // Envoyer le résultat à OpenAI puis déclencher la réponse (create_response: false en session)
       if (this.openAiWs && this.openAiWs.readyState === 1) {
         this.openAiWs.send(
           JSON.stringify({
@@ -68,6 +66,9 @@ export class FunctionCallHandler {
             },
           })
         );
+        // Obligatoire : sans response.create, le modèle ne continue pas (pas de TTS).
+        this.openAiWs.send(JSON.stringify({ type: "response.create" }));
+        this.callLogger.debug(this.streamSid, "response.create envoyé après function_call_output");
       }
     } catch (error) {
       this.callLogger.error(this.streamSid, error, {

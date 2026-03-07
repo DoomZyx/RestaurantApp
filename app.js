@@ -8,7 +8,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import callRoutes from "./Routes/Calls/call.js";
 import wsRoutes from "./Routes/Ws/ws.js";
-import callDataRoutes from "./Routes/CallData/callData.js";
 import processCallRoutes from "./Routes/CallData/processCall.js";
 import authRoutes from "./Routes/Auth/auth.js";
 import notificationRoutes from "./Routes/Ws/notifications.js";
@@ -116,7 +115,6 @@ fastify.register(async (instance) => {
     }
   });
 
-  instance.register(callDataRoutes, { prefix: "/api" });
   instance.register(processCallRoutes, { prefix: "/api" });
   instance.register(authRoutes, { prefix: "/api/auth" });
   instance.register(supplierOrderProtectedRoutes, { prefix: "/api" });

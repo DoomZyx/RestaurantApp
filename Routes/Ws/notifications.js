@@ -1,21 +1,37 @@
 // Routes/Ws/notifications.js
 import notificationService from "../../Services/notificationService.js";
 import { callLogger } from "../../Services/logging/logger.js";
+import { notifDebugLog } from "../../Services/logging/notifDebugLog.js";
 
 function requireApiKey(request, reply, done) {
+  notifDebugLog("requireApiKey: requete recue x-api-key=" + (request.headers["x-api-key"] ? "present" : "absent"));
   const apiKey = String(request.headers["x-api-key"] ?? "").trim();
   if (!apiKey || apiKey !== process.env.X_API_KEY) {
+    notifDebugLog("requireApiKey: rejet 401");
     return reply.code(401).send({ error: "Clé API manquante ou invalide" });
   }
   done();
 }
 
 export default async function notificationRoutes(fastify, options) {
+  // connection doit exposer .send() et .readyState (objet WebSocket @fastify/websocket)
   fastify.get("/ws/notifications", { websocket: true }, (connection, req) => {
-    // Ajouter la connexion au service de notification
+    const socket = connection?.socket ?? connection;
+    const readyState = socket?.readyState;
+    const hasSend = typeof (socket?.send) === "function";
+    notifDebugLog("WS connexion entrante readyState=" + readyState + " hasSend=" + hasSend + " totalAvant=" + notificationService.connections.size);
+    callLogger.info(null, "WebSocket /ws/notifications: connexion entrante", {
+      readyState,
+      hasSend,
+      totalConnectionsAvant: notificationService.connections.size,
+    });
     notificationService.addConnection(connection);
 
-    // Gérer les messages reçus (optionnel, pour les commandes)
+    connection.on("error", (err) => {
+      callLogger.error(null, err, { context: "ws_notifications_error" });
+      notificationService.removeConnection(connection);
+    });
+
     connection.on("message", (message) => {
       try {
         const data = JSON.parse(message.toString());
@@ -57,6 +73,7 @@ export default async function notificationRoutes(fastify, options) {
 
   // Route pour envoyer une notification de test (protégée par x-api-key)
   fastify.post("/api/notifications/test", { preHandler: requireApiKey }, async (request, reply) => {
+    notifDebugLog("POST /api/notifications/test recu type=" + (request.body?.type || "call_completed"));
     try {
       const { type = "call_completed", data = {} } = request.body;
 

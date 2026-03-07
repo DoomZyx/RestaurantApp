@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 import notificationService from "../../Services/notificationService.js";
+import { notifDebugLog } from "../../Services/logging/notifDebugLog.js";
 import { ValidationService } from "../services/ValidationService.js";
 import { normalizeTranscription } from "../../Services/transcription/transcriptionNormalizer.js";
 import { recordTranscription } from "../../Services/audioProcessing/audioRecordingService.js";
@@ -81,31 +82,25 @@ export class TranscriptionHandler {
         }
       );
 
-      // ✅ VALIDATION : Vérifier si la transcription est exploitable
+      // VALIDATION : vérifier si la transcription est exploitable (regles assouplies)
       const validation = ValidationService.validateTranscription(normalizedTranscription);
-      
+
       if (validation !== true) {
-        // ❌ Transcription invalide - Annuler le traitement
+        notifDebugLog("TranscriptionHandler: validation KO -> pas d'appel process-call raison=" + String(validation));
         this.callLogger.info(
           this.streamSid,
-          `⏭️ Appel ignoré : ${validation}`,
+          "Appel ignoré (validation): " + validation,
           {
-            transcriptionLength: transcription.length,
-            transcriptionPreview: transcription.substring(0, 100),
+            transcriptionLength: normalizedTranscription.length,
+            preview: normalizedTranscription.substring(0, 80),
           }
         );
-        
-        
-        // Ne pas traiter ni notifier
         return;
       }
 
-      // Si la transcription est trop courte, on la garde quand même (fallback désactivé)
+      notifDebugLog("TranscriptionHandler: validation OK -> POST process-call length=" + normalizedTranscription.length);
       if (normalizedTranscription.length < 100) {
-        this.callLogger.info(
-          this.streamSid,
-          "Transcription courte détectée - utilisation de la transcription OpenAI"
-        );
+        this.callLogger.info(this.streamSid, "Transcription courte - envoi quand même à process-call");
       }
 
       await this.sendToProcessingAPI(normalizedTranscription, startTime);
@@ -126,6 +121,7 @@ export class TranscriptionHandler {
     const apiUrl = `http://localhost:${
       process.env.PORT || 8080
     }/api/process-call`;
+    notifDebugLog("TranscriptionHandler: POST " + apiUrl + " (si reponse ok -> process-call envoie la notif)");
     this.callLogger.apiCallStarted(this.streamSid, apiUrl);
 
     const response = await fetch(apiUrl, {
@@ -150,6 +146,7 @@ export class TranscriptionHandler {
       // Notification déplacée dans callData.js pour avoir les IDs complets
       // (callId, orderId) après sauvegarde en base de données
     } else {
+      notifDebugLog("TranscriptionHandler: POST process-call erreur status=" + response.status + " -> pas de notif call_completed");
       this.callLogger.error(
         this.streamSid,
         new Error(`Erreur API: ${response.status}`),

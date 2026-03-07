@@ -1,6 +1,5 @@
 import { OrderService } from "./OrderService.js";
 import { CallValidator } from "../validators/CallValidator.js";
-import notificationService from "../../Services/notificationService.js";
 
 /**
  * Service de traitement des transcriptions d'appels (secteur restaurant).
@@ -47,21 +46,6 @@ export class ProcessCallService {
       } catch (err) {
         console.error("Erreur création commande (processCall):", err);
       }
-    }
-
-    try {
-      const notificationData = {
-        callId: null,
-        orderId: createdOrder?._id?.toString() ?? createdReservation?._id?.toString(),
-        nom: nom || "Client inconnu",
-        telephone: telephone || "Non fourni",
-        type_demande: type_demande || "Non spécifié",
-        services: services || "",
-        description: description || "",
-      };
-      notificationService.notifyCallCompleted(notificationData);
-    } catch (notifError) {
-      console.error("Erreur envoi notification WebSocket:", notifError);
     }
 
     return { reservation: createdReservation, order: createdOrder };
