@@ -112,16 +112,21 @@ function ReservationsPage() {
       .sort((a, b) => (a.heure || "").localeCompare(b.heure || ""));
   }, [filteredReservations, isViewingToday]);
 
-  /** KPI couverts : max, réservés (hors annulés), arrivés (en_cours), restants */
+  /** KPI couverts : max, réservés (hors annulés), arrivés (en_cours+termine), restants */
   const activeReservations = useMemo(() => 
     filteredReservations.filter(apt => !["annule"].includes(apt.statut)),
     [filteredReservations]
   );
   const couvertsReserves = activeReservations.reduce((sum, apt) => sum + (Number(apt.nombrePersonnes) || 0), 0);
+  /** Arrivés = en_cours + terminées (les couverts restent comptés une fois arrivés) */
   const couvertsArrives = activeReservations
-    .filter(apt => apt.statut === "en_cours")
+    .filter(apt => ["en_cours", "termine"].includes(apt.statut))
     .reduce((sum, apt) => sum + (Number(apt.nombrePersonnes) || 0), 0);
-  const couvertsRestants = capacity != null ? Math.max(0, capacity - couvertsReserves) : null;
+  /** Restants = capacité moins les couverts encore en occupation (planifié, confirmé, en_cours ; les terminés libèrent la place) */
+  const couvertsEnOccupation = activeReservations
+    .filter(apt => ["planifie", "confirme", "en_cours"].includes(apt.statut))
+    .reduce((sum, apt) => sum + (Number(apt.nombrePersonnes) || 0), 0);
+  const couvertsRestants = capacity != null ? Math.max(0, capacity - couvertsEnOccupation) : null;
 
   /** Couverts par créneau horaire (résas actives uniquement) */
   const coversPerSlot = useMemo(() => {
