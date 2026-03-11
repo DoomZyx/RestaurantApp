@@ -6508,3 +6508,137 @@
     at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
     at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
     at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-08 14:20:56] [ERROR] [extractCallData] [unknown...] [ERROR] Échec complet de l'extraction GPT après retry
+   Contexte: {
+  "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "context": "gpt_extraction_failed",
+  "status": 429,
+  "tentatives": 4
+}
+   Stack: Error: Échec complet de l'extraction GPT après retry
+    at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)
+[2026-03-08 14:21:20] [ERROR] [extractCallData] [unknown...] [ERROR] Échec complet de l'extraction GPT après retry
+   Contexte: {
+  "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "context": "gpt_extraction_failed",
+  "status": 429,
+  "tentatives": 4
+}
+   Stack: Error: Échec complet de l'extraction GPT après retry
+    at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)
+[2026-03-08 14:23:01] [ERROR] [app] [MZ499ad7...] [ERROR] OpenAI Error: Conversation already has an active response in progress: resp_DH8NzPA998ZGmU9HXhlXI. Wait until the response is finished before creating a new one.
+   Contexte: {
+  "error": "OpenAI Error: Conversation already has an active response in progress: resp_DH8NzPA998ZGmU9HXhlXI. Wait until the response is finished before creating a new one.",
+  "errorType": "invalid_request_error",
+  "errorCode": "conversation_already_has_active_response",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "conversation_already_has_active_response",
+    "message": "Conversation already has an active response in progress: resp_DH8NzPA998ZGmU9HXhlXI. Wait until the response is finished before creating a new one.",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Conversation already has an active response in progress: resp_DH8NzPA998ZGmU9HXhlXI. Wait until the response is finished before creating a new one.
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/openai/ErrorHandler.js:24:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/handlers/OpenAIHandler.js:163:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Websocket/connection.js:206:25)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-08 14:28:53] [ERROR] [extractCallData] [unknown...] [ERROR] Échec complet de l'extraction GPT après retry
+   Contexte: {
+  "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "context": "gpt_extraction_failed",
+  "status": 429,
+  "tentatives": 4
+}
+   Stack: Error: Échec complet de l'extraction GPT après retry
+    at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)
+[2026-03-08 14:32:28] [ERROR] [extractCallData] [unknown...] [ERROR] Échec complet de l'extraction GPT après retry
+   Contexte: {
+  "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "context": "gpt_extraction_failed",
+  "status": 429,
+  "tentatives": 4
+}
+   Stack: Error: Échec complet de l'extraction GPT après retry
+    at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)
+[2026-03-08 14:35:32] [ERROR] [extractCallData] [unknown...] [ERROR] Échec complet de l'extraction GPT après retry
+   Contexte: {
+  "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "context": "gpt_extraction_failed",
+  "status": 429,
+  "tentatives": 4
+}
+   Stack: Error: Échec complet de l'extraction GPT après retry
+    at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)
+[2026-03-08 14:38:20] [ERROR] [extractCallData] [unknown...] [ERROR] Échec complet de l'extraction GPT après retry
+   Contexte: {
+  "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "context": "gpt_extraction_failed",
+  "status": 429,
+  "tentatives": 4
+}
+   Stack: Error: Échec complet de l'extraction GPT après retry
+    at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)
+[2026-03-08 14:41:23] [ERROR] [extractCallData] [unknown...] [ERROR] Échec complet de l'extraction GPT après retry
+   Contexte: {
+  "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "context": "gpt_extraction_failed",
+  "status": 429,
+  "tentatives": 4
+}
+   Stack: Error: Échec complet de l'extraction GPT après retry
+    at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)
+[2026-03-08 14:50:30] [ERROR] [extractCallData] [unknown...] [ERROR] Échec complet de l'extraction GPT après retry
+   Contexte: {
+  "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "context": "gpt_extraction_failed",
+  "status": 429,
+  "tentatives": 4
+}
+   Stack: Error: Échec complet de l'extraction GPT après retry
+    at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)
+[2026-03-08 14:56:04] [ERROR] [extractCallData] [unknown...] [ERROR] Échec complet de l'extraction GPT après retry
+   Contexte: {
+  "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "context": "gpt_extraction_failed",
+  "status": 429,
+  "tentatives": 4
+}
+   Stack: Error: Échec complet de l'extraction GPT après retry
+    at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)
+[2026-03-08 15:28:47] [ERROR] [extractCallData] [unknown...] [ERROR] Échec complet de l'extraction GPT après retry
+   Contexte: {
+  "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "context": "gpt_extraction_failed",
+  "status": 429,
+  "tentatives": 4
+}
+   Stack: Error: Échec complet de l'extraction GPT après retry
+    at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)

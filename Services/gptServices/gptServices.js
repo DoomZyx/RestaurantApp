@@ -3,12 +3,15 @@ import { getSystemMessage } from "../../Config/prompts.js";
 import { generateEnrichedPrompt } from "./pricingService.js";
 
 export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
-  const ws = new WebSocket("wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview", {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "OpenAI-Beta": "realtime=v1"
-    }
-  });
+  const ws = new WebSocket(
+    "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-mini",
+    {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "OpenAI-Beta": "realtime=v1",
+      },
+    },
+  );
 
   ws.on("open", async () => {
     // Récupérer les infos du restaurant depuis la BDD (dynamique)
@@ -28,9 +31,9 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
         turn_detection: {
           type: "server_vad",
           threshold: 0.4, // Réduit de 0.5 à 0.4 pour VAD plus robuste et tolérant au bruit
-          prefix_padding_ms: 200, // Augmenté pour mieux capturer le début des phrases avec bruit
+          prefix_padding_ms: 100, // Augmenté pour mieux capturer le début des phrases avec bruit
           // Silence duration augmenté pour tolérer les pauses naturelles et le bruit ambiant
-          silence_duration_ms: 400, // Augmenté pour VAD robuste avec tolérance au bruit
+          silence_duration_ms: 150, // Augmenté pour VAD robuste avec tolérance au bruit
           // DÉSACTIVATION génération automatique - gestion manuelle uniquement
           // Les réponses seront créées manuellement via response.create après input_audio_buffer.committed
           create_response: false,
@@ -57,10 +60,12 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
               "PRIORITÉ - TÉLÉPHONE : Format XX XX XX XX XX (10 chiffres avec espaces). Ex: 'zéro six soixante-douze...' → '06 72 88 62 55'. Transcris chaque chiffre en numérique.\n\n" +
               "VOCABULAIRE MENU : 'Coca-Cola' (majuscules et tiret), 'burger', 'frites', 'tacos', 'pizza', 'margherita' (avec 'h'), 'sauce Algérienne' (majuscule), 'sauce Samouraï'.\n\n" +
               "RÈGLES HAUTE PRÉCISION : Privilégie justesse chiffres/horaires même avec bruit. Si incertain, transcris quand même. Garde ponctuation naturelle. Respecte majuscules noms propres et produits. Mode haute précision activé.";
-            
+
             // Tronquer à 1024 caractères maximum (limite OpenAI)
-            return fullPrompt.length > 1024 ? fullPrompt.substring(0, 1024) : fullPrompt;
-          })()
+            return fullPrompt.length > 1024
+              ? fullPrompt.substring(0, 1024)
+              : fullPrompt;
+          })(),
         },
         // Désactivation des résumés automatiques en cours d'appel
         // Le contexte conversationnel complet sera maintenu jusqu'à call_end
@@ -89,7 +94,8 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
           {
             type: "function",
             name: "create_appointment",
-            description: "Créer un rendez-vous pour un client. IMPORTANT: Il existe 2 services - SERVICE MIDI (11h-15h) et SERVICE SOIR (18h-00h). Choisis l'heure en fonction du service demandé. Deux structures distinctes : (1) Réservation de table = même base que le modèle Reservation : nombrePersonnes obligatoire, commandes = [] ; (2) Commande à emporter = même base que le modèle Order : commandes = liste des plats.",
+            description:
+              "Créer un rendez-vous pour un client. IMPORTANT: Il existe 2 services - SERVICE MIDI (11h-15h) et SERVICE SOIR (18h-00h). Choisis l'heure en fonction du service demandé. Deux structures distinctes : (1) Réservation de table = même base que le modèle Reservation : nombrePersonnes obligatoire, commandes = [] ; (2) Commande à emporter = même base que le modèle Order : commandes = liste des plats.",
             parameters: {
               type: "object",
               properties: {
@@ -99,7 +105,8 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                 },
                 telephone: {
                   type: "string",
-                  description: "Numéro de téléphone au format avec espaces entre paires (ex: 07 86 87 67 89)",
+                  description:
+                    "Numéro de téléphone au format avec espaces entre paires (ex: 07 86 87 67 89)",
                 },
                 date: {
                   type: "string",
@@ -109,7 +116,8 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                 time: {
                   type: "string",
                   pattern: "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$",
-                  description: "Heure du rendez-vous au format HH:MM. SERVICE MIDI: 11h00-14h59, SERVICE SOIR: 18h00-23h59. Exemple: 12h30 pour midi, 19h00 pour soir.",
+                  description:
+                    "Heure du rendez-vous au format HH:MM. SERVICE MIDI: 11h00-14h59, SERVICE SOIR: 18h00-23h59. Exemple: 12h30 pour midi, 19h00 pour soir.",
                 },
                 duration: {
                   type: "integer",
@@ -119,12 +127,14 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                 type: {
                   type: "string",
                   enum: ["Commande à emporter", "Réservation de table"],
-                  description: "Type : commande à emporter ou réservation de table. DOIT être explicitement spécifié.",
+                  description:
+                    "Type : commande à emporter ou réservation de table. DOIT être explicitement spécifié.",
                 },
                 modalite: {
                   type: "string",
                   enum: ["À emporter", "Sur place", "Livraison"],
-                  description: "Modalite: À emporter si type est Commande à emporter, Sur place si type est Réservation de table, ou Livraison pour livraison"
+                  description:
+                    "Modalite: À emporter si type est Commande à emporter, Sur place si type est Réservation de table, ou Livraison pour livraison",
                 },
                 description: {
                   type: "string",
@@ -133,11 +143,13 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                 nombrePersonnes: {
                   type: "integer",
                   minimum: 1,
-                  description: "OBLIGATOIRE pour Réservation de table (nombre de couverts). Ne pas remplir pour Commande à emporter.",
+                  description:
+                    "OBLIGATOIRE pour Réservation de table (nombre de couverts). Ne pas remplir pour Commande à emporter.",
                 },
                 commandes: {
                   type: "array",
-                  description: "Réservation : laisser [] (structure Reservation = pas de plats). Commande à emporter : liste des plats (structure Order), chaque élément au minimum 'nom' et 'quantite'.",
+                  description:
+                    "Réservation : laisser [] (structure Reservation = pas de plats). Commande à emporter : liste des plats (structure Order), chaque élément au minimum 'nom' et 'quantite'.",
                   items: {
                     type: "object",
                     properties: {
@@ -147,11 +159,13 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                       },
                       nom: {
                         type: "string",
-                        description: "Nom du plat (ex: 'Burger', 'Pizza Margherita', 'Tacos')",
+                        description:
+                          "Nom du plat (ex: 'Burger', 'Pizza Margherita', 'Tacos')",
                       },
                       categorie: {
                         type: "string",
-                        description: "Catégorie du plat (ex: 'Burgers', 'Pizzas', 'Tacos')",
+                        description:
+                          "Catégorie du plat (ex: 'Burgers', 'Pizzas', 'Tacos')",
                       },
                       quantite: {
                         type: "integer",
@@ -164,7 +178,8 @@ export function createOpenAiSession(apiKey, voice = "ballad", instructions) {
                       },
                       composition: {
                         type: "string",
-                        description: "Composition ou modifications (ex: 'Sans oignons', 'Extra sauce')",
+                        description:
+                          "Composition ou modifications (ex: 'Sans oignons', 'Extra sauce')",
                       },
                       options: {
                         type: "object",

@@ -423,3 +423,248 @@
 2026-03-07T22:19:43.890Z [NOTIF] Connexion supprimee total=0
 2026-03-07T22:19:44.620Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
 2026-03-07T22:19:44.623Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:18:34.613Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:18:34.618Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:19:15.121Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:19:15.125Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:19:29.104Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:19:29.109Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:19:34.112Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:19:34.117Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:20:17.113Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:20:17.117Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:20:40.099Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:20:40.101Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:20:40.114Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:20:40.116Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:20:40.117Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:20:56.474Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Autre
+2026-03-08T13:20:56.475Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T13:20:56.476Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T13:20:56.479Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T13:20:56.480Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T13:21:04.974Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:21:04.975Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:21:04.980Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:21:04.981Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:21:04.982Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:21:20.746Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Autre
+2026-03-08T13:21:20.747Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T13:21:20.748Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T13:21:20.750Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T13:21:20.751Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T13:22:28.616Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:22:28.620Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:23:06.957Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:23:06.958Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:23:06.980Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:23:06.982Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:23:06.984Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:23:19.108Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:23:19.112Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:23:29.627Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:23:29.632Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:25:44.616Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:25:44.620Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:28:37.931Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:28:37.932Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:28:37.946Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:28:37.947Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:28:37.948Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:28:54.043Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Autre
+2026-03-08T13:28:54.045Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T13:28:54.046Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T13:28:54.048Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T13:28:54.049Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T13:30:56.129Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:30:56.134Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:31:00.122Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:31:00.127Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:31:04.122Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:31:04.127Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:31:33.602Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:31:33.607Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:32:12.614Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:32:12.615Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:32:12.629Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:32:12.631Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:32:12.632Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:32:28.450Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Autre
+2026-03-08T13:32:28.452Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T13:32:28.453Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T13:32:28.455Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T13:32:28.456Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T13:33:57.618Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:33:57.622Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:35:16.576Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:35:16.578Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:35:16.590Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:35:16.591Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:35:16.592Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:35:32.143Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Autre
+2026-03-08T13:35:32.144Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T13:35:32.145Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T13:35:32.147Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T13:35:32.148Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T13:36:33.633Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:36:33.640Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:36:47.613Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:36:47.617Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:37:37.599Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:37:37.603Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:38:02.826Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:38:02.827Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:38:02.840Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:38:02.842Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:38:02.843Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:38:20.451Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Autre
+2026-03-08T13:38:20.453Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T13:38:20.454Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T13:38:20.457Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T13:38:20.458Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T13:40:05.605Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:40:05.610Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:40:17.599Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:40:17.605Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:41:06.658Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:41:06.659Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:41:06.672Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:41:06.673Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:41:06.674Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:41:23.139Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Autre
+2026-03-08T13:41:23.141Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T13:41:23.142Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T13:41:23.144Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T13:41:23.145Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T13:44:07.611Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:44:07.615Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:50:13.001Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:50:13.002Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:50:13.012Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:50:13.013Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:50:13.014Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:50:30.212Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Autre
+2026-03-08T13:50:30.213Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T13:50:30.215Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T13:50:30.217Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T13:50:30.218Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T13:54:21.614Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:54:21.619Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:55:47.849Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:55:47.851Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:55:47.871Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:55:47.874Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:55:47.878Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:56:04.636Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Autre
+2026-03-08T13:56:04.637Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T13:56:04.639Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T13:56:04.641Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T13:56:04.642Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T13:58:53.606Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:58:53.611Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T13:59:27.318Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T13:59:27.319Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T13:59:27.333Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T13:59:27.334Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T13:59:27.335Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T13:59:34.629Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T13:59:34.634Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T14:01:38.633Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T14:01:38.637Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T14:26:37.604Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T14:26:37.609Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T14:26:48.604Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T14:26:48.608Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T14:27:42.122Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T14:27:42.126Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T14:27:59.109Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T14:27:59.114Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T14:28:02.625Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T14:28:02.629Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T14:28:07.127Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T14:28:07.132Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T14:28:31.102Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=62
+2026-03-08T14:28:31.103Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T14:28:31.116Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T14:28:31.117Z [NOTIF] [process-call] 2. Transcription presente length=61
+2026-03-08T14:28:31.118Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T14:28:47.633Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Autre
+2026-03-08T14:28:47.636Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T14:28:47.638Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T14:28:47.642Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T14:28:47.643Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T14:30:33.611Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T14:30:33.616Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T14:32:39.222Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=101
+2026-03-08T14:32:39.223Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T14:32:39.239Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T14:32:39.241Z [NOTIF] [process-call] 2. Transcription presente length=101
+2026-03-08T14:32:39.243Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T14:32:48.103Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Information menu
+2026-03-08T14:32:48.104Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T14:32:48.106Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T14:32:48.109Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T14:32:48.110Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T15:15:15.777Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=524
+2026-03-08T15:15:15.778Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T15:15:15.784Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T15:15:15.785Z [NOTIF] [process-call] 2. Transcription presente length=524
+2026-03-08T15:15:15.787Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T15:15:20.683Z [NOTIF] process-call: extractCallData ok nom=Axel type_demande=Réservation de table
+2026-03-08T15:15:20.685Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-08T15:15:20.687Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-08T15:15:20.691Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-08T15:15:20.692Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T15:15:20.693Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T15:15:20.694Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-08T15:16:06.540Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=369
+2026-03-08T15:16:06.540Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T15:16:06.544Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T15:16:06.545Z [NOTIF] [process-call] 2. Transcription presente length=369
+2026-03-08T15:16:06.546Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T15:16:10.825Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Réservation de table
+2026-03-08T15:16:10.827Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-08T15:16:10.828Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-08T15:16:10.832Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-08T15:16:10.833Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T15:16:10.834Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T15:16:10.835Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-08T15:17:11.612Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T15:17:11.616Z [NOTIF] Connexion ajoutee total=1
+2026-03-08T15:35:27.957Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=732
+2026-03-08T15:35:27.958Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T15:35:27.963Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T15:35:27.965Z [NOTIF] [process-call] 2. Transcription presente length=732
+2026-03-08T15:35:27.966Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T15:35:36.218Z [NOTIF] process-call: extractCallData ok nom=Axel type_demande=Réservation de table
+2026-03-08T15:35:36.220Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-08T15:35:36.221Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-08T15:35:36.225Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-08T15:35:36.228Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T15:35:36.229Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T15:35:36.232Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-08T15:36:44.387Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=141
+2026-03-08T15:36:44.387Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T15:36:44.393Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T15:36:44.394Z [NOTIF] [process-call] 2. Transcription presente length=141
+2026-03-08T15:36:44.396Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T15:36:46.460Z [NOTIF] process-call: extractCallData ok nom=Client inconnu type_demande=Information menu
+2026-03-08T15:36:46.462Z [NOTIF] [process-call] 4. Verif isUseless isUseless=true hasResa=false hasOrder=false
+2026-03-08T15:36:46.463Z [NOTIF] [process-call] 5a. Branche ignoree -> envoi notif (ignored)
+2026-03-08T15:36:46.465Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T15:36:46.466Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T15:38:41.615Z [NOTIF] TranscriptionHandler: validation OK -> POST process-call length=956
+2026-03-08T15:38:41.616Z [NOTIF] TranscriptionHandler: POST http://localhost:8080/api/process-call (si reponse ok -> process-call envoie la notif)
+2026-03-08T15:38:41.621Z [NOTIF] [process-call] 1. Requete recue body keys=transcription
+2026-03-08T15:38:41.623Z [NOTIF] [process-call] 2. Transcription presente length=956
+2026-03-08T15:38:41.624Z [NOTIF] [process-call] 3. Appel extractCallData (GPT)
+2026-03-08T15:38:45.792Z [NOTIF] process-call: extractCallData ok nom=Alex type_demande=Commande à emporter
+2026-03-08T15:38:45.794Z [NOTIF] [process-call] 4. Verif isUseless isUseless=false hasResa=false hasOrder=false
+2026-03-08T15:38:45.795Z [NOTIF] [process-call] 5b. Branche traitement -> ProcessCallService.process
+2026-03-08T15:38:45.799Z [NOTIF] [process-call] 6. Succes -> envoi notif (processed) orderId=—
+2026-03-08T15:38:45.801Z [NOTIF] sendNotification appele type=call_completed connexions=1
+2026-03-08T15:38:45.803Z [NOTIF] Notification envoyee sentCount=1 totalConnections=1
+2026-03-08T15:38:45.804Z [NOTIF] [process-call] 7. Reponse 201 envoyee
+2026-03-08T15:41:21.563Z [NOTIF] Connexion supprimee total=0
+2026-03-08T15:42:02.273Z [NOTIF] WS connexion entrante readyState=1 hasSend=true totalAvant=0
+2026-03-08T15:42:02.274Z [NOTIF] Connexion ajoutee total=1
