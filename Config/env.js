@@ -8,5 +8,5 @@ export const config = {
   RESTAURANT_PHONE_NUMBER: process.env.RESTAURANT_PHONE_NUMBER,
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   PUBLIC_HOST: process.env.PUBLIC_HOST,
-  PORT: process.env.PORT || 3000,
+  PORT: Number(process.env.PORT) || 3000,
 };
