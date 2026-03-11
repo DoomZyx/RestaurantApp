@@ -1,22 +1,22 @@
 module.exports = {
-  apps: [
-    {
-      name: "prod",
-      script: "./server.js",
-      interpreter: "node",
-      watch: true,
-      env: {
-        NODE_ENV: "prod",
-      },
-    },
-    {
-      name: "preprod",
-      script: "./server.js",
-      interpreter: "node",
-      watch: true,
-      env: {
-        NODE_ENV: "preprod",
-      },
-    },
-  ],
+ apps: [
+   {
+     name: "prod",
+     cwd: "/home/ubuntu/SmartOrder/prod",
+     script: "server.js",
+     env: {
+       NODE_ENV: "production",
+       PORT: 3000
+     }
+   },
+   {
+     name: "preprod",
+     cwd: "/home/ubuntu/SmartOrder/preprod",
+     script: "server.js",
+     env: {
+       NODE_ENV: "preprod",
+       PORT: 3001
+     }
+   }
+ ]
 };
