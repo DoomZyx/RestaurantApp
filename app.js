@@ -15,6 +15,7 @@ import orderRoutes from "./Routes/Appointments/order.js";
 import reservationRoutes from "./Routes/Appointments/reservation.js";
 import pricingRoutes from "./Routes/Pricing/pricing.js";
 import phoneLineRoutes from "./Routes/PhoneLine/phoneLine.js";
+import callMinutesRoutes from "./Routes/CallMinutes/callMinutes.js";
 import pingRoutes from "./Routes/Ping/ping.js";
 import { AuthService } from "./Business/services/AuthService.js";
 import dotenv from "dotenv";
@@ -113,6 +114,7 @@ fastify.register(async (instance) => {
 
   instance.register(processCallRoutes, { prefix: "/api" });
   instance.register(phoneLineRoutes, { prefix: "/api" });
+  instance.register(callMinutesRoutes, { prefix: "/api" });
   instance.register(authRoutes, { prefix: "/api/auth" });
 });
 

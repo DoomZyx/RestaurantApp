@@ -1,35 +1,21 @@
-FROM node:18
+# Backend SmartCRM - Node Fastify (API + WebSocket)
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Installer Python, pip et curl
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    python3-venv \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# pnpm
+RUN corepack enable && corepack prepare pnpm@10.12.4 --activate
+RUN pnpm add -g pnpm@10.12.4
 
-# Copier les fichiers package
-COPY package*.json ./
-RUN npm install --production
+COPY package.json pnpm-lock.yaml* ./
 
-# Copier tout le code
+RUN pnpm install --frozen-lockfile || pnpm install
+
 COPY . .
 
-# Installer les dépendances Python pour RNNoise
-WORKDIR /app/Services/audioProcessing
-RUN pip3 install --no-cache-dir -r requirements.txt
+EXPOSE 3000
 
-# Retour au répertoire principal
-WORKDIR /app
+ENV NODE_ENV=production
+ENV PORT=3000
 
-# Exposer les ports
-EXPOSE 8080 8081
-
-# Copier le script de démarrage
-COPY start-services.sh ./
-RUN chmod +x start-services.sh
-
-# Démarrer les deux services
-CMD ["./start-services.sh"]
+CMD ["node", "server.js"]
