@@ -1,12 +1,17 @@
 
 
-// Service Twilio optimisé - génération TwiML uniquement
-export function generateTwiml(host) {
+/**
+ * Génère le TwiML pour connecter l'appel au media stream.
+ * @param {string} host - Host du serveur (ex: gateway.example.com)
+ * @param {string} [streamPath] - Chemin du stream WebSocket (défaut: /media-stream). Ex Gateway: /v1/inst_xxx/media-stream
+ */
+export function generateTwiml(host, streamPath = "/media-stream") {
+  const path = streamPath.startsWith("/") ? streamPath : `/${streamPath}`;
   return `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
 <Play>https://doomzyx.github.io/IntroVoice/VoiceIntro.mp3</Play>
   <Connect>
-    <Stream url="wss://${host}/media-stream" />
+    <Stream url="wss://${host}${path}" />
   </Connect>
 </Response>`;
 }

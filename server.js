@@ -21,6 +21,7 @@ process.on("SIGTERM", close);
 
 try {
   await fastify.listen({ port: PORT, host: HOST });
+  console.log(`App backend démarré sur http://localhost:${PORT} (PORT=${PORT})`);
 } catch (err) {
   console.error(err);
   process.exit(1);

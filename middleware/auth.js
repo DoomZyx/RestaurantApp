@@ -1,8 +1,11 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
-const JWT_SECRET =
-  process.env.JWT_SECRET || "your-super-secret-jwt-key-change-in-production";
+// audit-fix: pas de fallback secret; exiger JWT_SECRET au démarrage (voir app.js / server.js)
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET || typeof JWT_SECRET !== "string" || JWT_SECRET.length < 32) {
+  throw new Error("JWT_SECRET doit être défini et comporter au moins 32 caractères");
+}
 
 // Middleware pour vérifier le token JWT
 export const authenticateToken = async (request, reply) => {

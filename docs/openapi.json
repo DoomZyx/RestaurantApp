@@ -1,0 +1,453 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SmartCRM Backend API",
+    "description": "API interne du SaaS pour la gestion des instances multi-tenant. Le site e-commerce appelle le backend après confirmation de paiement Stripe : il envoie l'abonnement acheté et les données utilisateur ; le backend assure toute l'automatisation (création instance, clé API, optionnellement provision Twilio/OpenAI).",
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "/", "description": "Serveur principal" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key",
+        "description": "Clé API (instance existante ou clé serveur pour créer des instances). Requise pour tous les endpoints ci-dessous."
+      }
+    },
+    "schemas": {
+      "InstanceSummary": {
+        "type": "object",
+        "properties": {
+          "instanceId": { "type": "string", "example": "inst_a1b2c3d4e5" },
+          "name": { "type": "string" },
+          "slug": { "type": "string" },
+          "plan": { "type": "string" },
+          "status": { "type": "string", "enum": ["active", "suspended", "closed"] },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "InstanceDetail": {
+        "allOf": [
+          { "$ref": "#/components/schemas/InstanceSummary" },
+          {
+            "type": "object",
+            "properties": {
+              "countryCode": { "type": "string", "enum": ["FR", "BE", "LU"] },
+              "twilioNumbers": { "type": "array", "items": { "type": "string" } },
+              "openAi": {
+                "type": "object",
+                "properties": {
+                  "projectId": { "type": "string" },
+                  "model": { "type": "string" },
+                  "voice": { "type": "string" }
+                }
+              },
+              "audio": {
+                "type": "object",
+                "properties": {
+                  "enableNoiseReduction": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "CreateInstanceBody": {
+        "type": "object",
+        "required": ["plan"],
+        "properties": {
+          "plan": {
+            "type": "string",
+            "description": "Abonnement acheté par l'utilisateur (ex. echauffement, mise_en_place, standard, premium). Envoyé par le site après confirmation Stripe. Détermine les capacités de l'instance."
+          },
+          "name": {
+            "type": "string",
+            "description": "Nom affiché de l'instance (ex. nom du restaurant). Obligatoire si provisionOpenAi est false."
+          },
+          "clientId": {
+            "type": "string",
+            "description": "Identifiant métier du client/utilisateur (ex. ID utilisateur du site). Obligatoire si provisionOpenAi est true pour provisionner une clé OpenAI dédiée."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Identifiant URL unique (webhooks Twilio). Si absent, généré à partir de name ou clientId."
+          },
+          "countryCode": {
+            "type": "string",
+            "enum": ["FR", "BE", "LU"],
+            "description": "Pays de résidence du client pour l'achat de numéro Twilio."
+          },
+          "twilioNumbers": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Liste de numéros Twilio déjà détenus à associer."
+          },
+          "openAi": {
+            "type": "object",
+            "properties": {
+              "apiKey": { "type": "string", "description": "Clé API OpenAI (si fournie manuellement, sans provisionOpenAi)." },
+              "model": { "type": "string", "default": "gpt-4o-realtime-mini" },
+              "voice": { "type": "string", "default": "ballad" }
+            }
+          },
+          "audio": {
+            "type": "object",
+            "properties": {
+              "enableNoiseReduction": { "type": "boolean", "default": true }
+            }
+          },
+          "provisionOpenAi": {
+            "type": "boolean",
+            "description": "Si true, crée un projet OpenAI et une clé dédiée pour le client (exige clientId et OPENAI_KEY_ENCRYPTION_SECRET)."
+          },
+          "provisionTwilio": {
+            "type": "boolean",
+            "description": "Si true, provisionne Twilio (webhook sur numéro existant ou achat numéro selon options)."
+          },
+          "provisionTwilioSubaccount": { "type": "boolean" },
+          "buyOnMainAccount": { "type": "boolean" },
+          "twilioCountryCode": { "type": "string", "enum": ["FR", "BE", "LU"] },
+          "twilioAreaCode": { "type": "string" },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email pour créer le premier utilisateur (connexion à l'app avec email + mot de passe après paiement)."
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6,
+            "description": "Mot de passe pour le premier utilisateur (obligatoire si email fourni)."
+          },
+          "username": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 30,
+            "description": "Nom d'utilisateur optionnel ; si absent, dérivé de l'email."
+          }
+        }
+      },
+      "CreateInstanceResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "example": "ok" },
+          "instanceId": { "type": "string" },
+          "twilioNumber": { "type": "string", "nullable": true },
+          "openAiKey": { "type": "string", "description": "[SET] si clé provisionnée et chiffrée." },
+          "apiKey": {
+            "type": "string",
+            "description": "Clé API primaire à renvoyer au client/site pour les appels suivants (à stocker côté client)."
+          },
+          "twilioWebhookUrl": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      },
+      "InstanceReport": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "instanceId": { "type": "string" },
+          "twilioNumber": { "type": "string", "nullable": true },
+          "openAiKey": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      },
+      "PatchInstanceBody": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "plan": { "type": "string" },
+          "status": { "type": "string", "enum": ["active", "suspended", "closed"] },
+          "countryCode": { "type": "string", "enum": ["FR", "BE", "LU"] },
+          "twilioNumbers": { "type": "array", "items": { "type": "string" } },
+          "openAi": { "type": "object", "properties": { "apiKey": { "type": "string" }, "model": { "type": "string" }, "voice": { "type": "string" } } },
+          "audio": { "type": "object", "properties": { "enableNoiseReduction": { "type": "boolean" } } }
+        }
+      },
+      "ProvisionTwilioBody": {
+        "type": "object",
+        "properties": {
+          "provisionSubaccount": { "type": "boolean" },
+          "buyOnMainAccount": { "type": "boolean" },
+          "countryCode": { "type": "string", "enum": ["FR", "BE", "LU"] },
+          "areaCode": { "type": "string" }
+        }
+      },
+      "CreateApiKeyBody": {
+        "type": "object",
+        "properties": {
+          "label": { "type": "string", "default": "manual" },
+          "scopes": { "type": "array", "items": { "type": "string" }, "default": ["voice:connect", "api:write"] }
+        }
+      },
+      "ApiKeyCreated": {
+        "type": "object",
+        "properties": {
+          "apiKey": { "type": "string", "description": "Clé brute à stocker côté client (affichée une seule fois)." }
+        }
+      },
+      "ApiKeyListItem": {
+        "type": "object",
+        "properties": {
+          "label": { "type": "string" },
+          "scopes": { "type": "array", "items": { "type": "string" } },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "lastUsedAt": { "type": "string", "format": "date-time", "nullable": true }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" },
+          "status": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  },
+  "security": [{ "apiKey": [] }],
+  "paths": {
+    "/api/instances": {
+      "get": {
+        "summary": "Lister les instances",
+        "description": "Retourne la liste des instances (instanceId, name, slug, plan, status, createdAt).",
+        "tags": ["Instances"],
+        "responses": {
+          "200": {
+            "description": "Liste des instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "instances": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/InstanceSummary" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Clé API manquante ou invalide", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "post": {
+        "summary": "Créer une instance (après paiement Stripe)",
+        "description": "Appelé par le site e-commerce après confirmation de paiement Stripe. Le site envoie l'abonnement acheté (plan) et les données utilisateur ; le backend automatise tout : création de l'instance (tenant isolé), génération de la clé API, optionnellement provision Twilio (numéro) et/ou OpenAI (clé dédiée). Réponse 201 : instanceId, apiKey (à transmettre au client), twilioNumber et twilioWebhookUrl si Twilio provisionné.",
+        "tags": ["Instances"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateInstanceBody" },
+              "example": {
+                "plan": "echauffement",
+                "name": "Restaurant Dupont",
+                "countryCode": "FR",
+                "email": "contact@restaurant-dupont.fr",
+                "password": "motdepasse123",
+                "provisionTwilio": true,
+                "provisionOpenAi": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Instance créée",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateInstanceResponse" }
+              }
+            }
+          },
+          "400": { "description": "Données invalides (ex. name ou clientId manquant)", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "409": { "description": "Slug déjà utilisé", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "Clé API manquante ou invalide", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "500": { "description": "Erreur serveur (ex. chiffrement OpenAI indisponible)", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "502": { "description": "Échec provision OpenAI", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/api/instances/{instanceId}": {
+      "get": {
+        "summary": "Détail d'une instance",
+        "description": "Retourne les détails d'une instance (sans clés sensibles).",
+        "tags": ["Instances"],
+        "parameters": [
+          { "name": "instanceId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Détail instance",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/InstanceDetail" }
+              }
+            }
+          },
+          "404": { "description": "Instance non trouvée", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "Clé API manquante ou invalide", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "patch": {
+        "summary": "Modifier une instance",
+        "tags": ["Instances"],
+        "parameters": [
+          { "name": "instanceId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PatchInstanceBody" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Instance mise à jour",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/InstanceDetail" }
+              }
+            }
+          },
+          "404": { "description": "Instance non trouvée", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "Clé API manquante ou invalide", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/api/instances/{instanceId}/report": {
+      "get": {
+        "summary": "Rapport agent (instance)",
+        "description": "Rapport JSON standard : status, instanceId, twilioNumber, openAiKey, notes.",
+        "tags": ["Instances"],
+        "parameters": [
+          { "name": "instanceId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rapport",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/InstanceReport" }
+              }
+            }
+          },
+          "404": { "description": "Instance non trouvée ou erreur", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "Clé API manquante ou invalide", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/api/instances/{instanceId}/provision-twilio": {
+      "post": {
+        "summary": "Provisionner Twilio pour une instance",
+        "description": "Webhook sur numéro existant, ou subaccount + achat numéro.",
+        "tags": ["Instances"],
+        "parameters": [
+          { "name": "instanceId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ProvisionTwilioBody" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Provisionnement effectué" },
+          "400": { "description": "Erreur de provisionnement", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "Clé API manquante ou invalide", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/api/instances/{instanceId}/api-keys": {
+      "get": {
+        "summary": "Lister les clés API d'une instance",
+        "description": "Liste des clés actives (sans valeur, avec label, scopes, createdAt, lastUsedAt).",
+        "tags": ["Clés API"],
+        "parameters": [
+          { "name": "instanceId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Liste des clés",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiKeys": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/ApiKeyListItem" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "Instance non trouvée", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "Clé API manquante ou invalide", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "post": {
+        "summary": "Créer une clé API pour une instance",
+        "description": "Génère une nouvelle clé pour l'instance. La valeur brute est retournée une seule fois.",
+        "tags": ["Clés API"],
+        "parameters": [
+          { "name": "instanceId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateApiKeyBody" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Clé créée",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiKeyCreated" }
+              }
+            }
+          },
+          "404": { "description": "Instance non trouvée", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "Clé API manquante ou invalide", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/api/instances/{instanceId}/api-keys/{keyId}": {
+      "patch": {
+        "summary": "Révoquer ou consulter une clé API",
+        "description": "Body { revoked: true } pour révoquer. Sinon retourne les métadonnées de la clé.",
+        "tags": ["Clés API"],
+        "parameters": [
+          { "name": "instanceId", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "keyId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "revoked": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Clé révoquée ou métadonnées" },
+          "404": { "description": "Clé ou instance non trouvée", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "Clé API manquante ou invalide", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    }
+  }
+}

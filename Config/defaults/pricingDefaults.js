@@ -1,69 +1,44 @@
 /**
- * Configuration par défaut pour les tarifs et le menu du restaurant
- * Ces données sont utilisées lors de la première initialisation
+ * Configuration par défaut pour le modèle Pricing (création instance / premier accès).
+ * instanceId est ajouté par l'appelant.
  */
 
-export const DEFAULT_RESTAURANT_INFO = {
-  nom: "Mon Restaurant",
-  adresse: "",
-  telephone: "",
-  email: "",
-  horairesOuverture: {
-    lundi: { ouvert: false, ouverture: "09:00", fermeture: "18:00" },
-    mardi: { ouvert: true, ouverture: "09:00", fermeture: "18:00" },
-    mercredi: { ouvert: true, ouverture: "09:00", fermeture: "18:00" },
-    jeudi: { ouvert: true, ouverture: "09:00", fermeture: "18:00" },
-    vendredi: { ouvert: true, ouverture: "09:00", fermeture: "18:00" },
-    samedi: { ouvert: true, ouverture: "09:00", fermeture: "18:00" },
-    dimanche: { ouvert: false, ouverture: "09:00", fermeture: "18:00" }
-  }
-};
-
-export const DEFAULT_MENU = {
-  pizzas: {
-    nom: "Pizzas",
-    produits: []
-  },
-  burgers: {
-    nom: "Burgers",
-    produits: []
-  },
-  salades: {
-    nom: "Salades",
-    produits: []
-  },
-  boissons: {
-    nom: "Boissons",
-    produits: []
-  },
-  desserts: {
-    nom: "Desserts",
-    produits: []
-  },
-  tacos: {
-    nom: "Tacos",
-    produits: []
-  },
-  menus: {
-    nom: "Menus",
-    produits: []
-  }
-};
-
+/** Tailles autorisées par catégorie (validation des produits). */
 export const VALID_SIZES = {
-  pizzas: ["Petite", "Moyenne", "Grande"],
-  boissons: ["33cl", "50cl", "1L"]
+  pizzas: ["S", "M", "L", "XL"],
+  boissons: ["25cl", "33cl", "50cl", "1L"],
 };
 
-/**
- * Génère la configuration complète par défaut
- * @returns {Object} Configuration complète
- */
+const defaultHorairesDay = () => ({
+  midi: { ouverture: "11:00", fermeture: "15:00" },
+  soir: { ouverture: "18:00", fermeture: "23:00" },
+  ouvert: true,
+});
+
 export function getDefaultPricingConfig() {
+  const jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
+  const horairesOuverture = {};
+  for (const j of jours) {
+    horairesOuverture[j] = j === "dimanche" ? { ...defaultHorairesDay(), ouvert: false } : defaultHorairesDay();
+  }
   return {
-    restaurantInfo: DEFAULT_RESTAURANT_INFO,
-    menuPricing: DEFAULT_MENU,
-    phoneLineEnabled: true
+    restaurantInfo: {
+      nom: "Mon Restaurant",
+      adresse: "",
+      telephone: "",
+      email: "",
+      nombreCouverts: 0,
+      horairesOuverture,
+    },
+    menuPricing: {
+      pizzas: { nom: "Pizzas", produits: [] },
+      burgers: { nom: "Burgers", produits: [] },
+      salades: { nom: "Salades", produits: [] },
+      boissons: { nom: "Boissons", produits: [] },
+      desserts: { nom: "Desserts", produits: [] },
+    },
+    phoneLineEnabled: true,
+    version: "1.0",
+    modifiePar: "system",
   };
 }
-

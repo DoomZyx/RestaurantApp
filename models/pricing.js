@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const pricingSchema = new mongoose.Schema({
+  instanceId: { type: String, required: false, index: true },
   // Informations du restaurant
   restaurantInfo: {
     nom: { type: String, default: "Mon Restaurant" },
@@ -122,6 +123,7 @@ pricingSchema.methods.obtenirProduitsDisponibles = function(categorie) {
 };
 
 // Index pour les requêtes fréquentes
+pricingSchema.index({ instanceId: 1, derniereModification: -1 });
 pricingSchema.index({ derniereModification: -1 });
 
 const PricingModel = mongoose.model("Pricing", pricingSchema);

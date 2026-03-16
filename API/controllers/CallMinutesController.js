@@ -16,7 +16,8 @@ export class CallMinutesController {
   static async getActiveWithElapsed(request, reply) {
     try {
       const clientId = request.query.clientId ?? undefined;
-      const calls = await getActiveCallsWithElapsed(clientId);
+      const instanceId = request.instanceId || "inst_default";
+      const calls = await getActiveCallsWithElapsed(clientId, instanceId);
       if (calls.length === 0) {
         return reply.send({ active: false, elapsedSeconds: 0, elapsedMinutes: 0 });
       }
@@ -51,7 +52,8 @@ export class CallMinutesController {
   static async getQuota(request, reply) {
     try {
       const clientId = request.query.clientId ?? undefined;
-      const quota = await getClientQuota(clientId);
+      const instanceId = request.instanceId || "inst_default";
+      const quota = await getClientQuota(clientId, null, instanceId);
       return reply.send(quota);
     } catch (error) {
       request.log?.error?.(error);
@@ -66,9 +68,10 @@ export class CallMinutesController {
   static async getMonitoring(request, reply) {
     try {
       const clientId = request.query.clientId ?? undefined;
+      const instanceId = request.instanceId || "inst_default";
       const limit = request.query.limit ?? 50;
       const skip = request.query.skip ?? 0;
-      const list = await listCallMonitoring(clientId, { limit, skip });
+      const list = await listCallMonitoring(clientId, { limit, skip }, instanceId);
       return reply.send({ calls: list });
     } catch (error) {
       request.log?.error?.(error);

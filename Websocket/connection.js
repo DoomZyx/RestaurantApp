@@ -1,4 +1,5 @@
 import { createOpenAiSession } from "../Services/gptServices/gptServices.js";
+import { instanceConfigLoader } from "../Config/instanceConfigLoader.js";
 import WebSocket from "ws";
 import dotenv from "dotenv";
 import { callLogger } from "../Services/logging/logger.js";
@@ -30,20 +31,24 @@ async function getRnnoiseAvailable() {
 /**
  * Gestionnaire principal de la connexion WebSocket
  * Orchestre la communication entre Twilio et OpenAI
- * 
+ *
  * @param {WebSocket} connection - Connexion WebSocket Twilio
  * @param {Object} request - Requête HTTP initiale
+ * @param {string} [instanceId] - Instance (défaut: inst_default). Passé par le Gateway pour /v1/:instanceId/media-stream
+ * @param {{ useWorkers?: boolean }} [options] - useWorkers: true pour passer par le bus (Gateway)
  */
-export async function handleWebSocketConnection(connection, request) {
+export async function handleWebSocketConnection(connection, request, instanceId, options) {
+  const resolvedInstanceId = instanceId != null && String(instanceId).trim() !== "" ? String(instanceId).trim() : "inst_default";
+  const useWorkers = options?.useWorkers === true;
   try {
-    
-    callLogger.callStarted(null, { event: "client_connected" });
+    callLogger.callStarted(null, { event: "client_connected", instanceId: resolvedInstanceId });
 
     // ==========================================
     // INITIALISATION DES VARIABLES
     // ==========================================
     let streamSid = null;
     let closeTimeout = null;
+    const connectionId = useWorkers ? `conn_${Date.now()}_${Math.random().toString(36).slice(2, 9)}` : null;
     const callStartTime = Date.now();
     const CALL_WARNING_AT_MS = 4 * 60 * 1000;  // 4 min : avertissement client
     const CALL_MAX_DURATION_MS = 5 * 60 * 1000; // 5 min : raccrochage automatique
@@ -55,8 +60,12 @@ export async function handleWebSocketConnection(connection, request) {
     let silenceMonitor = null;
     let audioChunkCount = 0;
     let audioChunkCountCleaned = 0;
+    let unsubOpenaiOut = null;
+    let llmWorkerRef = null;
 
     const rnnoiseAvailable = await getRnnoiseAvailable();
+    const instanceConfig = await instanceConfigLoader.getConfigByInstanceId(resolvedInstanceId);
+    const useNoiseReduction = rnnoiseAvailable && instanceConfig.audio?.enableNoiseReduction !== false;
 
     silenceMonitor = new SilenceMonitor({
       getCallSid,
@@ -70,14 +79,32 @@ export async function handleWebSocketConnection(connection, request) {
       silenceTimeoutMs: undefined,
     });
 
-
-
     // ==========================================
-    // CRÉATION SESSION OPENAI
+    // CRÉATION SESSION OPENAI (inline ou via workers)
     // ==========================================
-    const openAiWs = createOpenAiSession(
-      process.env.OPENAI_API_KEY
-    );
+    let openAiWs;
+    if (useWorkers) {
+      const { workerBus } = await import("../workers/workerBus.js");
+      llmWorkerRef = await import("../workers/llmWorker.js");
+      llmWorkerRef.createSession(instanceConfig, connectionId);
+      openAiWs = {
+        send(msg) {
+          try {
+            const data = typeof msg === "string" ? JSON.parse(msg) : msg;
+            workerBus.publish("openai:in", { streamSid: connectionId, data });
+          } catch (e) {
+            console.error("[connection] openai:in parse error:", e);
+          }
+        },
+        readyState: 1
+      };
+      unsubOpenaiOut = workerBus.subscribe("openai:out", (data) => {
+        if (data.streamSid !== connectionId || !openAIHandler) return;
+        openAIHandler.handleMessage(data.data);
+      });
+    } else {
+      openAiWs = createOpenAiSession(instanceConfig);
+    }
 
     // Handlers créés dès la connexion (streamSid = null) pour recevoir media avant "start"
     const onUserVoiceActivity = () => silenceMonitor?.onUserVoiceActivity();
@@ -110,6 +137,9 @@ export async function handleWebSocketConnection(connection, request) {
           twilioHandler.handleMessage(data);
           const callSid = data.start?.callSid || null;
           registerStream(streamSid, connection, callSid);
+          if (useWorkers && typeof process !== "undefined" && process.pid) {
+            console.log(`Worker ${process.pid} gère streamSid ${streamSid}`);
+          }
 
           // Limite de durée d'appel : avertissement à 4 min, raccrochage à 5 min
           callWarningTimeout = setTimeout(() => {
@@ -135,43 +165,45 @@ export async function handleWebSocketConnection(connection, request) {
           }, CALL_MAX_DURATION_MS);
         }
 
-        // Événement MEDIA : Nettoyer et transférer l'audio à OpenAI (même avant "start")
+        // Événement MEDIA : via workers (bus) ou inline (monolith)
         if (data.event === "media" && openAiWs && openAiWs.readyState === WebSocket.OPEN) {
-          // Enregistrer l'audio brut pour diagnostic
           const currentStreamSid = streamSid || "unknown";
           audioChunkCount++;
-          
+
           if (audioChunkCount === 1) {
             callLogger.info(currentStreamSid, "Premier chunk audio reçu - début enregistrement", {
               event: "audio_recording_started",
               rnnoiseAvailable
             });
           }
-          
-          // Enregistrer l'audio brut (tous les 10 chunks pour éviter surcharge)
-          if (audioChunkCount % 10 === 0 || audioChunkCount <= 5) {
-            await recordAudioChunk(currentStreamSid, data.media.payload, false);
-          }
-          
-          // Nettoyer l'audio avec RNNoise si disponible
-          const audioPayload = rnnoiseAvailable 
-            ? await cleanAudio(data.media.payload)
-            : data.media.payload;
-          
-          // Enregistrer l'audio nettoyé si différent
-          if (rnnoiseAvailable && audioPayload !== data.media.payload) {
-            audioChunkCountCleaned++;
-            if (audioChunkCountCleaned % 10 === 0 || audioChunkCountCleaned <= 5) {
-              await recordAudioChunk(currentStreamSid, audioPayload, true);
+
+          if (useWorkers) {
+            const { workerBus } = await import("../workers/workerBus.js");
+            workerBus.publish("media:in", {
+              streamSid: connectionId,
+              payload: data.media.payload,
+              useNoiseReduction
+            });
+          } else {
+            if (audioChunkCount % 10 === 0 || audioChunkCount <= 5) {
+              await recordAudioChunk(currentStreamSid, data.media.payload, false);
             }
+            const audioPayload = useNoiseReduction
+              ? await cleanAudio(data.media.payload)
+              : data.media.payload;
+            if (rnnoiseAvailable && audioPayload !== data.media.payload) {
+              audioChunkCountCleaned++;
+              if (audioChunkCountCleaned % 10 === 0 || audioChunkCountCleaned <= 5) {
+                await recordAudioChunk(currentStreamSid, audioPayload, true);
+              }
+            }
+            openAiWs.send(
+              JSON.stringify({
+                type: "input_audio_buffer.append",
+                audio: audioPayload,
+              })
+            );
           }
-          
-          openAiWs.send(
-            JSON.stringify({
-              type: "input_audio_buffer.append",
-              audio: audioPayload,
-            })
-          );
         } else if (twilioHandler) {
           // Autres événements Twilio
           twilioHandler.handleMessage(data);
@@ -197,18 +229,20 @@ export async function handleWebSocketConnection(connection, request) {
     });
 
     // ==========================================
-    // HANDLER MESSAGES OPENAI
+    // HANDLER MESSAGES OPENAI (monolith uniquement ; en mode workers, openai:out est géré par l'abonnement bus)
     // ==========================================
-    openAiWs.on("message", (msg) => {
-      try {
-        const data = JSON.parse(msg.toString());
-        if (openAIHandler) {
-          openAIHandler.handleMessage(data);
+    if (!useWorkers) {
+      openAiWs.on("message", (msg) => {
+        try {
+          const data = JSON.parse(msg.toString());
+          if (openAIHandler) {
+            openAIHandler.handleMessage(data);
+          }
+        } catch (err) {
+          callLogger.error(streamSid, err, { source: "connection.js", context: "openai_message_parse" });
         }
-      } catch (err) {
-        callLogger.error(streamSid, err, { source: "connection.js", context: "openai_message_parse" });
-      }
-    });
+      });
+    }
 
     // ==========================================
     // GESTION ERREURS & FERMETURE
@@ -240,7 +274,7 @@ export async function handleWebSocketConnection(connection, request) {
       }
       
       const totalDuration = Date.now() - callStartTime;
-      callLogger.callCompleted(streamSid, totalDuration);
+      callLogger.callCompleted(streamSid, totalDuration, resolvedInstanceId);
       
       // Log récapitulatif audio
       if (audioChunkCount > 0) {
@@ -253,8 +287,11 @@ export async function handleWebSocketConnection(connection, request) {
         });
       }
 
-      // Fermer proprement la connexion OpenAI
-      if (openAiWs.readyState === WebSocket.OPEN) {
+      // Fermer proprement la connexion OpenAI (monolith) ou détruire la session (workers)
+      if (useWorkers && llmWorkerRef) {
+        llmWorkerRef.destroySession(connectionId);
+        if (unsubOpenaiOut) unsubOpenaiOut();
+      } else if (!useWorkers && openAiWs.readyState === WebSocket.OPEN) {
         closeTimeout = setTimeout(() => {
           if (openAiWs.readyState === WebSocket.OPEN) {
             callLogger.info(streamSid, "Timeout écoulé, fermeture WS OpenAI");
@@ -264,16 +301,17 @@ export async function handleWebSocketConnection(connection, request) {
       }
     });
 
-    openAiWs.on("error", (err) => {
-      callLogger.error(streamSid, err, { source: "connection.js", context: "openai_websocket_error" });
-    });
-
-    openAiWs.on("close", () => {
-      callLogger.info(streamSid, "Connexion OpenAI fermée");
-    });
+    if (!useWorkers) {
+      openAiWs.on("error", (err) => {
+        callLogger.error(streamSid, err, { source: "connection.js", context: "openai_websocket_error" });
+      });
+      openAiWs.on("close", () => {
+        callLogger.info(streamSid, "Connexion OpenAI fermée");
+      });
+    }
     
   } catch (error) {
-    callLogger.error(null, error, { source: "connection.js", context: "handleWebSocketConnection_init" });
+    callLogger.error(null, error, { source: "connection.js", context: "handleWebSocketConnection_init", instanceId: resolvedInstanceId });
     // Fermer proprement la connexion en cas d'erreur
     try {
       if (connection && connection.readyState === WebSocket.OPEN) {

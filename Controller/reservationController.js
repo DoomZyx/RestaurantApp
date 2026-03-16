@@ -1,5 +1,10 @@
 import ReservationModel from "../models/reservation.js";
 
+const DEFAULT_INSTANCE_ID = "inst_default";
+function getInstanceId(req) {
+  return req.instanceId || DEFAULT_INSTANCE_ID;
+}
+
 function digitsOnly(phone) {
   if (phone == null || phone === "") return "";
   return String(phone).replace(/\D/g, "");
@@ -31,9 +36,11 @@ function normalizeTime(raw) {
 export async function createReservation(request, reply) {
   try {
     const data = request.body;
+    const instanceId = getInstanceId(request);
     const relatedCall =
       data.related_call && String(data.related_call).length === 24 ? data.related_call : null;
     const reservation = await ReservationModel.create({
+      instanceId,
       nom: data.nom || null,
       telephone: data.telephone || null,
       date: data.date,
@@ -58,8 +65,9 @@ export async function createReservation(request, reply) {
 /** Récupérer les réservations avec filtres et pagination */
 export async function getReservations(request, reply) {
   try {
+    const instanceId = getInstanceId(request);
     const { page = 1, limit = 10, statut, date } = request.query;
-    const filter = {};
+    const filter = { instanceId };
     if (statut) filter.statut = statut;
     if (date) {
       const startDate = new Date(date);
@@ -95,11 +103,13 @@ export async function getReservations(request, reply) {
 /** Récupérer les réservations du jour */
 export async function getTodayReservations(request, reply) {
   try {
+    const instanceId = getInstanceId(request);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     const reservations = await ReservationModel.find({
+      instanceId,
       date: { $gte: today, $lt: tomorrow },
     }).sort({ heure: 1 });
     return reply.send({ success: true, data: reservations });
@@ -116,7 +126,8 @@ export async function getTodayReservations(request, reply) {
 export async function getReservationById(request, reply) {
   try {
     const { id } = request.params;
-    const reservation = await ReservationModel.findById(id);
+    const instanceId = getInstanceId(request);
+    const reservation = await ReservationModel.findOne({ _id: id, instanceId });
     if (!reservation) {
       return reply.code(404).send({ error: "Réservation non trouvée" });
     }
@@ -134,9 +145,10 @@ export async function getReservationById(request, reply) {
 export async function updateReservation(request, reply) {
   try {
     const { id } = request.params;
+    const instanceId = getInstanceId(request);
     const updateData = request.body;
-    const reservation = await ReservationModel.findByIdAndUpdate(
-      id,
+    const reservation = await ReservationModel.findOneAndUpdate(
+      { _id: id, instanceId },
       updateData,
       { new: true, runValidators: true },
     );
@@ -157,9 +169,10 @@ export async function updateReservation(request, reply) {
 export async function updateReservationStatus(request, reply) {
   try {
     const { id } = request.params;
+    const instanceId = getInstanceId(request);
     const { statut } = request.body;
-    const reservation = await ReservationModel.findByIdAndUpdate(
-      id,
+    const reservation = await ReservationModel.findOneAndUpdate(
+      { _id: id, instanceId },
       { statut },
       { new: true, runValidators: true },
     );
@@ -180,7 +193,8 @@ export async function updateReservationStatus(request, reply) {
 export async function deleteReservation(request, reply) {
   try {
     const { id } = request.params;
-    const reservation = await ReservationModel.findByIdAndDelete(id);
+    const instanceId = getInstanceId(request);
+    const reservation = await ReservationModel.findOneAndDelete({ _id: id, instanceId });
     if (!reservation) {
       return reply.code(404).send({ error: "Réservation non trouvée" });
     }
@@ -229,9 +243,10 @@ export async function checkAvailability(request, reply) {
 /** Créneaux disponibles pour une date (réservations + horaires) */
 export async function getAvailableSlots(request, reply) {
   try {
+    const instanceId = getInstanceId(request);
     const { date } = request.query;
     const PricingModel = (await import("../models/pricing.js")).default;
-    const pricing = await PricingModel.findOne();
+    const pricing = await PricingModel.findOne({ instanceId });
 
     if (!pricing || !pricing.restaurantInfo?.horairesOuverture) {
       return reply.code(503).send({
@@ -305,6 +320,7 @@ export async function getAvailableSlots(request, reply) {
     const endDate = new Date(date);
     endDate.setDate(endDate.getDate() + 1);
     const occupiedReservations = await ReservationModel.find({
+      instanceId,
       date: { $gte: startDate, $lt: endDate },
       statut: { $nin: ["annule", "termine"] },
     });
@@ -395,9 +411,10 @@ export async function createReservationFromAI(request, reply) {
         ? data.nombrePersonnes
         : parseInt(data.nombrePersonnes, 10) || 1;
 
+    const instanceId = getInstanceId(request);
     // Vérification capacité (max couverts) : toujours appliquée si maxCouverts configuré
     const PricingModel = (await import("../models/pricing.js")).default;
-    const pricing = await PricingModel.findOne();
+    const pricing = await PricingModel.findOne({ instanceId });
     const maxCouverts = pricing?.restaurantInfo?.nombreCouverts;
     if (maxCouverts != null && Number(maxCouverts) > 0) {
       const startDate = new Date(reservationDate);
@@ -405,6 +422,7 @@ export async function createReservationFromAI(request, reply) {
       const endDate = new Date(reservationDate);
       endDate.setDate(endDate.getDate() + 1);
       const reservationsDuJour = await ReservationModel.find({
+        instanceId,
         date: { $gte: startDate, $lt: endDate },
         statut: { $nin: ["annule", "termine"] },
       });
@@ -456,6 +474,7 @@ export async function createReservationFromAI(request, reply) {
     }
 
     const reservationToCreate = {
+      instanceId,
       nom: (data.name || "Client").trim() || null,
       telephone: rawPhone.trim(),
       date: reservationDate,

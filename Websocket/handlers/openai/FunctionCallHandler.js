@@ -25,9 +25,11 @@ export class FunctionCallHandler {
    */
   async handleFunctionCallCompleted(data) {
     try {
-      this.callLogger.info(this.streamSid, "Function call completed", {
+      // Log brut de la payload JSON envoyée par le modèle
+      this.callLogger.info(this.streamSid, "Function call completed (raw payload)", {
         name: data.name,
-        arguments: data.arguments,
+        callId: data.call_id,
+        rawArguments: data.arguments,
       });
 
       const functionName = data.name;
@@ -56,6 +58,13 @@ export class FunctionCallHandler {
 
       // Envoyer le résultat à OpenAI puis déclencher la réponse (create_response: false en session)
       if (this.openAiWs && this.openAiWs.readyState === 1) {
+        // Log du résultat renvoyé au modèle (JSON vers backend logique)
+        this.callLogger.info(this.streamSid, "Function call result ready, sending to OpenAI", {
+          functionName,
+          callId: data.call_id,
+          resultPreview: JSON.stringify(result).substring(0, 500),
+        });
+
         this.openAiWs.send(
           JSON.stringify({
             type: "conversation.item.create",

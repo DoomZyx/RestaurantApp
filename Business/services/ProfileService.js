@@ -23,38 +23,39 @@ export class ProfileService {
   }
 
   /**
-   * Met à jour le profil d'un utilisateur
+   * Met à jour le profil d'un utilisateur (unicité email/username scopée par instance)
    * @param {string} userId - ID de l'utilisateur
    * @param {Object} updates - Données à mettre à jour
+   * @param {string} [instanceId] - ID instance pour isolation
    * @returns {Promise<Object>} Utilisateur mis à jour
    */
-  static async updateProfile(userId, updates) {
+  static async updateProfile(userId, updates, instanceId) {
     const { username, email, telephone, poste, departement, avatar } = updates;
 
-    // Validation
     const validation = UserValidator.validateProfileUpdate({ username, email });
     if (!validation.isValid) {
-      throw new Error(validation.errors.join(', '));
+      throw new Error(validation.errors.join(", "));
     }
 
-    // Trouver l'utilisateur
     const user = await User.findById(userId);
     if (!user) {
       throw new Error("Utilisateur non trouvé");
     }
 
-    // Vérifier si l'email est déjà utilisé
+    const scope = instanceId && instanceId !== "inst_default"
+      ? { instanceId }
+      : { $or: [{ instanceId: null }, { instanceId: "" }, { instanceId: "inst_default" }, { instanceId: { $exists: false } }] };
+
     if (email && email !== user.email) {
-      const existingUser = await User.findOne({ email });
+      const existingUser = await User.findOne({ ...scope, email: email.trim().toLowerCase(), _id: { $ne: userId } });
       if (existingUser) {
         throw new Error("Cet email est déjà utilisé");
       }
-      user.email = email;
+      user.email = email.trim().toLowerCase();
     }
 
-    // Vérifier si le username est déjà utilisé
     if (username && username !== user.username) {
-      const existingUser = await User.findOne({ username });
+      const existingUser = await User.findOne({ ...scope, username, _id: { $ne: userId } });
       if (existingUser) {
         throw new Error("Ce nom d'utilisateur est déjà utilisé");
       }

@@ -6,6 +6,7 @@ import mongoose from "mongoose";
  */
 const callMonitorSchema = new mongoose.Schema(
   {
+    instanceId: { type: String, required: false, index: true },
     clientId: { type: String, required: true, index: true },
     callSid: { type: String, required: true, unique: true },
     callerNumber: { type: String, default: null },
@@ -16,6 +17,7 @@ const callMonitorSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+callMonitorSchema.index({ instanceId: 1, clientId: 1, startedAt: -1 });
 callMonitorSchema.index({ clientId: 1, startedAt: -1 });
 callMonitorSchema.index({ startedAt: -1 });
 

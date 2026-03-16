@@ -41,7 +41,7 @@ export class AuthController {
    */
   static async login(request, reply) {
     try {
-      const { user, token } = await AuthService.login(request.body);
+      const { user, token } = await AuthService.login(request.body, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.authSuccessResponse(user, token)

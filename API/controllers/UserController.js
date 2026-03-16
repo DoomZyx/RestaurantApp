@@ -12,7 +12,7 @@ export class UserController {
    */
   static async getAllUsers(request, reply) {
     try {
-      const users = await UserService.getAllUsers();
+      const users = await UserService.getAllUsers(request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.usersListResponse(users)
@@ -33,7 +33,7 @@ export class UserController {
   static async getUserById(request, reply) {
     try {
       const { id } = request.params;
-      const user = await UserService.getUserById(id);
+      const user = await UserService.getUserById(id, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.profileResponse(user)
@@ -60,7 +60,7 @@ export class UserController {
   static async updateUser(request, reply) {
     try {
       const { id } = request.params;
-      const user = await UserService.updateUser(id, request.body);
+      const user = await UserService.updateUser(id, request.body, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.userUpdateResponse(user)
@@ -95,7 +95,7 @@ export class UserController {
   static async deleteUser(request, reply) {
     try {
       const { id } = request.params;
-      await UserService.deleteUser(id, request.user._id.toString());
+      await UserService.deleteUser(id, request.user._id.toString(), request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.userDeleteResponse()
@@ -128,7 +128,7 @@ export class UserController {
    */
   static async searchUsers(request, reply) {
     try {
-      const users = await UserService.searchUsers(request.query);
+      const users = await UserService.searchUsers(request.query, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.usersListResponse(users)
@@ -151,7 +151,7 @@ export class UserController {
       const { id } = request.params;
       const { isActive } = request.body;
 
-      const user = await UserService.toggleUserStatus(id, isActive);
+      const user = await UserService.toggleUserStatus(id, isActive, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.userUpdateResponse(user)
@@ -180,7 +180,7 @@ export class UserController {
       const { id } = request.params;
       const { role } = request.body;
 
-      const user = await UserService.changeUserRole(id, role);
+      const user = await UserService.changeUserRole(id, role, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.userUpdateResponse(user)
@@ -212,7 +212,7 @@ export class UserController {
    */
   static async getUserStats(request, reply) {
     try {
-      const stats = await UserService.getUserStats();
+      const stats = await UserService.getUserStats(request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.statsResponse(stats)

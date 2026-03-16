@@ -29,7 +29,21 @@ const readableFormat = winston.format.printf(({ timestamp, level, message, strea
   delete filteredMeta.event;
   delete filteredMeta.streamSid;
   delete filteredMeta.source;
-  
+  // Ne jamais logger de secrets (clés API, tokens Twilio/OpenAI, etc.)
+  const sensitiveKeys = [
+    "apiKey",
+    "api_key",
+    "authorization",
+    "password",
+    "token",
+    "secret",
+    "twilioAuthToken",
+    "authToken",
+  ];
+  sensitiveKeys.forEach((k) => {
+    if (Object.prototype.hasOwnProperty.call(filteredMeta, k)) filteredMeta[k] = "[REDACTED]";
+  });
+
   if (Object.keys(filteredMeta).length > 0) {
     const hasStack = filteredMeta.stack;
     if (hasStack) {
@@ -289,14 +303,17 @@ export const callLogger = {
     });
   },
 
-  // Appel terminé
-  callCompleted: (streamSid, totalDuration) => {
-    logger.info("Appel termine avec succes", {
+  // Appel terminé (meta optionnel : instanceId pour diagnostic multi-tenant)
+  callCompleted: (streamSid, totalDuration, meta = {}) => {
+    const payload = {
       streamSid,
       totalDuration: `${totalDuration}ms`,
       event: "call_completed",
       timestamp: new Date().toISOString(),
-    });
+    };
+    if (typeof meta === "string") payload.instanceId = meta;
+    else if (meta && typeof meta === "object") Object.assign(payload, meta);
+    logger.info("Appel termine avec succes", payload);
   },
 };
 

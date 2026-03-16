@@ -14,7 +14,9 @@
     "fill-week": "node scripts/fillWeekData.js",
     "fill-menu": "node scripts/fillMenuData.js",
     "clean-demo": "node scripts/cleanDemoData.js",
-    "add-tacos": "node scripts/addTacos.js"
+    "add-tacos": "node scripts/addTacos.js",
+    "backfill-instance-id": "node scripts/backfillInstanceId.js",
+    "gateway": "node gateway.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +27,8 @@
     "@fastify/formbody": "^8.0.2",
     "@fastify/multipart": "^9.2.1",
     "@fastify/static": "^8.2.0",
+    "@fastify/swagger": "^9.7.0",
+    "@fastify/swagger-ui": "^5.2.5",
     "@fastify/websocket": "^11.2.0",
     "@jitsi/rnnoise-wasm": "^0.2.1",
     "bcryptjs": "^3.0.2",

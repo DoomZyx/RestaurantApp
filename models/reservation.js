@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
+  instanceId: { type: String, required: false, index: true },
   // Nom de l'appelant
   nom: {
     type: String,
@@ -65,6 +66,8 @@ const orderSchema = new mongoose.Schema({
 });
 
 // Index pour les requêtes fréquentes
+orderSchema.index({ instanceId: 1, date: 1, heure: 1 });
+orderSchema.index({ instanceId: 1, statut: 1, date: 1 });
 orderSchema.index({ date: 1, heure: 1 });
 orderSchema.index({ client: 1, date: -1 });
 orderSchema.index({ statut: 1, date: 1 });

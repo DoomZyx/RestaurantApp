@@ -6642,3 +6642,99 @@
     at extractCallData (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Services/gptServices/extractCallData.js:814:35)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async Object.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/Backend/Routes/CallData/processCall.js:52:25)
+[2026-03-16 12:53:08] [ERROR] [app] [MZ55507d...] [ERROR] OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+   Contexte: {
+  "error": "OpenAI Error: Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+  "errorType": "invalid_request_error",
+  "errorCode": "invalid_model",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "invalid_model",
+    "message": "Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/openai/ErrorHandler.js:24:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/OpenAIHandler.js:128:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/connection.js:239:27)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-16 12:56:54] [ERROR] [app] [MZd1308e...] [ERROR] OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+   Contexte: {
+  "error": "OpenAI Error: Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+  "errorType": "invalid_request_error",
+  "errorCode": "invalid_model",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "invalid_model",
+    "message": "Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/openai/ErrorHandler.js:24:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/OpenAIHandler.js:128:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/connection.js:239:27)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-16 12:58:42] [ERROR] [app] [MZ87042f...] [ERROR] OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+   Contexte: {
+  "error": "OpenAI Error: Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+  "errorType": "invalid_request_error",
+  "errorCode": "invalid_model",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "invalid_model",
+    "message": "Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/openai/ErrorHandler.js:24:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/OpenAIHandler.js:128:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/connection.js:239:27)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-16 13:01:00] [ERROR] [app] [MZacde26...] [ERROR] OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+   Contexte: {
+  "error": "OpenAI Error: Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+  "errorType": "invalid_request_error",
+  "errorCode": "invalid_model",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "invalid_model",
+    "message": "Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/openai/ErrorHandler.js:24:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/OpenAIHandler.js:128:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/connection.js:239:27)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7

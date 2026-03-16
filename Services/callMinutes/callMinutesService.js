@@ -27,6 +27,12 @@ export function getDefaultClientId() {
   return (process.env.CALL_MINUTES_CLIENT_ID || "default").trim() || "default";
 }
 
+const DEFAULT_INSTANCE_ID = "inst_default";
+
+function resolveInstanceId(instanceId) {
+  return instanceId != null && String(instanceId).trim() !== "" ? String(instanceId).trim() : DEFAULT_INSTANCE_ID;
+}
+
 // ---------------------------------------------------------------------------
 // Constantes abonnements (nom, prix €, quota minutes/mois)
 // ---------------------------------------------------------------------------
@@ -71,16 +77,21 @@ function getMonthStart(d) {
 
 /**
  * Récupère le quota d'un client. Crée l'entrée si absente (abonnement depuis env ou param).
+ * @param {string} [clientId]
+ * @param {string} [defaultSubscriptionKey]
+ * @param {string} [instanceId]
  */
-export async function getClientQuota(clientId, defaultSubscriptionKey) {
+export async function getClientQuota(clientId, defaultSubscriptionKey, instanceId) {
+  const iid = resolveInstanceId(instanceId);
   const cid = clientId != null && clientId !== "" ? clientId : getDefaultClientId();
   const subKey = defaultSubscriptionKey != null ? defaultSubscriptionKey : getSubscriptionKeyFromEnv();
   const thisMonth = getMonthStart(new Date());
 
-  let doc = await ClientQuotaModel.findOne({ clientId: cid }).lean();
+  let doc = await ClientQuotaModel.findOne({ instanceId: iid, clientId: cid }).lean();
   if (!doc) {
     const sub = SUBSCRIPTIONS[subKey] || SUBSCRIPTIONS.echauffement;
     doc = await ClientQuotaModel.create({
+      instanceId: iid,
       clientId: cid,
       abonnement: subKey,
       quotaMax: sub.quotaMax,
@@ -93,7 +104,7 @@ export async function getClientQuota(clientId, defaultSubscriptionKey) {
   if (doc.periodeDebut !== thisMonth) {
     const sub = SUBSCRIPTIONS[doc.abonnement] || SUBSCRIPTIONS.echauffement;
     await ClientQuotaModel.updateOne(
-      { clientId: cid },
+      { instanceId: iid, clientId: cid },
       { $set: { minutesUtilisees: 0, periodeDebut: thisMonth, quotaMax: sub.quotaMax } }
     );
     return { clientId: cid, abonnement: doc.abonnement, quotaMax: sub.quotaMax, minutesUtilisees: 0, periodeDebut: thisMonth };
@@ -105,15 +116,17 @@ export async function getClientQuota(clientId, defaultSubscriptionKey) {
 /**
  * Assigne un abonnement à un client (création ou mise à jour).
  */
-export async function setClientSubscription(clientId, subscriptionKey) {
+export async function setClientSubscription(clientId, subscriptionKey, instanceId) {
   if (!SUBSCRIPTION_KEYS.includes(subscriptionKey)) {
     throw new Error(`Abonnement inconnu: ${subscriptionKey}`);
   }
+  const iid = resolveInstanceId(instanceId);
   const cid = (clientId != null && clientId !== "") ? clientId : getDefaultClientId();
   const thisMonth = getMonthStart(new Date());
   const sub = SUBSCRIPTIONS[subscriptionKey];
-  const existing = await ClientQuotaModel.findOne({ clientId: cid }).lean();
+  const existing = await ClientQuotaModel.findOne({ instanceId: iid, clientId: cid }).lean();
   const payload = {
+    instanceId: iid,
     abonnement: subscriptionKey,
     quotaMax: sub.quotaMax,
     minutesUtilisees: existing ? existing.minutesUtilisees : 0,
@@ -121,7 +134,7 @@ export async function setClientSubscription(clientId, subscriptionKey) {
   };
   if (!existing) payload.clientId = cid;
   await ClientQuotaModel.findOneAndUpdate(
-    { clientId: cid },
+    { instanceId: iid, clientId: cid },
     { $set: payload },
     { upsert: true, new: true }
   );
@@ -132,9 +145,10 @@ export async function setClientSubscription(clientId, subscriptionKey) {
 // Vérification avant appel
 // ---------------------------------------------------------------------------
 
-export async function canStartCall(clientId) {
+export async function canStartCall(clientId, instanceId) {
+  const iid = resolveInstanceId(instanceId);
   const cid = clientId != null && clientId !== "" ? clientId : getDefaultClientId();
-  const quota = await getClientQuota(cid);
+  const quota = await getClientQuota(cid, null, iid);
   if (quota.minutesUtilisees >= quota.quotaMax) {
     return { allowed: false, reason: "Quota mensuel atteint. Renouvellement au prochain mois.", quota };
   }
@@ -152,9 +166,10 @@ const STALE_ACTIVE_MS = 4 * 60 * 60 * 1000;
  * Récupère tous les appels en cours pour un client. Nettoie les orphelins > 4h (lazy).
  * @returns {Promise<Array<{ callSid: string, startedAt: string, callerNumber?: string }>>}
  */
-export async function getActiveCalls(clientId) {
+export async function getActiveCalls(clientId, instanceId) {
+  const iid = resolveInstanceId(instanceId);
   const cid = clientId != null && clientId !== "" ? clientId : getDefaultClientId();
-  const docs = await CallMonitorModel.find({ clientId: cid, endedAt: null }).sort({ startedAt: 1 }).lean();
+  const docs = await CallMonitorModel.find({ instanceId: iid, clientId: cid, endedAt: null }).sort({ startedAt: 1 }).lean();
   const now = Date.now();
   const result = [];
   for (const doc of docs) {
@@ -178,8 +193,8 @@ export async function getActiveCalls(clientId) {
 /**
  * Récupère un seul appel en cours (le plus ancien). Rétrocompatibilité.
  */
-export async function getActiveCall(clientId) {
-  const calls = await getActiveCalls(clientId);
+export async function getActiveCall(clientId, instanceId) {
+  const calls = await getActiveCalls(clientId, instanceId);
   return calls.length > 0 ? calls[0] : null;
 }
 
@@ -187,8 +202,8 @@ export async function getActiveCall(clientId) {
  * Compteur temps réel : tous les appels en cours avec durée écoulée.
  * @returns {Promise<Array<{ callSid: string, startedAt: string, elapsedSeconds: number, elapsedMinutes: number, callerNumber?: string }>>}
  */
-export async function getActiveCallsWithElapsed(clientId) {
-  const actives = await getActiveCalls(clientId);
+export async function getActiveCallsWithElapsed(clientId, instanceId) {
+  const actives = await getActiveCalls(clientId, instanceId);
   const now = Date.now();
   return actives.map((a) => {
     const startedMs = new Date(a.startedAt).getTime();
@@ -207,8 +222,8 @@ export async function getActiveCallsWithElapsed(clientId) {
 /**
  * Un seul appel avec elapsed (rétrocompat). Retourne le premier actif ou null.
  */
-export async function getActiveCallWithElapsed(clientId) {
-  const calls = await getActiveCallsWithElapsed(clientId);
+export async function getActiveCallWithElapsed(clientId, instanceId) {
+  const calls = await getActiveCallsWithElapsed(clientId, instanceId);
   return calls.length > 0 ? calls[0] : null;
 }
 
@@ -220,13 +235,15 @@ export async function getActiveCallWithElapsed(clientId) {
  * Enregistre le début d'un appel (CallMonitor). Appels simultanés par client autorisés.
  */
 export async function startCall(callSid, options = {}) {
+  const iid = resolveInstanceId(options.instanceId);
   const cid = (options.clientId != null && options.clientId !== "") ? options.clientId : getDefaultClientId();
-  const check = await canStartCall(cid);
+  const check = await canStartCall(cid, iid);
   if (!check.allowed) {
     return { success: false, reason: check.reason };
   }
   try {
     await CallMonitorModel.create({
+      instanceId: iid,
       clientId: cid,
       callSid,
       callerNumber: options.callerNumber != null ? String(options.callerNumber) : null,
@@ -243,13 +260,17 @@ export async function startCall(callSid, options = {}) {
  * Termine un appel. clientId déduit depuis CallMonitor (callSid) pour cohérence.
  * Mise à jour quota atomique (MongoDB pipeline).
  */
-export async function endCall(callSid, durationMinutes, clientId) {
+export async function endCall(callSid, durationMinutes, clientId, instanceId) {
   const duration = Math.max(0, Number(durationMinutes) || 0);
   const durationSeconds = Math.round(duration * 60);
 
   let cid = null;
+  let iid = resolveInstanceId(instanceId);
   const monitorDoc = await CallMonitorModel.findOne({ callSid }).lean();
-  if (monitorDoc) cid = monitorDoc.clientId;
+  if (monitorDoc) {
+    cid = monitorDoc.clientId;
+    if (monitorDoc.instanceId) iid = monitorDoc.instanceId;
+  }
   if (cid == null || cid === "") cid = (clientId != null && clientId !== "") ? clientId : getDefaultClientId();
 
   await CallMonitorModel.updateOne(
@@ -259,7 +280,7 @@ export async function endCall(callSid, durationMinutes, clientId) {
 
   const thisMonth = getMonthStart(new Date());
   const updated = await ClientQuotaModel.findOneAndUpdate(
-    { clientId: cid },
+    { instanceId: iid, clientId: cid },
     [
       {
         $set: {
@@ -280,9 +301,9 @@ export async function endCall(callSid, durationMinutes, clientId) {
   );
 
   if (!updated) {
-    await getClientQuota(cid);
-    await ClientQuotaModel.updateOne({ clientId: cid }, { $inc: { minutesUtilisees: duration } });
-    const again = await ClientQuotaModel.findOne({ clientId: cid }).lean();
+    await getClientQuota(cid, null, iid);
+    await ClientQuotaModel.updateOne({ instanceId: iid, clientId: cid }, { $inc: { minutesUtilisees: duration } });
+    const again = await ClientQuotaModel.findOne({ instanceId: iid, clientId: cid }).lean();
     return { success: true, quotaExceeded: (again?.minutesUtilisees ?? 0) >= (again?.quotaMax ?? 0) };
   }
 
@@ -293,10 +314,11 @@ export async function endCall(callSid, durationMinutes, clientId) {
 /**
  * Vérifie si le quota est dépassé en cours d'appel (somme de tous les appels actifs).
  */
-export async function checkQuotaExceededDuringCall(clientId) {
+export async function checkQuotaExceededDuringCall(clientId, instanceId) {
+  const iid = resolveInstanceId(instanceId);
   const cid = clientId != null && clientId !== "" ? clientId : getDefaultClientId();
-  const quota = await getClientQuota(cid);
-  const actives = await getActiveCalls(cid);
+  const quota = await getClientQuota(cid, null, iid);
+  const actives = await getActiveCalls(cid, iid);
   if (actives.length === 0) {
     return {
       exceeded: quota.minutesUtilisees >= quota.quotaMax,
@@ -323,10 +345,11 @@ export async function checkQuotaExceededDuringCall(clientId) {
 /**
  * Marque tous les appels en cours du client comme terminés (base).
  */
-export async function clearActiveCall(clientId) {
+export async function clearActiveCall(clientId, instanceId) {
+  const iid = resolveInstanceId(instanceId);
   const cid = clientId != null && clientId !== "" ? clientId : getDefaultClientId();
   await CallMonitorModel.updateMany(
-    { clientId: cid, endedAt: null },
+    { instanceId: iid, clientId: cid, endedAt: null },
     { $set: { endedAt: new Date(), durationSeconds: 0 } }
   );
 }
@@ -335,11 +358,12 @@ export async function clearActiveCall(clientId) {
 // Monitoring (liste des appels)
 // ---------------------------------------------------------------------------
 
-export async function listCallMonitoring(clientId, options = {}) {
+export async function listCallMonitoring(clientId, options = {}, instanceId) {
+  const iid = resolveInstanceId(instanceId ?? options.instanceId);
   const cid = clientId != null && clientId !== "" ? clientId : getDefaultClientId();
   const limit = Math.min(Math.max(1, Number(options.limit) || 50), 200);
   const skip = Math.max(0, Number(options.skip) || 0);
-  const docs = await CallMonitorModel.find({ clientId: cid })
+  const docs = await CallMonitorModel.find({ instanceId: iid, clientId: cid })
     .sort({ startedAt: -1 })
     .skip(skip)
     .limit(limit)

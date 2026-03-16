@@ -6,7 +6,8 @@ import mongoose from "mongoose";
  */
 const clientQuotaSchema = new mongoose.Schema(
   {
-    clientId: { type: String, required: true, unique: true },
+    instanceId: { type: String, required: false, index: true },
+    clientId: { type: String, required: true },
     abonnement: { type: String, required: true },
     quotaMax: { type: Number, required: true },
     minutesUtilisees: { type: Number, required: true, default: 0 },
@@ -15,6 +16,7 @@ const clientQuotaSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+clientQuotaSchema.index({ instanceId: 1, clientId: 1 }, { unique: true });
 clientQuotaSchema.index({ clientId: 1 });
 clientQuotaSchema.index({ periodeDebut: 1 });
 
