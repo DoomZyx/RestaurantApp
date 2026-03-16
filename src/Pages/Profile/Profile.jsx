@@ -10,6 +10,7 @@ function Profile() {
     tempData,
     saving,
     success,
+    isWebsiteOnly,
     handleEdit,
     handleCancel,
     handleSave,
@@ -21,6 +22,8 @@ function Profile() {
     error,
     setError,
   } = useProfile();
+
+  const websiteUrl = import.meta.env.VITE_WEBSITE_URL || "";
 
   if (loading) {
     return (
@@ -48,6 +51,16 @@ function Profile() {
             Profil mis à jour avec succès !
           </div>
         )}
+        {isWebsiteOnly && (
+          <div className="info-message" style={{ marginBottom: "1rem", padding: "0.75rem 1rem", background: "var(--bs-info-bg-subtle, #cff4fc)", borderRadius: "0.5rem" }}>
+            Votre compte est géré sur le site.
+            {websiteUrl ? (
+              <a href={websiteUrl} target="_blank" rel="noopener noreferrer" style={{ marginLeft: "0.5rem" }}>Ouvrir Mon Espace</a>
+            ) : (
+              " Connectez-vous au site pour modifier votre profil."
+            )}
+          </div>
+        )}
         <div className="profile-content">
           <div className="profile-card">
             <div className="profile-info">
@@ -59,20 +72,22 @@ function Profile() {
                     <i className="bi bi-person-fill"></i>
                   )}
                 </div>
-                <label className="change-avatar">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) handleAvatarUpload(file);
-                      e.target.value = "";
-                    }}
-                    disabled={saving}
-                  />
-                  <i className="bi bi-camera-fill"></i>
-                  Changer la photo
-                </label>
+                {!isWebsiteOnly && (
+                  <label className="change-avatar">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handleAvatarUpload(file);
+                        e.target.value = "";
+                      }}
+                      disabled={saving}
+                    />
+                    <i className="bi bi-camera-fill"></i>
+                    Changer la photo
+                  </label>
+                )}
               </div>
               <div className="info-grid">
                 <div className="info-item">
@@ -153,39 +168,41 @@ function Profile() {
                 </div>
               </div>
             </div>
-            <div className="profile-actions">
-              {!editMode ? (
-                <button type="button" onClick={handleEdit} className="edit-btn">
-                  <i className="bi bi-pencil-square"></i>
-                  Modifier
-                </button>
-              ) : (
-                <div className="edit-actions">
-                  <button type="button" onClick={handleCancel} className="cancel-btn">
-                    <i className="bi bi-x-circle"></i>
-                    Annuler
+            {!isWebsiteOnly && (
+              <div className="profile-actions">
+                {!editMode ? (
+                  <button type="button" onClick={handleEdit} className="edit-btn">
+                    <i className="bi bi-pencil-square"></i>
+                    Modifier
                   </button>
-                  <button
-                    type="button"
-                    onClick={handleSave}
-                    className="save-btn"
-                    disabled={saving}
-                  >
-                    {saving ? (
-                      <>
-                        <i className="bi bi-arrow-repeat spinning"></i>
-                        Sauvegarde...
-                      </>
-                    ) : (
-                      <>
-                        <i className="bi bi-check-circle"></i>
-                        Sauvegarder
-                      </>
-                    )}
-                  </button>
-                </div>
-              )}
-            </div>
+                ) : (
+                  <div className="edit-actions">
+                    <button type="button" onClick={handleCancel} className="cancel-btn">
+                      <i className="bi bi-x-circle"></i>
+                      Annuler
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSave}
+                      className="save-btn"
+                      disabled={saving}
+                    >
+                      {saving ? (
+                        <>
+                          <i className="bi bi-arrow-repeat spinning"></i>
+                          Sauvegarde...
+                        </>
+                      ) : (
+                        <>
+                          <i className="bi bi-check-circle"></i>
+                          Sauvegarder
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

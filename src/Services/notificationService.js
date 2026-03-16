@@ -2,6 +2,7 @@
  * Service de gestion des notifications
  * Gère les notifications email, sonores et desktop
  */
+import { getApiKey } from "../API/apiKey.js";
 
 class NotificationService {
   constructor() {
@@ -301,7 +302,7 @@ class NotificationService {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": import.meta.env.VITE_API_KEY,
+          "x-api-key": getApiKey(),
         },
         body: JSON.stringify({ to, subject, message }),
       });

@@ -1,12 +1,26 @@
-const VITE_API_KEY = import.meta.env.VITE_API_KEY;
+import { getApiKey, getStoredWebsiteUser, clearTenantApiKey, clearWebsiteUser } from "./apiKey.js";
 const VITE_API_URL = import.meta.env.VITE_API_URL;
+
+/** Utilisateur connecté via le site (pas de token app) : on mappe vers le format attendu par l'app (menu utilise .username). */
+function websiteUserToAppUser(w) {
+  if (!w) return null;
+  const displayName = w.name || w.email || "";
+  return {
+    id: w.id,
+    email: w.email || "",
+    name: displayName,
+    username: displayName,
+    avatar: w.avatar || null,
+    role: w.appRole === "admin" ? "admin" : "user",
+  };
+}
 
 // Connexion utilisateur
 export async function loginUser(email, password) {
   const res = await fetch(`${VITE_API_URL}api/auth/login`, {
     method: "POST",
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
@@ -28,10 +42,12 @@ export async function loginUser(email, password) {
   return data;
 }
 
-// Déconnexion utilisateur
+// Déconnexion utilisateur (app + session website si présente)
 export function logoutUser() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
+  clearWebsiteUser();
+  clearTenantApiKey();
 }
 
 // Obtenir le token stocké
@@ -45,25 +61,34 @@ export function getCurrentUser() {
   return user ? JSON.parse(user) : null;
 }
 
-// Vérifier si l'utilisateur est connecté
+// Authentifié via le site (clé tenant + user /me) sans login app
+export function isAuthenticatedViaWebsite() {
+  const key = getApiKey();
+  const websiteUser = getStoredWebsiteUser();
+  return !!(key && websiteUser && (websiteUser.email || websiteUser.id));
+}
+
+// Vérifier si l'utilisateur est connecté (app ou via le site)
 export function isAuthenticated() {
   const token = getToken();
-  const user = getCurrentUser();
-  
-  // Vérifier que le token et l'utilisateur existent et ne sont pas vides
-  if (!token || token === "null" || token === "undefined") {
-    // Nettoyer le localStorage si token invalide
+  const userFromStorage = localStorage.getItem("user");
+
+  if (token && userFromStorage) {
+    if (token === "null" || token === "undefined") {
+      logoutUser();
+      return false;
+    }
+    try {
+      const user = JSON.parse(userFromStorage);
+      if (user && user.email) return true;
+    } catch {
+      // fallthrough
+    }
     logoutUser();
     return false;
   }
-  
-  if (!user || !user.email) {
-    // Nettoyer si user invalide
-    logoutUser();
-    return false;
-  }
-  
-  return true;
+
+  return isAuthenticatedViaWebsite();
 }
 
 // Vérifier si l'utilisateur est admin
@@ -81,7 +106,7 @@ export async function getProfile() {
 
   const res = await fetch(`${VITE_API_URL}api/auth/profile`, {
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       Authorization: `Bearer ${token}`,
     },
   });
@@ -104,7 +129,7 @@ export async function updateUserProfile(profileData) {
   const res = await fetch(`${VITE_API_URL}api/auth/profile`, {
     method: "PUT",
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
@@ -132,7 +157,7 @@ export async function uploadAvatar(file) {
   const res = await fetch(`${VITE_API_URL}api/auth/profile/avatar`, {
     method: "POST",
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       Authorization: `Bearer ${token}`,
       // Ne pas spécifier Content-Type, le navigateur le fera automatiquement avec le boundary
     },
@@ -157,7 +182,7 @@ export async function createUser(userData) {
   const res = await fetch(`${VITE_API_URL}api/auth/register`, {
     method: "POST",
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
@@ -183,7 +208,7 @@ export async function getAllUsers() {
 
   const res = await fetch(`${VITE_API_URL}api/auth/users`, {
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       Authorization: `Bearer ${token}`,
     },
   });
@@ -208,7 +233,7 @@ export async function updateUser(id, userData) {
   const res = await fetch(`${VITE_API_URL}api/auth/users/${id}`, {
     method: "PUT",
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
@@ -235,7 +260,7 @@ export async function deleteUser(id) {
   const res = await fetch(`${VITE_API_URL}api/auth/users/${id}`, {
     method: "DELETE",
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       Authorization: `Bearer ${token}`,
     },
   });
@@ -259,7 +284,7 @@ export async function getSystemStats() {
 
   const res = await fetch(`${VITE_API_URL}api/auth/stats`, {
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       Authorization: `Bearer ${token}`,
     },
   });
@@ -287,7 +312,7 @@ export async function getSystemLogs(type = "all", limit = 50) {
 
   const res = await fetch(`${VITE_API_URL}api/auth/logs?${params}`, {
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       Authorization: `Bearer ${token}`,
     },
   });
@@ -309,7 +334,7 @@ export async function getMaintenanceStats() {
 
   const res = await fetch(`${VITE_API_URL}api/auth/maintenance/stats`, {
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       Authorization: `Bearer ${token}`,
     },
   });

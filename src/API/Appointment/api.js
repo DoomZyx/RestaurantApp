@@ -1,8 +1,8 @@
-const VITE_API_KEY = import.meta.env.VITE_API_KEY;
+import { getApiKey } from "../apiKey.js";
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 const defaultHeaders = () => ({
-  "x-api-key": `${VITE_API_KEY}`,
+  "x-api-key": getApiKey(),
   "Content-Type": "application/json",
 });
 
@@ -75,7 +75,7 @@ export async function updateReservationStatus(id, statut) {
 export async function deleteReservation(id) {
   const res = await fetch(`${VITE_API_URL}api/reservations/${id}`, {
     method: "DELETE",
-    headers: { "x-api-key": `${VITE_API_KEY}` },
+    headers: { "x-api-key": getApiKey() },
   });
   if (!res.ok) throw new Error("Erreur lors de la suppression de la réservation");
   return res.json();
@@ -161,7 +161,7 @@ export async function updateOrderStatus(id, statut) {
 export async function deleteOrder(id) {
   const res = await fetch(`${VITE_API_URL}api/orders/${id}`, {
     method: "DELETE",
-    headers: { "x-api-key": `${VITE_API_KEY}` },
+    headers: { "x-api-key": getApiKey() },
   });
   if (!res.ok) throw new Error("Erreur lors de la suppression de la commande");
   return res.json();

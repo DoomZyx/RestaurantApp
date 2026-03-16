@@ -6,6 +6,7 @@ import "./Base/base.scss";
 import "./Styles/notifications.scss";
 import "./Components/Common/EmojiText.scss";
 import { isAuthenticated, isAdmin } from "./API/auth";
+import { fetchTenantKeyFromWebsite, fetchWebsiteUser } from "./API/apiKey";
 import Login from "./Pages/Login/Login";
 import Homepage from "./Pages/Homepage/homepage";
 import Profile from "./Pages/Profile/Profile";
@@ -22,7 +23,13 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    setAuthChecked(true);
+    let cancelled = false;
+    (async () => {
+      const key = await fetchTenantKeyFromWebsite();
+      if (key) await fetchWebsiteUser();
+      if (!cancelled) setAuthChecked(true);
+    })();
+    return () => { cancelled = true; };
   }, []);
 
   useEffect(() => {
@@ -71,7 +78,7 @@ function App() {
       )}
       <Routes>
         {/* Route publique */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={isAuthenticated() ? <Navigate to="/" replace /> : <Login />} />
 
         {/* Routes protégées */}
         <Route

@@ -1,4 +1,4 @@
-const VITE_API_KEY = import.meta.env.VITE_API_KEY;
+import { getApiKey } from "../apiKey.js";
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 // Mettre à jour les informations d'un client (lié à un appel)
@@ -9,7 +9,7 @@ export async function updateClient(id, clientData) {
   const res = await fetch(`${VITE_API_URL}api/calls/${id}/client`, {
     method: "PUT",
     headers: {
-      "x-api-key": `${VITE_API_KEY}`,
+      "x-api-key": getApiKey(),
       "Content-Type": "application/json",
     },
     body: JSON.stringify(clientData),

@@ -1,4 +1,4 @@
-const VITE_API_KEY = import.meta.env.VITE_API_KEY;
+import { getApiKey } from "../apiKey.js";
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 export async function fetchCalls(page = 1, limit = 10, filters = {}) {
@@ -20,7 +20,7 @@ export async function fetchCalls(page = 1, limit = 10, filters = {}) {
 
  const res = await fetch(`${VITE_API_URL}api/calls?${params.toString()}`, {
    headers: {
-     "x-api-key": `${VITE_API_KEY}`,
+     "x-api-key": getApiKey(),
      "Content-Type": "application/json",
    },
  });
@@ -31,7 +31,7 @@ export async function fetchCalls(page = 1, limit = 10, filters = {}) {
 export async function fetchCallsByDate() {
  const res = await fetch(`${VITE_API_URL}api/calls/dates`, {
    headers: {
-     "x-api-key": `${VITE_API_KEY}`,
+     "x-api-key": getApiKey(),
    },
  });
  if (!res.ok) throw new Error("Erreur API");
@@ -43,7 +43,7 @@ export async function fetchCall(id) {
 
  const res = await fetch(`${VITE_API_URL}api/calls/${id}`, {
    headers: {
-     "x-api-key": `${VITE_API_KEY}`,
+     "x-api-key": getApiKey(),
      "Content-Type": "application/json",
    },
  });
@@ -56,7 +56,7 @@ export async function createCall(callData) {
  const res = await fetch(`${VITE_API_URL}api/callsdata`, {
    method: "POST",
    headers: {
-     "x-api-key": `${VITE_API_KEY}`,
+     "x-api-key": getApiKey(),
      "Content-Type": "application/json",
    },
    body: JSON.stringify(callData),
@@ -77,7 +77,7 @@ export async function updateCallStatus(id, status) {
  const res = await fetch(url, {
    method: "PATCH",
    headers: {
-     "x-api-key": `${VITE_API_KEY}`,
+     "x-api-key": getApiKey(),
      "Content-Type": "application/json",
    },
    body: body,
@@ -103,7 +103,7 @@ export async function deleteCall(id) {
  const res = await fetch(url, {
    method: "DELETE",
    headers: {
-     "x-api-key": `${VITE_API_KEY}`,
+     "x-api-key": getApiKey(),
    },
  });
 

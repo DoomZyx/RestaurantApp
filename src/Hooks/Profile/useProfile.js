@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getProfile, updateUserProfile, uploadAvatar as uploadAvatarAPI } from "../../API/auth";
+import { getProfile, updateUserProfile, uploadAvatar as uploadAvatarAPI, isAuthenticatedViaWebsite, getToken, getCurrentUser } from "../../API/auth";
 
 export function useProfile() {
   const [profileData, setProfileData] = useState({
@@ -36,12 +36,26 @@ export function useProfile() {
     try {
       setLoading(true);
       setError(null);
+      if (isAuthenticatedViaWebsite() && !getToken()) {
+        const user = getCurrentUser();
+        const formattedData = {
+          nom: user?.name || "",
+          email: user?.email || "",
+          telephone: "",
+          poste: "",
+          departement: "",
+          avatar: user?.avatar || null,
+          dateCreation: "",
+          derniereConnexion: "",
+        };
+        setProfileData(formattedData);
+        setTempData(formattedData);
+        setLoading(false);
+        return;
+      }
       const response = await getProfile();
-      
-      
       if (response.success && response.data?.user) {
         const user = response.data.user;
-        
         const formattedData = {
           nom: user.username || "",
           email: user.email || "",
@@ -167,6 +181,8 @@ const formatDateTime = (dateString) => {
     minute: "2-digit",
   });
 };
+  const isWebsiteOnly = isAuthenticatedViaWebsite() && !getToken();
+
   return {
     profileData,
     setProfileData,
@@ -182,7 +198,7 @@ const formatDateTime = (dateString) => {
     success,
     setSuccess,
     statsPersonnelles,
-    
+    isWebsiteOnly,
     loadProfile,
     handleEdit,
     handleCancel,
@@ -191,5 +207,5 @@ const formatDateTime = (dateString) => {
     handleInputChange,
     formatDate,
     formatDateTime
-  }
+  };
 }
