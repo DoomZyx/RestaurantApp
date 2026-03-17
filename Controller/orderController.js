@@ -1,4 +1,5 @@
 import OrderModel from "../models/order.js";
+import logger from "../Services/logging/logger.js";
 
 const DEFAULT_INSTANCE_ID = "inst_default";
 function getInstanceId(req) {
@@ -32,7 +33,7 @@ export async function createOrder(request, reply) {
       data: order,
     });
   } catch (error) {
-    console.error("Erreur lors de la création de la commande:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la création de la commande");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -81,7 +82,7 @@ export async function getOrders(request, reply) {
       },
     });
   } catch (error) {
-    console.error("Erreur lors de la récupération des commandes:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la récupération des commandes");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -110,7 +111,7 @@ export async function getTodayOrders(request, reply) {
       data: orders,
     });
   } catch (error) {
-    console.error("Erreur lors de la récupération des commandes du jour:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la récupération des commandes du jour");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -137,7 +138,7 @@ export async function getOrderById(request, reply) {
       data: order,
     });
   } catch (error) {
-    console.error("Erreur lors de la récupération de la commande:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la récupération de la commande");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -169,7 +170,7 @@ export async function updateOrder(request, reply) {
       data: order,
     });
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de la commande:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la mise à jour de la commande");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -201,7 +202,7 @@ export async function updateOrderStatus(request, reply) {
       data: order,
     });
   } catch (error) {
-    console.error("Erreur lors de la mise à jour du statut:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la mise à jour du statut");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -228,7 +229,7 @@ export async function deleteOrder(request, reply) {
       message: "Commande supprimée avec succès",
     });
   } catch (error) {
-    console.error("Erreur lors de la suppression de la commande:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la suppression de la commande");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -260,7 +261,7 @@ export async function checkAvailability(request, reply) {
       conflicts: conflicts.length
     });
   } catch (error) {
-    console.error("Erreur lors de la vérification de disponibilité:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la vérification de disponibilité");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -357,7 +358,7 @@ export async function getAvailableSlots(request, reply) {
       occupiedSlots
     });
   } catch (error) {
-    console.error("Erreur lors de la récupération des créneaux:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la récupération des créneaux");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -470,7 +471,7 @@ export async function createOrderFromAI(request, reply) {
       data: order,
     });
   } catch (error) {
-    console.error("Erreur lors de la création de commande depuis l'IA:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la création de commande depuis l'IA");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,

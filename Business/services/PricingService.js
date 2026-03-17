@@ -39,7 +39,14 @@ export class PricingService {
     let pricing = await PricingModel.findOne({ instanceId: id });
 
     if (pricing) {
-      Object.assign(pricing, { ...pricingData, instanceId: id });
+      const dataToAssign = { ...pricingData, instanceId: id };
+      if (dataToAssign.restaurantInfo && typeof dataToAssign.restaurantInfo === "object") {
+        dataToAssign.restaurantInfo = {
+          ...(pricing.restaurantInfo?.toObject ? pricing.restaurantInfo.toObject() : pricing.restaurantInfo || {}),
+          ...dataToAssign.restaurantInfo,
+        };
+      }
+      Object.assign(pricing, dataToAssign);
       pricing.markModified("menuPricing");
       pricing.markModified("restaurantInfo");
       pricing.markModified("restaurantInfo.horairesOuverture");

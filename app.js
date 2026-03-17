@@ -1,5 +1,6 @@
 // audit-fix: charger dotenv avant tout module qui utilise process.env (ex. auth.js via AuthService)
 import "./Config/env.js";
+import logger from "./Services/logging/logger.js";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyFormBody from "@fastify/formbody";
@@ -37,7 +38,7 @@ async function connectDB() {
     }
     await mongoose.connect(process.env.MONGO_URI);
   } catch (err) {
-    console.error("Erreur de connexion MongoDB :", err);
+    logger.error({ err: err.message }, "Erreur de connexion MongoDB");
     process.exit(1);
   }
 }
@@ -51,7 +52,7 @@ const requiredEnv = [
 for (const { name, minLen } of requiredEnv) {
   const v = process.env[name];
   if (!v || typeof v !== "string" || v.length < minLen) {
-    console.error(`Variable d'environnement ${name} manquante ou trop courte (min ${minLen} caractères).`);
+    logger.error(`Variable d'environnement ${name} manquante ou trop courte (min ${minLen} caractères).`);
     process.exit(1);
   }
 }
@@ -146,11 +147,16 @@ fastify.register(async (instance) => {
   instance.register(apiKeyRoutes);
 });
 
-// Gestion globale des erreurs
-// audit-fix: en prod ne pas exposer error.message au client (fuite d'infos)
+// Gestion globale des erreurs : Fastify log + Winston pour les 5xx (audit #14)
 fastify.setErrorHandler((error, request, reply) => {
   request.log.error(error);
   const statusCode = error.statusCode || 500;
+  if (statusCode >= 500) {
+    logger.error(
+      { err: error.message, stack: error.stack, statusCode, url: request?.url, method: request?.method },
+      "Erreur 5xx"
+    );
+  }
   const isProd = process.env.NODE_ENV === "production";
   const message = isProd && statusCode === 500
     ? "Erreur interne du serveur"

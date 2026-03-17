@@ -1,5 +1,6 @@
 import { UserService } from "../../Business/services/UserService.js";
 import { UserTransformer } from "../../Business/transformers/UserTransformer.js";
+import logger from "../../Services/logging/logger.js";
 
 /**
  * Controller de gestion des utilisateurs (admin)
@@ -18,7 +19,7 @@ export class UserController {
         UserTransformer.usersListResponse(users)
       );
     } catch (error) {
-      console.error("❌ Erreur getAllUsers:", error);
+      logger.error({ err: error?.message }, "Erreur getAllUsers");
 
       return reply.code(500).send(
         UserTransformer.errorResponse("Erreur lors de la récupération des utilisateurs")
@@ -39,7 +40,7 @@ export class UserController {
         UserTransformer.profileResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur getUserById:", error);
+      logger.error({ err: error?.message }, "Erreur getUserById");
 
       if (error.message === "Utilisateur non trouvé") {
         return reply.code(404).send(
@@ -66,7 +67,7 @@ export class UserController {
         UserTransformer.userUpdateResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur updateUser:", error);
+      logger.error({ err: error?.message }, "Erreur updateUser");
 
       // Erreurs de validation
       if (error.message.includes("déjà utilisé") || 
@@ -101,7 +102,7 @@ export class UserController {
         UserTransformer.userDeleteResponse()
       );
     } catch (error) {
-      console.error("❌ Erreur deleteUser:", error);
+      logger.error({ err: error?.message }, "Erreur deleteUser");
 
       // Erreurs métier
       if (error.message.includes("propre compte")) {
@@ -134,7 +135,7 @@ export class UserController {
         UserTransformer.usersListResponse(users)
       );
     } catch (error) {
-      console.error("❌ Erreur searchUsers:", error);
+      logger.error({ err: error?.message }, "Erreur searchUsers");
 
       return reply.code(500).send(
         UserTransformer.errorResponse("Erreur lors de la recherche")
@@ -157,7 +158,7 @@ export class UserController {
         UserTransformer.userUpdateResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur toggleUserStatus:", error);
+      logger.error({ err: error?.message }, "Erreur toggleUserStatus");
 
       if (error.message === "Utilisateur non trouvé") {
         return reply.code(404).send(
@@ -186,7 +187,7 @@ export class UserController {
         UserTransformer.userUpdateResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur changeUserRole:", error);
+      logger.error({ err: error?.message }, "Erreur changeUserRole");
 
       if (error.message.includes("invalide")) {
         return reply.code(400).send(
@@ -218,7 +219,7 @@ export class UserController {
         UserTransformer.statsResponse(stats)
       );
     } catch (error) {
-      console.error("❌ Erreur getUserStats:", error);
+      logger.error({ err: error?.message }, "Erreur getUserStats");
 
       return reply.code(500).send(
         UserTransformer.errorResponse("Erreur lors de la récupération des statistiques")

@@ -1,5 +1,21 @@
 import winston from "winston";
+import DailyRotateFile from "winston-daily-rotate-file";
 import path from "path";
+
+// Répertoire des logs : LOG_PATH (défaut "logs") relatif à cwd
+const logDir = path.join(process.cwd(), process.env.LOG_PATH || "logs");
+const logRetention = process.env.LOG_RETENTION_DAYS || "7d";
+const logMaxSize = process.env.LOG_MAX_SIZE || "100m";
+
+function dailyTransport(options) {
+  return new DailyRotateFile({
+    dirname: logDir,
+    ...options,
+    maxSize: logMaxSize,
+    maxFiles: logRetention,
+    format: options.format || generalLogFormat,
+  });
+}
 
 // ========================================
 // FORMATS DE LOG
@@ -90,30 +106,23 @@ const consoleFormat = winston.format.combine(
 // ========================================
 
 const transports = [
-  // Console avec couleurs et emojis
   new winston.transports.Console({
     format: consoleFormat,
   }),
-
-  // Fichier pour TOUTES les erreurs
-  new winston.transports.File({
-    filename: path.join(process.cwd(), "logs", "error.log"),
+  dailyTransport({
+    filename: "error-%DATE%.log",
+    datePattern: "YYYY-MM-DD",
     level: "error",
-    format: generalLogFormat,
   }),
-
-  // Fichier pour TOUS les appels (call lifecycle)
-  new winston.transports.File({
-    filename: path.join(process.cwd(), "logs", "calls.log"),
+  dailyTransport({
+    filename: "calls-%DATE%.log",
+    datePattern: "YYYY-MM-DD",
     level: "info",
-    format: generalLogFormat,
   }),
-
-  // Fichier pour OpenAI uniquement
-  new winston.transports.File({
-    filename: path.join(process.cwd(), "logs", "openai.log"),
+  dailyTransport({
+    filename: "openai-%DATE%.log",
+    datePattern: "YYYY-MM-DD",
     level: "debug",
-    format: generalLogFormat,
   }),
 ];
 
@@ -121,8 +130,10 @@ const transports = [
 // CRÉATION DU LOGGER PRINCIPAL
 // ========================================
 
+const logLevel = process.env.LOG_LEVEL || (process.env.NODE_ENV === "production" ? "info" : "debug");
+
 const logger = winston.createLogger({
-  level: process.env.NODE_ENV === "production" ? "info" : "debug",
+  level: logLevel,
   format: generalLogFormat,
   transports,
   exitOnError: false,
@@ -133,17 +144,17 @@ const logger = winston.createLogger({
 // ========================================
 
 /**
- * Logger spécifique pour OpenAI
- * Écrit dans openai.log
+ * Logger spécifique pour OpenAI (openai.log avec rotation)
  */
 const openAiLogger = winston.createLogger({
-  level: "debug",
+  level: logLevel,
   format: generalLogFormat,
   transports: [
     new winston.transports.Console({ format: consoleFormat }),
-    new winston.transports.File({
-      filename: path.join(process.cwd(), "logs", "openai.log"),
-      format: generalLogFormat,
+    dailyTransport({
+      filename: "openai-%DATE%.log",
+      datePattern: "YYYY-MM-DD",
+      level: "debug",
     }),
   ],
   exitOnError: false,
@@ -316,5 +327,35 @@ export const callLogger = {
     logger.info("Appel termine avec succes", payload);
   },
 };
+
+// ========================================
+// NOTIFICATIONS DEBUG (remplace notifDebugLog.js fs.appendFileSync)
+// Transport dédié avec rotation ; échec d'écriture remonté vers le logger principal
+// ========================================
+
+const notifRotateTransport = dailyTransport({
+  filename: "notifications-%DATE%.log",
+  datePattern: "YYYY-MM-DD",
+  level: "info",
+});
+
+const notifLogger = winston.createLogger({
+  level: "info",
+  format: generalLogFormat,
+  transports: [notifRotateTransport],
+  exitOnError: false,
+});
+
+notifRotateTransport.on("error", (err) => {
+  logger.error("notifDebugLog: échec écriture fichier notifications", { err: err.message });
+});
+
+export function notifDebugLog(msg) {
+  try {
+    notifLogger.info("[NOTIF] " + msg);
+  } catch (e) {
+    logger.error("notifDebugLog: exception", { err: e?.message });
+  }
+}
 
 export default logger;

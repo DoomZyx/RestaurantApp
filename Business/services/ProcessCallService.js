@@ -1,5 +1,6 @@
 import { OrderService } from "./OrderService.js";
 import { CallValidator } from "../validators/CallValidator.js";
+import logger from "../../Services/logging/logger.js";
 
 /**
  * Service de traitement des transcriptions d'appels (secteur restaurant).
@@ -31,7 +32,7 @@ export class ProcessCallService {
           instanceId,
         });
       } catch (err) {
-        console.error("Erreur création réservation (processCall):", err);
+        logger.error({ err: err?.message }, "Erreur création réservation (processCall)");
       }
     }
 
@@ -45,7 +46,7 @@ export class ProcessCallService {
           instanceId,
         });
       } catch (err) {
-        console.error("Erreur création commande (processCall):", err);
+        logger.error({ err: err?.message }, "Erreur création commande (processCall)");
       }
     }
 

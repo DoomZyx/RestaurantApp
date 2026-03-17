@@ -2,6 +2,7 @@
  * Bus d'événements in-memory pour le Gateway (Phase 4).
  * Permet de découpler réception audio, traitement (audioWorker) et LLM (llmWorker).
  */
+import logger from "../Services/logging/logger.js";
 
 const listeners = new Map();
 
@@ -37,11 +38,11 @@ export function publish(topic, data) {
       const r = handler(data);
       if (r && typeof r.then === "function") {
         r.catch((err) => {
-          console.error(`[workerBus] handler error on ${topic}:`, err);
+          logger.error({ err: err?.message, topic }, "[workerBus] handler error");
         });
       }
     } catch (err) {
-      console.error(`[workerBus] handler error on ${topic}:`, err);
+      logger.error({ err: err?.message, topic }, "[workerBus] handler error");
     }
   }
 }

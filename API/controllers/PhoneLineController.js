@@ -1,5 +1,6 @@
 import { PricingService } from "../../Business/services/PricingService.js";
 import { PricingTransformer } from "../../Business/transformers/PricingTransformer.js";
+import logger from "../../Services/logging/logger.js";
 
 /**
  * Controller de la ligne téléphonique (activation / désactivation)
@@ -17,7 +18,7 @@ export class PhoneLineController {
         PricingTransformer.successResponse({ phoneLineEnabled: enabled })
       );
     } catch (error) {
-      console.error("Erreur getPhoneLine:", error);
+      logger.error({ err: error?.message }, "Erreur getPhoneLine");
       return reply.code(500).send(
         PricingTransformer.errorResponse("Erreur interne du serveur", error.message)
       );
@@ -46,7 +47,7 @@ export class PhoneLineController {
         )
       );
     } catch (error) {
-      console.error("Erreur updatePhoneLine:", error);
+      logger.error({ err: error?.message }, "Erreur updatePhoneLine");
       return reply.code(500).send(
         PricingTransformer.errorResponse("Erreur interne du serveur", error.message)
       );

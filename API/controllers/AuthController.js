@@ -1,5 +1,6 @@
 import { AuthService } from "../../Business/services/AuthService.js";
 import { UserTransformer } from "../../Business/transformers/UserTransformer.js";
+import logger from "../../Services/logging/logger.js";
 
 /**
  * Controller d'authentification
@@ -18,7 +19,7 @@ export class AuthController {
         UserTransformer.registrationSuccessResponse(user, token)
       );
     } catch (error) {
-      console.error("❌ Erreur registration:", error);
+      logger.error({ err: error?.message }, "Erreur registration");
 
       // Erreurs de validation ou de duplication
       if (error.message.includes("existe déjà") || 
@@ -47,7 +48,7 @@ export class AuthController {
         UserTransformer.authSuccessResponse(user, token)
       );
     } catch (error) {
-      console.error("❌ Erreur login:", error);
+      logger.error({ err: error?.message }, "Erreur login");
 
       // Erreurs d'authentification
       if (error.message.includes("incorrect") || 
@@ -76,7 +77,7 @@ export class AuthController {
         UserTransformer.profileResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur verification token:", error);
+      logger.error({ err: error?.message }, "Erreur verification token");
 
       return reply.code(401).send(
         UserTransformer.errorResponse(error.message)

@@ -1,5 +1,6 @@
 import { ProfileService } from "../../Business/services/ProfileService.js";
 import { UserTransformer } from "../../Business/transformers/UserTransformer.js";
+import logger from "../../Services/logging/logger.js";
 
 /**
  * Controller de gestion du profil
@@ -21,7 +22,7 @@ export class ProfileController {
         UserTransformer.profileResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur getProfile:", error);
+      logger.error({ err: error?.message }, "Erreur getProfile");
 
       if (error.message === "Utilisateur non trouvé") {
         return reply.code(404).send(
@@ -54,7 +55,7 @@ export class ProfileController {
         UserTransformer.profileUpdateResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur updateProfile:", error);
+      logger.error({ err: error?.message }, "Erreur updateProfile");
 
       // Erreurs de validation ou de duplication
       if (error.message.includes("déjà utilisé") || 
@@ -95,7 +96,7 @@ export class ProfileController {
         UserTransformer.avatarUploadResponse(avatarUrl, user)
       );
     } catch (error) {
-      console.error("❌ Erreur uploadAvatar:", error);
+      logger.error({ err: error?.message }, "Erreur uploadAvatar");
 
       // Erreurs de validation
       if (error.message.includes("fichier") || 
@@ -130,7 +131,7 @@ export class ProfileController {
         UserTransformer.profileUpdateResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur deleteAvatar:", error);
+      logger.error({ err: error?.message }, "Erreur deleteAvatar");
 
       if (error.message === "Utilisateur non trouvé") {
         return reply.code(404).send(

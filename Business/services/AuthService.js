@@ -2,6 +2,7 @@ import crypto from "crypto";
 import User from "../../models/user.js";
 import { generateToken } from "../../middleware/auth.js";
 import { UserValidator } from "../validators/UserValidator.js";
+import logger from "../../Services/logging/logger.js";
 
 /**
  * Service d'authentification
@@ -210,7 +211,7 @@ export class AuthService {
         await adminUser.save();
       }
     } catch (error) {
-      console.error("Erreur création admin par défaut:", error);
+      logger.error({ err: error?.message }, "Erreur création admin par défaut");
     }
   }
 }

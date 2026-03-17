@@ -19,6 +19,7 @@ import { InstanceModel } from "./storage/models/Instance.js";
 import { handleWebSocketConnection } from "./Websocket/connection.js";
 import { start as startAudioWorker } from "./workers/audioWorker.js";
 import { start as startLlmWorker } from "./workers/llmWorker.js";
+import logger from "./Services/logging/logger.js";
 
 dotenv.config();
 
@@ -35,17 +36,17 @@ const numWorkers = process.env.GATEWAY_WORKERS
   : os.cpus().length;
 
 if (cluster.isPrimary) {
-  console.log(`Gateway master démarré - ${numWorkers} workers`);
+  logger.info({ numWorkers }, "Gateway master démarré");
   for (let i = 0; i < numWorkers; i++) {
     cluster.fork();
   }
   cluster.on("exit", (worker) => {
-    console.log(`Worker ${worker.process.pid} mort, redémarrage`);
+    logger.info({ pid: worker.process.pid }, "Worker mort, redémarrage");
     cluster.fork();
   });
 } else {
   startGatewayServer().catch((err) => {
-    console.error(err);
+    logger.error({ err: err?.message }, "Gateway worker");
     process.exit(1);
   });
 }
@@ -111,5 +112,5 @@ async function startGatewayServer() {
   startAudioWorker();
   startLlmWorker();
   await fastify.listen({ port, host: "0.0.0.0" });
-  console.log(`Gateway vocal écoute sur le port ${port} (worker PID ${process.pid})`);
+  logger.info({ port, pid: process.pid }, "Gateway vocal écoute");
 }

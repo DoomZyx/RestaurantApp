@@ -1,4 +1,5 @@
 import ReservationModel from "../models/reservation.js";
+import logger from "../Services/logging/logger.js";
 
 const DEFAULT_INSTANCE_ID = "inst_default";
 function getInstanceId(req) {
@@ -54,7 +55,7 @@ export async function createReservation(request, reply) {
     });
     return reply.code(201).send({ success: true, data: reservation });
   } catch (error) {
-    console.error("Erreur création réservation:", error);
+    logger.error({ err: error?.message }, "Erreur création réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -92,7 +93,7 @@ export async function getReservations(request, reply) {
       },
     });
   } catch (error) {
-    console.error("Erreur récupération réservations:", error);
+    logger.error({ err: error?.message }, "Erreur récupération réservations");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -114,7 +115,7 @@ export async function getTodayReservations(request, reply) {
     }).sort({ heure: 1 });
     return reply.send({ success: true, data: reservations });
   } catch (error) {
-    console.error("Erreur réservations du jour:", error);
+    logger.error({ err: error?.message }, "Erreur réservations du jour");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -133,7 +134,7 @@ export async function getReservationById(request, reply) {
     }
     return reply.send({ success: true, data: reservation });
   } catch (error) {
-    console.error("Erreur récupération réservation:", error);
+    logger.error({ err: error?.message }, "Erreur récupération réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -157,7 +158,7 @@ export async function updateReservation(request, reply) {
     }
     return reply.send({ success: true, data: reservation });
   } catch (error) {
-    console.error("Erreur mise à jour réservation:", error);
+    logger.error({ err: error?.message }, "Erreur mise à jour réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -181,7 +182,7 @@ export async function updateReservationStatus(request, reply) {
     }
     return reply.send({ success: true, data: reservation });
   } catch (error) {
-    console.error("Erreur mise à jour statut réservation:", error);
+    logger.error({ err: error?.message }, "Erreur mise à jour statut réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -203,7 +204,7 @@ export async function deleteReservation(request, reply) {
       message: "Réservation supprimée avec succès",
     });
   } catch (error) {
-    console.error("Erreur suppression réservation:", error);
+    logger.error({ err: error?.message }, "Erreur suppression réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -232,7 +233,7 @@ export async function checkAvailability(request, reply) {
       conflicts: conflicts.length,
     });
   } catch (error) {
-    console.error("Erreur vérification disponibilité réservation:", error);
+    logger.error({ err: error?.message }, "Erreur vérification disponibilité réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -366,7 +367,7 @@ export async function getAvailableSlots(request, reply) {
       remainingCoversSoir,
     });
   } catch (error) {
-    console.error("Erreur créneaux disponibles réservations:", error);
+    logger.error({ err: error?.message }, "Erreur créneaux disponibles réservations");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -494,7 +495,7 @@ export async function createReservationFromAI(request, reply) {
       message: "Réservation créée",
     });
   } catch (error) {
-    console.error("Erreur création réservation depuis l'IA:", error);
+    logger.error({ err: error?.message }, "Erreur création réservation depuis l'IA");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
