@@ -93,7 +93,6 @@ export function useCallList() {
 
  // Callback pour rafraîchir quand un nouvel appel arrive via WebSocket
  const handleNewCall = useCallback((notificationData) => {
-   console.log("[useCallList] handleNewCall appele, refetch appels");
    if (loadCallsRef.current) {
      loadCallsRef.current(paginationRef.current, filtersRef.current);
    }
@@ -104,7 +103,6 @@ export function useCallList() {
  
  useEffect(() => {
    const unsubscribe = subscribe("call", handleNewCall);
-   console.log("[useCallList] abonne au WS type=call");
    return () => unsubscribe();
  }, [subscribe, handleNewCall]);
 

@@ -330,8 +330,7 @@ export function useAppointments(mode = "orders") {
   }, [pagination, filtersHook.filters, loadAppointments, loadTodayAppointments]);
 
   // Callback pour rafraîchir quand une nouvelle commande arrive via WebSocket
-  const handleNewOrder = useCallback((notificationData) => {
-    console.log("[useAppointments] handleNewOrder appele, refetch listes");
+const handleNewOrder = useCallback((notificationData) => {
     if (loadAppointmentsRef.current) {
       loadAppointmentsRef.current(paginationRef.current.page, paginationRef.current.limit, filtersRef.current);
     }
@@ -346,7 +345,6 @@ export function useAppointments(mode = "orders") {
 
   useEffect(() => {
     const unsubscribe = subscribe("order", handleNewOrder);
-    console.log("[useAppointments] abonne au WS type=order");
     return () => unsubscribe();
   }, [subscribe, handleNewOrder]);
 
@@ -354,7 +352,6 @@ export function useAppointments(mode = "orders") {
   useEffect(() => {
     if (lastOrderNotificationAt == null || lastOrderNotificationAt === lastRefetchedForNotifRef.current) return;
     lastRefetchedForNotifRef.current = lastOrderNotificationAt;
-    console.log("[useAppointments] refetch suite a lastOrderNotificationAt");
     const t = setTimeout(() => {
       if (loadAppointmentsRef.current) {
         loadAppointmentsRef.current(paginationRef.current.page, paginationRef.current.limit, filtersRef.current);

@@ -14,6 +14,7 @@ import Admin from "./Pages/Admin/Admin";
 import AppointmentsPage from "./Pages/AppointmentsPage/AppointmentsPage";
 import ReservationsPage from "./Pages/ReservationsPage/ReservationsPage";
 import Configuration from "./Pages/Configuration/Configuration";
+import ErrorBoundary from "./Components/Common/ErrorBoundary";
 
 const FLASH_ERROR_KEY = "app_flash_error";
 
@@ -63,14 +64,15 @@ function App() {
   };
 
   return (
-    <Twemoji 
-      options={{ 
-        className: 'emoji-icon',
-        folder: 'svg',
-        ext: '.svg'
-      }}
-    >
-      {flashError && (
+    <ErrorBoundary>
+      <Twemoji 
+        options={{ 
+          className: 'emoji-icon',
+          folder: 'svg',
+          ext: '.svg'
+        }}
+      >
+        {flashError && (
         <div className="notification-toast error-message" style={{ position: "fixed", top: "1rem", left: "50%", transform: "translateX(-50%)", zIndex: 9999 }}>
           <i className="bi bi-exclamation-triangle-fill"></i>
           <span className="message-content">{flashError}</span>
@@ -136,6 +138,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Twemoji>
+    </ErrorBoundary>
   );
 }
 

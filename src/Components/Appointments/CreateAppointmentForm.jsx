@@ -70,20 +70,11 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
           });
         });
         setMenuProducts(flattened);
-        
-        // Extraire les boissons pour les menus
-        console.log('🔍 Structure menu complète:', menu);
-        console.log('🔍 Catégories disponibles:', Object.keys(menu));
-        
+
         const boissonsCategorie = menu['Boissons'] || menu['boissons'];
-        console.log('🍹 Catégorie Boissons trouvée:', boissonsCategorie);
-        
         if (boissonsCategorie && Array.isArray(boissonsCategorie.produits)) {
           const boissons = boissonsCategorie.produits.map(b => b.nom);
-          console.log('✅ Boissons extraites:', boissons);
           setBoissonsDisponibles(boissons);
-        } else {
-          console.log('❌ Aucune boisson trouvée dans la config');
         }
       } catch (e) {
         setMenuProducts([]);
@@ -327,12 +318,6 @@ export function CreateAppointmentForm({ onSubmit, onCancel, loading, appointment
                       selectedProduct.categorie?.toLowerCase().includes('menu') || 
                       selectedProduct.nom?.toLowerCase().includes('menu')
                     );
-                    console.log('🔍 Produit sélectionné:', selectedProduct?.nom);
-                    console.log('📦 Catégorie:', selectedProduct?.categorie);
-                    console.log('🍹 Boissons disponibles produit:', selectedProduct?.boissonsDisponibles);
-                    console.log('🍹 Boissons disponibles globales:', boissonsDisponibles);
-                    console.log('✅ Est un menu:', isMenu);
-                    
                     return isMenu && (
                       <div className="item-options" style={{ marginTop: '10px' }}>
                         <div className="option-group">
