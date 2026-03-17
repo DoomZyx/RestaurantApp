@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const clientSchema = new mongoose.Schema(
   {
+    instanceId: { type: String, required: false, index: true },
     prenom: { type: String, default: '-' },
     nom: { type: String, default: '-' },
-    telephone: { type: String, required: true, unique: true },
+    telephone: { type: String, required: true },
     email: { type: String },
     adresse: { type: String },
     entrepriseName: { type: String },
@@ -38,6 +39,7 @@ clientSchema.virtual('nomComplet').get(function() {
   return `${this.prenom} ${this.nom}`;
 });
 
+clientSchema.index({ instanceId: 1, telephone: 1 }, { unique: true });
 const ClientModel = mongoose.model("Client", clientSchema);
 
 export default ClientModel;

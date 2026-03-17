@@ -1,5 +1,6 @@
 import { PricingService } from "../../Business/services/PricingService.js";
 import { PricingTransformer } from "../../Business/transformers/PricingTransformer.js";
+import logger from "../../Services/logging/logger.js";
 
 /**
  * Controller de la ligne téléphonique (activation / désactivation)
@@ -11,12 +12,13 @@ export class PhoneLineController {
    */
   static async getStatus(request, reply) {
     try {
-      const enabled = await PricingService.getPhoneLineEnabled();
+      const instanceId = request.instanceId || "inst_default";
+      const enabled = await PricingService.getPhoneLineEnabled(instanceId);
       return reply.send(
         PricingTransformer.successResponse({ phoneLineEnabled: enabled })
       );
     } catch (error) {
-      console.error("Erreur getPhoneLine:", error);
+      logger.error({ err: error?.message }, "Erreur getPhoneLine");
       return reply.code(500).send(
         PricingTransformer.errorResponse("Erreur interne du serveur", error.message)
       );
@@ -36,7 +38,8 @@ export class PhoneLineController {
           PricingTransformer.errorResponse("Le champ 'enabled' (boolean) est requis")
         );
       }
-      await PricingService.updatePhoneLineEnabled(enabled);
+      const instanceId = request.instanceId || "inst_default";
+      await PricingService.updatePhoneLineEnabled(enabled, instanceId);
       return reply.send(
         PricingTransformer.successResponse(
           { phoneLineEnabled: !!enabled },
@@ -44,7 +47,7 @@ export class PhoneLineController {
         )
       );
     } catch (error) {
-      console.error("Erreur updatePhoneLine:", error);
+      logger.error({ err: error?.message }, "Erreur updatePhoneLine");
       return reply.code(500).send(
         PricingTransformer.errorResponse("Erreur interne du serveur", error.message)
       );

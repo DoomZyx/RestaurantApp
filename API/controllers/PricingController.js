@@ -1,6 +1,7 @@
 import { PricingService } from "../../Business/services/PricingService.js";
 import { ProductService } from "../../Business/services/ProductService.js";
 import { PricingTransformer } from "../../Business/transformers/PricingTransformer.js";
+import logger from "../../Services/logging/logger.js";
 
 /**
  * Controller de gestion des tarifs et du menu
@@ -12,13 +13,14 @@ export class PricingController {
    */
   static async getPricing(request, reply) {
     try {
-      const pricing = await PricingService.getPricing();
+      const instanceId = request.instanceId;
+      const pricing = await PricingService.getPricing(instanceId);
 
       return reply.send(
         PricingTransformer.successResponse(pricing)
       );
     } catch (error) {
-      console.error("❌ Erreur getPricing:", error);
+      logger.error({ err: error?.message }, "Erreur getPricing");
 
       return reply.code(500).send(
         PricingTransformer.errorResponse(
@@ -35,7 +37,8 @@ export class PricingController {
    */
   static async createOrUpdatePricing(request, reply) {
     try {
-      const pricing = await PricingService.createOrUpdatePricing(request.body);
+      const instanceId = request.instanceId || "inst_default";
+      const pricing = await PricingService.createOrUpdatePricing(request.body, instanceId);
 
       return reply.send(
         PricingTransformer.successResponse(
@@ -44,7 +47,7 @@ export class PricingController {
         )
       );
     } catch (error) {
-      console.error("❌ Erreur createOrUpdatePricing:", error);
+      logger.error({ err: error?.message }, "Erreur createOrUpdatePricing");
 
       return reply.code(500).send(
         PricingTransformer.errorResponse(
@@ -62,13 +65,14 @@ export class PricingController {
   static async getAvailableProducts(request, reply) {
     try {
       const { categorie } = request.params;
-      const products = await PricingService.getAvailableProducts(categorie);
+      const instanceId = request.instanceId || "inst_default";
+      const products = await PricingService.getAvailableProducts(categorie, instanceId);
 
       return reply.send(
         PricingTransformer.successResponse(products)
       );
     } catch (error) {
-      console.error("❌ Erreur getAvailableProducts:", error);
+      logger.error({ err: error?.message }, "Erreur getAvailableProducts");
 
       if (error.message.includes("non trouvée")) {
         return reply.code(404).send(
@@ -91,13 +95,14 @@ export class PricingController {
    */
   static async checkRestaurantAvailability(request, reply) {
     try {
-      const availability = await PricingService.checkAvailability();
+      const instanceId = request.instanceId || "inst_default";
+      const availability = await PricingService.checkAvailability(instanceId);
 
       return reply.send(
         PricingTransformer.successResponse(availability)
       );
     } catch (error) {
-      console.error("❌ Erreur checkRestaurantAvailability:", error);
+      logger.error({ err: error?.message }, "Erreur checkRestaurantAvailability");
 
       if (error.message.includes("non trouvée")) {
         return reply.code(404).send(
@@ -121,7 +126,8 @@ export class PricingController {
   static async addProduct(request, reply) {
     try {
       const { categorie, produit } = request.body;
-      const product = await ProductService.addProduct(categorie, produit);
+      const instanceId = request.instanceId || "inst_default";
+      const product = await ProductService.addProduct(categorie, produit, instanceId);
 
       return reply.send(
         PricingTransformer.successResponse(
@@ -130,7 +136,7 @@ export class PricingController {
         )
       );
     } catch (error) {
-      console.error("❌ Erreur addProduct:", error);
+      logger.error({ err: error?.message }, "Erreur addProduct");
 
       if (error.message.includes("non trouvée")) {
         return reply.code(404).send(
@@ -162,8 +168,8 @@ export class PricingController {
   static async updateProduct(request, reply) {
     try {
       const { categorie, produitId, produitData } = request.body;
-      
-      const product = await ProductService.updateProduct(categorie, produitId, produitData);
+      const instanceId = request.instanceId || "inst_default";
+      const product = await ProductService.updateProduct(categorie, produitId, produitData, instanceId);
 
       return reply.send(
         PricingTransformer.successResponse(
@@ -172,7 +178,7 @@ export class PricingController {
         )
       );
     } catch (error) {
-      console.error("❌ Erreur updateProduct:", error);
+      logger.error({ err: error?.message }, "Erreur updateProduct");
 
       if (error.message.includes("non trouvé")) {
         return reply.code(404).send(
@@ -202,7 +208,8 @@ export class PricingController {
   static async deleteProduct(request, reply) {
     try {
       const { categorie, produitId } = request.params;
-      await ProductService.deleteProduct(categorie, produitId);
+      const instanceId = request.instanceId || "inst_default";
+      await ProductService.deleteProduct(categorie, produitId, instanceId);
 
       return reply.send(
         PricingTransformer.successResponse(
@@ -211,7 +218,7 @@ export class PricingController {
         )
       );
     } catch (error) {
-      console.error("❌ Erreur deleteProduct:", error);
+      logger.error({ err: error?.message }, "Erreur deleteProduct");
 
       if (error.message.includes("non trouvé")) {
         return reply.code(404).send(
@@ -234,13 +241,14 @@ export class PricingController {
    */
   static async getPricingForGPT(request, reply) {
     try {
-      const gptData = await PricingService.getPricingForGPT();
+      const instanceId = request.instanceId || "inst_default";
+      const gptData = await PricingService.getPricingForGPT(instanceId);
 
       return reply.send(
         PricingTransformer.successResponse(gptData)
       );
     } catch (error) {
-      console.error("❌ Erreur getPricingForGPT:", error);
+      logger.error({ err: error?.message }, "Erreur getPricingForGPT");
 
       if (error.message.includes("non trouvée")) {
         return reply.code(404).send(

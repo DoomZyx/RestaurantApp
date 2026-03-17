@@ -1,5 +1,6 @@
 import { OrderService } from "./OrderService.js";
 import { CallValidator } from "../validators/CallValidator.js";
+import logger from "../../Services/logging/logger.js";
 
 /**
  * Service de traitement des transcriptions d'appels (secteur restaurant).
@@ -9,15 +10,14 @@ export class ProcessCallService {
   /**
    * Traite les données extraites d'une transcription : crée résa et/ou commande, envoie la notification.
    * @param {Object} extractedData - Données extraites par extractCallData (nom, telephone, reservation?, order?, ...)
+   * @param {Object} [options] - { instanceId }
    * @returns {Promise<Object>} { reservation, order }
    */
-  static async process(extractedData) {
+  static async process(extractedData, options = {}) {
+    const instanceId = options.instanceId || "inst_default";
     const {
       nom,
       telephone,
-      type_demande,
-      services,
-      description,
       reservation,
       order,
     } = extractedData;
@@ -29,9 +29,10 @@ export class ProcessCallService {
       try {
         createdReservation = await OrderService.createReservationFromData(reservation, {
           callId: null,
+          instanceId,
         });
       } catch (err) {
-        console.error("Erreur création réservation (processCall):", err);
+        logger.error({ err: err?.message }, "Erreur création réservation (processCall)");
       }
     }
 
@@ -42,9 +43,10 @@ export class ProcessCallService {
           callId: null,
           nom: nom || "Client inconnu",
           telephone: telephone && telephone !== "Non fourni" ? telephone : null,
+          instanceId,
         });
       } catch (err) {
-        console.error("Erreur création commande (processCall):", err);
+        logger.error({ err: err?.message }, "Erreur création commande (processCall)");
       }
     }
 

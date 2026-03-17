@@ -86,10 +86,11 @@ export default async function processCallRoutes(fastify, options) {
       const saveStartTime = Date.now();
       callLogger.apiCallStarted(streamSid, "ProcessCallService.process");
 
+      const instanceId = request.instanceId || "inst_default";
       let result;
       try {
         result = await retryWithBackoff(
-          () => ProcessCallService.process(extractedData),
+          () => ProcessCallService.process(extractedData, { instanceId }),
           {
             maxRetries: 3,
             baseDelay: 1000,

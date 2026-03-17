@@ -1,8 +1,12 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+import logger from "../Services/logging/logger.js";
 
-const JWT_SECRET =
-  process.env.JWT_SECRET || "your-super-secret-jwt-key-change-in-production";
+// audit-fix: pas de fallback secret; exiger JWT_SECRET au démarrage (voir app.js / server.js)
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET || typeof JWT_SECRET !== "string" || JWT_SECRET.length < 32) {
+  throw new Error("JWT_SECRET doit être défini et comporter au moins 32 caractères");
+}
 
 // Middleware pour vérifier le token JWT
 export const authenticateToken = async (request, reply) => {
@@ -26,7 +30,7 @@ export const authenticateToken = async (request, reply) => {
     // Ajouter l'utilisateur à la requête
     request.user = user;
   } catch (error) {
-    console.error("Erreur d'authentification:", error);
+    logger.error({ err: error?.message }, "Erreur d'authentification");
     return reply.code(401).send({ error: "Token invalide" });
   }
 };
@@ -46,7 +50,7 @@ export const requireAdmin = async (request, reply) => {
         .send({ error: "Accès refusé - Rôle admin requis" });
     }
   } catch (error) {
-    console.error("Erreur vérification admin:", error);
+    logger.error({ err: error?.message }, "Erreur vérification admin");
     return reply.code(403).send({ error: "Accès refusé" });
   }
 };
@@ -66,7 +70,7 @@ export const requireUser = async (request, reply) => {
         .send({ error: "Accès refusé - Rôle utilisateur requis" });
     }
   } catch (error) {
-    console.error("Erreur vérification utilisateur:", error);
+    logger.error({ err: error?.message }, "Erreur vérification utilisateur");
     return reply.code(403).send({ error: "Accès refusé" });
   }
 };

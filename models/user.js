@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema({
+  instanceId: { type: String, required: false, index: true },
   username: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
     minlength: 3,
     maxlength: 30,
@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
     lowercase: true,
   },
@@ -25,7 +24,6 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["admin", "user"],
-    default: "user",
   },
   isActive: {
     type: Boolean,
@@ -103,6 +101,10 @@ const userSchema = new mongoose.Schema({
     },
   },
 });
+
+// Unicité (email, username) par instance : même email possible dans deux instances différentes
+userSchema.index({ email: 1, instanceId: 1 }, { unique: true });
+userSchema.index({ username: 1, instanceId: 1 }, { unique: true });
 
 // Middleware pour hasher le mot de passe avant sauvegarde
 userSchema.pre("save", async function (next) {

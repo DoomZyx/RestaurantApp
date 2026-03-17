@@ -1,3 +1,6 @@
+// audit-fix: charger dotenv avant tout module qui utilise process.env (ex. auth.js via AuthService)
+import "./Config/env.js";
+import logger from "./Services/logging/logger.js";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyFormBody from "@fastify/formbody";
@@ -6,6 +9,8 @@ import fastifyStatic from "@fastify/static";
 import fastifyMultipart from "@fastify/multipart";
 import path from "path";
 import { fileURLToPath } from "url";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
 import callRoutes from "./Routes/Calls/call.js";
 import wsRoutes from "./Routes/Ws/ws.js";
 import processCallRoutes from "./Routes/CallData/processCall.js";
@@ -17,9 +22,10 @@ import pricingRoutes from "./Routes/Pricing/pricing.js";
 import phoneLineRoutes from "./Routes/PhoneLine/phoneLine.js";
 import callMinutesRoutes from "./Routes/CallMinutes/callMinutes.js";
 import pingRoutes from "./Routes/Ping/ping.js";
+import instanceRoutes from "./API/routes/instances.js";
+import apiKeyRoutes from "./API/routes/apiKeys.js";
+import { multiTenantAuth } from "./API/middleware/multiTenantAuth.js";
 import { AuthService } from "./Business/services/AuthService.js";
-import dotenv from "dotenv";
-dotenv.config();
 import mongoose from "mongoose";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,25 +38,42 @@ async function connectDB() {
     }
     await mongoose.connect(process.env.MONGO_URI);
   } catch (err) {
-    console.error("Erreur de connexion MongoDB :", err);
+    logger.error({ err: err.message }, "Erreur de connexion MongoDB");
     process.exit(1);
   }
 }
 await connectDB();
 
-// Créer l'utilisateur admin par défaut
+// audit-fix: exiger variables critiques au démarrage (pas de fallback en prod)
+const requiredEnv = [
+  { name: "JWT_SECRET", minLen: 32 },
+  { name: "API_KEY_SALT", minLen: 8 },
+];
+for (const { name, minLen } of requiredEnv) {
+  const v = process.env[name];
+  if (!v || typeof v !== "string" || v.length < minLen) {
+    logger.error(`Variable d'environnement ${name} manquante ou trop courte (min ${minLen} caractères).`);
+    process.exit(1);
+  }
+}
+
+// Créer l'utilisateur admin par défaut (désactivé en prod, voir AuthService)
 await AuthService.createDefaultAdmin();
 
 
 const fastify = Fastify();
 
+// audit-fix: restreindre CORS aux domaines front (env CORS_ORIGINS, séparés par des virgules)
+const corsOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(",").map((o) => o.trim()).filter(Boolean)
+  : [];
 await fastify.register(cors, {
-  origin: true, // Accepter toutes les origines (important pour WebSocket Twilio)
+  origin: corsOrigins.length > 0 ? corsOrigins : true,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: [
-    "Content-Type", 
-    "Authorization", 
+    "Content-Type",
+    "Authorization",
     "x-api-key",
     "Sec-WebSocket-Extensions",
     "Sec-WebSocket-Key",
@@ -59,6 +82,18 @@ await fastify.register(cors, {
 });
 
 fastify.register(fastifyFormBody);
+
+// Documentation Swagger (interne) : /docs
+await fastify.register(fastifySwagger, {
+  mode: "static",
+  specification: {
+    path: path.join(__dirname, "docs", "openapi.json"),
+  },
+});
+await fastify.register(fastifySwaggerUi, {
+  routePrefix: "/docs",
+  uiConfig: { docExpansion: "list", filter: true },
+});
 
 // Configuration multipart pour les uploads de fichiers
 fastify.register(fastifyMultipart, {
@@ -102,29 +137,33 @@ fastify.register(reservationRoutes, { prefix: "/api" });
 fastify.register(pricingRoutes, { prefix: "/api" });
 
 fastify.register(async (instance) => {
-  instance.addHook("onRequest", async (request, reply) => {
-    const apiKey = String(request.headers["x-api-key"] ?? "").trim();
-    if (!apiKey) {
-      return reply.code(401).send({ error: "Clé API manquante" });
-    }
-    if (apiKey !== process.env.X_API_KEY) {
-      return reply.code(401).send({ error: "Clé API invalide" });
-    }
-  });
+  instance.addHook("onRequest", multiTenantAuth);
 
   instance.register(processCallRoutes, { prefix: "/api" });
   instance.register(phoneLineRoutes, { prefix: "/api" });
   instance.register(callMinutesRoutes, { prefix: "/api" });
   instance.register(authRoutes, { prefix: "/api/auth" });
+  instance.register(instanceRoutes);
+  instance.register(apiKeyRoutes);
 });
 
-// Gestion globale des erreurs
+// Gestion globale des erreurs : Fastify log + Winston pour les 5xx (audit #14)
 fastify.setErrorHandler((error, request, reply) => {
-  request.log.error(error); // log complet côté serveur
+  request.log.error(error);
   const statusCode = error.statusCode || 500;
+  if (statusCode >= 500) {
+    logger.error(
+      { err: error.message, stack: error.stack, statusCode, url: request?.url, method: request?.method },
+      "Erreur 5xx"
+    );
+  }
+  const isProd = process.env.NODE_ENV === "production";
+  const message = isProd && statusCode === 500
+    ? "Erreur interne du serveur"
+    : (error.message || "Erreur interne du serveur");
   reply.code(statusCode).send({
     error: true,
-    message: error.message || "Erreur interne du serveur",
+    message,
   });
 });
 

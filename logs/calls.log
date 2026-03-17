@@ -62930,3 +62930,3451 @@
   "clientIp": "127.0.0.1",
   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
 }
+[2026-03-16 12:53:07] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected",
+    "instanceId": "inst_default"
+  }
+}
+[2026-03-16 12:53:07] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-16 12:53:07] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-16 12:53:07] [INFO] [MZ55507d...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ55507d4cdca3ed6da519b8afc1f156e2",
+      "callSid": "CA3907ee7937daac7e707b98050fd86102",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T11:53:07.375Z"
+  }
+}
+[2026-03-16 12:53:07] [INFO] [MZ55507d...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ55507d4cdca3ed6da519b8afc1f156e2",
+      "callSid": "CA3907ee7937daac7e707b98050fd86102",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T11:53:07.377Z"
+  }
+}
+[2026-03-16 12:53:08] [INFO] [MZ55507d...] [AUDIO_RECORDING_STARTED] Premier chunk audio reçu - début enregistrement
+   {
+  "rnnoiseAvailable": true
+}
+[2026-03-16 12:53:08] [ERROR] [app] [MZ55507d...] [ERROR] OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+   Contexte: {
+  "error": "OpenAI Error: Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+  "errorType": "invalid_request_error",
+  "errorCode": "invalid_model",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "invalid_model",
+    "message": "Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/openai/ErrorHandler.js:24:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/OpenAIHandler.js:128:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/connection.js:239:27)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-16 12:53:08] [INFO] [MZ55507d...] Connexion OpenAI fermée
+[2026-03-16 12:53:17] [INFO] [MZ55507d...] Événement stop détecté - fin d'appel
+[2026-03-16 12:53:17] [INFO] [MZ55507d...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-16 12:53:17] [INFO] [MZ55507d...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 62
+}
+[2026-03-16 12:53:17] [INFO] [MZ55507d...] [TRANSCRIPTION_FULL_RECEIVED] Transcription brute complète reçue
+   {
+  "length": 62,
+  "preview": "Appel démarré - StreamSid: MZ55507d4cdca3ed6da519b8afc1f156e2\n",
+  "fullContent": "Appel démarré - StreamSid: MZ55507d4cdca3ed6da519b8afc1f156e2\n"
+}
+[2026-03-16 12:53:17] [INFO] [MZ55507d...] [TRANSCRIPTION_READY_FOR_GPT] Transcription normalisée complète - prête pour GPT
+   {
+  "length": 62,
+  "fullContent": "Appel démarré - StreamSid: MZ55507d4cdca3ed6da519b8afc1f156e2\n"
+}
+[2026-03-16 12:53:17] [INFO] [MZ55507d...] Transcription courte - envoi quand même à process-call
+[2026-03-16 12:53:17] [INFO] [MZ55507d...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-16 12:53:17] [INFO] [unknown...] process-call: 1. Requete recue
+   {
+  "detail": "body keys=transcription"
+}
+[2026-03-16 12:53:17] [INFO] [unknown...] process-call: 2. Transcription presente
+   {
+  "detail": "length=61"
+}
+[2026-03-16 12:53:17] [INFO] [unknown...] process-call: 3. Appel extractCallData (GPT)
+[2026-03-16 12:53:17] [INFO] [unknown...] [TRANSCRIPTION_RAW_FOR_GPT] Transcription brute reçue pour extraction GPT
+   {
+  "transcriptionLength": 62,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ55507d4cdca3ed6da519b8afc1f156e2\n",
+  "transcriptionFull": "Appel démarré - StreamSid: MZ55507d4cdca3ed6da519b8afc1f156e2\n",
+  "promptVersion": "2.0"
+}
+[2026-03-16 12:53:18] [INFO] [MZ55507d...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "11340ms",
+  "instanceId": "inst_default"
+}
+[2026-03-16 12:53:18] [INFO] [MZ55507d...] [AUDIO_RECORDING_SUMMARY] Récapitulatif enregistrement audio
+   {
+  "totalChunks": 1,
+  "cleanedChunks": 1,
+  "rnnoiseUsed": true,
+  "duration": 11340
+}
+[2026-03-16 12:53:19] [INFO] [unknown...] [GPT_RAW_RESPONSE] Réponse brute GPT reçue
+   {
+  "responseLength": 209,
+  "responsePreview": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}",
+  "responseFull": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}"
+}
+[2026-03-16 12:53:19] [INFO] [unknown...] [JSON_EXTRACTED_COMPARISON] JSON extrait par GPT - comparaison avec transcription
+   {
+  "extractedData": "{\n  \"nom\": \"Client inconnu\",\n  \"telephone\": \"Non fourni\",\n  \"type_demande\": \"Information menu\",\n  \"services\": \"Autre\",\n  \"description\": \"Demande d'informations sur les horaires\",\n  \"statut\": \"nouveau\",\n  \"reservation\": null,\n  \"order\": null\n}",
+  "extractedDataCompact": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}",
+  "transcriptionOriginal": "Appel démarré - StreamSid: MZ55507d4cdca3ed6da519b8afc1f156e2\n",
+  "transcriptionLength": 62,
+  "extractedDataKeys": [
+    "nom",
+    "telephone",
+    "type_demande",
+    "services",
+    "description",
+    "statut",
+    "reservation",
+    "order"
+  ],
+  "hasReservation": false,
+  "hasOrder": false,
+  "hasCommandes": false,
+  "commandesCount": 0,
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Information menu"
+}
+[2026-03-16 12:53:19] [WARN] [unknown...] [VALIDATION_ERRORS] Erreurs de validation détectées
+   {
+  "validationReport": {
+    "isValid": false,
+    "errors": [
+      {
+        "field": "telephone",
+        "original": "Non fourni",
+        "reason": "Numéro invalide (doit contenir exactement 10 chiffres)"
+      }
+    ],
+    "emptyStringsConverted": [],
+    "originalPhone": "Non fourni",
+    "validatedPhone": null
+  }
+}
+[2026-03-16 12:53:19] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "2106ms"
+}
+[2026-03-16 12:53:19] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Client inconnu",
+    "telephone": "Non fourni",
+    "type_demande": "Information menu",
+    "services": "Autre",
+    "description": "Demande d'informations sur les horaires",
+    "statut": "nouveau",
+    "date": "2026-03-16T11:53:19.817Z"
+  }
+}
+[2026-03-16 12:53:19] [INFO] [unknown...] process-call: 4. Verif isUseless
+   {
+  "detail": "isUseless=true hasResa=false hasOrder=false"
+}
+[2026-03-16 12:53:19] [INFO] [unknown...] process-call: 5a. Branche ignoree -> envoi notif (ignored)
+[2026-03-16 12:53:19] [INFO] [unknown...] Appel ignoré : Aucune information utile extraite
+   {
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Information menu"
+}
+[2026-03-16 12:53:19] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA : Information menu",
+    "message": "Appel terminé – Information menu (aucune action enregistrée).",
+    "hasOrder": false,
+    "details": {
+      "callId": null,
+      "orderId": null,
+      "appointmentType": null,
+      "client": "Client inconnu",
+      "telephone": "Non fourni",
+      "type_demande": "Information menu",
+      "callTypeLabel": "Information menu",
+      "services": "Autre",
+      "description": "Demande d'informations sur les horaires",
+      "duration": null,
+      "heure": "12:53"
+    },
+    "priority": "info"
+  }
+}
+[2026-03-16 12:53:19] [WARN] Aucun client WebSocket connecte pour les notifications
+   {
+  "type": "call_completed"
+}
+[2026-03-16 12:53:19] [INFO] [MZ55507d...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "2259ms"
+}
+[2026-03-16 12:53:19] [INFO] [MZ55507d...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 200
+}
+[2026-03-16 12:53:19] [INFO] [MZ55507d...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "ignored": true,
+    "message": "Appel ignoré - Aucune information utile",
+    "reason": "Pas de nom, pas de téléphone, pas de réservation ni commande"
+  }
+}
+[2026-03-16 12:56:53] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected",
+    "instanceId": "inst_default"
+  }
+}
+[2026-03-16 12:56:53] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-16 12:56:54] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-16 12:56:54] [INFO] [MZd1308e...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZd1308e27191221575b005921a646aad5",
+      "callSid": "CAb73c4892cd6a3b0550ff984f725c3196",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T11:56:54.097Z"
+  }
+}
+[2026-03-16 12:56:54] [INFO] [MZd1308e...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZd1308e27191221575b005921a646aad5",
+      "callSid": "CAb73c4892cd6a3b0550ff984f725c3196",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T11:56:54.098Z"
+  }
+}
+[2026-03-16 12:56:54] [INFO] [MZd1308e...] [AUDIO_RECORDING_STARTED] Premier chunk audio reçu - début enregistrement
+   {
+  "rnnoiseAvailable": true
+}
+[2026-03-16 12:56:54] [ERROR] [app] [MZd1308e...] [ERROR] OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+   Contexte: {
+  "error": "OpenAI Error: Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+  "errorType": "invalid_request_error",
+  "errorCode": "invalid_model",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "invalid_model",
+    "message": "Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/openai/ErrorHandler.js:24:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/OpenAIHandler.js:128:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/connection.js:239:27)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-16 12:56:55] [INFO] [MZd1308e...] Connexion OpenAI fermée
+[2026-03-16 12:56:57] [INFO] [MZd1308e...] Événement stop détecté - fin d'appel
+[2026-03-16 12:56:57] [INFO] [MZd1308e...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-16 12:56:57] [INFO] [MZd1308e...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 62
+}
+[2026-03-16 12:56:57] [INFO] [MZd1308e...] [TRANSCRIPTION_FULL_RECEIVED] Transcription brute complète reçue
+   {
+  "length": 62,
+  "preview": "Appel démarré - StreamSid: MZd1308e27191221575b005921a646aad5\n",
+  "fullContent": "Appel démarré - StreamSid: MZd1308e27191221575b005921a646aad5\n"
+}
+[2026-03-16 12:56:57] [INFO] [MZd1308e...] [TRANSCRIPTION_READY_FOR_GPT] Transcription normalisée complète - prête pour GPT
+   {
+  "length": 62,
+  "fullContent": "Appel démarré - StreamSid: MZd1308e27191221575b005921a646aad5\n"
+}
+[2026-03-16 12:56:57] [INFO] [MZd1308e...] Transcription courte - envoi quand même à process-call
+[2026-03-16 12:56:57] [INFO] [MZd1308e...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-16 12:56:57] [INFO] [unknown...] process-call: 1. Requete recue
+   {
+  "detail": "body keys=transcription"
+}
+[2026-03-16 12:56:57] [INFO] [unknown...] process-call: 2. Transcription presente
+   {
+  "detail": "length=61"
+}
+[2026-03-16 12:56:57] [INFO] [unknown...] process-call: 3. Appel extractCallData (GPT)
+[2026-03-16 12:56:57] [INFO] [unknown...] [TRANSCRIPTION_RAW_FOR_GPT] Transcription brute reçue pour extraction GPT
+   {
+  "transcriptionLength": 62,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZd1308e27191221575b005921a646aad5\n",
+  "transcriptionFull": "Appel démarré - StreamSid: MZd1308e27191221575b005921a646aad5\n",
+  "promptVersion": "2.0"
+}
+[2026-03-16 12:56:58] [INFO] [MZd1308e...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "4376ms",
+  "instanceId": "inst_default"
+}
+[2026-03-16 12:56:58] [INFO] [MZd1308e...] [AUDIO_RECORDING_SUMMARY] Récapitulatif enregistrement audio
+   {
+  "totalChunks": 1,
+  "cleanedChunks": 1,
+  "rnnoiseUsed": true,
+  "duration": 4376
+}
+[2026-03-16 12:56:59] [INFO] [unknown...] [GPT_RAW_RESPONSE] Réponse brute GPT reçue
+   {
+  "responseLength": 209,
+  "responsePreview": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}",
+  "responseFull": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}"
+}
+[2026-03-16 12:56:59] [INFO] [unknown...] [JSON_EXTRACTED_COMPARISON] JSON extrait par GPT - comparaison avec transcription
+   {
+  "extractedData": "{\n  \"nom\": \"Client inconnu\",\n  \"telephone\": \"Non fourni\",\n  \"type_demande\": \"Information menu\",\n  \"services\": \"Autre\",\n  \"description\": \"Demande d'informations sur les horaires\",\n  \"statut\": \"nouveau\",\n  \"reservation\": null,\n  \"order\": null\n}",
+  "extractedDataCompact": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}",
+  "transcriptionOriginal": "Appel démarré - StreamSid: MZd1308e27191221575b005921a646aad5\n",
+  "transcriptionLength": 62,
+  "extractedDataKeys": [
+    "nom",
+    "telephone",
+    "type_demande",
+    "services",
+    "description",
+    "statut",
+    "reservation",
+    "order"
+  ],
+  "hasReservation": false,
+  "hasOrder": false,
+  "hasCommandes": false,
+  "commandesCount": 0,
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Information menu"
+}
+[2026-03-16 12:56:59] [WARN] [unknown...] [VALIDATION_ERRORS] Erreurs de validation détectées
+   {
+  "validationReport": {
+    "isValid": false,
+    "errors": [
+      {
+        "field": "telephone",
+        "original": "Non fourni",
+        "reason": "Numéro invalide (doit contenir exactement 10 chiffres)"
+      }
+    ],
+    "emptyStringsConverted": [],
+    "originalPhone": "Non fourni",
+    "validatedPhone": null
+  }
+}
+[2026-03-16 12:56:59] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "2418ms"
+}
+[2026-03-16 12:56:59] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Client inconnu",
+    "telephone": "Non fourni",
+    "type_demande": "Information menu",
+    "services": "Autre",
+    "description": "Demande d'informations sur les horaires",
+    "statut": "nouveau",
+    "date": "2026-03-16T11:56:59.885Z"
+  }
+}
+[2026-03-16 12:56:59] [INFO] [unknown...] process-call: 4. Verif isUseless
+   {
+  "detail": "isUseless=true hasResa=false hasOrder=false"
+}
+[2026-03-16 12:56:59] [INFO] [unknown...] process-call: 5a. Branche ignoree -> envoi notif (ignored)
+[2026-03-16 12:56:59] [INFO] [unknown...] Appel ignoré : Aucune information utile extraite
+   {
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Information menu"
+}
+[2026-03-16 12:56:59] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA : Information menu",
+    "message": "Appel terminé – Information menu (aucune action enregistrée).",
+    "hasOrder": false,
+    "details": {
+      "callId": null,
+      "orderId": null,
+      "appointmentType": null,
+      "client": "Client inconnu",
+      "telephone": "Non fourni",
+      "type_demande": "Information menu",
+      "callTypeLabel": "Information menu",
+      "services": "Autre",
+      "description": "Demande d'informations sur les horaires",
+      "duration": null,
+      "heure": "12:56"
+    },
+    "priority": "info"
+  }
+}
+[2026-03-16 12:56:59] [WARN] Aucun client WebSocket connecte pour les notifications
+   {
+  "type": "call_completed"
+}
+[2026-03-16 12:56:59] [INFO] [MZd1308e...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "2573ms"
+}
+[2026-03-16 12:56:59] [INFO] [MZd1308e...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 200
+}
+[2026-03-16 12:56:59] [INFO] [MZd1308e...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "ignored": true,
+    "message": "Appel ignoré - Aucune information utile",
+    "reason": "Pas de nom, pas de téléphone, pas de réservation ni commande"
+  }
+}
+[2026-03-16 12:58:41] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected",
+    "instanceId": "inst_default"
+  }
+}
+[2026-03-16 12:58:41] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-16 12:58:41] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-16 12:58:41] [INFO] [MZ87042f...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ87042fe1e13d826a01bec58eef157360",
+      "callSid": "CA0f7492fdef8bde00a360cbb993597d44",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T11:58:41.528Z"
+  }
+}
+[2026-03-16 12:58:41] [INFO] [MZ87042f...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ87042fe1e13d826a01bec58eef157360",
+      "callSid": "CA0f7492fdef8bde00a360cbb993597d44",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T11:58:41.528Z"
+  }
+}
+[2026-03-16 12:58:42] [INFO] [MZ87042f...] [AUDIO_RECORDING_STARTED] Premier chunk audio reçu - début enregistrement
+   {
+  "rnnoiseAvailable": true
+}
+[2026-03-16 12:58:42] [ERROR] [app] [MZ87042f...] [ERROR] OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+   Contexte: {
+  "error": "OpenAI Error: Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+  "errorType": "invalid_request_error",
+  "errorCode": "invalid_model",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "invalid_model",
+    "message": "Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/openai/ErrorHandler.js:24:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/OpenAIHandler.js:128:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/connection.js:239:27)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-16 12:58:42] [INFO] [MZ87042f...] Connexion OpenAI fermée
+[2026-03-16 12:58:46] [INFO] [MZ87042f...] Événement stop détecté - fin d'appel
+[2026-03-16 12:58:46] [INFO] [MZ87042f...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-16 12:58:46] [INFO] [MZ87042f...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 62
+}
+[2026-03-16 12:58:46] [INFO] [MZ87042f...] [TRANSCRIPTION_FULL_RECEIVED] Transcription brute complète reçue
+   {
+  "length": 62,
+  "preview": "Appel démarré - StreamSid: MZ87042fe1e13d826a01bec58eef157360\n",
+  "fullContent": "Appel démarré - StreamSid: MZ87042fe1e13d826a01bec58eef157360\n"
+}
+[2026-03-16 12:58:46] [INFO] [MZ87042f...] [TRANSCRIPTION_READY_FOR_GPT] Transcription normalisée complète - prête pour GPT
+   {
+  "length": 62,
+  "fullContent": "Appel démarré - StreamSid: MZ87042fe1e13d826a01bec58eef157360\n"
+}
+[2026-03-16 12:58:46] [INFO] [MZ87042f...] Transcription courte - envoi quand même à process-call
+[2026-03-16 12:58:46] [INFO] [MZ87042f...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-16 12:58:47] [INFO] [unknown...] process-call: 1. Requete recue
+   {
+  "detail": "body keys=transcription"
+}
+[2026-03-16 12:58:47] [INFO] [unknown...] process-call: 2. Transcription presente
+   {
+  "detail": "length=61"
+}
+[2026-03-16 12:58:47] [INFO] [unknown...] process-call: 3. Appel extractCallData (GPT)
+[2026-03-16 12:58:47] [INFO] [unknown...] [TRANSCRIPTION_RAW_FOR_GPT] Transcription brute reçue pour extraction GPT
+   {
+  "transcriptionLength": 62,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ87042fe1e13d826a01bec58eef157360\n",
+  "transcriptionFull": "Appel démarré - StreamSid: MZ87042fe1e13d826a01bec58eef157360\n",
+  "promptVersion": "2.0"
+}
+[2026-03-16 12:58:47] [INFO] [MZ87042f...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "6495ms",
+  "instanceId": "inst_default"
+}
+[2026-03-16 12:58:47] [INFO] [MZ87042f...] [AUDIO_RECORDING_SUMMARY] Récapitulatif enregistrement audio
+   {
+  "totalChunks": 1,
+  "cleanedChunks": 1,
+  "rnnoiseUsed": true,
+  "duration": 6495
+}
+[2026-03-16 12:58:49] [INFO] [unknown...] [GPT_RAW_RESPONSE] Réponse brute GPT reçue
+   {
+  "responseLength": 209,
+  "responsePreview": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}",
+  "responseFull": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}"
+}
+[2026-03-16 12:58:49] [INFO] [unknown...] [JSON_EXTRACTED_COMPARISON] JSON extrait par GPT - comparaison avec transcription
+   {
+  "extractedData": "{\n  \"nom\": \"Client inconnu\",\n  \"telephone\": \"Non fourni\",\n  \"type_demande\": \"Information menu\",\n  \"services\": \"Autre\",\n  \"description\": \"Demande d'informations sur les horaires\",\n  \"statut\": \"nouveau\",\n  \"reservation\": null,\n  \"order\": null\n}",
+  "extractedDataCompact": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}",
+  "transcriptionOriginal": "Appel démarré - StreamSid: MZ87042fe1e13d826a01bec58eef157360\n",
+  "transcriptionLength": 62,
+  "extractedDataKeys": [
+    "nom",
+    "telephone",
+    "type_demande",
+    "services",
+    "description",
+    "statut",
+    "reservation",
+    "order"
+  ],
+  "hasReservation": false,
+  "hasOrder": false,
+  "hasCommandes": false,
+  "commandesCount": 0,
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Information menu"
+}
+[2026-03-16 12:58:49] [WARN] [unknown...] [VALIDATION_ERRORS] Erreurs de validation détectées
+   {
+  "validationReport": {
+    "isValid": false,
+    "errors": [
+      {
+        "field": "telephone",
+        "original": "Non fourni",
+        "reason": "Numéro invalide (doit contenir exactement 10 chiffres)"
+      }
+    ],
+    "emptyStringsConverted": [],
+    "originalPhone": "Non fourni",
+    "validatedPhone": null
+  }
+}
+[2026-03-16 12:58:49] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "2576ms"
+}
+[2026-03-16 12:58:49] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Client inconnu",
+    "telephone": "Non fourni",
+    "type_demande": "Information menu",
+    "services": "Autre",
+    "description": "Demande d'informations sur les horaires",
+    "statut": "nouveau",
+    "date": "2026-03-16T11:58:49.599Z"
+  }
+}
+[2026-03-16 12:58:49] [INFO] [unknown...] process-call: 4. Verif isUseless
+   {
+  "detail": "isUseless=true hasResa=false hasOrder=false"
+}
+[2026-03-16 12:58:49] [INFO] [unknown...] process-call: 5a. Branche ignoree -> envoi notif (ignored)
+[2026-03-16 12:58:49] [INFO] [unknown...] Appel ignoré : Aucune information utile extraite
+   {
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Information menu"
+}
+[2026-03-16 12:58:49] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA : Information menu",
+    "message": "Appel terminé – Information menu (aucune action enregistrée).",
+    "hasOrder": false,
+    "details": {
+      "callId": null,
+      "orderId": null,
+      "appointmentType": null,
+      "client": "Client inconnu",
+      "telephone": "Non fourni",
+      "type_demande": "Information menu",
+      "callTypeLabel": "Information menu",
+      "services": "Autre",
+      "description": "Demande d'informations sur les horaires",
+      "duration": null,
+      "heure": "12:58"
+    },
+    "priority": "info"
+  }
+}
+[2026-03-16 12:58:49] [WARN] Aucun client WebSocket connecte pour les notifications
+   {
+  "type": "call_completed"
+}
+[2026-03-16 12:58:49] [INFO] [MZ87042f...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "2735ms"
+}
+[2026-03-16 12:58:49] [INFO] [MZ87042f...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 200
+}
+[2026-03-16 12:58:49] [INFO] [MZ87042f...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "ignored": true,
+    "message": "Appel ignoré - Aucune information utile",
+    "reason": "Pas de nom, pas de téléphone, pas de réservation ni commande"
+  }
+}
+[2026-03-16 13:00:59] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected",
+    "instanceId": "inst_default"
+  }
+}
+[2026-03-16 13:00:59] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-16 13:00:59] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-16 13:00:59] [INFO] [MZacde26...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZacde2698f4de751815a60a67fa893e8a",
+      "callSid": "CA64f49d57f4456663f34dfb3c09659c9b",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T12:00:59.708Z"
+  }
+}
+[2026-03-16 13:00:59] [INFO] [MZacde26...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZacde2698f4de751815a60a67fa893e8a",
+      "callSid": "CA64f49d57f4456663f34dfb3c09659c9b",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T12:00:59.709Z"
+  }
+}
+[2026-03-16 13:01:00] [INFO] [MZacde26...] [AUDIO_RECORDING_STARTED] Premier chunk audio reçu - début enregistrement
+   {
+  "rnnoiseAvailable": true
+}
+[2026-03-16 13:01:00] [ERROR] [app] [MZacde26...] [ERROR] OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+   Contexte: {
+  "error": "OpenAI Error: Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+  "errorType": "invalid_request_error",
+  "errorCode": "invalid_model",
+  "errorDetails": {
+    "type": "invalid_request_error",
+    "code": "invalid_model",
+    "message": "Model \"gpt-4o-realtime-mini\" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.",
+    "param": null,
+    "event_id": null
+  }
+}
+   Stack: Error: OpenAI Error: Model "gpt-4o-realtime-mini" is not supported in realtime mode. See https://platform.openai.com/docs/models for a list of supported models.
+    at ErrorHandler.handleError (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/openai/ErrorHandler.js:24:43)
+    at OpenAIHandler.handleMessage (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/handlers/OpenAIHandler.js:128:27)
+    at WebSocket.<anonymous> (file:///C:/Users/axelc/OneDrive/Documents/Projects/SmartCRM/backend/Websocket/connection.js:239:27)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:596:14)
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\receiver.js:530:12
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:309:9
+    at C:\Users\axelc\OneDrive\Documents\Projects\SmartCRM\backend\node_modules\.pnpm\ws@8.18.3\node_modules\ws\lib\permessage-deflate.js:392:7
+[2026-03-16 13:01:00] [INFO] [MZacde26...] Connexion OpenAI fermée
+[2026-03-16 13:01:02] [INFO] [MZacde26...] Événement stop détecté - fin d'appel
+[2026-03-16 13:01:02] [INFO] [MZacde26...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-16 13:01:02] [INFO] [MZacde26...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 62
+}
+[2026-03-16 13:01:02] [INFO] [MZacde26...] [TRANSCRIPTION_FULL_RECEIVED] Transcription brute complète reçue
+   {
+  "length": 62,
+  "preview": "Appel démarré - StreamSid: MZacde2698f4de751815a60a67fa893e8a\n",
+  "fullContent": "Appel démarré - StreamSid: MZacde2698f4de751815a60a67fa893e8a\n"
+}
+[2026-03-16 13:01:02] [INFO] [MZacde26...] [TRANSCRIPTION_READY_FOR_GPT] Transcription normalisée complète - prête pour GPT
+   {
+  "length": 62,
+  "fullContent": "Appel démarré - StreamSid: MZacde2698f4de751815a60a67fa893e8a\n"
+}
+[2026-03-16 13:01:02] [INFO] [MZacde26...] Transcription courte - envoi quand même à process-call
+[2026-03-16 13:01:02] [INFO] [MZacde26...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-16 13:01:02] [INFO] [unknown...] process-call: 1. Requete recue
+   {
+  "detail": "body keys=transcription"
+}
+[2026-03-16 13:01:02] [INFO] [unknown...] process-call: 2. Transcription presente
+   {
+  "detail": "length=61"
+}
+[2026-03-16 13:01:02] [INFO] [unknown...] process-call: 3. Appel extractCallData (GPT)
+[2026-03-16 13:01:02] [INFO] [unknown...] [TRANSCRIPTION_RAW_FOR_GPT] Transcription brute reçue pour extraction GPT
+   {
+  "transcriptionLength": 62,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZacde2698f4de751815a60a67fa893e8a\n",
+  "transcriptionFull": "Appel démarré - StreamSid: MZacde2698f4de751815a60a67fa893e8a\n",
+  "promptVersion": "2.0"
+}
+[2026-03-16 13:01:03] [INFO] [MZacde26...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "3709ms",
+  "instanceId": "inst_default"
+}
+[2026-03-16 13:01:03] [INFO] [MZacde26...] [AUDIO_RECORDING_SUMMARY] Récapitulatif enregistrement audio
+   {
+  "totalChunks": 1,
+  "cleanedChunks": 1,
+  "rnnoiseUsed": true,
+  "duration": 3709
+}
+[2026-03-16 13:01:04] [INFO] [unknown...] [GPT_RAW_RESPONSE] Réponse brute GPT reçue
+   {
+  "responseLength": 209,
+  "responsePreview": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}",
+  "responseFull": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}"
+}
+[2026-03-16 13:01:04] [INFO] [unknown...] [JSON_EXTRACTED_COMPARISON] JSON extrait par GPT - comparaison avec transcription
+   {
+  "extractedData": "{\n  \"nom\": \"Client inconnu\",\n  \"telephone\": \"Non fourni\",\n  \"type_demande\": \"Information menu\",\n  \"services\": \"Autre\",\n  \"description\": \"Demande d'informations sur les horaires\",\n  \"statut\": \"nouveau\",\n  \"reservation\": null,\n  \"order\": null\n}",
+  "extractedDataCompact": "{\"nom\":\"Client inconnu\",\"telephone\":\"Non fourni\",\"type_demande\":\"Information menu\",\"services\":\"Autre\",\"description\":\"Demande d'informations sur les horaires\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":null}",
+  "transcriptionOriginal": "Appel démarré - StreamSid: MZacde2698f4de751815a60a67fa893e8a\n",
+  "transcriptionLength": 62,
+  "extractedDataKeys": [
+    "nom",
+    "telephone",
+    "type_demande",
+    "services",
+    "description",
+    "statut",
+    "reservation",
+    "order"
+  ],
+  "hasReservation": false,
+  "hasOrder": false,
+  "hasCommandes": false,
+  "commandesCount": 0,
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Information menu"
+}
+[2026-03-16 13:01:04] [WARN] [unknown...] [VALIDATION_ERRORS] Erreurs de validation détectées
+   {
+  "validationReport": {
+    "isValid": false,
+    "errors": [
+      {
+        "field": "telephone",
+        "original": "Non fourni",
+        "reason": "Numéro invalide (doit contenir exactement 10 chiffres)"
+      }
+    ],
+    "emptyStringsConverted": [],
+    "originalPhone": "Non fourni",
+    "validatedPhone": null
+  }
+}
+[2026-03-16 13:01:04] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "2515ms"
+}
+[2026-03-16 13:01:04] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Client inconnu",
+    "telephone": "Non fourni",
+    "type_demande": "Information menu",
+    "services": "Autre",
+    "description": "Demande d'informations sur les horaires",
+    "statut": "nouveau",
+    "date": "2026-03-16T12:01:04.763Z"
+  }
+}
+[2026-03-16 13:01:04] [INFO] [unknown...] process-call: 4. Verif isUseless
+   {
+  "detail": "isUseless=true hasResa=false hasOrder=false"
+}
+[2026-03-16 13:01:04] [INFO] [unknown...] process-call: 5a. Branche ignoree -> envoi notif (ignored)
+[2026-03-16 13:01:04] [INFO] [unknown...] Appel ignoré : Aucune information utile extraite
+   {
+  "nom": "Client inconnu",
+  "telephone": "Non fourni",
+  "type_demande": "Information menu"
+}
+[2026-03-16 13:01:04] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA : Information menu",
+    "message": "Appel terminé – Information menu (aucune action enregistrée).",
+    "hasOrder": false,
+    "details": {
+      "callId": null,
+      "orderId": null,
+      "appointmentType": null,
+      "client": "Client inconnu",
+      "telephone": "Non fourni",
+      "type_demande": "Information menu",
+      "callTypeLabel": "Information menu",
+      "services": "Autre",
+      "description": "Demande d'informations sur les horaires",
+      "duration": null,
+      "heure": "13:01"
+    },
+    "priority": "info"
+  }
+}
+[2026-03-16 13:01:04] [WARN] Aucun client WebSocket connecte pour les notifications
+   {
+  "type": "call_completed"
+}
+[2026-03-16 13:01:04] [INFO] [MZacde26...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "2671ms"
+}
+[2026-03-16 13:01:04] [INFO] [MZacde26...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 200
+}
+[2026-03-16 13:01:04] [INFO] [MZacde26...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "ignored": true,
+    "message": "Appel ignoré - Aucune information utile",
+    "reason": "Pas de nom, pas de téléphone, pas de réservation ni commande"
+  }
+}
+[2026-03-16 13:03:47] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected",
+    "instanceId": "inst_default"
+  }
+}
+[2026-03-16 13:03:47] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-16 13:03:47] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-16 13:03:47] [INFO] [MZ962b82...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ962b82507e815a2b252384291f6a554e",
+      "callSid": "CA64f70ee6b0e4a12cf6d1a6520f2a2c33",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T12:03:47.566Z"
+  }
+}
+[2026-03-16 13:03:47] [INFO] [MZ962b82...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ962b82507e815a2b252384291f6a554e",
+      "callSid": "CA64f70ee6b0e4a12cf6d1a6520f2a2c33",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T12:03:47.567Z"
+  }
+}
+[2026-03-16 13:03:48] [INFO] [MZ962b82...] [AUDIO_RECORDING_STARTED] Premier chunk audio reçu - début enregistrement
+   {
+  "rnnoiseAvailable": true
+}
+[2026-03-16 13:03:48] [INFO] [MZ962b82...] Envoi de la salutation automatique
+[2026-03-16 13:03:49] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-16 13:03:56] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D'accord, vous souhaitez passer une commande à emporter. Quel produit voulez-vous commander ?..."
+  }
+}
+[2026-03-16 13:03:56] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-16 13:03:57] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Oui, bonjour. Je vous appelle pour claver une comm...",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:03:57] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bien, quels produits exactement ? Dites-moi ce que vous souhaitez...."
+  }
+}
+[2026-03-16 13:04:05] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Écoutez, il me faudrait un menu USA Beef Burger....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:04:05] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, quelle boisson avec ce menu ?..."
+  }
+}
+[2026-03-16 13:04:10] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "À coca, chérie....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:04:11] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, un Menu USA Beef Burger avec un Coca Cherry. C'est bien ça ?..."
+  }
+}
+[2026-03-16 13:04:17] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait. Quel est votre nom ?..."
+  }
+}
+[2026-03-16 13:04:17] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Exactement....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:04:21] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Mettez au nom d'Axel....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:04:21] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Axel, c'est noté. Quel est votre numéro de téléphone ?..."
+  }
+}
+[2026-03-16 13:04:29] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "C'est bien le 0 7 67 57 18 24 ?..."
+  }
+}
+[2026-03-16 13:04:29] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "07 67 57 18 24....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:04:35] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Oui, c'est ça exactement....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:04:36] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, c’est noté. Nous avons donc : Menu USA Beef Burger avec Coca Cherry, pour 13h30. C’est bien..."
+  }
+}
+[2026-03-16 13:04:45] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-16 13:04:46] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Euh... j'avais pas d'hileur par contre. Non....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:04:49] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D’accord, pour 16h45, c’est bien noté. C’est confirmé ?..."
+  }
+}
+[2026-03-16 13:04:49] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Écoutez, je passe pour 13h45, c'est bon ?...",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:04:52] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-16 13:04:54] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Ciao....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:04:55] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien. Quel est votre nom, je vous le confirme ensuite...."
+  }
+}
+[2026-03-16 13:04:55] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Zero heures trente-seize....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:05:01] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Merci, Axel. Quel est votre numéro de téléphone, s’il vous plaît ?..."
+  }
+}
+[2026-03-16 13:05:01] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "C'est axé....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:05:09] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "07 67 57 18 24....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:05:09] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "C'est bien le 0 7 67 57 18 24 ?..."
+  }
+}
+[2026-03-16 13:05:14] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Oui ?...",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:05:15] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, c'est noté. Pouvez-vous me confirmer le numéro : 0 7 67 57 18 24 ?..."
+  }
+}
+[2026-03-16 13:05:28] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Ouais, c'est ça....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:05:28] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, c'est correct. Merci Axel. La commande est bien enregistrée...."
+  }
+}
+[2026-03-16 13:05:34] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Voulez-vous ajouter autre chose ? Sinon, la commande est confirmée pour 16h45...."
+  }
+}
+[2026-03-16 13:05:37] [INFO] [MZ962b82...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Non, c'est......",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:05:37] [INFO] [MZ962b82...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D'accord, c'est noté. Commande finalisée. Merci Axel...."
+  }
+}
+[2026-03-16 13:05:42] [INFO] [MZ962b82...] Événement stop détecté - fin d'appel
+[2026-03-16 13:05:42] [INFO] [MZ962b82...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-16 13:05:42] [INFO] [MZ962b82...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 1088
+}
+[2026-03-16 13:05:42] [INFO] [MZ962b82...] [TRANSCRIPTION_FULL_RECEIVED] Transcription brute complète reçue
+   {
+  "length": 1088,
+  "preview": "Appel démarré - StreamSid: MZ962b82507e815a2b252384291f6a554e\nBonjour, Tasty Crousty, je vous écoute.D'accord, vous souhaitez passer une commande à emporter. Quel produit voulez-vous commander ?\nAssistant: Bien, quels produits exactement ? Dites-moi ce que vous souhaitez.Très bien, quelle boisson av...",
+  "fullContent": "Appel démarré - StreamSid: MZ962b82507e815a2b252384291f6a554e\nBonjour, Tasty Crousty, je vous écoute.D'accord, vous souhaitez passer une commande à emporter. Quel produit voulez-vous commander ?\nAssistant: Bien, quels produits exactement ? Dites-moi ce que vous souhaitez.Très bien, quelle boisson avec ce menu ?Parfait, un Menu USA Beef Burger avec un Coca Cherry. C'est bien ça ?Parfait. Quel est votre nom ?Axel, c'est noté. Quel est votre numéro de téléphone ?C'est bien le 0 7 67 57 18 24 ?Parfait, c’est noté. Nous avons donc : Menu USA Beef Burger avec Coca Cherry, pour 13h30. C’est bien ça ?D’accord, pour 16h45, c’est bien noté. C’est confirmé ?Très bien. Quel est votre nom, je vous le confirme ensuite.Merci, Axel. Quel est votre numéro de téléphone, s’il vous plaît ?C'est bien le 0 7 67 57 18 24 ?Très bien, c'est noté. Pouvez-vous me confirmer le numéro : 0 7 67 57 18 24 ?Parfait, c'est correct. Merci Axel. La commande est bien enregistrée.Voulez-vous ajouter autre chose ? Sinon, la commande est confirmée pour 16h45.D'accord, c'est noté. Commande finalisée. Merci Axel."
+}
+[2026-03-16 13:05:42] [INFO] [MZ962b82...] [TRANSCRIPTION_NORMALIZED] Transcription normalisée
+   {
+  "originalLength": 1088,
+  "normalizedLength": 1079,
+  "preview": "Appel démarré - StreamSid: MZ962b82507e815a2b252384291f6a554e\nBonjour, Tasty Crousty, je vous écoute.D'accord, vous souhaitez passer 1 commande à emporter. Quel produit voulez-vous commander ?\nAssistant: Bien, quels produits exactement ? Dites-moi ce que vous souhaitez.Très bien, quelle boisson avec...",
+  "changes": {
+    "original": "Appel démarré - StreamSid: MZ962b82507e815a2b252384291f6a554e\nBonjour, Tasty Crousty, je vous écoute.D'accord, vous souhaitez passer une commande à emporter. Quel produit voulez-vous commander ?\nAssis",
+    "normalized": "Appel démarré - StreamSid: MZ962b82507e815a2b252384291f6a554e\nBonjour, Tasty Crousty, je vous écoute.D'accord, vous souhaitez passer 1 commande à emporter. Quel produit voulez-vous commander ?\nAssista"
+  }
+}
+[2026-03-16 13:05:42] [INFO] [MZ962b82...] [TRANSCRIPTION_READY_FOR_GPT] Transcription normalisée complète - prête pour GPT
+   {
+  "length": 1079,
+  "fullContent": "Appel démarré - StreamSid: MZ962b82507e815a2b252384291f6a554e\nBonjour, Tasty Crousty, je vous écoute.D'accord, vous souhaitez passer 1 commande à emporter. Quel produit voulez-vous commander ?\nAssistant: Bien, quels produits exactement ? Dites-moi ce que vous souhaitez.Très bien, quelle boisson avec ce menu ?Parfait, 1 Menu USA Beef Burger avec 1 Coca-Cola Cherry. C'est bien ça ?Parfait. Quel est votre nom ?Axel, c'est noté. Quel est votre numéro de téléphone ?C'est bien le 0 7 67 57 18 24 ?Parfait, c’est noté. Nous avons donc : Menu USA Beef Burger avec Coca-Cola Cherry, 13h30. C’est bien ça ?D’accord, 16h45, c’est bien noté. C’est confirmé ?Très bien. Quel est votre nom, je vous le confirme ensuite.Merci, Axel. Quel est votre numéro de téléphone, s’il vous plaît ?C'est bien le 0 7 67 57 18 24 ?Très bien, c'est noté. Pouvez-vous me confirmer le numéro : 0 7 67 57 18 24 ?Parfait, c'est correct. Merci Axel. La commande est bien enregistrée.Voulez-vous ajouter autre chose ? Sinon, la commande est confirmée 16h45.D'accord, c'est noté. Commande finalisée. Merci Axel."
+}
+[2026-03-16 13:05:42] [INFO] [MZ962b82...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-16 13:05:42] [INFO] [unknown...] process-call: 1. Requete recue
+   {
+  "detail": "body keys=transcription"
+}
+[2026-03-16 13:05:42] [INFO] [unknown...] process-call: 2. Transcription presente
+   {
+  "detail": "length=1079"
+}
+[2026-03-16 13:05:42] [INFO] [unknown...] process-call: 3. Appel extractCallData (GPT)
+[2026-03-16 13:05:42] [INFO] [unknown...] [TRANSCRIPTION_RAW_FOR_GPT] Transcription brute reçue pour extraction GPT
+   {
+  "transcriptionLength": 1079,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ962b82507e815a2b252384291f6a554e\nBonjour, Tasty Crousty, je vous écoute.D'accord, vous souhaitez passer 1 commande à emporter. Quel produit voulez-vous commander ?\nAssistant: Bien, quels produits exactement ? Dites-moi ce que vous souhaitez.Très bien, quelle boisson avec ce menu ?Parfait, 1 Menu USA Beef Burger avec 1 Coca-Cola Cherry. C'est bien ça ?Parfait. Quel est votre nom ?Axel, c'est noté. Quel est votre numéro de téléphone ?C'est bien le 0 7 67 57 18 24 ?Parf...",
+  "transcriptionFull": "Appel démarré - StreamSid: MZ962b82507e815a2b252384291f6a554e\nBonjour, Tasty Crousty, je vous écoute.D'accord, vous souhaitez passer 1 commande à emporter. Quel produit voulez-vous commander ?\nAssistant: Bien, quels produits exactement ? Dites-moi ce que vous souhaitez.Très bien, quelle boisson avec ce menu ?Parfait, 1 Menu USA Beef Burger avec 1 Coca-Cola Cherry. C'est bien ça ?Parfait. Quel est votre nom ?Axel, c'est noté. Quel est votre numéro de téléphone ?C'est bien le 0 7 67 57 18 24 ?Parfait, c’est noté. Nous avons donc : Menu USA Beef Burger avec Coca-Cola Cherry, 13h30. C’est bien ça ?D’accord, 16h45, c’est bien noté. C’est confirmé ?Très bien. Quel est votre nom, je vous le confirme ensuite.Merci, Axel. Quel est votre numéro de téléphone, s’il vous plaît ?C'est bien le 0 7 67 57 18 24 ?Très bien, c'est noté. Pouvez-vous me confirmer le numéro : 0 7 67 57 18 24 ?Parfait, c'est correct. Merci Axel. La commande est bien enregistrée.Voulez-vous ajouter autre chose ? Sinon, la commande est confirmée 16h45.D'accord, c'est noté. Commande finalisée. Merci Axel.",
+  "promptVersion": "2.0"
+}
+[2026-03-16 13:05:43] [INFO] [MZ962b82...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "116080ms",
+  "instanceId": "inst_default"
+}
+[2026-03-16 13:05:43] [INFO] [MZ962b82...] [AUDIO_RECORDING_SUMMARY] Récapitulatif enregistrement audio
+   {
+  "totalChunks": 5722,
+  "cleanedChunks": 5722,
+  "rnnoiseUsed": true,
+  "duration": 116080
+}
+[2026-03-16 13:05:44] [INFO] [MZ962b82...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-16 13:05:44] [INFO] [MZ962b82...] Connexion OpenAI fermée
+[2026-03-16 13:05:50] [INFO] [unknown...] [GPT_RAW_RESPONSE] Réponse brute GPT reçue
+   {
+  "responseLength": 670,
+  "responsePreview": "{\n  \"nom\": \"Axel\",\n  \"telephone\": \"07 67 57 18 24\",\n  \"type_demande\": \"Commande à emporter\",\n  \"services\": \"Menus\",\n  \"description\": \"Commande d'un Menu USA Beef Burger avec Coca-Cola Cherry pour 16h45\",\n  \"statut\": \"nouveau\",\n  \"reservation\": null,\n  \"order\": {\n    \"nom\": \"Axel\",\n    \"telephone\": \"07 67 57 18 24\",\n    \"date\": \"ASAP\",\n    \"heure\": \"16:45\",\n    \"description\": \"\",\n    \"statut\": \"confirme\",\n    \"commandes\": [\n      {\n        \"nom\": \"Menu USA Beef Burger\",\n        \"categorie\": \"Menu...",
+  "responseFull": "{\n  \"nom\": \"Axel\",\n  \"telephone\": \"07 67 57 18 24\",\n  \"type_demande\": \"Commande à emporter\",\n  \"services\": \"Menus\",\n  \"description\": \"Commande d'un Menu USA Beef Burger avec Coca-Cola Cherry pour 16h45\",\n  \"statut\": \"nouveau\",\n  \"reservation\": null,\n  \"order\": {\n    \"nom\": \"Axel\",\n    \"telephone\": \"07 67 57 18 24\",\n    \"date\": \"ASAP\",\n    \"heure\": \"16:45\",\n    \"description\": \"\",\n    \"statut\": \"confirme\",\n    \"commandes\": [\n      {\n        \"nom\": \"Menu USA Beef Burger\",\n        \"categorie\": \"Menus\",\n        \"quantite\": 1,\n        \"prixUnitaire\": 15.00,\n        \"composition\": \"\",\n        \"options\": {\n          \"boisson\": \"Coca Cherry\"\n        }\n      }\n    ]\n  }\n}"
+}
+[2026-03-16 13:05:50] [INFO] [unknown...] [JSON_EXTRACTED_COMPARISON] JSON extrait par GPT - comparaison avec transcription
+   {
+  "extractedData": "{\n  \"nom\": \"Axel\",\n  \"telephone\": \"07 67 57 18 24\",\n  \"type_demande\": \"Commande à emporter\",\n  \"services\": \"Menus\",\n  \"description\": \"Commande d'un Menu USA Beef Burger avec Coca-Cola Cherry pour 16h45\",\n  \"statut\": \"nouveau\",\n  \"reservation\": null,\n  \"order\": {\n    \"nom\": \"Axel\",\n    \"telephone\": \"07 67 57 18 24\",\n    \"date\": \"ASAP\",\n    \"heure\": \"16:45\",\n    \"description\": \"\",\n    \"statut\": \"confirme\",\n    \"commandes\": [\n      {\n        \"nom\": \"Menu USA Beef Burger\",\n        \"categorie\": \"Menus\",\n        \"quantite\": 1,\n        \"prixUnitaire\": 15,\n        \"composition\": \"\",\n        \"options\": {\n          \"boisson\": \"Coca Cherry\"\n        }\n      }\n    ]\n  }\n}",
+  "extractedDataCompact": "{\"nom\":\"Axel\",\"telephone\":\"07 67 57 18 24\",\"type_demande\":\"Commande à emporter\",\"services\":\"Menus\",\"description\":\"Commande d'un Menu USA Beef Burger avec Coca-Cola Cherry pour 16h45\",\"statut\":\"nouveau\",\"reservation\":null,\"order\":{\"nom\":\"Axel\",\"telephone\":\"07 67 57 18 24\",\"date\":\"ASAP\",\"heure\":\"16:45\",\"description\":\"\",\"statut\":\"confirme\",\"commandes\":[{\"nom\":\"Menu USA Beef Burger\",\"categorie\":\"Menus\",\"quantite\":1,\"prixUnitaire\":15,\"composition\":\"\",\"options\":{\"boisson\":\"Coca Cherry\"}}]}}",
+  "transcriptionOriginal": "Appel démarré - StreamSid: MZ962b82507e815a2b252384291f6a554e\nBonjour, Tasty Crousty, je vous écoute.D'accord, vous souhaitez passer 1 commande à emporter. Quel produit voulez-vous commander ?\nAssistant: Bien, quels produits exactement ? Dites-moi ce que vous souhaitez.Très bien, quelle boisson avec ce menu ?Parfait, 1 Menu USA Beef Burger avec 1 Coca-Cola Cherry. C'est bien ça ?Parfait. Quel est votre nom ?Axel, c'est noté. Quel est votre numéro de téléphone ?C'est bien le 0 7 67 57 18 24 ?Parfait, c’est noté. Nous avons donc : Menu USA Beef Burger avec Coca-Cola Cherry, 13h30. C’est bien ça ?D’accord, 16h45, c’est bien noté. C’est confirmé ?Très bien. Quel est votre nom, je vous le confirme ensuite.Merci, Axel. Quel est votre numéro de téléphone, s’il vous plaît ?C'est bien le 0 7 67 57 18 24 ?Très bien, c'est noté. Pouvez-vous me confirmer le numéro : 0 7 67 57 18 24 ?Parfait, c'est correct. Merci Axel. La commande est bien enregistrée.Voulez-vous ajouter autre chose ? Sinon, la commande est confirmée 16h45.D'accord, c'est noté. Commande finalisée. Merci Axel.",
+  "transcriptionLength": 1079,
+  "extractedDataKeys": [
+    "nom",
+    "telephone",
+    "type_demande",
+    "services",
+    "description",
+    "statut",
+    "reservation",
+    "order"
+  ],
+  "hasReservation": false,
+  "hasOrder": true,
+  "hasCommandes": true,
+  "commandesCount": 1,
+  "nom": "Axel",
+  "telephone": "07 67 57 18 24",
+  "type_demande": "Commande à emporter"
+}
+[2026-03-16 13:05:50] [WARN] [unknown...] [PRODUCT_NOT_FOUND] Produit non trouvé dans le catalogue
+   {
+  "nomProduit": "Menu USA Beef Burger",
+  "categorie": "Menus"
+}
+[2026-03-16 13:05:50] [WARN] [unknown...] [PRODUCT_VALIDATION_ERRORS] Erreurs de validation produits
+   {
+  "errors": [
+    {
+      "produit": "Menu USA Beef Burger",
+      "categorie": "Menus",
+      "errors": [
+        "Produit \"Menu USA Beef Burger\" non trouvé dans la catégorie \"Menus\""
+      ]
+    }
+  ]
+}
+[2026-03-16 13:05:50] [WARN] [unknown...] [TIME_OUTSIDE_HOURS] Heure hors horaires d'ouverture
+   {
+  "heure": "16:45",
+  "date": "ASAP",
+  "reason": "Restaurant fermé le lundi",
+  "adjustedTime": null
+}
+[2026-03-16 13:05:50] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "8129ms"
+}
+[2026-03-16 13:05:50] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Axel",
+    "telephone": "0767571824",
+    "type_demande": "Commande à emporter",
+    "services": "Menus",
+    "description": "Commande d'un Menu USA Beef Burger avec Coca-Cola Cherry pour 16h45",
+    "statut": "nouveau",
+    "date": "2026-03-16T12:05:50.729Z"
+  }
+}
+[2026-03-16 13:05:50] [INFO] [unknown...] process-call: 4. Verif isUseless
+   {
+  "detail": "isUseless=false hasResa=false hasOrder=false"
+}
+[2026-03-16 13:05:50] [INFO] [unknown...] process-call: 5b. Branche traitement -> ProcessCallService.process
+[2026-03-16 13:05:50] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "ProcessCallService.process"
+}
+[2026-03-16 13:05:50] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "1ms"
+}
+[2026-03-16 13:05:50] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-16 13:05:50] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "8140ms"
+}
+[2026-03-16 13:05:50] [INFO] [unknown...] process-call: 6. Succes -> envoi notif (processed)
+   {
+  "detail": "orderId=—"
+}
+[2026-03-16 13:05:50] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA : Commande à emporter",
+    "message": "Appel terminé – Commande à emporter (aucune action enregistrée).",
+    "hasOrder": false,
+    "details": {
+      "callId": null,
+      "orderId": null,
+      "appointmentType": null,
+      "client": "Axel",
+      "telephone": "0767571824",
+      "type_demande": "Commande à emporter",
+      "callTypeLabel": "Commande à emporter",
+      "services": "Menus",
+      "description": "Commande d'un Menu USA Beef Burger avec Coca-Cola Cherry pour 16h45",
+      "duration": null,
+      "heure": "13:05"
+    },
+    "priority": "info"
+  }
+}
+[2026-03-16 13:05:50] [WARN] Aucun client WebSocket connecte pour les notifications
+   {
+  "type": "call_completed"
+}
+[2026-03-16 13:05:50] [INFO] [unknown...] process-call: 7. Reponse 201 envoyee
+[2026-03-16 13:05:50] [INFO] [MZ962b82...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "8284ms"
+}
+[2026-03-16 13:05:50] [INFO] [MZ962b82...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-16 13:05:50] [INFO] [MZ962b82...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité : réservation et/ou commande créée(s)",
+    "data": {
+      "reservation": null,
+      "order": null
+    }
+  }
+}
+[2026-03-16 13:05:57] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 13:05:57] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 13:05:57] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 13:15:57] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 13:15:57] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 13:15:57] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 13:25:39] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected",
+    "instanceId": "inst_default"
+  }
+}
+[2026-03-16 13:25:39] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-16 13:25:40] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-16 13:25:40] [INFO] [MZ046d52...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ046d52dc2ba45153fbe55d6fab0f980f",
+      "callSid": "CAc28d59c1c7a5d4e3a0268f4f57dc764b",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T12:25:40.053Z"
+  }
+}
+[2026-03-16 13:25:40] [INFO] [MZ046d52...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ046d52dc2ba45153fbe55d6fab0f980f",
+      "callSid": "CAc28d59c1c7a5d4e3a0268f4f57dc764b",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T12:25:40.054Z"
+  }
+}
+[2026-03-16 13:25:40] [INFO] [MZ046d52...] [AUDIO_RECORDING_STARTED] Premier chunk audio reçu - début enregistrement
+   {
+  "rnnoiseAvailable": true
+}
+[2026-03-16 13:25:41] [INFO] [MZ046d52...] Envoi de la salutation automatique
+[2026-03-16 13:25:41] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-16 13:25:42] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, commande ou réservation ?..."
+  }
+}
+[2026-03-16 13:25:52] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Bonjour. Écoutez, il me faudrait une réservation p...",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:25:52] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, pour combien de personnes et pour quel service : midi ou soir ?..."
+  }
+}
+[2026-03-16 13:26:02] [INFO] [MZ046d52...] Function call completed (raw payload)
+   {
+  "name": "check_availability",
+  "callId": "call_GJ0dt1JtA5VSXUWJ",
+  "rawArguments": "{  \n  \"date\": \"2026-03-17\"\n}"
+}
+[2026-03-16 13:26:02] [INFO] [MZ046d52...] Function call arguments parsed
+   {
+  "functionName": "check_availability",
+  "parsedArgs": "{\n  \"date\": \"2026-03-17\"\n}",
+  "commandesCount": 0,
+  "hasCommandes": false
+}
+[2026-03-16 13:26:02] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-16 13:26:03] [INFO] [MZ046d52...] Function call result ready, sending to OpenAI
+   {
+  "functionName": "check_availability",
+  "callId": "call_GJ0dt1JtA5VSXUWJ",
+  "resultPreview": "{\"success\":true,\"date\":\"2026-03-17\",\"slots\":[\"11:00\",\"11:30\",\"12:00\",\"12:30\",\"13:00\",\"13:30\",\"18:00\",\"18:30\",\"19:00\",\"19:30\",\"20:00\",\"20:30\",\"21:00\",\"21:30\",\"22:00\",\"22:30\"],\"message\":\"Disponibilités récupérées\",\"remainingCoversMidi\":60,\"remainingCoversSoir\":60}"
+}
+[2026-03-16 13:26:03] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Alors, ça fait pour quatre personnes, demain midi,...",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:26:04] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, pour midi, il reste de la place pour 60 personnes. Est-ce que 12h, c’est parfait pour vou..."
+  }
+}
+[2026-03-16 13:26:14] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Oui, bah oui, de toute façon, on sera là, allez, e...",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:26:14] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D'accord, je note 12h. Pour 4 personnes, c’est bien ça ?..."
+  }
+}
+[2026-03-16 13:26:16] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Merci pour la confirmation. Quel est votre nom, s’il vous plaît ?..."
+  }
+}
+[2026-03-16 13:26:22] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Alors, mettez vos noms d'accès....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:26:23] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D’accord, Axel. Quel est votre numéro de téléphone ?..."
+  }
+}
+[2026-03-16 13:26:31] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-16 13:26:31] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Alors, le 06 72 88 62 55....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:26:33] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, c'est bien le 06 72 48 62 55 ?..."
+  }
+}
+[2026-03-16 13:26:38] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Merci, c'est correct. Nous avons donc..."
+  }
+}
+[2026-03-16 13:26:40] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Exactement....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:26:41] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, je confirme : réservation pour 4 personnes demain à midi. Nom : Axel. Numéro : 06 72 48 62 ..."
+  }
+}
+[2026-03-16 13:26:49] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-16 13:26:49] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Non....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:26:52] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-16 13:26:52] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Non, c'est 06 72 88......",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:26:55] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "92, 50....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:26:55] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D’accord, je vais répéter. C'est bien le 0 6 72 88 62 55 ?..."
+  }
+}
+[2026-03-16 13:27:04] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-16 13:27:05] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Non, pas du tout. 06, 72, 88....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:27:07] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Six-soixante-deux......",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:27:07] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Déjà streamé"
+  }
+}
+[2026-03-16 13:27:07] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Ça concède....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:27:09] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Merci pour la précision. Je vais noter : 0 6 72 88 62 55. C'est bien correct ?..."
+  }
+}
+[2026-03-16 13:27:16] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Oui, voilà....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:27:18] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait. Donc, réservation pour demain à midi, 4 personnes, nom Axel, numéro 06 72 88 62 55. C’est b..."
+  }
+}
+[2026-03-16 13:27:20] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Merci pour votre confirmation. L'appel est en cours de finalisation. Si vous avez besoin d'autre cho..."
+  }
+}
+[2026-03-16 13:27:27] [INFO] [MZ046d52...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Merci à vous....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:27:28] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Avec plaisir, bonjour et à bientôt chez Tasty Crousty !..."
+  }
+}
+[2026-03-16 13:27:31] [INFO] [MZ046d52...] Événement stop détecté - fin d'appel
+[2026-03-16 13:27:31] [INFO] [MZ046d52...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-16 13:27:31] [INFO] [MZ046d52...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 1225
+}
+[2026-03-16 13:27:31] [INFO] [MZ046d52...] [TRANSCRIPTION_FULL_RECEIVED] Transcription brute complète reçue
+   {
+  "length": 1225,
+  "preview": "Appel démarré - StreamSid: MZ046d52dc2ba45153fbe55d6fab0f980f\nBonjour, Tasty Crousty, je vous écoute.\nAssistant: Bonjour, commande ou réservation ?Très bien, pour combien de personnes et pour quel service : midi ou soir ?\nAssistant: Très bien, pour midi, il reste de la place pour 60 personnes. Est-c...",
+  "fullContent": "Appel démarré - StreamSid: MZ046d52dc2ba45153fbe55d6fab0f980f\nBonjour, Tasty Crousty, je vous écoute.\nAssistant: Bonjour, commande ou réservation ?Très bien, pour combien de personnes et pour quel service : midi ou soir ?\nAssistant: Très bien, pour midi, il reste de la place pour 60 personnes. Est-ce que 12h, c’est parfait pour vous ?D'accord, je note 12h. Pour 4 personnes, c’est bien ça ?\nAssistant: Merci pour la confirmation. Quel est votre nom, s’il vous plaît ?D’accord, Axel. Quel est votre numéro de téléphone ?\nAssistant: Parfait, c'est bien le 06 72 48 62 55 ?Merci, c'est correct. Nous avons doncParfait, je confirme : réservation pour 4 personnes demain à midi. Nom : Axel. Numéro : 06 72 48 62 55. C’est bien cela ?D’accord, je vais répéter. C'est bien le 0 6 72 88 62 55 ?\nAssistant: Merci pour la précision. Je vais noter : 0 6 72 88 62 55. C'est bien correct ?Parfait. Donc, réservation pour demain à midi, 4 personnes, nom Axel, numéro 06 72 88 62 55. C’est bien ça ?Merci pour votre confirmation. L'appel est en cours de finalisation. Si vous avez besoin d'autre chose, je suis là.Avec plaisir, bonjour et à bientôt chez Tasty Crousty !Je vous en prie, je vais noter toute la réservation. Bon après-midi !"
+}
+[2026-03-16 13:27:31] [INFO] [MZ046d52...] [TRANSCRIPTION_NORMALIZED] Transcription normalisée
+   {
+  "originalLength": 1225,
+  "normalizedLength": 1215,
+  "preview": "Appel démarré - StreamSid: MZ046d52dc2ba45153fbe55d6fab0f980f\nBonjour, Tasty Crousty, je vous écoute.\nAssistant: Bonjour, commande ou réservation ?Très bien, pour combien de personnes et pour quel service : 12h ou soir ?\nAssistant: Très bien, 12h, il reste de la place pour 60 personnes. Est-ce que 1...",
+  "changes": {
+    "original": "Appel démarré - StreamSid: MZ046d52dc2ba45153fbe55d6fab0f980f\nBonjour, Tasty Crousty, je vous écoute.\nAssistant: Bonjour, commande ou réservation ?Très bien, pour combien de personnes et pour quel ser",
+    "normalized": "Appel démarré - StreamSid: MZ046d52dc2ba45153fbe55d6fab0f980f\nBonjour, Tasty Crousty, je vous écoute.\nAssistant: Bonjour, commande ou réservation ?Très bien, pour combien de personnes et pour quel ser"
+  }
+}
+[2026-03-16 13:27:31] [INFO] [MZ046d52...] [TRANSCRIPTION_READY_FOR_GPT] Transcription normalisée complète - prête pour GPT
+   {
+  "length": 1215,
+  "fullContent": "Appel démarré - StreamSid: MZ046d52dc2ba45153fbe55d6fab0f980f\nBonjour, Tasty Crousty, je vous écoute.\nAssistant: Bonjour, commande ou réservation ?Très bien, pour combien de personnes et pour quel service : 12h ou soir ?\nAssistant: Très bien, 12h, il reste de la place pour 60 personnes. Est-ce que 12h, c’est parfait pour vous ?D'accord, je note 12h. Pour 4 personnes, c’est bien ça ?\nAssistant: Merci pour la confirmation. Quel est votre nom, s’il vous plaît ?D’accord, Axel. Quel est votre numéro de téléphone ?\nAssistant: Parfait, c'est bien le 06 72 48 62 55 ?Merci, c'est correct. Nous avons doncParfait, je confirme : réservation pour 4 personnes demain à 12h. Nom : Axel. Numéro : 06 72 48 62 55. C’est bien cela ?D’accord, je vais répéter. C'est bien le 0 6 72 88 62 55 ?\nAssistant: Merci pour la précision. Je vais noter : 0 6 72 88 62 55. C'est bien correct ?Parfait. Donc, réservation pour demain à 12h, 4 personnes, nom Axel, numéro 06 72 88 62 55. C’est bien ça ?Merci pour votre confirmation. L'appel est en cours de finalisation. Si vous avez besoin d'autre chose, je suis là.Avec plaisir, bonjour et à bientôt chez Tasty Crousty !Je vous en prie, je vais noter toute la réservation. Bon après-12h !"
+}
+[2026-03-16 13:27:31] [INFO] [MZ046d52...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-16 13:27:31] [INFO] [unknown...] process-call: 1. Requete recue
+   {
+  "detail": "body keys=transcription"
+}
+[2026-03-16 13:27:31] [INFO] [unknown...] process-call: 2. Transcription presente
+   {
+  "detail": "length=1215"
+}
+[2026-03-16 13:27:31] [INFO] [unknown...] process-call: 3. Appel extractCallData (GPT)
+[2026-03-16 13:27:31] [INFO] [unknown...] [TRANSCRIPTION_RAW_FOR_GPT] Transcription brute reçue pour extraction GPT
+   {
+  "transcriptionLength": 1215,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ046d52dc2ba45153fbe55d6fab0f980f\nBonjour, Tasty Crousty, je vous écoute.\nAssistant: Bonjour, commande ou réservation ?Très bien, pour combien de personnes et pour quel service : 12h ou soir ?\nAssistant: Très bien, 12h, il reste de la place pour 60 personnes. Est-ce que 12h, c’est parfait pour vous ?D'accord, je note 12h. Pour 4 personnes, c’est bien ça ?\nAssistant: Merci pour la confirmation. Quel est votre nom, s’il vous plaît ?D’accord, Axel. Quel est votre numéro ...",
+  "transcriptionFull": "Appel démarré - StreamSid: MZ046d52dc2ba45153fbe55d6fab0f980f\nBonjour, Tasty Crousty, je vous écoute.\nAssistant: Bonjour, commande ou réservation ?Très bien, pour combien de personnes et pour quel service : 12h ou soir ?\nAssistant: Très bien, 12h, il reste de la place pour 60 personnes. Est-ce que 12h, c’est parfait pour vous ?D'accord, je note 12h. Pour 4 personnes, c’est bien ça ?\nAssistant: Merci pour la confirmation. Quel est votre nom, s’il vous plaît ?D’accord, Axel. Quel est votre numéro de téléphone ?\nAssistant: Parfait, c'est bien le 06 72 48 62 55 ?Merci, c'est correct. Nous avons doncParfait, je confirme : réservation pour 4 personnes demain à 12h. Nom : Axel. Numéro : 06 72 48 62 55. C’est bien cela ?D’accord, je vais répéter. C'est bien le 0 6 72 88 62 55 ?\nAssistant: Merci pour la précision. Je vais noter : 0 6 72 88 62 55. C'est bien correct ?Parfait. Donc, réservation pour demain à 12h, 4 personnes, nom Axel, numéro 06 72 88 62 55. C’est bien ça ?Merci pour votre confirmation. L'appel est en cours de finalisation. Si vous avez besoin d'autre chose, je suis là.Avec plaisir, bonjour et à bientôt chez Tasty Crousty !Je vous en prie, je vais noter toute la réservation. Bon après-12h !",
+  "promptVersion": "2.0"
+}
+[2026-03-16 13:27:31] [INFO] [MZ046d52...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Je vous en prie, je vais noter toute la réservation. Bon après-midi !..."
+  }
+}
+[2026-03-16 13:27:32] [INFO] [MZ046d52...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "112844ms",
+  "instanceId": "inst_default"
+}
+[2026-03-16 13:27:32] [INFO] [MZ046d52...] [AUDIO_RECORDING_SUMMARY] Récapitulatif enregistrement audio
+   {
+  "totalChunks": 5548,
+  "cleanedChunks": 5548,
+  "rnnoiseUsed": true,
+  "duration": 112844
+}
+[2026-03-16 13:27:33] [INFO] [MZ046d52...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-16 13:27:33] [INFO] [MZ046d52...] Connexion OpenAI fermée
+[2026-03-16 13:27:39] [INFO] [unknown...] [GPT_RAW_RESPONSE] Réponse brute GPT reçue
+   {
+  "responseLength": 467,
+  "responsePreview": "{\n  \"nom\": \"Axel\",\n  \"telephone\": \"06 72 88 62 55\",\n  \"type_demande\": \"Réservation de table\",\n  \"services\": \"Autre\",\n  \"description\": \"Réservation pour 4 personnes demain à 12h\",\n  \"statut\": \"nouveau\",\n  \"reservation\": {\n    \"nom\": \"Axel\",\n    \"telephone\": \"06 72 88 62 55\",\n    \"date\": \"ASAP\",\n    \"heure\": \"12:00\",\n    \"description\": \"Réservation pour 4 personnes\",\n    \"nombrePersonnes\": 4,\n    \"notes_internes\": \"\",\n    \"statut\": \"confirme\"\n  },\n  \"order\": null\n}",
+  "responseFull": "{\n  \"nom\": \"Axel\",\n  \"telephone\": \"06 72 88 62 55\",\n  \"type_demande\": \"Réservation de table\",\n  \"services\": \"Autre\",\n  \"description\": \"Réservation pour 4 personnes demain à 12h\",\n  \"statut\": \"nouveau\",\n  \"reservation\": {\n    \"nom\": \"Axel\",\n    \"telephone\": \"06 72 88 62 55\",\n    \"date\": \"ASAP\",\n    \"heure\": \"12:00\",\n    \"description\": \"Réservation pour 4 personnes\",\n    \"nombrePersonnes\": 4,\n    \"notes_internes\": \"\",\n    \"statut\": \"confirme\"\n  },\n  \"order\": null\n}"
+}
+[2026-03-16 13:27:39] [INFO] [unknown...] [JSON_EXTRACTED_COMPARISON] JSON extrait par GPT - comparaison avec transcription
+   {
+  "extractedData": "{\n  \"nom\": \"Axel\",\n  \"telephone\": \"06 72 88 62 55\",\n  \"type_demande\": \"Réservation de table\",\n  \"services\": \"Autre\",\n  \"description\": \"Réservation pour 4 personnes demain à 12h\",\n  \"statut\": \"nouveau\",\n  \"reservation\": {\n    \"nom\": \"Axel\",\n    \"telephone\": \"06 72 88 62 55\",\n    \"date\": \"ASAP\",\n    \"heure\": \"12:00\",\n    \"description\": \"Réservation pour 4 personnes\",\n    \"nombrePersonnes\": 4,\n    \"notes_internes\": \"\",\n    \"statut\": \"confirme\"\n  },\n  \"order\": null\n}",
+  "extractedDataCompact": "{\"nom\":\"Axel\",\"telephone\":\"06 72 88 62 55\",\"type_demande\":\"Réservation de table\",\"services\":\"Autre\",\"description\":\"Réservation pour 4 personnes demain à 12h\",\"statut\":\"nouveau\",\"reservation\":{\"nom\":\"Axel\",\"telephone\":\"06 72 88 62 55\",\"date\":\"ASAP\",\"heure\":\"12:00\",\"description\":\"Réservation pour 4 personnes\",\"nombrePersonnes\":4,\"notes_internes\":\"\",\"statut\":\"confirme\"},\"order\":null}",
+  "transcriptionOriginal": "Appel démarré - StreamSid: MZ046d52dc2ba45153fbe55d6fab0f980f\nBonjour, Tasty Crousty, je vous écoute.\nAssistant: Bonjour, commande ou réservation ?Très bien, pour combien de personnes et pour quel service : 12h ou soir ?\nAssistant: Très bien, 12h, il reste de la place pour 60 personnes. Est-ce que 12h, c’est parfait pour vous ?D'accord, je note 12h. Pour 4 personnes, c’est bien ça ?\nAssistant: Merci pour la confirmation. Quel est votre nom, s’il vous plaît ?D’accord, Axel. Quel est votre numéro de téléphone ?\nAssistant: Parfait, c'est bien le 06 72 48 62 55 ?Merci, c'est correct. Nous avons doncParfait, je confirme : réservation pour 4 personnes demain à 12h. Nom : Axel. Numéro : 06 72 48 62 55. C’est bien cela ?D’accord, je vais répéter. C'est bien le 0 6 72 88 62 55 ?\nAssistant: Merci pour la précision. Je vais noter : 0 6 72 88 62 55. C'est bien correct ?Parfait. Donc, réservation pour demain à 12h, 4 personnes, nom Axel, numéro 06 72 88 62 55. C’est bien ça ?Merci pour votre confirmation. L'appel est en cours de finalisation. Si vous avez besoin d'autre chose, je suis là.Avec plaisir, bonjour et à bientôt chez Tasty Crousty !Je vous en prie, je vais noter toute la réservation. Bon après-12h !",
+  "transcriptionLength": 1215,
+  "extractedDataKeys": [
+    "nom",
+    "telephone",
+    "type_demande",
+    "services",
+    "description",
+    "statut",
+    "reservation",
+    "order"
+  ],
+  "hasReservation": true,
+  "hasOrder": false,
+  "hasCommandes": false,
+  "commandesCount": 0,
+  "nom": "Axel",
+  "telephone": "06 72 88 62 55",
+  "type_demande": "Réservation de table"
+}
+[2026-03-16 13:27:39] [WARN] [unknown...] [TIME_OUTSIDE_HOURS] Heure hors horaires d'ouverture
+   {
+  "heure": "12:00",
+  "date": "ASAP",
+  "reason": "Restaurant fermé le lundi",
+  "adjustedTime": null
+}
+[2026-03-16 13:27:39] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "8018ms"
+}
+[2026-03-16 13:27:39] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Axel",
+    "telephone": "0672886255",
+    "type_demande": "Réservation de table",
+    "services": "Autre",
+    "description": "Réservation pour 4 personnes demain à 12h",
+    "statut": "nouveau",
+    "date": "2026-03-16T12:27:39.865Z"
+  }
+}
+[2026-03-16 13:27:39] [INFO] [unknown...] process-call: 4. Verif isUseless
+   {
+  "detail": "isUseless=false hasResa=false hasOrder=false"
+}
+[2026-03-16 13:27:39] [INFO] [unknown...] process-call: 5b. Branche traitement -> ProcessCallService.process
+[2026-03-16 13:27:39] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "ProcessCallService.process"
+}
+[2026-03-16 13:27:39] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "1ms"
+}
+[2026-03-16 13:27:39] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-16 13:27:39] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "8026ms"
+}
+[2026-03-16 13:27:39] [INFO] [unknown...] process-call: 6. Succes -> envoi notif (processed)
+   {
+  "detail": "orderId=—"
+}
+[2026-03-16 13:27:39] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 0,
+  "totalConnections": 0,
+  "notificationData": {
+    "title": "Appel IA : Réservation",
+    "message": "Appel terminé – Réservation (aucune action enregistrée).",
+    "hasOrder": false,
+    "details": {
+      "callId": null,
+      "orderId": null,
+      "appointmentType": null,
+      "client": "Axel",
+      "telephone": "0672886255",
+      "type_demande": "Réservation de table",
+      "callTypeLabel": "Réservation",
+      "services": "Autre",
+      "description": "Réservation pour 4 personnes demain à 12h",
+      "duration": null,
+      "heure": "13:27"
+    },
+    "priority": "info"
+  }
+}
+[2026-03-16 13:27:39] [WARN] Aucun client WebSocket connecte pour les notifications
+   {
+  "type": "call_completed"
+}
+[2026-03-16 13:27:39] [INFO] [unknown...] process-call: 7. Reponse 201 envoyee
+[2026-03-16 13:27:39] [INFO] [MZ046d52...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "8156ms"
+}
+[2026-03-16 13:27:39] [INFO] [MZ046d52...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-16 13:27:39] [INFO] [MZ046d52...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité : réservation et/ou commande créée(s)",
+    "data": {
+      "reservation": null,
+      "order": null
+    }
+  }
+}
+[2026-03-16 13:48:00] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 13:48:00] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 13:48:00] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 13:48:54] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 13:48:54] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 13:48:54] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 13:49:23] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 13:49:23] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 13:49:23] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 13:49:40] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 13:49:40] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 13:49:40] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 13:49:47] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 13:49:47] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 13:49:47] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 13:50:02] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected",
+    "instanceId": "inst_default"
+  }
+}
+[2026-03-16 13:50:02] [INFO] RNNoise activé - Réduction de bruit en temps réel
+[2026-03-16 13:50:03] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-16 13:50:03] [INFO] [MZa9b14a...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZa9b14a96da94f5e96953e48835761779",
+      "callSid": "CA29ba4338c60b9e577b82bacec4621003",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T12:50:03.105Z"
+  }
+}
+[2026-03-16 13:50:03] [INFO] [MZa9b14a...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZa9b14a96da94f5e96953e48835761779",
+      "callSid": "CA29ba4338c60b9e577b82bacec4621003",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T12:50:03.106Z"
+  }
+}
+[2026-03-16 13:50:03] [INFO] [MZa9b14a...] [AUDIO_RECORDING_STARTED] Premier chunk audio reçu - début enregistrement
+   {
+  "rnnoiseAvailable": true
+}
+[2026-03-16 13:50:04] [INFO] [MZa9b14a...] Envoi de la salutation automatique
+[2026-03-16 13:50:04] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-16 13:50:11] [INFO] [MZa9b14a...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Oui, bonjour. Je vous appelle pour faire une réser...",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:50:11] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bien sûr, pour quelle date et pour combien de personnes ?..."
+  }
+}
+[2026-03-16 13:50:18] [INFO] [MZa9b14a...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Alors écoutez, ça serait pour demain à midi....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:50:19] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, pour demain à midi, combien de personnes ?..."
+  }
+}
+[2026-03-16 13:50:25] [INFO] [MZa9b14a...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Sous-titrage Société Radio-Canada...",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:50:26] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D’accord, il reste des places pour 4 personnes demain à midi. C'est bien ça ?..."
+  }
+}
+[2026-03-16 13:50:31] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait. C’est noté pour 4 personnes..."
+  }
+}
+[2026-03-16 13:50:33] [INFO] [MZa9b14a...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Bah, oui. Du coup, oui....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:50:33] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, je confirme pour 4 personnes demain à midi. Quel est votre nom, s’il vous plaît ?..."
+  }
+}
+[2026-03-16 13:50:40] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, Alex. Quel est votre numéro de téléphone ?..."
+  }
+}
+[2026-03-16 13:50:41] [INFO] [MZa9b14a...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Alors, mettez au nom d'Alex......",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:50:48] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "C'est bien le 0 7 67 57 18 24 ?..."
+  }
+}
+[2026-03-16 13:50:48] [INFO] [MZa9b14a...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "06 67 57 18 24....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:50:54] [INFO] [MZa9b14a...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Où est-ce que ça va ?...",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:50:55] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, je le note. Donc c’est correct : 0 7 67 57 18 24. C’est bien ça ?..."
+  }
+}
+[2026-03-16 13:51:02] [INFO] [MZa9b14a...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Oui....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:51:03] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, la réservation est donc confirmée. Merci, Alex. À demain à midi...."
+  }
+}
+[2026-03-16 13:51:09] [INFO] [MZa9b14a...] Événement stop détecté - fin d'appel
+[2026-03-16 13:51:09] [INFO] [MZa9b14a...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-16 13:51:09] [INFO] [MZa9b14a...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 647
+}
+[2026-03-16 13:51:09] [INFO] [MZa9b14a...] [TRANSCRIPTION_FULL_RECEIVED] Transcription brute complète reçue
+   {
+  "length": 647,
+  "preview": "Appel démarré - StreamSid: MZa9b14a96da94f5e96953e48835761779\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour quelle date et pour combien de personnes ?Très bien, pour demain à midi, combien de personnes ?D’accord, il reste des places pour 4 personnes demain à midi. C'est bien ça ?Parfait. C’e...",
+  "fullContent": "Appel démarré - StreamSid: MZa9b14a96da94f5e96953e48835761779\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour quelle date et pour combien de personnes ?Très bien, pour demain à midi, combien de personnes ?D’accord, il reste des places pour 4 personnes demain à midi. C'est bien ça ?Parfait. C’est noté pour 4 personnesTrès bien, je confirme pour 4 personnes demain à midi. Quel est votre nom, s’il vous plaît ?Très bien, Alex. Quel est votre numéro de téléphone ?C'est bien le 0 7 67 57 18 24 ?Parfait, je le note. Donc c’est correct : 0 7 67 57 18 24. C’est bien ça ?Parfait, la réservation est donc confirmée. Merci, Alex. À demain à midi."
+}
+[2026-03-16 13:51:09] [INFO] [MZa9b14a...] [TRANSCRIPTION_NORMALIZED] Transcription normalisée
+   {
+  "originalLength": 647,
+  "normalizedLength": 643,
+  "preview": "Appel démarré - StreamSid: MZa9b14a96da94f5e96953e48835761779\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour quelle date et pour combien de personnes ?Très bien, pour demain à 12h, combien de personnes ?D’accord, il reste des places pour 4 personnes demain à 12h. C'est bien ça ?Parfait. C’est...",
+  "changes": {
+    "original": "Appel démarré - StreamSid: MZa9b14a96da94f5e96953e48835761779\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour quelle date et pour combien de personnes ?Très bien, pour demain à midi, combien de ",
+    "normalized": "Appel démarré - StreamSid: MZa9b14a96da94f5e96953e48835761779\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour quelle date et pour combien de personnes ?Très bien, pour demain à 12h, combien de p"
+  }
+}
+[2026-03-16 13:51:09] [INFO] [MZa9b14a...] [TRANSCRIPTION_READY_FOR_GPT] Transcription normalisée complète - prête pour GPT
+   {
+  "length": 643,
+  "fullContent": "Appel démarré - StreamSid: MZa9b14a96da94f5e96953e48835761779\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour quelle date et pour combien de personnes ?Très bien, pour demain à 12h, combien de personnes ?D’accord, il reste des places pour 4 personnes demain à 12h. C'est bien ça ?Parfait. C’est noté pour 4 personnesTrès bien, je confirme pour 4 personnes demain à 12h. Quel est votre nom, s’il vous plaît ?Très bien, Alex. Quel est votre numéro de téléphone ?C'est bien le 0 7 67 57 18 24 ?Parfait, je le note. Donc c’est correct : 0 7 67 57 18 24. C’est bien ça ?Parfait, la réservation est donc confirmée. Merci, Alex. À demain à 12h."
+}
+[2026-03-16 13:51:09] [INFO] [MZa9b14a...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-16 13:51:09] [INFO] [unknown...] process-call: 1. Requete recue
+   {
+  "detail": "body keys=transcription"
+}
+[2026-03-16 13:51:09] [INFO] [unknown...] process-call: 2. Transcription presente
+   {
+  "detail": "length=643"
+}
+[2026-03-16 13:51:09] [INFO] [unknown...] process-call: 3. Appel extractCallData (GPT)
+[2026-03-16 13:51:09] [INFO] [unknown...] [TRANSCRIPTION_RAW_FOR_GPT] Transcription brute reçue pour extraction GPT
+   {
+  "transcriptionLength": 643,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZa9b14a96da94f5e96953e48835761779\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour quelle date et pour combien de personnes ?Très bien, pour demain à 12h, combien de personnes ?D’accord, il reste des places pour 4 personnes demain à 12h. C'est bien ça ?Parfait. C’est noté pour 4 personnesTrès bien, je confirme pour 4 personnes demain à 12h. Quel est votre nom, s’il vous plaît ?Très bien, Alex. Quel est votre numéro de téléphone ?C'est bien le 0 7 67 57 18 24 ?Par...",
+  "transcriptionFull": "Appel démarré - StreamSid: MZa9b14a96da94f5e96953e48835761779\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour quelle date et pour combien de personnes ?Très bien, pour demain à 12h, combien de personnes ?D’accord, il reste des places pour 4 personnes demain à 12h. C'est bien ça ?Parfait. C’est noté pour 4 personnesTrès bien, je confirme pour 4 personnes demain à 12h. Quel est votre nom, s’il vous plaît ?Très bien, Alex. Quel est votre numéro de téléphone ?C'est bien le 0 7 67 57 18 24 ?Parfait, je le note. Donc c’est correct : 0 7 67 57 18 24. C’est bien ça ?Parfait, la réservation est donc confirmée. Merci, Alex. À demain à 12h.",
+  "promptVersion": "2.0"
+}
+[2026-03-16 13:51:10] [INFO] [MZa9b14a...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "À demain à midi....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 13:51:10] [INFO] [MZa9b14a...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "67616ms",
+  "instanceId": "inst_default"
+}
+[2026-03-16 13:51:10] [INFO] [MZa9b14a...] [AUDIO_RECORDING_SUMMARY] Récapitulatif enregistrement audio
+   {
+  "totalChunks": 3286,
+  "cleanedChunks": 3286,
+  "rnnoiseUsed": true,
+  "duration": 67616
+}
+[2026-03-16 13:51:11] [INFO] [MZa9b14a...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, Alex, rendez-vous demain à midi. Si besoin, appelez-nous. Merci et à bientôt...."
+  }
+}
+[2026-03-16 13:51:11] [INFO] [MZa9b14a...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-16 13:51:11] [INFO] [MZa9b14a...] Connexion OpenAI fermée
+[2026-03-16 13:51:12] [INFO] [unknown...] [GPT_RAW_RESPONSE] Réponse brute GPT reçue
+   {
+  "responseLength": 467,
+  "responsePreview": "{\n  \"nom\": \"Alex\",\n  \"telephone\": \"07 67 57 18 24\",\n  \"type_demande\": \"Réservation de table\",\n  \"services\": \"Autre\",\n  \"description\": \"Réservation pour 4 personnes demain à 12h\",\n  \"statut\": \"nouveau\",\n  \"reservation\": {\n    \"nom\": \"Alex\",\n    \"telephone\": \"07 67 57 18 24\",\n    \"date\": \"ASAP\",\n    \"heure\": \"12:00\",\n    \"description\": \"Réservation pour 4 personnes\",\n    \"nombrePersonnes\": 4,\n    \"notes_internes\": \"\",\n    \"statut\": \"confirme\"\n  },\n  \"order\": null\n}",
+  "responseFull": "{\n  \"nom\": \"Alex\",\n  \"telephone\": \"07 67 57 18 24\",\n  \"type_demande\": \"Réservation de table\",\n  \"services\": \"Autre\",\n  \"description\": \"Réservation pour 4 personnes demain à 12h\",\n  \"statut\": \"nouveau\",\n  \"reservation\": {\n    \"nom\": \"Alex\",\n    \"telephone\": \"07 67 57 18 24\",\n    \"date\": \"ASAP\",\n    \"heure\": \"12:00\",\n    \"description\": \"Réservation pour 4 personnes\",\n    \"nombrePersonnes\": 4,\n    \"notes_internes\": \"\",\n    \"statut\": \"confirme\"\n  },\n  \"order\": null\n}"
+}
+[2026-03-16 13:51:12] [INFO] [unknown...] [JSON_EXTRACTED_COMPARISON] JSON extrait par GPT - comparaison avec transcription
+   {
+  "extractedData": "{\n  \"nom\": \"Alex\",\n  \"telephone\": \"07 67 57 18 24\",\n  \"type_demande\": \"Réservation de table\",\n  \"services\": \"Autre\",\n  \"description\": \"Réservation pour 4 personnes demain à 12h\",\n  \"statut\": \"nouveau\",\n  \"reservation\": {\n    \"nom\": \"Alex\",\n    \"telephone\": \"07 67 57 18 24\",\n    \"date\": \"ASAP\",\n    \"heure\": \"12:00\",\n    \"description\": \"Réservation pour 4 personnes\",\n    \"nombrePersonnes\": 4,\n    \"notes_internes\": \"\",\n    \"statut\": \"confirme\"\n  },\n  \"order\": null\n}",
+  "extractedDataCompact": "{\"nom\":\"Alex\",\"telephone\":\"07 67 57 18 24\",\"type_demande\":\"Réservation de table\",\"services\":\"Autre\",\"description\":\"Réservation pour 4 personnes demain à 12h\",\"statut\":\"nouveau\",\"reservation\":{\"nom\":\"Alex\",\"telephone\":\"07 67 57 18 24\",\"date\":\"ASAP\",\"heure\":\"12:00\",\"description\":\"Réservation pour 4 personnes\",\"nombrePersonnes\":4,\"notes_internes\":\"\",\"statut\":\"confirme\"},\"order\":null}",
+  "transcriptionOriginal": "Appel démarré - StreamSid: MZa9b14a96da94f5e96953e48835761779\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour quelle date et pour combien de personnes ?Très bien, pour demain à 12h, combien de personnes ?D’accord, il reste des places pour 4 personnes demain à 12h. C'est bien ça ?Parfait. C’est noté pour 4 personnesTrès bien, je confirme pour 4 personnes demain à 12h. Quel est votre nom, s’il vous plaît ?Très bien, Alex. Quel est votre numéro de téléphone ?C'est bien le 0 7 67 57 18 24 ?Parfait, je le note. Donc c’est correct : 0 7 67 57 18 24. C’est bien ça ?Parfait, la réservation est donc confirmée. Merci, Alex. À demain à 12h.",
+  "transcriptionLength": 643,
+  "extractedDataKeys": [
+    "nom",
+    "telephone",
+    "type_demande",
+    "services",
+    "description",
+    "statut",
+    "reservation",
+    "order"
+  ],
+  "hasReservation": true,
+  "hasOrder": false,
+  "hasCommandes": false,
+  "commandesCount": 0,
+  "nom": "Alex",
+  "telephone": "07 67 57 18 24",
+  "type_demande": "Réservation de table"
+}
+[2026-03-16 13:51:12] [WARN] [unknown...] [TIME_OUTSIDE_HOURS] Heure hors horaires d'ouverture
+   {
+  "heure": "12:00",
+  "date": "ASAP",
+  "reason": "Restaurant fermé le lundi",
+  "adjustedTime": null
+}
+[2026-03-16 13:51:12] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "3148ms"
+}
+[2026-03-16 13:51:12] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Alex",
+    "telephone": "0767571824",
+    "type_demande": "Réservation de table",
+    "services": "Autre",
+    "description": "Réservation pour 4 personnes demain à 12h",
+    "statut": "nouveau",
+    "date": "2026-03-16T12:51:12.814Z"
+  }
+}
+[2026-03-16 13:51:12] [INFO] [unknown...] process-call: 4. Verif isUseless
+   {
+  "detail": "isUseless=false hasResa=false hasOrder=false"
+}
+[2026-03-16 13:51:12] [INFO] [unknown...] process-call: 5b. Branche traitement -> ProcessCallService.process
+[2026-03-16 13:51:12] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "ProcessCallService.process"
+}
+[2026-03-16 13:51:12] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "1ms"
+}
+[2026-03-16 13:51:12] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-16 13:51:12] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "3159ms"
+}
+[2026-03-16 13:51:12] [INFO] [unknown...] process-call: 6. Succes -> envoi notif (processed)
+   {
+  "detail": "orderId=—"
+}
+[2026-03-16 13:51:12] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 1,
+  "totalConnections": 1,
+  "notificationData": {
+    "title": "Appel IA : Réservation",
+    "message": "Appel terminé – Réservation (aucune action enregistrée).",
+    "hasOrder": false,
+    "details": {
+      "callId": null,
+      "orderId": null,
+      "appointmentType": null,
+      "client": "Alex",
+      "telephone": "0767571824",
+      "type_demande": "Réservation de table",
+      "callTypeLabel": "Réservation",
+      "services": "Autre",
+      "description": "Réservation pour 4 personnes demain à 12h",
+      "duration": null,
+      "heure": "13:51"
+    },
+    "priority": "info"
+  }
+}
+[2026-03-16 13:51:12] [INFO] [unknown...] process-call: 7. Reponse 201 envoyee
+[2026-03-16 13:51:12] [INFO] [MZa9b14a...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "3295ms"
+}
+[2026-03-16 13:51:12] [INFO] [MZa9b14a...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-16 13:51:12] [INFO] [MZa9b14a...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité : réservation et/ou commande créée(s)",
+    "data": {
+      "reservation": null,
+      "order": null
+    }
+  }
+}
+[2026-03-16 14:04:10] [INFO] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "event": "client_connected",
+    "instanceId": "inst_default"
+  }
+}
+[2026-03-16 14:04:10] [INFO] Événement Twilio: connected
+   {
+  "eventData": "{\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}..."
+}
+[2026-03-16 14:04:10] [INFO] [MZ8bd8a4...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ8bd8a44b2a4e5fc4a2de1ff887881d8f",
+      "callSid": "CA4c0b2e6e27e96594afbcfe65eceda7f7",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T13:04:10.836Z"
+  }
+}
+[2026-03-16 14:04:10] [INFO] [MZ8bd8a4...] [CALL_STARTED] Appel demarre
+   {
+  "callerInfo": {
+    "callerInfo": {
+      "accountSid": "AC8f2d8374a6d357391e19da60bd344b39",
+      "streamSid": "MZ8bd8a44b2a4e5fc4a2de1ff887881d8f",
+      "callSid": "CA4c0b2e6e27e96594afbcfe65eceda7f7",
+      "tracks": [
+        "inbound"
+      ],
+      "mediaFormat": {
+        "encoding": "audio/x-mulaw",
+        "sampleRate": 8000,
+        "channels": 1
+      },
+      "customParameters": {}
+    },
+    "timestamp": "2026-03-16T13:04:10.837Z"
+  }
+}
+[2026-03-16 14:04:11] [INFO] [MZ8bd8a4...] [AUDIO_RECORDING_STARTED] Premier chunk audio reçu - début enregistrement
+   {
+  "rnnoiseAvailable": true
+}
+[2026-03-16 14:04:11] [INFO] [MZ8bd8a4...] Envoi de la salutation automatique
+[2026-03-16 14:04:12] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bonjour, Tasty Crousty, je vous écoute...."
+  }
+}
+[2026-03-16 14:04:18] [INFO] [MZ8bd8a4...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Oui, bonjour, je voudrais faire une réservation....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 14:04:18] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Bien sûr, pour combien de personnes ?..."
+  }
+}
+[2026-03-16 14:04:25] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, demain, midi. Il reste encore de la disponibilité. Confirmez-vous pour 12h ?..."
+  }
+}
+[2026-03-16 14:04:25] [INFO] [MZ8bd8a4...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Pour six personnes, demain à midi....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 14:04:31] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait. Pour 6 personnes, demain à 12h, c'est bien ça ?..."
+  }
+}
+[2026-03-16 14:04:33] [INFO] [MZ8bd8a4...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Oui....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 14:04:37] [INFO] [MZ8bd8a4...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Ouais, c'est ça....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 14:04:37] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Merci, noter la réservation. Quel est votre nom ?..."
+  }
+}
+[2026-03-16 14:04:41] [INFO] [MZ8bd8a4...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Accès....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 14:04:42] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Merci, votre nom est Axel, c'est bien ça ?..."
+  }
+}
+[2026-03-16 14:04:46] [INFO] [MZ8bd8a4...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "❤️ par SousTitreur.com...",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 14:04:46] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "D’accord, je note Axel. Pouvez-vous me donner votre numéro de téléphone ?..."
+  }
+}
+[2026-03-16 14:04:55] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "C'est bien le 0 6 72 88 62 55 ?..."
+  }
+}
+[2026-03-16 14:04:55] [INFO] [MZ8bd8a4...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Alors, 06 72 88 62 55....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 14:05:00] [INFO] [MZ8bd8a4...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Oui....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 14:05:01] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Parfait, c'est correct. La réservation est donc pour Axel, demain à 12h, pour 6 personnes. \n\nAvez-vo..."
+  }
+}
+[2026-03-16 14:05:09] [INFO] [MZ8bd8a4...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Non, du tout....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 14:05:10] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Très bien, donc c’est noté. Je vais finaliser la réservation. Merci, et voilà, c’est confirmé...."
+  }
+}
+[2026-03-16 14:05:17] [INFO] [MZ8bd8a4...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "output_text": "Avec plaisir ! À bientôt chez Tasty Crousty...."
+  }
+}
+[2026-03-16 14:05:18] [INFO] [MZ8bd8a4...] Transcription client reçue d'OpenAI (non utilisée pour extraction)
+   {
+  "transcript": "Merci à vous....",
+  "note": "Seule la transcription de GPT (répétition) sera utilisée pour l'extraction"
+}
+[2026-03-16 14:05:20] [INFO] [MZ8bd8a4...] Événement stop détecté - fin d'appel
+[2026-03-16 14:05:20] [INFO] [MZ8bd8a4...] [EXTRACTION_STARTED] Extraction GPT-4 demarree
+[2026-03-16 14:05:20] [INFO] [MZ8bd8a4...] [TRANSCRIPTION_RECEIVED] Transcription recue
+   {
+  "transcriptionLength": 740
+}
+[2026-03-16 14:05:20] [INFO] [MZ8bd8a4...] [TRANSCRIPTION_FULL_RECEIVED] Transcription brute complète reçue
+   {
+  "length": 740,
+  "preview": "Appel démarré - StreamSid: MZ8bd8a44b2a4e5fc4a2de1ff887881d8f\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour combien de personnes ?Très bien, demain, midi. Il reste encore de la disponibilité. Confirmez-vous pour 12h ?Parfait. Pour 6 personnes, demain à 12h, c'est bien ça ?Merci, noter la rés...",
+  "fullContent": "Appel démarré - StreamSid: MZ8bd8a44b2a4e5fc4a2de1ff887881d8f\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour combien de personnes ?Très bien, demain, midi. Il reste encore de la disponibilité. Confirmez-vous pour 12h ?Parfait. Pour 6 personnes, demain à 12h, c'est bien ça ?Merci, noter la réservation. Quel est votre nom ?Merci, votre nom est Axel, c'est bien ça ?D’accord, je note Axel. Pouvez-vous me donner votre numéro de téléphone ?C'est bien le 0 6 72 88 62 55 ?Parfait, c'est correct. La réservation est donc pour Axel, demain à 12h, pour 6 personnes. \n\nAvez-vous autre chose à ajouter ?Très bien, donc c’est noté. Je vais finaliser la réservation. Merci, et voilà, c’est confirmé.Avec plaisir ! À bientôt chez Tasty Crousty."
+}
+[2026-03-16 14:05:20] [INFO] [MZ8bd8a4...] [TRANSCRIPTION_NORMALIZED] Transcription normalisée
+   {
+  "originalLength": 740,
+  "normalizedLength": 734,
+  "preview": "Appel démarré - StreamSid: MZ8bd8a44b2a4e5fc4a2de1ff887881d8f\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour combien de personnes ?Très bien, demain, 12h. Il reste encore de la disponibilité. Confirmez-vous 12h ?Parfait. Pour 6 personnes, demain à 12h, c'est bien ça ?Merci, noter la réservati...",
+  "changes": {
+    "original": "Appel démarré - StreamSid: MZ8bd8a44b2a4e5fc4a2de1ff887881d8f\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour combien de personnes ?Très bien, demain, midi. Il reste encore de la disponibilité. ",
+    "normalized": "Appel démarré - StreamSid: MZ8bd8a44b2a4e5fc4a2de1ff887881d8f\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour combien de personnes ?Très bien, demain, 12h. Il reste encore de la disponibilité. C"
+  }
+}
+[2026-03-16 14:05:20] [INFO] [MZ8bd8a4...] [TRANSCRIPTION_READY_FOR_GPT] Transcription normalisée complète - prête pour GPT
+   {
+  "length": 734,
+  "fullContent": "Appel démarré - StreamSid: MZ8bd8a44b2a4e5fc4a2de1ff887881d8f\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour combien de personnes ?Très bien, demain, 12h. Il reste encore de la disponibilité. Confirmez-vous 12h ?Parfait. Pour 6 personnes, demain à 12h, c'est bien ça ?Merci, noter la réservation. Quel est votre nom ?Merci, votre nom est Axel, c'est bien ça ?D’accord, je note Axel. Pouvez-vous me donner votre numéro de téléphone ?C'est bien le 0 6 72 88 62 55 ?Parfait, c'est correct. La réservation est donc pour Axel, demain à 12h, pour 6 personnes. \n\nAvez-vous autre chose à ajouter ?Très bien, donc c’est noté. Je vais finaliser la réservation. Merci, et voilà, c’est confirmé.Avec plaisir ! À bientôt chez Tasty Crousty."
+}
+[2026-03-16 14:05:20] [INFO] [MZ8bd8a4...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "http://localhost:8080/api/process-call"
+}
+[2026-03-16 14:05:21] [INFO] [unknown...] process-call: 1. Requete recue
+   {
+  "detail": "body keys=transcription"
+}
+[2026-03-16 14:05:21] [INFO] [unknown...] process-call: 2. Transcription presente
+   {
+  "detail": "length=734"
+}
+[2026-03-16 14:05:21] [INFO] [unknown...] process-call: 3. Appel extractCallData (GPT)
+[2026-03-16 14:05:21] [INFO] [unknown...] [TRANSCRIPTION_RAW_FOR_GPT] Transcription brute reçue pour extraction GPT
+   {
+  "transcriptionLength": 734,
+  "transcriptionPreview": "Appel démarré - StreamSid: MZ8bd8a44b2a4e5fc4a2de1ff887881d8f\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour combien de personnes ?Très bien, demain, 12h. Il reste encore de la disponibilité. Confirmez-vous 12h ?Parfait. Pour 6 personnes, demain à 12h, c'est bien ça ?Merci, noter la réservation. Quel est votre nom ?Merci, votre nom est Axel, c'est bien ça ?D’accord, je note Axel. Pouvez-vous me donner votre numéro de téléphone ?C'est bien le 0 6 72 88 62 55 ?Parfait, c'est correct. La rés...",
+  "transcriptionFull": "Appel démarré - StreamSid: MZ8bd8a44b2a4e5fc4a2de1ff887881d8f\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour combien de personnes ?Très bien, demain, 12h. Il reste encore de la disponibilité. Confirmez-vous 12h ?Parfait. Pour 6 personnes, demain à 12h, c'est bien ça ?Merci, noter la réservation. Quel est votre nom ?Merci, votre nom est Axel, c'est bien ça ?D’accord, je note Axel. Pouvez-vous me donner votre numéro de téléphone ?C'est bien le 0 6 72 88 62 55 ?Parfait, c'est correct. La réservation est donc pour Axel, demain à 12h, pour 6 personnes. \n\nAvez-vous autre chose à ajouter ?Très bien, donc c’est noté. Je vais finaliser la réservation. Merci, et voilà, c’est confirmé.Avec plaisir ! À bientôt chez Tasty Crousty.",
+  "promptVersion": "2.0"
+}
+[2026-03-16 14:05:21] [INFO] [MZ8bd8a4...] [CALL_COMPLETED] Appel termine avec succes
+   {
+  "totalDuration": "71211ms",
+  "instanceId": "inst_default"
+}
+[2026-03-16 14:05:21] [INFO] [MZ8bd8a4...] [AUDIO_RECORDING_SUMMARY] Récapitulatif enregistrement audio
+   {
+  "totalChunks": 3460,
+  "cleanedChunks": 3460,
+  "rnnoiseUsed": true,
+  "duration": 71211
+}
+[2026-03-16 14:05:22] [INFO] [MZ8bd8a4...] Timeout écoulé, fermeture WS OpenAI
+[2026-03-16 14:05:23] [INFO] [MZ8bd8a4...] Connexion OpenAI fermée
+[2026-03-16 14:05:26] [INFO] [unknown...] [GPT_RAW_RESPONSE] Réponse brute GPT reçue
+   {
+  "responseLength": 467,
+  "responsePreview": "{\n  \"nom\": \"Axel\",\n  \"telephone\": \"06 72 88 62 55\",\n  \"type_demande\": \"Réservation de table\",\n  \"services\": \"Autre\",\n  \"description\": \"Réservation pour 6 personnes demain à 12h\",\n  \"statut\": \"nouveau\",\n  \"reservation\": {\n    \"nom\": \"Axel\",\n    \"telephone\": \"06 72 88 62 55\",\n    \"date\": \"ASAP\",\n    \"heure\": \"12:00\",\n    \"description\": \"Réservation pour 6 personnes\",\n    \"nombrePersonnes\": 6,\n    \"notes_internes\": \"\",\n    \"statut\": \"confirme\"\n  },\n  \"order\": null\n}",
+  "responseFull": "{\n  \"nom\": \"Axel\",\n  \"telephone\": \"06 72 88 62 55\",\n  \"type_demande\": \"Réservation de table\",\n  \"services\": \"Autre\",\n  \"description\": \"Réservation pour 6 personnes demain à 12h\",\n  \"statut\": \"nouveau\",\n  \"reservation\": {\n    \"nom\": \"Axel\",\n    \"telephone\": \"06 72 88 62 55\",\n    \"date\": \"ASAP\",\n    \"heure\": \"12:00\",\n    \"description\": \"Réservation pour 6 personnes\",\n    \"nombrePersonnes\": 6,\n    \"notes_internes\": \"\",\n    \"statut\": \"confirme\"\n  },\n  \"order\": null\n}"
+}
+[2026-03-16 14:05:26] [INFO] [unknown...] [JSON_EXTRACTED_COMPARISON] JSON extrait par GPT - comparaison avec transcription
+   {
+  "extractedData": "{\n  \"nom\": \"Axel\",\n  \"telephone\": \"06 72 88 62 55\",\n  \"type_demande\": \"Réservation de table\",\n  \"services\": \"Autre\",\n  \"description\": \"Réservation pour 6 personnes demain à 12h\",\n  \"statut\": \"nouveau\",\n  \"reservation\": {\n    \"nom\": \"Axel\",\n    \"telephone\": \"06 72 88 62 55\",\n    \"date\": \"ASAP\",\n    \"heure\": \"12:00\",\n    \"description\": \"Réservation pour 6 personnes\",\n    \"nombrePersonnes\": 6,\n    \"notes_internes\": \"\",\n    \"statut\": \"confirme\"\n  },\n  \"order\": null\n}",
+  "extractedDataCompact": "{\"nom\":\"Axel\",\"telephone\":\"06 72 88 62 55\",\"type_demande\":\"Réservation de table\",\"services\":\"Autre\",\"description\":\"Réservation pour 6 personnes demain à 12h\",\"statut\":\"nouveau\",\"reservation\":{\"nom\":\"Axel\",\"telephone\":\"06 72 88 62 55\",\"date\":\"ASAP\",\"heure\":\"12:00\",\"description\":\"Réservation pour 6 personnes\",\"nombrePersonnes\":6,\"notes_internes\":\"\",\"statut\":\"confirme\"},\"order\":null}",
+  "transcriptionOriginal": "Appel démarré - StreamSid: MZ8bd8a44b2a4e5fc4a2de1ff887881d8f\nBonjour, Tasty Crousty, je vous écoute.Bien sûr, pour combien de personnes ?Très bien, demain, 12h. Il reste encore de la disponibilité. Confirmez-vous 12h ?Parfait. Pour 6 personnes, demain à 12h, c'est bien ça ?Merci, noter la réservation. Quel est votre nom ?Merci, votre nom est Axel, c'est bien ça ?D’accord, je note Axel. Pouvez-vous me donner votre numéro de téléphone ?C'est bien le 0 6 72 88 62 55 ?Parfait, c'est correct. La réservation est donc pour Axel, demain à 12h, pour 6 personnes. \n\nAvez-vous autre chose à ajouter ?Très bien, donc c’est noté. Je vais finaliser la réservation. Merci, et voilà, c’est confirmé.Avec plaisir ! À bientôt chez Tasty Crousty.",
+  "transcriptionLength": 734,
+  "extractedDataKeys": [
+    "nom",
+    "telephone",
+    "type_demande",
+    "services",
+    "description",
+    "statut",
+    "reservation",
+    "order"
+  ],
+  "hasReservation": true,
+  "hasOrder": false,
+  "hasCommandes": false,
+  "commandesCount": 0,
+  "nom": "Axel",
+  "telephone": "06 72 88 62 55",
+  "type_demande": "Réservation de table"
+}
+[2026-03-16 14:05:26] [WARN] [unknown...] [TIME_OUTSIDE_HOURS] Heure hors horaires d'ouverture
+   {
+  "heure": "12:00",
+  "date": "ASAP",
+  "reason": "Restaurant fermé le lundi",
+  "adjustedTime": null
+}
+[2026-03-16 14:05:26] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "gpt_extraction",
+  "duration": "5026ms"
+}
+[2026-03-16 14:05:26] [INFO] [unknown...] [EXTRACTION_COMPLETED] Extraction GPT-4 terminee
+   {
+  "extractedData": {
+    "nom": "Axel",
+    "telephone": "0672886255",
+    "type_demande": "Réservation de table",
+    "services": "Autre",
+    "description": "Réservation pour 6 personnes demain à 12h",
+    "statut": "nouveau",
+    "date": "2026-03-16T13:05:26.025Z"
+  }
+}
+[2026-03-16 14:05:26] [INFO] [unknown...] process-call: 4. Verif isUseless
+   {
+  "detail": "isUseless=false hasResa=false hasOrder=false"
+}
+[2026-03-16 14:05:26] [INFO] [unknown...] process-call: 5b. Branche traitement -> ProcessCallService.process
+[2026-03-16 14:05:26] [INFO] [unknown...] [API_CALL_STARTED] Appel API demarre
+   {
+  "endpoint": "ProcessCallService.process"
+}
+[2026-03-16 14:05:26] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "api_save",
+  "duration": "1ms"
+}
+[2026-03-16 14:05:26] [INFO] [unknown...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-16 14:05:26] [INFO] [unknown...] [PERFORMANCE] Performance
+   {
+  "operation": "total_processing",
+  "duration": "5037ms"
+}
+[2026-03-16 14:05:26] [INFO] [unknown...] process-call: 6. Succes -> envoi notif (processed)
+   {
+  "detail": "orderId=—"
+}
+[2026-03-16 14:05:26] [INFO] Notification envoyée
+   {
+  "type": "call_completed",
+  "sentCount": 1,
+  "totalConnections": 1,
+  "notificationData": {
+    "title": "Appel IA : Réservation",
+    "message": "Appel terminé – Réservation (aucune action enregistrée).",
+    "hasOrder": false,
+    "details": {
+      "callId": null,
+      "orderId": null,
+      "appointmentType": null,
+      "client": "Axel",
+      "telephone": "0672886255",
+      "type_demande": "Réservation de table",
+      "callTypeLabel": "Réservation",
+      "services": "Autre",
+      "description": "Réservation pour 6 personnes demain à 12h",
+      "duration": null,
+      "heure": "14:05"
+    },
+    "priority": "info"
+  }
+}
+[2026-03-16 14:05:26] [INFO] [unknown...] process-call: 7. Reponse 201 envoyee
+[2026-03-16 14:05:26] [INFO] [MZ8bd8a4...] [PERFORMANCE] Performance
+   {
+  "operation": "api_call",
+  "duration": "5170ms"
+}
+[2026-03-16 14:05:26] [INFO] [MZ8bd8a4...] [API_CALL_COMPLETED] Appel API termine
+   {
+  "responseStatus": 201
+}
+[2026-03-16 14:05:26] [INFO] [MZ8bd8a4...] Appel traité avec succès
+   {
+  "result": {
+    "success": true,
+    "message": "Appel traité : réservation et/ou commande créée(s)",
+    "data": {
+      "reservation": null,
+      "order": null
+    }
+  }
+}
+[2026-03-16 19:28:18] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:28:18] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:28:18] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:29:20] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:29:21] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:29:21] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:29:21] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:39:16] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:39:18] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:39:18] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:39:18] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:39:44] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:39:44] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:39:44] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:39:44] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:39:44] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:39:45] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:39:45] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:39:45] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:39:52] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:39:52] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:39:52] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:39:52] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:39:52] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:39:53] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:39:53] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:39:53] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:39:53] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:39:53] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:39:53] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:39:53] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:39:53] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:39:54] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:39:54] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:39:54] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:40:51] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:40:53] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:40:53] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:40:53] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:43:37] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:43:37] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:43:37] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:43:37] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:43:37] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:43:38] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:43:38] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:43:38] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:45:32] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:45:43] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:45:43] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:45:43] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:45:49] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:45:52] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:45:52] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:45:52] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:48:20] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 19:48:21] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:48:21] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:48:21] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:53:47] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 1
+}
+[2026-03-16 19:53:47] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 2,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:53:47] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:57:59] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:57:59] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:57:59] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:58:01] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 1
+}
+[2026-03-16 19:58:01] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 2,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:58:01] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:58:09] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:58:09] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:58:09] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:58:11] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 1
+}
+[2026-03-16 19:58:11] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 2,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:58:11] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:58:22] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 19:58:22] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:58:22] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 19:58:23] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 1
+}
+[2026-03-16 19:58:23] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 2,
+  "connectionId": "unknown"
+}
+[2026-03-16 19:58:23] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:01:05] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 1
+}
+[2026-03-16 20:01:07] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 1
+}
+[2026-03-16 20:01:07] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 2,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:01:07] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:03:38] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 1
+}
+[2026-03-16 20:03:38] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 1
+}
+[2026-03-16 20:03:38] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 2,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:03:38] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:04:27] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 1
+}
+[2026-03-16 20:05:59] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 20:18:54] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:18:54] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:18:54] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:24:09] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 20:24:09] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:24:09] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:24:09] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:24:09] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 1
+}
+[2026-03-16 20:24:09] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 2,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:24:09] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:24:10] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 1
+}
+[2026-03-16 20:26:03] [INFO] Connexion notification supprimée
+   {
+  "totalConnections": 0
+}
+[2026-03-16 20:26:12] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:26:12] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:26:12] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:31:00] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:31:00] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:31:00] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:31:15] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:31:15] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:31:15] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:31:57] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:31:57] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:31:57] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:32:14] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:32:14] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:32:14] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:32:19] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:32:19] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:32:19] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:33:01] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:33:01] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:33:01] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:33:06] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:33:06] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:33:06] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:33:39] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:33:39] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:33:39] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}
+[2026-03-16 20:33:43] [INFO] WebSocket /ws/notifications: connexion entrante
+   {
+  "readyState": 1,
+  "hasSend": true,
+  "totalConnectionsAvant": 0
+}
+[2026-03-16 20:33:43] [INFO] Nouvelle connexion notification ajoutée
+   {
+  "totalConnections": 1,
+  "connectionId": "unknown"
+}
+[2026-03-16 20:33:43] [INFO] Connexion notification WebSocket établie
+   {
+  "clientIp": "127.0.0.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0"
+}

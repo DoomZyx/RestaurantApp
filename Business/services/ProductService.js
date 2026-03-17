@@ -3,24 +3,31 @@ import mongoose from "mongoose";
 import { PricingValidator } from "../validators/PricingValidator.js";
 import { VALID_SIZES } from "../../Config/defaults/pricingDefaults.js";
 
+const DEFAULT_INSTANCE_ID = "inst_default";
+
+function resolveInstanceId(instanceId) {
+  return instanceId != null && String(instanceId).trim() !== "" ? String(instanceId).trim() : DEFAULT_INSTANCE_ID;
+}
+
 /**
- * Service de gestion des produits du menu
+ * Service de gestion des produits du menu (multi-tenant par instanceId)
  */
 export class ProductService {
   /**
    * Ajoute un nouveau produit à une catégorie
    * @param {string} category - Catégorie du produit
    * @param {Object} productData - Données du produit
+   * @param {string} [instanceId]
    * @returns {Promise<Object>} Catégorie mise à jour
    */
-  static async addProduct(category, productData) {
-    // Validation
+  static async addProduct(category, productData, instanceId) {
+    const id = resolveInstanceId(instanceId);
     const validation = PricingValidator.validateProduct(productData, category);
     if (!validation.isValid) {
       throw new Error(validation.errors.join(', '));
     }
 
-    const pricing = await PricingModel.findOne();
+    const pricing = await PricingModel.findOne({ instanceId: id });
     if (!pricing) {
       throw new Error("Configuration des tarifs non trouvée");
     }
@@ -89,10 +96,12 @@ export class ProductService {
    * @param {string} category - Catégorie du produit
    * @param {string} productId - ID du produit
    * @param {Object} productData - Nouvelles données
+   * @param {string} [instanceId]
    * @returns {Promise<Object>} Produit mis à jour
    */
-  static async updateProduct(category, productId, productData) {
-    const pricing = await PricingModel.findOne();
+  static async updateProduct(category, productId, productData, instanceId) {
+    const id = resolveInstanceId(instanceId);
+    const pricing = await PricingModel.findOne({ instanceId: id });
     if (!pricing) {
       throw new Error("Configuration des tarifs non trouvée");
     }
@@ -164,7 +173,7 @@ export class ProductService {
 
 
     // Recharger et retourner le produit mis à jour
-    const updated = await PricingModel.findOne();
+    const updated = await PricingModel.findOne({ instanceId: id });
     const updatedProduct = updated.toObject().menuPricing[category].produits.find(
       p => p._id.toString() === productId
     );
@@ -176,9 +185,11 @@ export class ProductService {
    * Supprime un produit
    * @param {string} category - Catégorie du produit
    * @param {string} productId - ID du produit
+   * @param {string} [instanceId]
    */
-  static async deleteProduct(category, productId) {
-    const pricing = await PricingModel.findOne();
+  static async deleteProduct(category, productId, instanceId) {
+    const id = resolveInstanceId(instanceId);
+    const pricing = await PricingModel.findOne({ instanceId: id });
     if (!pricing) {
       throw new Error("Configuration des tarifs non trouvée");
     }

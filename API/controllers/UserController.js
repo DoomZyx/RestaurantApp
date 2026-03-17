@@ -1,5 +1,6 @@
 import { UserService } from "../../Business/services/UserService.js";
 import { UserTransformer } from "../../Business/transformers/UserTransformer.js";
+import logger from "../../Services/logging/logger.js";
 
 /**
  * Controller de gestion des utilisateurs (admin)
@@ -12,13 +13,13 @@ export class UserController {
    */
   static async getAllUsers(request, reply) {
     try {
-      const users = await UserService.getAllUsers();
+      const users = await UserService.getAllUsers(request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.usersListResponse(users)
       );
     } catch (error) {
-      console.error("❌ Erreur getAllUsers:", error);
+      logger.error({ err: error?.message }, "Erreur getAllUsers");
 
       return reply.code(500).send(
         UserTransformer.errorResponse("Erreur lors de la récupération des utilisateurs")
@@ -33,13 +34,13 @@ export class UserController {
   static async getUserById(request, reply) {
     try {
       const { id } = request.params;
-      const user = await UserService.getUserById(id);
+      const user = await UserService.getUserById(id, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.profileResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur getUserById:", error);
+      logger.error({ err: error?.message }, "Erreur getUserById");
 
       if (error.message === "Utilisateur non trouvé") {
         return reply.code(404).send(
@@ -60,13 +61,13 @@ export class UserController {
   static async updateUser(request, reply) {
     try {
       const { id } = request.params;
-      const user = await UserService.updateUser(id, request.body);
+      const user = await UserService.updateUser(id, request.body, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.userUpdateResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur updateUser:", error);
+      logger.error({ err: error?.message }, "Erreur updateUser");
 
       // Erreurs de validation
       if (error.message.includes("déjà utilisé") || 
@@ -95,13 +96,13 @@ export class UserController {
   static async deleteUser(request, reply) {
     try {
       const { id } = request.params;
-      await UserService.deleteUser(id, request.user._id.toString());
+      await UserService.deleteUser(id, request.user._id.toString(), request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.userDeleteResponse()
       );
     } catch (error) {
-      console.error("❌ Erreur deleteUser:", error);
+      logger.error({ err: error?.message }, "Erreur deleteUser");
 
       // Erreurs métier
       if (error.message.includes("propre compte")) {
@@ -128,13 +129,13 @@ export class UserController {
    */
   static async searchUsers(request, reply) {
     try {
-      const users = await UserService.searchUsers(request.query);
+      const users = await UserService.searchUsers(request.query, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.usersListResponse(users)
       );
     } catch (error) {
-      console.error("❌ Erreur searchUsers:", error);
+      logger.error({ err: error?.message }, "Erreur searchUsers");
 
       return reply.code(500).send(
         UserTransformer.errorResponse("Erreur lors de la recherche")
@@ -151,13 +152,13 @@ export class UserController {
       const { id } = request.params;
       const { isActive } = request.body;
 
-      const user = await UserService.toggleUserStatus(id, isActive);
+      const user = await UserService.toggleUserStatus(id, isActive, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.userUpdateResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur toggleUserStatus:", error);
+      logger.error({ err: error?.message }, "Erreur toggleUserStatus");
 
       if (error.message === "Utilisateur non trouvé") {
         return reply.code(404).send(
@@ -180,13 +181,13 @@ export class UserController {
       const { id } = request.params;
       const { role } = request.body;
 
-      const user = await UserService.changeUserRole(id, role);
+      const user = await UserService.changeUserRole(id, role, request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.userUpdateResponse(user)
       );
     } catch (error) {
-      console.error("❌ Erreur changeUserRole:", error);
+      logger.error({ err: error?.message }, "Erreur changeUserRole");
 
       if (error.message.includes("invalide")) {
         return reply.code(400).send(
@@ -212,13 +213,13 @@ export class UserController {
    */
   static async getUserStats(request, reply) {
     try {
-      const stats = await UserService.getUserStats();
+      const stats = await UserService.getUserStats(request.instanceId);
 
       return reply.code(200).send(
         UserTransformer.statsResponse(stats)
       );
     } catch (error) {
-      console.error("❌ Erreur getUserStats:", error);
+      logger.error({ err: error?.message }, "Erreur getUserStats");
 
       return reply.code(500).send(
         UserTransformer.errorResponse("Erreur lors de la récupération des statistiques")

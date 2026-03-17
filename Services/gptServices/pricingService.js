@@ -1,59 +1,54 @@
 import PricingModel from "../../models/pricing.js";
 
-// Récupérer les tarifs et les intégrer dans le prompt GPT
-export async function getPricingForGPT() {
-  try {
-    const pricing = await PricingModel.findOne();
-    if (!pricing) {
-      return null;
-    }
-
-    // Format simplifié pour GPT
-    const gptPricing = {
-      restaurantInfo: pricing.restaurantInfo,
-      menu: {},
-      availability: pricing.verifierDisponibilite()
+/**
+ * Même format que getPricingForGPT mais à partir d'un document pricing (ex. déjà filtré par instanceId).
+ * Exporté pour usage par instanceConfigLoader.
+ */
+export function buildGptPricingFromDoc(pricing) {
+  if (!pricing) return null;
+  const gptPricing = {
+    restaurantInfo: pricing.restaurantInfo,
+    menu: {},
+    availability: pricing.verifierDisponibilite ? pricing.verifierDisponibilite() : false
+  };
+  const menuPricing = pricing.menuPricing || {};
+  Object.keys(menuPricing).forEach((categorie) => {
+    const cat = menuPricing[categorie];
+    gptPricing.menu[categorie] = {
+      nom: cat.nom,
+      produits: (cat.produits || [])
+        .filter((p) => p.disponible)
+        .map((p) => ({
+          nom: p.nom,
+          description: p.description,
+          prix: p.prixBase,
+          options: p.options
+        }))
     };
+  });
+  return gptPricing;
+}
 
-    // Simplifier le menu pour GPT
-    Object.keys(pricing.menuPricing).forEach(categorie => {
-      gptPricing.menu[categorie] = {
-        nom: pricing.menuPricing[categorie].nom,
-        produits: pricing.menuPricing[categorie].produits
-          .filter(p => p.disponible)
-          .map(p => {
-            const produitData = {
-              nom: p.nom,
-              description: p.description,
-              prix: p.prixBase
-            };
-            
-            // Ajouter les options pour les tacos
-            if (p.options && Object.keys(p.options).length > 0) {
-              produitData.options = p.options;
-            }
-            
-            return produitData;
-          })
-      };
-    });
-
-    return gptPricing;
+// Récupérer les tarifs et les intégrer dans le prompt GPT
+export async function getPricingForGPT(instanceId) {
+  try {
+    const filter = instanceId != null && String(instanceId).trim() !== "" ? { instanceId: String(instanceId).trim() } : {};
+    const pricing = await PricingModel.findOne(filter);
+    if (!pricing) return null;
+    return buildGptPricingFromDoc(pricing);
   } catch (error) {
     console.error("Erreur lors de la récupération des tarifs pour GPT:", error);
     return null;
   }
 }
 
-// Générer un prompt enrichi avec les tarifs
-export async function generateEnrichedPrompt(basePrompt) {
-  try {
-    const pricing = await getPricingForGPT();
-    if (!pricing) {
-      return basePrompt;
-    }
-
-    let enrichedPrompt = basePrompt;
+/**
+ * Génère le prompt enrichi à partir d'un objet pricing déjà au format GPT (restaurantInfo + menu).
+ * Utilisé par instanceConfigLoader pour éviter un second accès BDD.
+ */
+export function generateEnrichedPromptWithPricing(basePrompt, pricing) {
+  if (!pricing) return basePrompt;
+  let enrichedPrompt = basePrompt;
 
     // Ajouter les informations du restaurant
     if (pricing.restaurantInfo.nom) {
@@ -141,10 +136,15 @@ Client : "Un coca"
 Toi : "Parfait ! C'est note : menu tacos double poulet sauce samourai avec salade et tomates, et un coca. Pour quelle heure ?"
 `;
 
-    // Ajouter les informations de tarifs à la fin du prompt
-    enrichedPrompt += pricingInfo;
+  enrichedPrompt += pricingInfo;
+  return enrichedPrompt;
+}
 
-    return enrichedPrompt;
+// Générer un prompt enrichi avec les tarifs (charge BDD via getPricingForGPT)
+export async function generateEnrichedPrompt(basePrompt, instanceId) {
+  try {
+    const pricing = await getPricingForGPT(instanceId);
+    return generateEnrichedPromptWithPricing(basePrompt, pricing);
   } catch (error) {
     console.error("Erreur lors de la génération du prompt enrichi:", error);
     return basePrompt;
@@ -152,9 +152,10 @@ Toi : "Parfait ! C'est note : menu tacos double poulet sauce samourai avec salad
 }
 
 // Calculer le prix total d'une commande (retourne uniquement TTC)
-export async function calculateOrderTotal(orderItems) {
+export async function calculateOrderTotal(orderItems, instanceId) {
   try {
-    const pricingDoc = await PricingModel.findOne();
+    const filter = instanceId != null && String(instanceId).trim() !== "" ? { instanceId: String(instanceId).trim() } : {};
+    const pricingDoc = await PricingModel.findOne(filter);
     if (!pricingDoc) {
       return { total: 0 };
     }
@@ -243,7 +244,7 @@ export function getSimilarProducts(nomProduit, categorie, pricing) {
 }
 
 // Fonction utilitaire pour récupérer les infos du restaurant depuis la BDD
-export async function getRestaurantInfo() {
-  const pricing = await getPricingForGPT();
+export async function getRestaurantInfo(instanceId) {
+  const pricing = await getPricingForGPT(instanceId);
   return pricing?.restaurantInfo || null;
 }

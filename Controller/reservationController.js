@@ -1,4 +1,10 @@
 import ReservationModel from "../models/reservation.js";
+import logger from "../Services/logging/logger.js";
+
+const DEFAULT_INSTANCE_ID = "inst_default";
+function getInstanceId(req) {
+  return req.instanceId || DEFAULT_INSTANCE_ID;
+}
 
 function digitsOnly(phone) {
   if (phone == null || phone === "") return "";
@@ -31,9 +37,11 @@ function normalizeTime(raw) {
 export async function createReservation(request, reply) {
   try {
     const data = request.body;
+    const instanceId = getInstanceId(request);
     const relatedCall =
       data.related_call && String(data.related_call).length === 24 ? data.related_call : null;
     const reservation = await ReservationModel.create({
+      instanceId,
       nom: data.nom || null,
       telephone: data.telephone || null,
       date: data.date,
@@ -47,7 +55,7 @@ export async function createReservation(request, reply) {
     });
     return reply.code(201).send({ success: true, data: reservation });
   } catch (error) {
-    console.error("Erreur création réservation:", error);
+    logger.error({ err: error?.message }, "Erreur création réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -58,8 +66,9 @@ export async function createReservation(request, reply) {
 /** Récupérer les réservations avec filtres et pagination */
 export async function getReservations(request, reply) {
   try {
+    const instanceId = getInstanceId(request);
     const { page = 1, limit = 10, statut, date } = request.query;
-    const filter = {};
+    const filter = { instanceId };
     if (statut) filter.statut = statut;
     if (date) {
       const startDate = new Date(date);
@@ -84,7 +93,7 @@ export async function getReservations(request, reply) {
       },
     });
   } catch (error) {
-    console.error("Erreur récupération réservations:", error);
+    logger.error({ err: error?.message }, "Erreur récupération réservations");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -95,16 +104,18 @@ export async function getReservations(request, reply) {
 /** Récupérer les réservations du jour */
 export async function getTodayReservations(request, reply) {
   try {
+    const instanceId = getInstanceId(request);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     const reservations = await ReservationModel.find({
+      instanceId,
       date: { $gte: today, $lt: tomorrow },
     }).sort({ heure: 1 });
     return reply.send({ success: true, data: reservations });
   } catch (error) {
-    console.error("Erreur réservations du jour:", error);
+    logger.error({ err: error?.message }, "Erreur réservations du jour");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -116,13 +127,14 @@ export async function getTodayReservations(request, reply) {
 export async function getReservationById(request, reply) {
   try {
     const { id } = request.params;
-    const reservation = await ReservationModel.findById(id);
+    const instanceId = getInstanceId(request);
+    const reservation = await ReservationModel.findOne({ _id: id, instanceId });
     if (!reservation) {
       return reply.code(404).send({ error: "Réservation non trouvée" });
     }
     return reply.send({ success: true, data: reservation });
   } catch (error) {
-    console.error("Erreur récupération réservation:", error);
+    logger.error({ err: error?.message }, "Erreur récupération réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -134,9 +146,10 @@ export async function getReservationById(request, reply) {
 export async function updateReservation(request, reply) {
   try {
     const { id } = request.params;
+    const instanceId = getInstanceId(request);
     const updateData = request.body;
-    const reservation = await ReservationModel.findByIdAndUpdate(
-      id,
+    const reservation = await ReservationModel.findOneAndUpdate(
+      { _id: id, instanceId },
       updateData,
       { new: true, runValidators: true },
     );
@@ -145,7 +158,7 @@ export async function updateReservation(request, reply) {
     }
     return reply.send({ success: true, data: reservation });
   } catch (error) {
-    console.error("Erreur mise à jour réservation:", error);
+    logger.error({ err: error?.message }, "Erreur mise à jour réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -157,9 +170,10 @@ export async function updateReservation(request, reply) {
 export async function updateReservationStatus(request, reply) {
   try {
     const { id } = request.params;
+    const instanceId = getInstanceId(request);
     const { statut } = request.body;
-    const reservation = await ReservationModel.findByIdAndUpdate(
-      id,
+    const reservation = await ReservationModel.findOneAndUpdate(
+      { _id: id, instanceId },
       { statut },
       { new: true, runValidators: true },
     );
@@ -168,7 +182,7 @@ export async function updateReservationStatus(request, reply) {
     }
     return reply.send({ success: true, data: reservation });
   } catch (error) {
-    console.error("Erreur mise à jour statut réservation:", error);
+    logger.error({ err: error?.message }, "Erreur mise à jour statut réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -180,7 +194,8 @@ export async function updateReservationStatus(request, reply) {
 export async function deleteReservation(request, reply) {
   try {
     const { id } = request.params;
-    const reservation = await ReservationModel.findByIdAndDelete(id);
+    const instanceId = getInstanceId(request);
+    const reservation = await ReservationModel.findOneAndDelete({ _id: id, instanceId });
     if (!reservation) {
       return reply.code(404).send({ error: "Réservation non trouvée" });
     }
@@ -189,7 +204,7 @@ export async function deleteReservation(request, reply) {
       message: "Réservation supprimée avec succès",
     });
   } catch (error) {
-    console.error("Erreur suppression réservation:", error);
+    logger.error({ err: error?.message }, "Erreur suppression réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -218,7 +233,7 @@ export async function checkAvailability(request, reply) {
       conflicts: conflicts.length,
     });
   } catch (error) {
-    console.error("Erreur vérification disponibilité réservation:", error);
+    logger.error({ err: error?.message }, "Erreur vérification disponibilité réservation");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -229,9 +244,10 @@ export async function checkAvailability(request, reply) {
 /** Créneaux disponibles pour une date (réservations + horaires) */
 export async function getAvailableSlots(request, reply) {
   try {
+    const instanceId = getInstanceId(request);
     const { date } = request.query;
     const PricingModel = (await import("../models/pricing.js")).default;
-    const pricing = await PricingModel.findOne();
+    const pricing = await PricingModel.findOne({ instanceId });
 
     if (!pricing || !pricing.restaurantInfo?.horairesOuverture) {
       return reply.code(503).send({
@@ -305,6 +321,7 @@ export async function getAvailableSlots(request, reply) {
     const endDate = new Date(date);
     endDate.setDate(endDate.getDate() + 1);
     const occupiedReservations = await ReservationModel.find({
+      instanceId,
       date: { $gte: startDate, $lt: endDate },
       statut: { $nin: ["annule", "termine"] },
     });
@@ -350,7 +367,7 @@ export async function getAvailableSlots(request, reply) {
       remainingCoversSoir,
     });
   } catch (error) {
-    console.error("Erreur créneaux disponibles réservations:", error);
+    logger.error({ err: error?.message }, "Erreur créneaux disponibles réservations");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -395,9 +412,10 @@ export async function createReservationFromAI(request, reply) {
         ? data.nombrePersonnes
         : parseInt(data.nombrePersonnes, 10) || 1;
 
+    const instanceId = getInstanceId(request);
     // Vérification capacité (max couverts) : toujours appliquée si maxCouverts configuré
     const PricingModel = (await import("../models/pricing.js")).default;
-    const pricing = await PricingModel.findOne();
+    const pricing = await PricingModel.findOne({ instanceId });
     const maxCouverts = pricing?.restaurantInfo?.nombreCouverts;
     if (maxCouverts != null && Number(maxCouverts) > 0) {
       const startDate = new Date(reservationDate);
@@ -405,6 +423,7 @@ export async function createReservationFromAI(request, reply) {
       const endDate = new Date(reservationDate);
       endDate.setDate(endDate.getDate() + 1);
       const reservationsDuJour = await ReservationModel.find({
+        instanceId,
         date: { $gte: startDate, $lt: endDate },
         statut: { $nin: ["annule", "termine"] },
       });
@@ -456,6 +475,7 @@ export async function createReservationFromAI(request, reply) {
     }
 
     const reservationToCreate = {
+      instanceId,
       nom: (data.name || "Client").trim() || null,
       telephone: rawPhone.trim(),
       date: reservationDate,
@@ -475,7 +495,7 @@ export async function createReservationFromAI(request, reply) {
       message: "Réservation créée",
     });
   } catch (error) {
-    console.error("Erreur création réservation depuis l'IA:", error);
+    logger.error({ err: error?.message }, "Erreur création réservation depuis l'IA");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,

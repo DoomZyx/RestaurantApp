@@ -1,15 +1,23 @@
 import OrderModel from "../models/order.js";
+import logger from "../Services/logging/logger.js";
+
+const DEFAULT_INSTANCE_ID = "inst_default";
+function getInstanceId(req) {
+  return req.instanceId || DEFAULT_INSTANCE_ID;
+}
 
 // Créer une nouvelle commande (sans champ client : commandes à emporter uniquement)
 export async function createOrder(request, reply) {
   try {
     const orderData = request.body;
+    const instanceId = getInstanceId(request);
 
     const relatedCall =
       orderData.related_call && String(orderData.related_call).length === 24
         ? orderData.related_call
         : null;
     const order = await OrderModel.create({
+      instanceId,
       nom: orderData.nom || null,
       telephone: orderData.telephone || null,
       date: orderData.date,
@@ -25,7 +33,7 @@ export async function createOrder(request, reply) {
       data: order,
     });
   } catch (error) {
-    console.error("Erreur lors de la création de la commande:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la création de la commande");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -36,10 +44,11 @@ export async function createOrder(request, reply) {
 // Récupérer toutes les commandes
 export async function getOrders(request, reply) {
   try {
+    const instanceId = getInstanceId(request);
     const { page = 1, limit = 10, statut, type, date, modalite } = request.query;
 
     // Construire le filtre
-    const filter = {};
+    const filter = { instanceId };
     if (statut) filter.statut = statut;
     if (type) filter.type = type;
     if (modalite) filter.modalite = modalite;
@@ -73,7 +82,7 @@ export async function getOrders(request, reply) {
       },
     });
   } catch (error) {
-    console.error("Erreur lors de la récupération des commandes:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la récupération des commandes");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -90,7 +99,9 @@ export async function getTodayOrders(request, reply) {
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
+    const instanceId = getInstanceId(request);
     const orders = await OrderModel.find({
+      instanceId,
       date: { $gte: today, $lt: tomorrow },
     })
       .sort({ heure: 1 });
@@ -100,7 +111,7 @@ export async function getTodayOrders(request, reply) {
       data: orders,
     });
   } catch (error) {
-    console.error("Erreur lors de la récupération des commandes du jour:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la récupération des commandes du jour");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -112,8 +123,9 @@ export async function getTodayOrders(request, reply) {
 export async function getOrderById(request, reply) {
   try {
     const { id } = request.params;
+    const instanceId = getInstanceId(request);
 
-    const order = await OrderModel.findById(id);
+    const order = await OrderModel.findOne({ _id: id, instanceId });
 
     if (!order) {
       return reply.code(404).send({
@@ -126,7 +138,7 @@ export async function getOrderById(request, reply) {
       data: order,
     });
   } catch (error) {
-    console.error("Erreur lors de la récupération de la commande:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la récupération de la commande");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -138,10 +150,11 @@ export async function getOrderById(request, reply) {
 export async function updateOrder(request, reply) {
   try {
     const { id } = request.params;
+    const instanceId = getInstanceId(request);
     const updateData = request.body;
 
-    const order = await OrderModel.findByIdAndUpdate(
-      id,
+    const order = await OrderModel.findOneAndUpdate(
+      { _id: id, instanceId },
       updateData,
       { new: true, runValidators: true }
     );
@@ -157,7 +170,7 @@ export async function updateOrder(request, reply) {
       data: order,
     });
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de la commande:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la mise à jour de la commande");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -169,10 +182,11 @@ export async function updateOrder(request, reply) {
 export async function updateOrderStatus(request, reply) {
   try {
     const { id } = request.params;
+    const instanceId = getInstanceId(request);
     const { statut } = request.body;
 
-    const order = await OrderModel.findByIdAndUpdate(
-      id,
+    const order = await OrderModel.findOneAndUpdate(
+      { _id: id, instanceId },
       { statut },
       { new: true, runValidators: true }
     );
@@ -188,7 +202,7 @@ export async function updateOrderStatus(request, reply) {
       data: order,
     });
   } catch (error) {
-    console.error("Erreur lors de la mise à jour du statut:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la mise à jour du statut");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -200,8 +214,9 @@ export async function updateOrderStatus(request, reply) {
 export async function deleteOrder(request, reply) {
   try {
     const { id } = request.params;
+    const instanceId = getInstanceId(request);
 
-    const order = await OrderModel.findByIdAndDelete(id);
+    const order = await OrderModel.findOneAndDelete({ _id: id, instanceId });
 
     if (!order) {
       return reply.code(404).send({
@@ -214,7 +229,7 @@ export async function deleteOrder(request, reply) {
       message: "Commande supprimée avec succès",
     });
   } catch (error) {
-    console.error("Erreur lors de la suppression de la commande:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la suppression de la commande");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -225,6 +240,7 @@ export async function deleteOrder(request, reply) {
 // Vérifier la disponibilité d'un créneau
 export async function checkAvailability(request, reply) {
   try {
+    const instanceId = getInstanceId(request);
     const { date, heure, duree } = request.query;
 
     const startTime = new Date(`${date}T${heure}:00`);
@@ -232,6 +248,7 @@ export async function checkAvailability(request, reply) {
 
     // Vérifier les conflits
     const conflicts = await OrderModel.find({
+      instanceId,
       date: { $gte: startTime, $lt: endTime },
       statut: { $nin: ["annule", "termine"] }
     });
@@ -244,7 +261,7 @@ export async function checkAvailability(request, reply) {
       conflicts: conflicts.length
     });
   } catch (error) {
-    console.error("Erreur lors de la vérification de disponibilité:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la vérification de disponibilité");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -257,9 +274,10 @@ export async function getAvailableSlots(request, reply) {
   try {
     const { date } = request.query;
     
+    const instanceId = getInstanceId(request);
     // Récupérer les horaires depuis la BDD (dynamique)
     const PricingModel = (await import("../models/pricing.js")).default;
-    const pricing = await PricingModel.findOne();
+    const pricing = await PricingModel.findOne({ instanceId });
     
     if (!pricing || !pricing.restaurantInfo?.horairesOuverture) {
       return reply.code(503).send({
@@ -325,6 +343,7 @@ export async function getAvailableSlots(request, reply) {
     endDate.setDate(endDate.getDate() + 1);
 
     const occupiedOrders = await OrderModel.find({
+      instanceId,
       date: { $gte: startDate, $lt: endDate },
       statut: { $nin: ["annule", "termine"] }
     });
@@ -339,7 +358,7 @@ export async function getAvailableSlots(request, reply) {
       occupiedSlots
     });
   } catch (error) {
-    console.error("Erreur lors de la récupération des créneaux:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la récupération des créneaux");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,
@@ -433,7 +452,9 @@ export async function createOrderFromAI(request, reply) {
       });
     }
 
+    const instanceId = getInstanceId(request);
     const orderToCreate = {
+      instanceId,
       nom: (orderData.name || "Client").trim() || null,
       telephone: rawPhone.trim(),
       date: orderDate,
@@ -450,7 +471,7 @@ export async function createOrderFromAI(request, reply) {
       data: order,
     });
   } catch (error) {
-    console.error("Erreur lors de la création de commande depuis l'IA:", error);
+    logger.error({ err: error?.message }, "Erreur lors de la création de commande depuis l'IA");
     return reply.code(500).send({
       error: "Erreur interne du serveur",
       details: error.message,

@@ -7,7 +7,7 @@
 
 export const TTS_SPEED_CONFIG = {
   // Prise de commande générale (questions sur produits, menu, etc.)
-  ORDER_TAKING: 1.3,
+  ORDER_TAKING: 1.2,
   
   // Confirmation de commandes (récapitulatif avant validation)
   ORDER_CONFIRMATION: 1.15,

@@ -12,12 +12,14 @@ export class OrderService {
    * @returns {Promise<Object|null>} Réservation créée ou null
    */
   static async createReservationFromData(reservationData, options = {}) {
-    const { callId } = options;
+    const { callId, instanceId } = options;
+    const id = instanceId || "inst_default";
     const { orderDate, orderHeure } = this._handleAsapDateTime(
       reservationData.date,
       reservationData.heure
     );
     const created = await ReservationModel.create({
+      instanceId: id,
       nom: reservationData.nom || "Client inconnu",
       telephone: reservationData.telephone && reservationData.telephone !== "Non fourni" ? reservationData.telephone : null,
       date: orderDate,
@@ -39,12 +41,14 @@ export class OrderService {
    * @returns {Promise<Object|null>} Commande créée ou null
    */
   static async createOrderFromAppointment(orderData, options = {}) {
-    const { client, callId, nom, telephone } = options;
+    const { client, callId, nom, telephone, instanceId } = options;
+    const id = instanceId || "inst_default";
     const { orderDate, orderHeure } = this._handleAsapDateTime(
       orderData.date,
       orderData.heure
     );
     const createdOrder = await OrderModel.create({
+      instanceId: id,
       nom: !client ? (nom || orderData.nom || "Client Inconnu") : null,
       telephone: !client && (telephone || orderData.telephone) && (telephone || orderData.telephone) !== "Non fourni" ? (telephone || orderData.telephone) : null,
       date: orderDate,
@@ -91,9 +95,10 @@ export class OrderService {
    * @returns {Promise<Array>} Commandes trouvées
    */
   static async searchOrders(criteria) {
-    const { searchTerm, isDateSearch, clientIds } = criteria;
+    const { searchTerm, isDateSearch, clientIds, instanceId } = criteria;
+    const id = instanceId || "inst_default";
 
-    let filters = {};
+    let filters = { instanceId: id };
 
     if (isDateSearch) {
       filters.date = {
@@ -122,8 +127,9 @@ export class OrderService {
    * @param {string} clientId - ID du client
    * @returns {Promise<Array>} Commandes du client
    */
-  static async getOrdersByClient(clientId) {
-    const orders = await OrderModel.find({ client: clientId })
+  static async getOrdersByClient(clientId, instanceId) {
+    const id = instanceId || "inst_default";
+    const orders = await OrderModel.find({ instanceId: id, client: clientId })
       .sort({ date: -1, heure: -1 })
       .populate("client");
 
