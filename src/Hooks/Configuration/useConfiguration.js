@@ -89,6 +89,7 @@ export function useConfiguration() {
         
         // Construire l'objet final en GARDANT les données du backend
         const initializedData = {
+          instancePhoneNumber: data.instancePhoneNumber || null,
           restaurantInfo: {
             nom: data.restaurantInfo?.nom || "",
             adresse: data.restaurantInfo?.adresse || "",

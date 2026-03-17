@@ -27,7 +27,7 @@ function Menu() {
 
   const handleLogout = () => {
     logoutUser();
-    navigate("/login");
+    navigate("/", { replace: true });
   };
 
   // Construire l'URL de l'avatar (Cloudinary renvoie des URLs complètes)
@@ -108,10 +108,12 @@ function Menu() {
             <i className="bi bi-person-badge"></i>
             <h3>{t("menu.myAccount")}</h3>
           </Link>
-          <Link className="admin" to="/admin" onClick={closeMenu}>
-            <i className="bi bi-person-gear"></i>
-            <h3>{t("menu.adminPanel")}</h3>
-          </Link>
+          {currentUser?.role === "admin" && (
+            <Link className="admin" to="/admin" onClick={closeMenu}>
+              <i className="bi bi-person-gear"></i>
+              <h3>{t("menu.adminPanel")}</h3>
+            </Link>
+          )}
         </div>
         <button
           className="logout"

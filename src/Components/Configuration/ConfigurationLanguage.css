@@ -1,0 +1,46 @@
+.language-settings h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+}
+.language-settings p {
+  color: white;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.language-settings .language-options {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.language-settings .language-options .language-btn {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.01);
+}
+.language-settings .language-options .language-btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: var(--color-accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 48px rgba(99, 102, 241, 0.2);
+}
+.language-settings .language-options .language-btn:active {
+  transform: translateY(-2px);
+}/*# sourceMappingURL=ConfigurationLanguage.css.map */

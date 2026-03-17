@@ -1,0 +1,19 @@
+.emoji-icon {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: -0.2em;
+  margin: 0 0.1em;
+}
+
+button .emoji-icon {
+  margin-right: 0.3em;
+}
+
+h1 .emoji-icon,
+h2 .emoji-icon,
+h3 .emoji-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+}/*# sourceMappingURL=EmojiText.css.map */

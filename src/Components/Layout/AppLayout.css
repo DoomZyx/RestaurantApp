@@ -1,0 +1,119 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+.app-layout .app-wallpaper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  -o-object-fit: cover;
+     object-fit: cover;
+  pointer-events: none;
+}
+.app-layout .main-content {
+  flex: 1;
+  margin-left: 280px;
+  color: var(--color-text-primary);
+  padding: 2.5rem;
+  position: relative;
+  z-index: 200;
+}
+.app-layout .main-content .title-section {
+  margin-bottom: 2.5rem;
+}
+.app-layout .main-content .title-section h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 0.75rem 0;
+  color: var(--color-text-primary);
+  letter-spacing: -0.05em;
+  line-height: 1.2;
+}
+.app-layout .main-content .title-section .subtitle {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.6;
+}
+.app-layout .main-content .content-body {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.notification-center-fixed {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 9999;
+}
+
+@media (min-width: 1024px) and (max-width: 1919px) {
+  .app-layout .main-content {
+    margin-left: 260px;
+    padding: 2rem;
+  }
+  .app-layout .main-content .title-section {
+    margin-bottom: 2rem;
+  }
+  .app-layout .main-content .title-section h1 {
+    font-size: 2.25rem;
+  }
+  .app-layout .main-content .title-section .subtitle {
+    font-size: 1.0625rem;
+  }
+  .app-layout .notification-center-fixed {
+    top: 1.75rem;
+    right: 1.75rem;
+  }
+}
+@media (max-width: 1024px) {
+  .app-layout .main-content {
+    margin-left: 0;
+    padding: 1.75rem;
+  }
+  .app-layout .main-content .title-section {
+    margin-bottom: 1.75rem;
+  }
+  .app-layout .main-content .title-section h1 {
+    font-size: 2rem;
+  }
+  .app-layout .main-content .title-section .subtitle {
+    font-size: 1rem;
+  }
+  .app-layout .notification-center-fixed {
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .app-layout .main-content {
+    padding: 1.5rem;
+  }
+  .app-layout .main-content .title-section {
+    margin-bottom: 1.5rem;
+  }
+  .app-layout .main-content .title-section h1 {
+    font-size: 1.75rem;
+  }
+  .app-layout .main-content .title-section .subtitle {
+    font-size: 0.9375rem;
+  }
+  .app-layout .notification-center-fixed {
+    top: 1.25rem;
+    right: 1.25rem;
+  }
+}/*# sourceMappingURL=AppLayout.css.map */

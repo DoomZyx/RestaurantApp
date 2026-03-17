@@ -55,10 +55,20 @@ export function getToken() {
   return localStorage.getItem("token");
 }
 
-// Obtenir l'utilisateur connecté
+// Obtenir l'utilisateur connecté (token app ou, à défaut, utilisateur site mappé)
 export function getCurrentUser() {
   const user = localStorage.getItem("user");
-  return user ? JSON.parse(user) : null;
+  if (user) {
+    try {
+      return JSON.parse(user);
+    } catch {
+      // fallthrough
+    }
+  }
+  if (isAuthenticatedViaWebsite()) {
+    return websiteUserToAppUser(getStoredWebsiteUser());
+  }
+  return null;
 }
 
 // Authentifié via le site (clé tenant + user /me) sans login app
@@ -97,23 +107,40 @@ export function isAdmin() {
   return user?.role === "admin";
 }
 
+/**
+ * En-têtes d'authentification : Bearer token ou x-website-user-email (connexion via le site).
+ */
+function getAuthHeaders(extra = {}) {
+  const headers = { "x-api-key": getApiKey(), ...extra };
+  const token = getToken();
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  } else {
+    const w = getStoredWebsiteUser();
+    if (w?.email) headers["x-website-user-email"] = w.email;
+  }
+  return headers;
+}
+
+function requireAuth() {
+  if (getToken()) return;
+  const w = getStoredWebsiteUser();
+  if (w?.email) return;
+  throw new Error("Non authentifié");
+}
+
 // Obtenir le profil utilisateur
 export async function getProfile() {
-  const token = getToken();
-  if (!token) {
-    throw new Error("Non authentifié");
-  }
+  requireAuth();
 
   const res = await fetch(`${VITE_API_URL}api/auth/profile`, {
-    headers: {
-      "x-api-key": getApiKey(),
-      Authorization: `Bearer ${token}`,
-    },
+    headers: getAuthHeaders(),
   });
 
   if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.error || "Erreur lors de la récupération du profil");
+    const err = await res.json().catch(() => ({}));
+    const msg = err.hint ? `${err.error || "Erreur"}. ${err.hint}` : (err.error || "Erreur lors de la récupération du profil");
+    throw new Error(msg);
   }
 
   return res.json();
@@ -121,18 +148,11 @@ export async function getProfile() {
 
 // Mettre à jour le profil utilisateur
 export async function updateUserProfile(profileData) {
-  const token = getToken();
-  if (!token) {
-    throw new Error("Non authentifié");
-  }
+  requireAuth();
 
   const res = await fetch(`${VITE_API_URL}api/auth/profile`, {
     method: "PUT",
-    headers: {
-      "x-api-key": getApiKey(),
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(profileData),
   });
 
@@ -146,21 +166,14 @@ export async function updateUserProfile(profileData) {
 
 // Uploader l'avatar utilisateur
 export async function uploadAvatar(file) {
-  const token = getToken();
-  if (!token) {
-    throw new Error("Non authentifié");
-  }
+  requireAuth();
 
   const formData = new FormData();
   formData.append("avatar", file);
 
   const res = await fetch(`${VITE_API_URL}api/auth/profile/avatar`, {
     method: "POST",
-    headers: {
-      "x-api-key": getApiKey(),
-      Authorization: `Bearer ${token}`,
-      // Ne pas spécifier Content-Type, le navigateur le fera automatiquement avec le boundary
-    },
+    headers: getAuthHeaders(),
     body: formData,
   });
 
@@ -174,18 +187,11 @@ export async function uploadAvatar(file) {
 
 // Créer un nouvel utilisateur (admin seulement)
 export async function createUser(userData) {
-  const token = getToken();
-  if (!token) {
-    throw new Error("Non authentifié");
-  }
+  requireAuth();
 
   const res = await fetch(`${VITE_API_URL}api/auth/register`, {
     method: "POST",
-    headers: {
-      "x-api-key": getApiKey(),
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(userData),
   });
 
@@ -201,16 +207,10 @@ export async function createUser(userData) {
 
 // Lister tous les utilisateurs (admin seulement)
 export async function getAllUsers() {
-  const token = getToken();
-  if (!token) {
-    throw new Error("Non authentifié");
-  }
+  requireAuth();
 
   const res = await fetch(`${VITE_API_URL}api/auth/users`, {
-    headers: {
-      "x-api-key": getApiKey(),
-      Authorization: `Bearer ${token}`,
-    },
+    headers: getAuthHeaders(),
   });
 
   if (!res.ok) {
@@ -225,18 +225,11 @@ export async function getAllUsers() {
 
 // Modifier un utilisateur (admin seulement)
 export async function updateUser(id, userData) {
-  const token = getToken();
-  if (!token) {
-    throw new Error("Non authentifié");
-  }
+  requireAuth();
 
   const res = await fetch(`${VITE_API_URL}api/auth/users/${id}`, {
     method: "PUT",
-    headers: {
-      "x-api-key": getApiKey(),
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(userData),
   });
 
@@ -252,17 +245,11 @@ export async function updateUser(id, userData) {
 
 // Supprimer un utilisateur (admin seulement)
 export async function deleteUser(id) {
-  const token = getToken();
-  if (!token) {
-    throw new Error("Non authentifié");
-  }
+  requireAuth();
 
   const res = await fetch(`${VITE_API_URL}api/auth/users/${id}`, {
     method: "DELETE",
-    headers: {
-      "x-api-key": getApiKey(),
-      Authorization: `Bearer ${token}`,
-    },
+    headers: getAuthHeaders(),
   });
 
   if (!res.ok) {
@@ -277,16 +264,10 @@ export async function deleteUser(id) {
 
 // Récupérer les statistiques système (admin seulement)
 export async function getSystemStats() {
-  const token = getToken();
-  if (!token) {
-    throw new Error("Non authentifié");
-  }
+  requireAuth();
 
   const res = await fetch(`${VITE_API_URL}api/auth/stats`, {
-    headers: {
-      "x-api-key": getApiKey(),
-      Authorization: `Bearer ${token}`,
-    },
+    headers: getAuthHeaders(),
   });
 
   if (!res.ok) {
@@ -301,20 +282,14 @@ export async function getSystemStats() {
 
 // Récupérer les logs système (admin seulement)
 export async function getSystemLogs(type = "all", limit = 50) {
-  const token = getToken();
-  if (!token) {
-    throw new Error("Non authentifié");
-  }
+  requireAuth();
 
   const params = new URLSearchParams();
   if (type !== "all") params.append("type", type);
   params.append("limit", limit);
 
   const res = await fetch(`${VITE_API_URL}api/auth/logs?${params}`, {
-    headers: {
-      "x-api-key": getApiKey(),
-      Authorization: `Bearer ${token}`,
-    },
+    headers: getAuthHeaders(),
   });
 
   if (!res.ok) {

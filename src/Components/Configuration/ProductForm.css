@@ -1,0 +1,242 @@
+.product-form {
+  padding: 0;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.product-form .form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
+  background: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+}
+.product-form .form-header h5 {
+  margin: 0;
+  color: #333;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.product-form .form-header .close-form-btn {
+  background: transparent;
+  border: none;
+  color: #6c757d;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+  line-height: 1;
+}
+.product-form .form-header .close-form-btn:hover {
+  background: #e9ecef;
+  color: #dc3545;
+}
+.product-form .form-row {
+  display: flex;
+  gap: 12px;
+  margin: 20px;
+  flex-wrap: wrap;
+}
+.product-form .form-row input {
+  flex: 1;
+  min-width: 180px;
+  padding: 12px 14px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+.product-form .form-row input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.08);
+}
+.product-form .form-row input::-moz-placeholder {
+  color: #adb5bd;
+}
+.product-form .form-row input::placeholder {
+  color: #adb5bd;
+}
+.product-form .custom-options-wrapper {
+  margin: 0 20px;
+}
+.product-form .menu-composition-wrapper {
+  margin: 0 20px;
+}
+.product-form .form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 20px;
+  border-top: 1px solid #e9ecef;
+}
+.product-form .form-actions button {
+  padding: 10px 24px;
+  border: 1px solid;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.product-form .form-actions button:first-child {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+.product-form .form-actions button:first-child:hover {
+  background: #0056b3;
+  border-color: #0056b3;
+}
+.product-form .form-actions button:last-child {
+  background: white;
+  color: #6c757d;
+  border-color: #ced4da;
+}
+.product-form .form-actions button:last-child:hover {
+  background: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.menu-composition-wrapper {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+.menu-composition-wrapper .search-filter {
+  margin-bottom: 20px;
+}
+.menu-composition-wrapper .search-filter input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+.menu-composition-wrapper .search-filter input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+.menu-composition-wrapper .search-filter input::-moz-placeholder {
+  color: #adb5bd;
+}
+.menu-composition-wrapper .search-filter input::placeholder {
+  color: #adb5bd;
+}
+.menu-composition-wrapper .composition-section {
+  margin-bottom: 30px;
+}
+.menu-composition-wrapper .composition-section > label {
+  display: block;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+.menu-composition-wrapper .composition-section > label input[type=checkbox] {
+  margin-right: 8px;
+}
+.menu-composition-wrapper .composition-section .product-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.menu-composition-wrapper .composition-section .product-cards .product-card {
+  background: white;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.menu-composition-wrapper .composition-section .product-cards .product-card:hover {
+  border-color: #007bff;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+}
+.menu-composition-wrapper .composition-section .product-cards .product-card.selected {
+  border-color: #007bff;
+  background: #e7f3ff;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+.menu-composition-wrapper .composition-section .product-cards .product-card.selected .card-name {
+  color: #007bff;
+  font-weight: 600;
+}
+.menu-composition-wrapper .composition-section .product-cards .product-card .card-name {
+  font-size: 0.9rem;
+  color: #495057;
+  margin-bottom: 8px;
+}
+.menu-composition-wrapper .composition-section .product-cards .product-card .card-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #28a745;
+}
+.menu-composition-wrapper .boissons-selection {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.menu-composition-wrapper .boissons-selection .boisson-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.menu-composition-wrapper .boissons-selection .boisson-checkbox:hover {
+  border-color: #007bff;
+  background: #f8f9fa;
+}
+.menu-composition-wrapper .boissons-selection .boisson-checkbox input[type=checkbox] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #007bff;
+}
+.menu-composition-wrapper .boissons-selection .boisson-checkbox span {
+  font-size: 0.9rem;
+  color: #495057;
+  font-weight: 500;
+}
+.menu-composition-wrapper .boissons-selection .boisson-checkbox:has(input:checked) {
+  border-color: #007bff;
+  background: #e7f3ff;
+}
+.menu-composition-wrapper .boissons-selection .boisson-checkbox:has(input:checked) span {
+  color: #007bff;
+  font-weight: 600;
+}
+.menu-composition-wrapper .auto-description {
+  background: #e7f3ff;
+  border-left: 4px solid #007bff;
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: #495057;
+}
+.menu-composition-wrapper .auto-description strong {
+  color: #007bff;
+}/*# sourceMappingURL=ProductForm.css.map */

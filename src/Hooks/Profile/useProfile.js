@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getProfile, updateUserProfile, uploadAvatar as uploadAvatarAPI, isAuthenticatedViaWebsite, getToken, getCurrentUser } from "../../API/auth";
+import { updateStoredWebsiteUser } from "../../API/apiKey";
 
 export function useProfile() {
   const [profileData, setProfileData] = useState({
@@ -36,23 +37,6 @@ export function useProfile() {
     try {
       setLoading(true);
       setError(null);
-      if (isAuthenticatedViaWebsite() && !getToken()) {
-        const user = getCurrentUser();
-        const formattedData = {
-          nom: user?.name || "",
-          email: user?.email || "",
-          telephone: "",
-          poste: "",
-          departement: "",
-          avatar: user?.avatar || null,
-          dateCreation: "",
-          derniereConnexion: "",
-        };
-        setProfileData(formattedData);
-        setTempData(formattedData);
-        setLoading(false);
-        return;
-      }
       const response = await getProfile();
       if (response.success && response.data?.user) {
         const user = response.data.user;
@@ -68,9 +52,38 @@ export function useProfile() {
         };
         setProfileData(formattedData);
         setTempData(formattedData);
+      } else if (isAuthenticatedViaWebsite() && !getToken()) {
+        const user = getCurrentUser();
+        const formattedData = {
+          nom: user?.name || user?.username || "",
+          email: user?.email || "",
+          telephone: "",
+          poste: "",
+          departement: "",
+          avatar: user?.avatar || null,
+          dateCreation: "",
+          derniereConnexion: "",
+        };
+        setProfileData(formattedData);
+        setTempData(formattedData);
       }
     } catch (err) {
       setError(err.message);
+      if (isAuthenticatedViaWebsite() && !getToken()) {
+        const user = getCurrentUser();
+        const formattedData = {
+          nom: user?.name || user?.username || "",
+          email: user?.email || "",
+          telephone: "",
+          poste: "",
+          departement: "",
+          avatar: user?.avatar || null,
+          dateCreation: "",
+          derniereConnexion: "",
+        };
+        setProfileData(formattedData);
+        setTempData(formattedData);
+      }
     } finally {
       setLoading(false);
     }
@@ -104,20 +117,27 @@ export function useProfile() {
       const response = await updateUserProfile(updateData);
 
       if (response.success) {
-        // Recharger le profil depuis le serveur
         await loadProfile();
-        
-        // Mettre à jour le localStorage pour synchroniser le menu
-        const currentUser = JSON.parse(localStorage.getItem("user"));
-        if (currentUser) {
-          currentUser.username = updateData.username;
-          currentUser.email = updateData.email;
-          currentUser.telephone = updateData.telephone;
-          currentUser.poste = updateData.poste;
-          currentUser.departement = updateData.departement;
-          localStorage.setItem("user", JSON.stringify(currentUser));
+
+        if (isAuthenticatedViaWebsite() && !getToken()) {
+          const avatar = response.data?.user?.avatar ?? response.data?.avatar;
+          updateStoredWebsiteUser({
+            name: updateData.username,
+            email: updateData.email,
+            ...(avatar !== undefined && { avatar }),
+          });
+        } else {
+          const currentUser = JSON.parse(localStorage.getItem("user"));
+          if (currentUser) {
+            currentUser.username = updateData.username;
+            currentUser.email = updateData.email;
+            currentUser.telephone = updateData.telephone;
+            currentUser.poste = updateData.poste;
+            currentUser.departement = updateData.departement;
+            localStorage.setItem("user", JSON.stringify(currentUser));
+          }
         }
-        
+
         setEditMode(false);
         setSuccess(true);
         setTimeout(() => setSuccess(false), 3000);
@@ -137,16 +157,19 @@ export function useProfile() {
       const response = await uploadAvatarAPI(file);
 
       if (response.success) {
-        // Recharger le profil pour afficher le nouvel avatar
         await loadProfile();
-        
-        // Mettre à jour le localStorage pour synchroniser le menu
-        const currentUser = JSON.parse(localStorage.getItem("user"));
-        if (currentUser && response.data?.avatar) {
-          currentUser.avatar = response.data.avatar;
-          localStorage.setItem("user", JSON.stringify(currentUser));
+
+        const avatar = response.data?.user?.avatar ?? response.data?.avatar;
+        if (isAuthenticatedViaWebsite() && !getToken() && avatar) {
+          updateStoredWebsiteUser({ avatar });
+        } else {
+          const currentUser = JSON.parse(localStorage.getItem("user"));
+          if (currentUser && avatar) {
+            currentUser.avatar = avatar;
+            localStorage.setItem("user", JSON.stringify(currentUser));
+          }
         }
-        
+
         setSuccess(true);
         setTimeout(() => setSuccess(false), 3000);
       }

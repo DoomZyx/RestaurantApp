@@ -1,0 +1,23 @@
+.menu-pricing .categories-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.menu-pricing .categories-container .categories-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+}
+.menu-pricing .categories-container .categories-actions .btn-addCategories {
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  background: #007bff;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.menu-pricing .categories-container .categories-actions .btn-addCategories:hover {
+  opacity: 0.8;
+}/*# sourceMappingURL=ConfigurationMenu.css.map */

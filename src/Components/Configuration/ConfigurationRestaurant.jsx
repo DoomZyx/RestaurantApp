@@ -8,7 +8,20 @@ export function ConfigurationRestaurant({ safePricing, handleInputChange }) {
   return (
     <div className="restaurant-info">
       <h3>{t('configuration.restaurant.title')}</h3>
-      
+
+      {/* Numéro intelligent (IA) - lecture seule */}
+      <div className="form-group">
+        <label>Numéro intelligent (IA mySmartFood)</label>
+        <input
+          type="tel"
+          value={safePricing.instancePhoneNumber || ""}
+          readOnly
+        />
+        <small className="help-text">
+          Ce numéro est celui de votre IA téléphonique. Il peut être communiqué à vos clients pour qu&apos;ils appellent directement l&apos;assistant.
+        </small>
+      </div>
+
       <div className="form-group">
         <label>{t('configuration.restaurant.name')}</label>
         <input
@@ -34,6 +47,9 @@ export function ConfigurationRestaurant({ safePricing, handleInputChange }) {
           value={safePricing.restaurantInfo?.telephone || ""}
           onChange={(e) => handleInputChange("restaurantInfo.telephone", e.target.value)}
         />
+        <small className="help-text">
+          Numéro du restaurant pour le transfert humain : lorsque l&apos;IA doit passer l&apos;appel à votre équipe, elle utilise ce numéro.
+        </small>
       </div>
       
       <div className="form-group">

@@ -87,6 +87,17 @@ export function getStoredWebsiteUser() {
   }
 }
 
+/**
+ * Met à jour partiellement l'utilisateur site stocké (ex. après édition profil dans l'app).
+ * @param {Object} partial - Champs à fusionner (ex. { name, email, avatar })
+ */
+export function updateStoredWebsiteUser(partial) {
+  const current = getStoredWebsiteUser();
+  if (!current || !partial || typeof partial !== "object") return;
+  const next = { ...current, ...partial };
+  sessionStorage.setItem(WEBSITE_USER_KEY, JSON.stringify(next));
+}
+
 export function clearWebsiteUser() {
   sessionStorage.removeItem(WEBSITE_USER_KEY);
 }

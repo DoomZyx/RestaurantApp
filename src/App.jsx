@@ -7,7 +7,6 @@ import "./Styles/notifications.scss";
 import "./Components/Common/EmojiText.scss";
 import { isAuthenticated, isAdmin } from "./API/auth";
 import { fetchTenantKeyFromWebsite, fetchWebsiteUser } from "./API/apiKey";
-import Login from "./Pages/Login/Login";
 import Homepage from "./Pages/Homepage/homepage";
 import Profile from "./Pages/Profile/Profile";
 import Admin from "./Pages/Admin/Admin";
@@ -52,7 +51,18 @@ function App() {
     if (!authChecked) return null;
 
     if (!isAuthenticated()) {
-      return <Navigate to="/login" replace />;
+      return (
+        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ maxWidth: 480, padding: "2rem", borderRadius: "1rem", background: "#111", border: "1px solid #333", textAlign: "center" }}>
+            <h2 style={{ marginBottom: "0.75rem" }}>Accès à l&apos;application</h2>
+            <p style={{ marginBottom: 0, color: "#ccc", lineHeight: 1.5 }}>
+              Pour utiliser mySmartFood, ouvrez l&apos;application depuis votre espace client sur le site
+              <br />
+              <strong>mysmartfood.fr</strong>, après avoir créé ou sélectionné votre abonnement.
+            </p>
+          </div>
+        </div>
+      );
     }
 
     if (requireAdmin && !isAdmin()) {
@@ -79,9 +89,6 @@ function App() {
         </div>
       )}
       <Routes>
-        {/* Route publique */}
-        <Route path="/login" element={isAuthenticated() ? <Navigate to="/" replace /> : <Login />} />
-
         {/* Routes protégées */}
         <Route
           path="/"

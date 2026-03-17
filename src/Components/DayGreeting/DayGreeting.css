@@ -1,0 +1,45 @@
+.day-greeting {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 18px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.08);
+}
+.day-greeting:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+.day-greeting .greeting-content {
+  text-align: center;
+}
+.day-greeting .greeting-content .greeting-main {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+@media (max-width: 768px) {
+  .day-greeting {
+    padding: 1.5rem;
+  }
+  .day-greeting .greeting-content .greeting-main {
+    font-size: 1.25rem;
+  }
+}
+@media (max-width: 480px) {
+  .day-greeting {
+    padding: 1.25rem;
+  }
+  .day-greeting .greeting-content .greeting-main {
+    font-size: 1.1rem;
+  }
+}/*# sourceMappingURL=DayGreeting.css.map */
