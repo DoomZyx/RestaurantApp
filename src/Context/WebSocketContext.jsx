@@ -11,15 +11,25 @@ const PING_INTERVAL_MS = 25000;
  */
 function getWebSocketUrl() {
   const explicit = import.meta.env.VITE_WS_URL;
+  let url;
   if (explicit && typeof explicit === "string" && explicit.trim()) {
-    return explicit.trim();
+    url = explicit.trim();
+  } else {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const base = apiUrl.replace(/\/$/, "");
+    if (base.startsWith("https://")) {
+      url = base.replace(/^https:\/\//, "wss://") + "/ws/notifications";
+    } else {
+      url = base.replace(/^http:\/\//, "ws://") + "/ws/notifications";
+    }
   }
-  const apiUrl = import.meta.env.VITE_API_URL;
-  const base = apiUrl.replace(/\/$/, "");
-  if (base.startsWith("https://")) {
-    return base.replace(/^https:\/\//, "wss://") + "/ws/notifications";
+  // Les navigateurs n'envoient pas x-api-key sur WebSocket ; query utile si le proxy ou une future auth l'utilise.
+  const key = import.meta.env.VITE_API_KEY;
+  if (key != null && String(key).trim() !== "") {
+    const sep = url.includes("?") ? "&" : "?";
+    url = `${url}${sep}api_key=${encodeURIComponent(String(key).trim())}`;
   }
-  return base.replace(/^http:\/\//, "ws://") + "/ws/notifications";
+  return url;
 }
 
 export function WebSocketProvider({ children }) {
@@ -107,7 +117,11 @@ export function WebSocketProvider({ children }) {
           notificationType,
         };
 
-        const hasOrderOrResa = notificationData.hasOrder === true || (notificationData.details?.orderId != null && String(notificationData.details.orderId).trim() !== "");
+        const d = notificationData.details;
+        const hasLinkId =
+          (d?.orderId != null && String(d.orderId).trim() !== "") ||
+          (d?.reservationId != null && String(d.reservationId).trim() !== "");
+        const hasOrderOrResa = notificationData.hasOrder === true || hasLinkId;
         const callbacks = callbacksRef.current;
 
         queueMicrotask(() => {
