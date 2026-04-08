@@ -1,7 +1,13 @@
-import winston from "winston";
-import DailyRotateFile from "winston-daily-rotate-file";
-import path from "path";
+/**
+ * Logs sur stdout/stderr uniquement (plus de fichiers Winston).
+ * API inchangée : default export + callLogger + notifDebugLog.
+ * Les champs sensibles restent masqués dans les objets loggés.
+ */
 import { sanitizeUrlForLog } from "./sanitizeLogUrl.js";
+
+const LEVEL_RANK = { error: 0, warn: 1, info: 2, debug: 3 };
+const envLevel = process.env.LOG_LEVEL || (process.env.NODE_ENV === "production" ? "info" : "debug");
+const minRank = LEVEL_RANK[envLevel] ?? LEVEL_RANK.info;
 
 function isSensitiveMetaKey(k) {
   const n = String(k).toLowerCase();
@@ -19,7 +25,6 @@ function isSensitiveMetaKey(k) {
   );
 }
 
-/** Parcours récursif : masque clés sensibles et paramètres api_key dans les chaînes d’URL connues. */
 function redactSensitiveDeep(value, depth = 0) {
   if (depth > 10 || value === null || value === undefined) return value;
   if (typeof value === "string") {
@@ -43,226 +48,78 @@ function redactSensitiveDeep(value, depth = 0) {
   return value;
 }
 
-// Répertoire des logs : LOG_PATH (défaut "logs") relatif à cwd
-const logDir = path.join(process.cwd(), process.env.LOG_PATH || "logs");
-const logRetention = process.env.LOG_RETENTION_DAYS || "7d";
-const logMaxSize = process.env.LOG_MAX_SIZE || "100m";
-
-function dailyTransport(options) {
-  return new DailyRotateFile({
-    dirname: logDir,
-    ...options,
-    maxSize: logMaxSize,
-    maxFiles: logRetention,
-    format: options.format || generalLogFormat,
-  });
+/** Gère (msg, meta) et (meta, msg) comme avec Winston dans ce projet. */
+function pickMessageAndMeta(a, b) {
+  if (typeof a === "string") {
+    return { message: a, meta: b != null && typeof b === "object" ? b : {} };
+  }
+  if (typeof b === "string" && a != null && typeof a === "object") {
+    return { message: b, meta: a };
+  }
+  if (a != null && typeof a === "object") {
+    return { message: b != null && typeof b === "string" ? b : (a.message ?? "[object]"), meta: a };
+  }
+  return { message: String(a), meta: {} };
 }
 
-// ========================================
-// FORMATS DE LOG
-// ========================================
-
-/**
- * Format lisible pour les fichiers de log
- * Affiche: [TIMESTAMP] [LEVEL] [SOURCE] Message - Détails
- */
-const readableFormat = winston.format.printf(({ timestamp, level, message, streamSid, event, source, ...meta }) => {
-  let log = `[${timestamp}] [${level.toUpperCase()}]`;
-  
-  if (source) {
-    log += ` [${source}]`;
+function emit(level, a, b) {
+  if (LEVEL_RANK[level] > minRank) return;
+  const { message, meta: rawMeta } = pickMessageAndMeta(a, b);
+  const meta = redactSensitiveDeep(rawMeta);
+  const ts = new Date().toISOString();
+  const prefix = `${ts} [${level.toUpperCase()}] ${message}`;
+  const hasMeta = meta && typeof meta === "object" && Object.keys(meta).length > 0;
+  if (level === "error") {
+    if (hasMeta) console.error(prefix, meta);
+    else console.error(prefix);
+  } else if (level === "warn") {
+    if (hasMeta) console.warn(prefix, meta);
+    else console.warn(prefix);
+  } else if (level === "debug") {
+    if (hasMeta) console.debug(prefix, meta);
+    else console.debug(prefix);
+  } else {
+    if (hasMeta) console.log(prefix, meta);
+    else console.log(prefix);
   }
-  if (streamSid) {
-    log += ` [${String(streamSid).substring(0, 8)}...]`;
-  }
-  if (event) {
-    log += ` [${event.toUpperCase()}]`;
-  }
-  
-  log += ` ${message}`;
-  
-  let filteredMeta = { ...meta };
-  delete filteredMeta.timestamp;
-  delete filteredMeta.event;
-  delete filteredMeta.streamSid;
-  delete filteredMeta.source;
-  if (typeof filteredMeta.url === "string") {
-    filteredMeta.url = sanitizeUrlForLog(filteredMeta.url);
-  }
-  filteredMeta = redactSensitiveDeep(filteredMeta);
+}
 
-  if (Object.keys(filteredMeta).length > 0) {
-    const hasStack = filteredMeta.stack;
-    if (hasStack) {
-      log += `\n   Contexte: ${JSON.stringify({ ...filteredMeta, stack: undefined }, null, 2)}`;
-      log += `\n   Stack: ${filteredMeta.stack}`;
-    } else {
-      log += `\n   ${JSON.stringify(filteredMeta, null, 2)}`;
-    }
-  }
-  
-  return log;
-});
-
-/**
- * Format pour les logs généraux (lisible)
- */
-const generalLogFormat = winston.format.combine(
-  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-  winston.format.errors({ stack: true }),
-  readableFormat
-);
-
-/**
- * Format pour la console (avec couleurs)
- * Pour les erreurs: affiche [source] et extrait du contexte
- */
-const consoleFormat = winston.format.combine(
-  winston.format.colorize(),
-  winston.format.timestamp({ format: "HH:mm:ss" }),
-  winston.format.printf(({ timestamp, level, message, source, streamSid, ...meta }) => {
-    let out = `${timestamp} [${level}]`;
-    if (source) out += ` [${source}]`;
-    if (streamSid) out += ` [${String(streamSid).substring(0, 8)}...]`;
-    out += ` ${message}`;
-    if (meta.stack) {
-      out += `\n   ${String(meta.stack).split("\n").slice(0, 4).join("\n   ")}`;
-    }
-    return out;
-  })
-);
-
-// ========================================
-// CONFIGURATION DES TRANSPORTS
-// ========================================
-
-const transports = [
-  new winston.transports.Console({
-    format: consoleFormat,
-  }),
-  dailyTransport({
-    filename: "error-%DATE%.log",
-    datePattern: "YYYY-MM-DD",
-    level: "error",
-  }),
-  dailyTransport({
-    filename: "calls-%DATE%.log",
-    datePattern: "YYYY-MM-DD",
-    level: "info",
-  }),
-  dailyTransport({
-    filename: "openai-%DATE%.log",
-    datePattern: "YYYY-MM-DD",
-    level: "debug",
-  }),
-];
-
-// ========================================
-// CRÉATION DU LOGGER PRINCIPAL
-// ========================================
-
-const logLevel = process.env.LOG_LEVEL || (process.env.NODE_ENV === "production" ? "info" : "debug");
-
-const logger = winston.createLogger({
-  level: logLevel,
-  format: generalLogFormat,
-  transports,
-  exitOnError: false,
-});
-
-// ========================================
-// LOGGERS SPÉCIALISÉS PAR SERVICE
-// ========================================
-
-/**
- * Logger spécifique pour OpenAI (openai.log avec rotation)
- */
-const openAiLogger = winston.createLogger({
-  level: logLevel,
-  format: generalLogFormat,
-  transports: [
-    new winston.transports.Console({ format: consoleFormat }),
-    dailyTransport({
-      filename: "openai-%DATE%.log",
-      datePattern: "YYYY-MM-DD",
-      level: "debug",
-    }),
-  ],
-  exitOnError: false,
-});
-
-// ========================================
-// MÉTHODES SPÉCIALISÉES POUR LES APPELS
-// ========================================
+const logger = {
+  error: (a, b) => emit("error", a, b),
+  warn: (a, b) => emit("warn", a, b),
+  info: (a, b) => emit("info", a, b),
+  debug: (a, b) => emit("debug", a, b),
+};
 
 export const callLogger = {
-  /**
-   * Log d'information générique
-   */
   info: (streamSid, message, meta = {}) => {
-    logger.info(message, {
-      streamSid,
-      ...meta,
-      timestamp: new Date().toISOString(),
-    });
+    logger.info(message, { streamSid, ...meta, timestamp: new Date().toISOString() });
   },
-
-  /**
-   * Log de debug générique
-   */
   debug: (streamSid, message, meta = {}) => {
-    logger.debug(message, {
-      streamSid,
-      ...meta,
-      timestamp: new Date().toISOString(),
-    });
+    logger.debug(message, { streamSid, ...meta, timestamp: new Date().toISOString() });
   },
-
-  /**
-   * Log de warning générique
-   */
   warn: (streamSid, message, meta = {}) => {
-    logger.warn(message, {
-      streamSid,
-      ...meta,
-      timestamp: new Date().toISOString(),
-    });
+    logger.warn(message, { streamSid, ...meta, timestamp: new Date().toISOString() });
   },
-
-  /**
-   * Logs spécifiques pour OpenAI Realtime
-   */
   openAi: {
     info: (streamSid, message, meta = {}) => {
-      openAiLogger.info(message, {
-        streamSid,
-        service: "openai",
-        ...meta,
-        timestamp: new Date().toISOString(),
-      });
+      logger.info(message, { streamSid, service: "openai", ...meta, timestamp: new Date().toISOString() });
     },
     debug: (streamSid, message, meta = {}) => {
-      openAiLogger.debug(message, {
-        streamSid,
-        service: "openai",
-        ...meta,
-        timestamp: new Date().toISOString(),
-      });
+      logger.debug(message, { streamSid, service: "openai", ...meta, timestamp: new Date().toISOString() });
     },
     error: (streamSid, error, context = {}) => {
-      openAiLogger.error("Erreur OpenAI", {
+      logger.error("Erreur OpenAI", {
         streamSid,
         service: "openai",
-        error: error.message,
-        stack: error.stack,
+        error: error?.message,
+        stack: error?.stack,
         context,
         event: "openai_error",
         timestamp: new Date().toISOString(),
       });
     },
   },
-
-  // Début d'appel
   callStarted: (streamSid, callerInfo = {}) => {
     logger.info("Appel demarre", {
       streamSid,
@@ -271,8 +128,6 @@ export const callLogger = {
       timestamp: new Date().toISOString(),
     });
   },
-
-  // Transcription reçue
   transcriptionReceived: (streamSid, transcriptionLength) => {
     logger.info("Transcription recue", {
       streamSid,
@@ -281,8 +136,6 @@ export const callLogger = {
       timestamp: new Date().toISOString(),
     });
   },
-
-  // Extraction GPT-4
   extractionStarted: (streamSid) => {
     logger.info("Extraction GPT-4 demarree", {
       streamSid,
@@ -290,7 +143,6 @@ export const callLogger = {
       timestamp: new Date().toISOString(),
     });
   },
-
   extractionCompleted: (streamSid, extractedData) => {
     logger.info("Extraction GPT-4 terminee", {
       streamSid,
@@ -299,8 +151,6 @@ export const callLogger = {
       timestamp: new Date().toISOString(),
     });
   },
-
-  // Sauvegarde API
   apiCallStarted: (streamSid, endpoint) => {
     logger.info("Appel API demarre", {
       streamSid,
@@ -309,7 +159,6 @@ export const callLogger = {
       timestamp: new Date().toISOString(),
     });
   },
-
   apiCallCompleted: (streamSid, response) => {
     logger.info("Appel API termine", {
       streamSid,
@@ -318,8 +167,6 @@ export const callLogger = {
       timestamp: new Date().toISOString(),
     });
   },
-
-  // Erreurs - source: fichier ou module d'origine, context: description de l'action
   error: (streamSid, error, context = {}) => {
     const message = error?.message || (typeof error === "string" ? error : "Erreur inconnue");
     const { source, ...rest } = typeof context === "object" ? context : { context };
@@ -333,8 +180,6 @@ export const callLogger = {
       timestamp: new Date().toISOString(),
     });
   },
-
-  // Performance
   performance: (streamSid, operation, duration) => {
     logger.info("Performance", {
       streamSid,
@@ -344,8 +189,6 @@ export const callLogger = {
       timestamp: new Date().toISOString(),
     });
   },
-
-  // Appel terminé (meta optionnel : instanceId pour diagnostic multi-tenant)
   callCompleted: (streamSid, totalDuration, meta = {}) => {
     const payload = {
       streamSid,
@@ -359,34 +202,8 @@ export const callLogger = {
   },
 };
 
-// ========================================
-// NOTIFICATIONS DEBUG (remplace notifDebugLog.js fs.appendFileSync)
-// Transport dédié avec rotation ; échec d'écriture remonté vers le logger principal
-// ========================================
-
-const notifRotateTransport = dailyTransport({
-  filename: "notifications-%DATE%.log",
-  datePattern: "YYYY-MM-DD",
-  level: "info",
-});
-
-const notifLogger = winston.createLogger({
-  level: "info",
-  format: generalLogFormat,
-  transports: [notifRotateTransport],
-  exitOnError: false,
-});
-
-notifRotateTransport.on("error", (err) => {
-  logger.error("notifDebugLog: échec écriture fichier notifications", { err: err.message });
-});
-
 export function notifDebugLog(msg) {
-  try {
-    notifLogger.info("[NOTIF] " + msg);
-  } catch (e) {
-    logger.error("notifDebugLog: exception", { err: e?.message });
-  }
+  console.log(`[NOTIF] ${msg}`);
 }
 
 export default logger;
