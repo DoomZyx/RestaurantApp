@@ -1,6 +1,7 @@
 // audit-fix: charger dotenv avant tout module qui utilise process.env (ex. auth.js via AuthService)
 import "./Config/env.js";
 import logger from "./Services/logging/logger.js";
+import { sanitizeUrlForLog } from "./Services/logging/sanitizeLogUrl.js";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyFormBody from "@fastify/formbody";
@@ -205,7 +206,13 @@ fastify.setErrorHandler((error, request, reply) => {
   const statusCode = error.statusCode || 500;
   if (statusCode >= 500) {
     logger.error(
-      { err: error.message, stack: error.stack, statusCode, url: request?.url, method: request?.method },
+      {
+        err: error.message,
+        stack: error.stack,
+        statusCode,
+        url: request?.url != null ? sanitizeUrlForLog(String(request.url)) : undefined,
+        method: request?.method,
+      },
       "Erreur 5xx"
     );
   }

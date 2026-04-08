@@ -1,6 +1,47 @@
 import winston from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 import path from "path";
+import { sanitizeUrlForLog } from "./sanitizeLogUrl.js";
+
+function isSensitiveMetaKey(k) {
+  const n = String(k).toLowerCase();
+  return (
+    n === "apikey" ||
+    n === "api_key" ||
+    n === "x-api-key" ||
+    n === "authorization" ||
+    n === "password" ||
+    n === "token" ||
+    n === "secret" ||
+    n === "twilioauthtoken" ||
+    n === "authtoken" ||
+    n === "cookie"
+  );
+}
+
+/** Parcours récursif : masque clés sensibles et paramètres api_key dans les chaînes d’URL connues. */
+function redactSensitiveDeep(value, depth = 0) {
+  if (depth > 10 || value === null || value === undefined) return value;
+  if (typeof value === "string") {
+    if (/api_key=/i.test(value)) return sanitizeUrlForLog(value);
+    return value;
+  }
+  if (Array.isArray(value)) {
+    return value.map((v) => redactSensitiveDeep(v, depth + 1));
+  }
+  if (typeof value === "object") {
+    const out = {};
+    for (const [k, v] of Object.entries(value)) {
+      if (isSensitiveMetaKey(k)) {
+        out[k] = "[REDACTED]";
+      } else {
+        out[k] = redactSensitiveDeep(v, depth + 1);
+      }
+    }
+    return out;
+  }
+  return value;
+}
 
 // Répertoire des logs : LOG_PATH (défaut "logs") relatif à cwd
 const logDir = path.join(process.cwd(), process.env.LOG_PATH || "logs");
@@ -40,25 +81,15 @@ const readableFormat = winston.format.printf(({ timestamp, level, message, strea
   
   log += ` ${message}`;
   
-  const filteredMeta = { ...meta };
+  let filteredMeta = { ...meta };
   delete filteredMeta.timestamp;
   delete filteredMeta.event;
   delete filteredMeta.streamSid;
   delete filteredMeta.source;
-  // Ne jamais logger de secrets (clés API, tokens Twilio/OpenAI, etc.)
-  const sensitiveKeys = [
-    "apiKey",
-    "api_key",
-    "authorization",
-    "password",
-    "token",
-    "secret",
-    "twilioAuthToken",
-    "authToken",
-  ];
-  sensitiveKeys.forEach((k) => {
-    if (Object.prototype.hasOwnProperty.call(filteredMeta, k)) filteredMeta[k] = "[REDACTED]";
-  });
+  if (typeof filteredMeta.url === "string") {
+    filteredMeta.url = sanitizeUrlForLog(filteredMeta.url);
+  }
+  filteredMeta = redactSensitiveDeep(filteredMeta);
 
   if (Object.keys(filteredMeta).length > 0) {
     const hasStack = filteredMeta.stack;

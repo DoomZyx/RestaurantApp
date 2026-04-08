@@ -20,6 +20,7 @@ import { handleWebSocketConnection } from "./Websocket/connection.js";
 import { start as startAudioWorker } from "./workers/audioWorker.js";
 import { start as startLlmWorker } from "./workers/llmWorker.js";
 import logger from "./Services/logging/logger.js";
+import { sanitizeUrlForLog } from "./Services/logging/sanitizeLogUrl.js";
 
 dotenv.config();
 
@@ -57,7 +58,27 @@ if (cluster.isPrimary) {
  */
 async function startGatewayServer() {
   await connectDB();
-  const fastify = Fastify({ logger: true });
+  const fastify = Fastify({
+    logger: {
+      level: process.env.LOG_LEVEL || "info",
+      redact: {
+        paths: ["req.headers.authorization", 'req.headers["x-api-key"]', "req.headers.cookie"],
+        censor: "[Redacted]",
+      },
+      serializers: {
+        req(req) {
+          const url = typeof req.url === "string" ? sanitizeUrlForLog(req.url) : req.url;
+          return {
+            method: req.method,
+            url,
+            host: req.headers?.host,
+            remoteAddress: req.socket?.remoteAddress,
+            remotePort: req.socket?.remotePort,
+          };
+        },
+      },
+    },
+  });
 
   // audit-fix: CORS restreint (Twilio/WebSocket); CORS_ORIGINS ou origine true si vide
   const corsOrigins = process.env.CORS_ORIGINS
