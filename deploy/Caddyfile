@@ -1,6 +1,0 @@
-# À utiliser depuis le dossier parent qui contient backend/, frontend/ et ce fichier (monté par docker-compose).
-# DNS : A / AAAA vers le VPS pour www.dashboard et dashboard.
-
-www.dashboard.mysmartfood.fr, dashboard.mysmartfood.fr {
-    reverse_proxy frontend:80
-}
