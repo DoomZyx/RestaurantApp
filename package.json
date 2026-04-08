@@ -4,6 +4,9 @@
   "description": "",
   "main": "server.js",
   "type": "module",
+  "imports": {
+    "#logger": "./Services/logging/logger.js"
+  },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --coverage",
     "monitor": "node scripts/monitor.js",

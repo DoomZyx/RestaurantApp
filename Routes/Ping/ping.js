@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import logger from "../../Services/logging/logger.js";
+import logger from "#logger";
 
 export default async function pingRoutes(fastify, options) {
   fastify.get("/ping", {
