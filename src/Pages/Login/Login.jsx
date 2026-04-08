@@ -33,13 +33,14 @@ function Login() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="login-form" autoComplete="on">
           <div className="form-group">
             <label htmlFor="email">{t('login.email')}</label>
             <input
               type="email"
               id="email"
               name="email"
+              autoComplete="email"
               value={formData.email}
               onChange={handleInputChange}
               placeholder={t('login.emailPlaceholder')}
@@ -53,6 +54,7 @@ function Login() {
               type="password"
               id="password"
               name="password"
+              autoComplete="current-password"
               value={formData.password}
               onChange={handleInputChange}
               placeholder={t('login.passwordPlaceholder')}
