@@ -7,6 +7,10 @@ const DEFAULT_INSTANCE_ID = "inst_default";
  * attache request.instanceId.
  */
 export async function multiTenantAuth(request, reply) {
+  // Preflight CORS : pas de x-api-key sur OPTIONS → ne pas répondre 401 sans en-têtes CORS.
+  if (request.method === "OPTIONS") {
+    return;
+  }
   const headerKey = request.headers["x-api-key"];
   const queryKey = request.query?.api_key;
   const rawKey = [headerKey, queryKey].find((k) => k != null && String(k).trim() !== "");
