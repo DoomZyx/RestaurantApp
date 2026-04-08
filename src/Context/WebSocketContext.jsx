@@ -24,12 +24,6 @@ function getWebSocketUrl() {
       url = base.replace(/^http:\/\//, "ws://") + "/api/ws/notifications";
     }
   }
-  // Les navigateurs n'envoient pas x-api-key sur WebSocket ; query utile si le proxy ou une future auth l'utilise.
-  const key = import.meta.env.VITE_API_KEY;
-  if (key != null && String(key).trim() !== "") {
-    const sep = url.includes("?") ? "&" : "?";
-    url = `${url}${sep}api_key=${encodeURIComponent(String(key).trim())}`;
-  }
   return url;
 }
 
