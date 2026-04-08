@@ -5,7 +5,6 @@ WORKDIR /app
 
 # pnpm
 RUN corepack enable && corepack prepare pnpm@10.12.4 --activate
-RUN pnpm add -g pnpm@10.12.4
 
 COPY package.json pnpm-lock.yaml* ./
 
