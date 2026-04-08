@@ -17,10 +17,11 @@ function getWebSocketUrl() {
   } else {
     const apiUrl = import.meta.env.VITE_API_URL;
     const base = apiUrl.replace(/\/$/, "");
+    // Sous /api pour les reverse proxy qui ne forward que ce préfixe vers Node (ex. api.mysmartfood.fr).
     if (base.startsWith("https://")) {
-      url = base.replace(/^https:\/\//, "wss://") + "/ws/notifications";
+      url = base.replace(/^https:\/\//, "wss://") + "/api/ws/notifications";
     } else {
-      url = base.replace(/^http:\/\//, "ws://") + "/ws/notifications";
+      url = base.replace(/^http:\/\//, "ws://") + "/api/ws/notifications";
     }
   }
   // Les navigateurs n'envoient pas x-api-key sur WebSocket ; query utile si le proxy ou une future auth l'utilise.
