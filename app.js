@@ -23,8 +23,6 @@ import pricingRoutes from "./Routes/Pricing/pricing.js";
 import phoneLineRoutes from "./Routes/PhoneLine/phoneLine.js";
 import callMinutesRoutes from "./Routes/CallMinutes/callMinutes.js";
 import pingRoutes from "./Routes/Ping/ping.js";
-import instanceRoutes from "./API/routes/instances.js";
-import apiKeyRoutes from "./API/routes/apiKeys.js";
 import { multiTenantAuth } from "./API/middleware/multiTenantAuth.js";
 import { AuthService } from "./Business/services/AuthService.js";
 import mongoose from "mongoose";
@@ -202,8 +200,6 @@ fastify.register(async (instance) => {
   instance.register(phoneLineRoutes, { prefix: "/api" });
   instance.register(callMinutesRoutes, { prefix: "/api" });
   instance.register(authRoutes, { prefix: "/api/auth" });
-  instance.register(instanceRoutes);
-  instance.register(apiKeyRoutes);
 });
 
 // Gestion globale des erreurs : Fastify log + Winston pour les 5xx (audit #14)
