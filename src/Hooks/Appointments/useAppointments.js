@@ -9,6 +9,7 @@ import {
   updateReservationStatus,
   deleteReservation,
   checkReservationAvailability,
+  fetchReservationAvailableSlots,
   fetchOrders,
   fetchTodayOrders,
   fetchOrder,
@@ -24,6 +25,51 @@ import { useWebSocket } from "../../Context/WebSocketContext";
 
 const RESERVATION_TYPE = "Réservation de table";
 const ORDER_TYPE = "Commande à emporter";
+
+function resolveServiceFromTime(heure) {
+  if (!heure || typeof heure !== "string") return null;
+  const match = heure.match(/^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/);
+  if (!match) return null;
+  const h = parseInt(match[1], 10);
+  const m = parseInt(match[2], 10);
+  const totalMinutes = (h * 60) + m;
+  if (totalMinutes >= (11 * 60) && totalMinutes < (15 * 60)) return "midi";
+  if (totalMinutes >= (18 * 60) && totalMinutes < (24 * 60)) return "soir";
+  return null;
+}
+
+async function validateReservationCovers(appointmentData) {
+  const date = appointmentData?.date;
+  const heure = appointmentData?.heure;
+  const requestedCovers = Number(appointmentData?.nombrePersonnes) || 1;
+
+  if (!date || !heure) return;
+
+  const service = resolveServiceFromTime(heure);
+  if (!service) return;
+
+  const slotsData = await fetchReservationAvailableSlots(date);
+  const remainingCovers =
+    service === "midi"
+      ? slotsData?.remainingCoversMidi
+      : slotsData?.remainingCoversSoir;
+
+  if (remainingCovers == null || !Number.isFinite(remainingCovers)) return;
+
+  if (remainingCovers <= 0) {
+    throw new Error(
+      service === "soir"
+        ? "Le service du soir est complet. Impossible de prendre une réservation."
+        : "Le service du midi est complet. Impossible de prendre une réservation."
+    );
+  }
+
+  if (requestedCovers > remainingCovers) {
+    throw new Error(
+      `Impossible de réserver ${requestedCovers} couvert(s). Il ne reste que ${remainingCovers} couvert(s) pour ce service.`
+    );
+  }
+}
 
 function normalizeReservation(item) {
   if (!item) return item;
@@ -150,6 +196,7 @@ export function useAppointments(mode = "orders") {
 
         let response;
         if (isReservations) {
+          await validateReservationCovers(appointmentData);
           const payload = {
             nom: appointmentData.nom,
             telephone: appointmentData.telephone,
@@ -198,6 +245,7 @@ export function useAppointments(mode = "orders") {
 
         let response;
         if (isReservations) {
+          await validateReservationCovers(appointmentData);
           const payload = {
             nom: appointmentData.nom,
             telephone: appointmentData.telephone,

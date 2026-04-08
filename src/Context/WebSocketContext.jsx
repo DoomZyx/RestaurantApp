@@ -32,6 +32,20 @@ function getWebSocketUrl() {
   return url;
 }
 
+/** URL affichable en log (sans clé API en query). */
+function websocketUrlForLog(url) {
+  if (!url || typeof url !== "string") return url;
+  try {
+    const u = new URL(url);
+    if (u.searchParams.has("api_key")) u.searchParams.set("api_key", "[REDACTED]");
+    return u.toString();
+  } catch {
+    const i = url.indexOf("api_key=");
+    if (i === -1) return url;
+    return `${url.slice(0, i)}api_key=[REDACTED]`;
+  }
+}
+
 export function WebSocketProvider({ children }) {
   const [isConnected, setIsConnected] = useState(false);
   const [lastError, setLastError] = useState(null);
@@ -61,7 +75,7 @@ export function WebSocketProvider({ children }) {
     try {
       isConnectingRef.current = true;
       const wsUrl = getWebSocketUrl();
-      if (isDev) console.log("[WS] Connexion:", wsUrl);
+      if (isDev) console.log("[WS] Connexion:", websocketUrlForLog(wsUrl));
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 

@@ -14,8 +14,25 @@ import AppointmentsPage from "./Pages/AppointmentsPage/AppointmentsPage";
 import ReservationsPage from "./Pages/ReservationsPage/ReservationsPage";
 import Configuration from "./Pages/Configuration/Configuration";
 import ErrorBoundary from "./Components/Common/ErrorBoundary";
+import Login from "./Pages/Login/Login";
 
 const FLASH_ERROR_KEY = "app_flash_error";
+
+function ProtectedRoute({ children, requireAdmin = false, authChecked }) {
+  const routeLocation = useLocation();
+  if (!authChecked) return null;
+
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace state={{ from: routeLocation }} />;
+  }
+
+  if (requireAdmin && !isAdmin()) {
+    sessionStorage.setItem(FLASH_ERROR_KEY, "Vous n'avez pas les privilèges pour accéder à cette page.");
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+}
 
 function App() {
   const [authChecked, setAuthChecked] = useState(false);
@@ -46,33 +63,6 @@ function App() {
     return () => clearTimeout(t);
   }, [flashError]);
 
-  // Composant pour protéger les routes
-  const ProtectedRoute = ({ children, requireAdmin = false }) => {
-    if (!authChecked) return null;
-
-    if (!isAuthenticated()) {
-      return (
-        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ maxWidth: 480, padding: "2rem", borderRadius: "1rem", background: "#111", border: "1px solid #333", textAlign: "center" }}>
-            <h2 style={{ marginBottom: "0.75rem" }}>Accès à l&apos;application</h2>
-            <p style={{ marginBottom: 0, color: "#ccc", lineHeight: 1.5 }}>
-              Pour utiliser mySmartFood, ouvrez l&apos;application depuis votre espace client sur le site
-              <br />
-              <strong>mysmartfood.fr</strong>, après avoir créé ou sélectionné votre abonnement.
-            </p>
-          </div>
-        </div>
-      );
-    }
-
-    if (requireAdmin && !isAdmin()) {
-      sessionStorage.setItem(FLASH_ERROR_KEY, "Vous n'avez pas les privilèges pour accéder à cette page.");
-      return <Navigate to="/" replace />;
-    }
-
-    return children;
-  };
-
   return (
     <ErrorBoundary>
       <Twemoji 
@@ -89,11 +79,13 @@ function App() {
         </div>
       )}
       <Routes>
+        <Route path="/login" element={<Login />} />
+
         {/* Routes protégées */}
         <Route
           path="/"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute authChecked={authChecked}>
               <Homepage />
             </ProtectedRoute>
           }
@@ -101,7 +93,7 @@ function App() {
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute authChecked={authChecked}>
               <Profile />
             </ProtectedRoute>
           }
@@ -109,7 +101,7 @@ function App() {
         <Route
           path="/orders"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute authChecked={authChecked}>
               <AppointmentsPage />
             </ProtectedRoute>
           }
@@ -117,7 +109,7 @@ function App() {
         <Route
           path="/reservations"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute authChecked={authChecked}>
               <ReservationsPage />
             </ProtectedRoute>
           }
@@ -125,7 +117,7 @@ function App() {
         <Route
           path="/configuration"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute authChecked={authChecked}>
               <Configuration />
             </ProtectedRoute>
           }
@@ -135,7 +127,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute requireAdmin={true}>
+            <ProtectedRoute authChecked={authChecked} requireAdmin={true}>
               <Admin />
             </ProtectedRoute>
           }

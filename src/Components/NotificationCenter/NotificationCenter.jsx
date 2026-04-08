@@ -13,19 +13,24 @@ const NotificationCenter = () => {
   const navigate = useNavigate();
   const { isConnected, lastError, reconnect } = useWebSocket();
 
-  // Gérer le clic sur une notification : naviguer puis la page ouvrira la modale détail via orderid en URL
+  // Clic : ouvrir la fiche commande ou réservation (IDs distincts dans details)
   const handleNotificationClick = (notification) => {
     notificationService.markAsRead(notification.id);
     const orderId = notification.details?.orderId;
+    const reservationId = notification.details?.reservationId;
     const appointmentType = notification.details?.appointmentType;
 
     if (notification.notificationType === "call_completed" || notification.notificationType === "new_order") {
-      if (orderId) {
+      if (reservationId && orderId) {
         if (appointmentType === "reservation") {
-          navigate(`/reservations?orderid=${orderId}`);
+          navigate(`/reservations?orderid=${reservationId}`);
         } else {
           navigate(`/orders?orderid=${orderId}`);
         }
+      } else if (reservationId) {
+        navigate(`/reservations?orderid=${reservationId}`);
+      } else if (orderId) {
+        navigate(`/orders?orderid=${orderId}`);
       } else if (notification.notificationType === "call_completed") {
         navigate("/calls-list");
       } else {

@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { loginUser, isAuthenticated } from "../../API/auth";
+
+/** Chemin interne uniquement (évite redirection ouverte). */
+function safePathFromLocation(from) {
+  if (!from || typeof from.pathname !== "string") return "/";
+  const p = from.pathname;
+  if (!p.startsWith("/") || p.startsWith("//")) return "/";
+  if (p === "/login") return "/";
+  return `${p}${from.search || ""}`;
+}
 
 export function useLogin() {
  const [formData, setFormData] = useState({
@@ -10,13 +19,13 @@ export function useLogin() {
 const [loading, setLoading] = useState(false);
 const [error, setError] = useState(null);
 const navigate = useNavigate();
+const location = useLocation();
 
 useEffect(() => {
-  // Rediriger si déjà connecté
   if (isAuthenticated()) {
-    navigate("/");
+    navigate(safePathFromLocation(location.state?.from), { replace: true });
   }
-}, [navigate]);
+}, [navigate, location.state, location.key]);
 
 const handleInputChange = (e) => {
   const { name, value } = e.target;
@@ -33,7 +42,7 @@ const handleSubmit = async (e) => {
 
   try {
     await loginUser(formData.email, formData.password);
-    navigate("/");
+    navigate(safePathFromLocation(location.state?.from), { replace: true });
   } catch (err) {
     setError(err.message);
   } finally {

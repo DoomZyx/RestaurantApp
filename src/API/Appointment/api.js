@@ -90,6 +90,18 @@ export async function checkReservationAvailability(date, heure, duree) {
   return res.json();
 }
 
+export async function fetchReservationAvailableSlots(date) {
+  const params = new URLSearchParams({ date });
+  const res = await fetch(`${VITE_API_URL}api/reservations/ai/available-slots?${params.toString()}`, {
+    headers: defaultHeaders(),
+  });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || errorData.error || "Erreur lors de la récupération des créneaux");
+  }
+  return res.json();
+}
+
 // --- Commandes à emporter (orders) ---
 
 export async function fetchOrders(page = 1, limit = 50, filters = {}) {
