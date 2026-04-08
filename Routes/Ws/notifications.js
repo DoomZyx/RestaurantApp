@@ -13,65 +13,114 @@ function requireApiKey(request, reply, done) {
   done();
 }
 
-export default async function notificationRoutes(fastify, options) {
-  // connection doit exposer .send() et .readyState (objet WebSocket @fastify/websocket)
-  fastify.get("/ws/notifications", { websocket: true }, (connection, req) => {
-    const socket = connection?.socket ?? connection;
-    const readyState = socket?.readyState;
-    const hasSend = typeof (socket?.send) === "function";
-    notifDebugLog("WS connexion entrante readyState=" + readyState + " hasSend=" + hasSend + " totalAvant=" + notificationService.connections.size);
-    callLogger.info(null, "WebSocket /ws/notifications: connexion entrante", {
-      readyState,
-      hasSend,
-      totalConnectionsAvant: notificationService.connections.size,
-    });
-    notificationService.addConnection(connection);
+/** Clé passée en query (navigateur) ou en-tête (outils). */
+function clientKeyFromRawReq(req) {
+  const headerKey = String(req.headers?.["x-api-key"] ?? "").trim();
+  if (headerKey) return headerKey;
+  try {
+    const pathAndQuery = req.url?.split("?")[1] ?? "";
+    const params = new URLSearchParams(pathAndQuery);
+    return String(params.get("api_key") ?? "").trim();
+  } catch {
+    return "";
+  }
+}
 
-    connection.on("error", (err) => {
-      callLogger.error(null, err, { context: "ws_notifications_error" });
-      notificationService.removeConnection(connection);
-    });
+/**
+ * Si X_API_KEY est défini, refuse la socket sans bonne clé (query api_key ou header x-api-key).
+ * @returns {boolean} false si la connexion a été refusée
+ */
+function rejectWsIfApiKeyInvalid(socket, req) {
+  const envKey = process.env.X_API_KEY != null ? String(process.env.X_API_KEY).trim() : "";
+  if (!envKey) return true;
+  const clientKey = clientKeyFromRawReq(req);
+  if (clientKey === envKey) return true;
+  notifDebugLog("WS notifications: rejet (cle absente ou invalide)");
+  try {
+    socket.close(1008, "Unauthorized");
+  } catch (_) {
+    /* ignore */
+  }
+  return false;
+}
 
-    connection.on("message", (message) => {
-      try {
-        const data = JSON.parse(message.toString());
+function attachNotificationWebSocket(connection, req, routeLabel) {
+  const socket = connection?.socket ?? connection;
+  if (!rejectWsIfApiKeyInvalid(socket, req)) {
+    return;
+  }
 
-        if (data.type === "ping") {
-          connection.send(
-            JSON.stringify({
-              type: "pong",
-              timestamp: new Date().toISOString(),
-            })
-          );
-        }
-      } catch (error) {
-        callLogger.error(null, "Erreur parsing message notification", {
-          error: error.message,
-        });
-      }
-    });
+  const readyState = socket?.readyState;
+  const hasSend = typeof socket?.send === "function";
+  notifDebugLog(
+    "WS connexion entrante " +
+      routeLabel +
+      " readyState=" +
+      readyState +
+      " hasSend=" +
+      hasSend +
+      " totalAvant=" +
+      notificationService.connections.size
+  );
+  callLogger.info(null, "WebSocket " + routeLabel + ": connexion entrante", {
+    readyState,
+    hasSend,
+    totalConnectionsAvant: notificationService.connections.size,
+  });
+  notificationService.addConnection(connection);
 
-    // Gérer la fermeture de connexion
-    connection.on("close", () => {
-      notificationService.removeConnection(connection);
-    });
-
-    // Envoyer un message de confirmation
-    connection.send(
-      JSON.stringify({
-        type: "connected",
-        message: "Connexion notification établie",
-        timestamp: new Date().toISOString(),
-      })
-    );
-
-    callLogger.info(null, "Connexion notification WebSocket établie", {
-      clientIp: req.ip,
-      userAgent: req.headers["user-agent"],
-    });
+  connection.on("error", (err) => {
+    callLogger.error(null, err, { context: "ws_notifications_error" });
+    notificationService.removeConnection(connection);
   });
 
-  // Route pour envoyer une notification de test (protégée par x-api-key)
+  connection.on("message", (message) => {
+    try {
+      const data = JSON.parse(message.toString());
+
+      if (data.type === "ping") {
+        connection.send(
+          JSON.stringify({
+            type: "pong",
+            timestamp: new Date().toISOString(),
+          })
+        );
+      }
+    } catch (error) {
+      callLogger.error(null, "Erreur parsing message notification", {
+        error: error.message,
+      });
+    }
+  });
+
+  connection.on("close", () => {
+    notificationService.removeConnection(connection);
+  });
+
+  connection.send(
+    JSON.stringify({
+      type: "connected",
+      message: "Connexion notification établie",
+      timestamp: new Date().toISOString(),
+    })
+  );
+
+  callLogger.info(null, "Connexion notification WebSocket établie", {
+    clientIp: req.socket?.remoteAddress,
+    userAgent: req.headers?.["user-agent"],
+  });
+}
+
+export default async function notificationRoutes(fastify, options) {
+  // Deux chemins : /api/ws/... pour reverse proxy qui ne forward que /api/* ; /ws/... rétrocompat.
+  const wsOpts = { websocket: true };
+  fastify.get("/ws/notifications", wsOpts, (connection, req) =>
+    attachNotificationWebSocket(connection, req, "/ws/notifications")
+  );
+  fastify.get("/api/ws/notifications", wsOpts, (connection, req) =>
+    attachNotificationWebSocket(connection, req, "/api/ws/notifications")
+  );
+
   fastify.post("/api/notifications/test", { preHandler: requireApiKey }, async (request, reply) => {
     notifDebugLog("POST /api/notifications/test recu type=" + (request.body?.type || "call_completed"));
     try {
@@ -117,7 +166,6 @@ export default async function notificationRoutes(fastify, options) {
     }
   });
 
-  // Route simple pour tester les connexions (protégée par x-api-key)
   fastify.get("/api/notifications/status", { preHandler: requireApiKey }, async (request, reply) => {
     return reply.send({
       success: true,
