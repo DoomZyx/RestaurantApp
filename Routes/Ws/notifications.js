@@ -13,42 +13,8 @@ function requireApiKey(request, reply, done) {
   done();
 }
 
-/** Clé passée en query (navigateur) ou en-tête (outils). */
-function clientKeyFromRawReq(req) {
-  const headerKey = String(req.headers?.["x-api-key"] ?? "").trim();
-  if (headerKey) return headerKey;
-  try {
-    const pathAndQuery = req.url?.split("?")[1] ?? "";
-    const params = new URLSearchParams(pathAndQuery);
-    return String(params.get("api_key") ?? "").trim();
-  } catch {
-    return "";
-  }
-}
-
-/**
- * Si X_API_KEY est défini, refuse la socket sans bonne clé (query api_key ou header x-api-key).
- * @returns {boolean} false si la connexion a été refusée
- */
-function rejectWsIfApiKeyInvalid(socket, req) {
-  const envKey = process.env.X_API_KEY != null ? String(process.env.X_API_KEY).trim() : "";
-  if (!envKey) return true;
-  const clientKey = clientKeyFromRawReq(req);
-  if (clientKey === envKey) return true;
-  notifDebugLog("WS notifications: rejet (cle absente ou invalide)");
-  try {
-    socket.close(1008, "Unauthorized");
-  } catch (_) {
-    /* ignore */
-  }
-  return false;
-}
-
 function attachNotificationWebSocket(connection, req, routeLabel) {
   const socket = connection?.socket ?? connection;
-  if (!rejectWsIfApiKeyInvalid(socket, req)) {
-    return;
-  }
 
   const readyState = socket?.readyState;
   const hasSend = typeof socket?.send === "function";
