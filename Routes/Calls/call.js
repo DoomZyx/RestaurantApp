@@ -4,11 +4,14 @@ import { generateTwiml, generateTwimlTransferToRestaurant } from "../../Services
 import { PricingService } from "../../Business/services/PricingService.js";
 import { PhoneLineService } from "../../Business/services/PhoneLineService.js";
 
-const DEFAULT_INSTANCE_ID = "inst_default";
+function getInstanceIdFromEnv() {
+  const fromEnv = process.env.INSTANCE_ID != null ? String(process.env.INSTANCE_ID).trim() : "";
+  return fromEnv || "inst_default";
+}
 
 export default async function callRoutes(fastify) {
   fastify.all("/incoming-call", async (request, reply) => {
-    const instanceId = DEFAULT_INSTANCE_ID;
+    const instanceId = getInstanceIdFromEnv();
     const lineEnabled = await PricingService.getPhoneLineEnabled(instanceId);
     if (!lineEnabled) {
       const transferNumber = await PhoneLineService.getTransferNumber(instanceId);
