@@ -724,6 +724,17 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       enrichedPrompt = EXTRACTION_PROMPT + menuInfo;
     }
 
+    const ref = new Date();
+    const ymd = `${ref.getFullYear()}-${String(ref.getMonth() + 1).padStart(2, "0")}-${String(ref.getDate()).padStart(2, "0")}`;
+    enrichedPrompt += `
+========================================
+CONTEXTE CALENDRIER (obligatoire)
+========================================
+La date d'aujourd'hui côté serveur est ${ymd}.
+Pour "demain", "après-demain" ou équivalent, calcule la date en YYYY-MM-DD à partir de cette référence.
+N'invente pas d'année passée ou fictive : utilise l'année courante du serveur.
+`;
+
     // Vérifier si le circuit breaker est ouvert (OpenAI down)
     if (circuitBreaker.isOpen()) {
       callLogger.warn(streamSid, "Circuit breaker ouvert - Utilisation extracteur rule-based", {
@@ -1024,7 +1035,7 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
     // Enregistrer extraction réussie
     recordSuccessfulExtraction();
 
-    // Convertir "order" en "appointment" pour la compatibilité
+    // Données pour ProcessCallService : conserver reservation / order (validés)
     const finalData = {
       nom: validatedData.nom,
       telephone: validatedData.telephone || "Non fourni",
@@ -1033,7 +1044,8 @@ Si le client ne précise pas le produit exact, utilise les noms génériques mai
       description: validatedData.description,
       statut: validatedData.statut,
       date: validatedData.date,
-      appointment: validatedData.appointment,
+      reservation: validatedData.reservation,
+      order: validatedData.order,
     };
 
     const extractionDuration = Date.now() - extractionStartTime;
