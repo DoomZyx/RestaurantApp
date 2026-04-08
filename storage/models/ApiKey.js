@@ -16,6 +16,6 @@ const apiKeySchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-apiKeySchema.index({ instanceId: 1 });
+// index instanceId : déjà via index: true sur le champ (évite doublon avec schema.index)
 
 export const ApiKeyModel = mongoose.model("ApiKey", apiKeySchema);
