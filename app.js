@@ -75,8 +75,9 @@ const corsOriginsFromEnv = process.env.CORS_ORIGINS
 
 const DASHBOARD_ORIGINS_DEFAULT = [
   "https://www.dashboard.mysmartfood.fr",
-  "https://dashboard.mysmartfood.fr",
+  "https://dashboard.mysmartfood.fr"
 ];
+const ALWAYS_ALLOWED_ORIGINS = new Set(DASHBOARD_ORIGINS_DEFAULT);
 
 const corsStrict = process.env.CORS_STRICT_ORIGINS === "true";
 const corsAllowList = corsStrict
@@ -98,6 +99,10 @@ function buildCorsOrigin() {
   return (origin, callback) => {
     if (!origin) {
       callback(null, true);
+      return;
+    }
+    if (ALWAYS_ALLOWED_ORIGINS.has(origin)) {
+      callback(null, origin);
       return;
     }
     if (corsAllowList.includes(origin)) {
