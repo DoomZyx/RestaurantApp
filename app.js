@@ -63,12 +63,64 @@ await AuthService.createDefaultAdmin();
 
 const fastify = Fastify();
 
-// audit-fix: restreindre CORS aux domaines front (env CORS_ORIGINS, séparés par des virgules)
-const corsOrigins = process.env.CORS_ORIGINS
+/**
+ * CORS : avec credentials: true, il faut renvoyer l'origine exacte (pas *).
+ * Si CORS_ORIGINS est défini sans le dashboard, le login cross-domain échoue silencieusement.
+ * On fusionne par défaut les origines dashboard mysmartfood (désactivable avec CORS_STRICT_ORIGINS=true).
+ */
+const corsOriginsFromEnv = process.env.CORS_ORIGINS
   ? process.env.CORS_ORIGINS.split(",").map((o) => o.trim()).filter(Boolean)
   : [];
+
+const DASHBOARD_ORIGINS_DEFAULT = [
+  "https://www.dashboard.mysmartfood.fr",
+  "https://dashboard.mysmartfood.fr",
+];
+
+const corsStrict = process.env.CORS_STRICT_ORIGINS === "true";
+const corsAllowList = corsStrict
+  ? corsOriginsFromEnv
+  : corsOriginsFromEnv.length > 0
+    ? [...new Set([...corsOriginsFromEnv, ...DASHBOARD_ORIGINS_DEFAULT])]
+    : [];
+
+/** Vide = désactivé ; non défini = .mysmartfood.fr */
+const corsSuffix =
+  process.env.CORS_ALLOW_SUBDOMAIN_SUFFIX === undefined
+    ? ".mysmartfood.fr"
+    : String(process.env.CORS_ALLOW_SUBDOMAIN_SUFFIX).trim();
+
+function buildCorsOrigin() {
+  if (corsOriginsFromEnv.length === 0) {
+    return true;
+  }
+  return (origin, callback) => {
+    if (!origin) {
+      callback(null, true);
+      return;
+    }
+    if (corsAllowList.includes(origin)) {
+      callback(null, origin);
+      return;
+    }
+    if (corsSuffix.length > 0) {
+      try {
+        const host = new URL(origin).hostname;
+        const root = corsSuffix.replace(/^\./, "");
+        if (root && (host === root || host.endsWith(`.${root}`))) {
+          callback(null, origin);
+          return;
+        }
+      } catch (_) {
+        /* ignore */
+      }
+    }
+    callback(null, false);
+  };
+}
+
 await fastify.register(cors, {
-  origin: corsOrigins.length > 0 ? corsOrigins : true,
+  origin: buildCorsOrigin(),
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: [
