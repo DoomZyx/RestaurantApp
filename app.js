@@ -190,6 +190,7 @@ fastify.register(reservationRoutes, { prefix: "/api" });
 fastify.register(pricingRoutes, { prefix: "/api" });
 
 fastify.register(async (instance) => {
+  // Pose request.instanceId depuis INSTANCE_ID (.env) — déploiement mono-client par dossier.
   instance.addHook("onRequest", multiTenantAuth);
 
   instance.register(processCallRoutes, { prefix: "/api" });

@@ -6,6 +6,8 @@ export const config = {
   Twilio_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
   Twilio_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER,
   CORS_ORIGINS: process.env.CORS_ORIGINS,
+  /** Identifiant d’instance Mongo (un déploiement = une valeur, souvent inst_default). */
+  INSTANCE_ID: process.env.INSTANCE_ID,
   RESTAURANT_PHONE_NUMBER: process.env.RESTAURANT_PHONE_NUMBER,
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   PUBLIC_HOST: process.env.PUBLIC_HOST,
