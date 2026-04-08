@@ -44,10 +44,7 @@ async function connectDB() {
 await connectDB();
 
 // audit-fix: exiger variables critiques au démarrage (pas de fallback en prod)
-const requiredEnv = [
-  { name: "JWT_SECRET", minLen: 32 },
-  { name: "API_KEY_SALT", minLen: 8 },
-];
+const requiredEnv = [{ name: "JWT_SECRET", minLen: 32 }];
 for (const { name, minLen } of requiredEnv) {
   const v = process.env[name];
   if (!v || typeof v !== "string" || v.length < minLen) {

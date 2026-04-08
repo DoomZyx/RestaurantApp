@@ -1,5 +1,5 @@
 import { createOpenAiSession } from "../Services/gptServices/gptServices.js";
-import { instanceConfigLoader } from "../Config/instanceConfigLoader.js";
+import { getVoiceRuntimeConfig } from "../Config/voiceRuntimeConfig.js";
 import WebSocket from "ws";
 import dotenv from "dotenv";
 import { callLogger } from "../Services/logging/logger.js";
@@ -64,7 +64,7 @@ export async function handleWebSocketConnection(connection, request, instanceId,
     let llmWorkerRef = null;
 
     const rnnoiseAvailable = await getRnnoiseAvailable();
-    const instanceConfig = await instanceConfigLoader.getConfigByInstanceId(resolvedInstanceId);
+    const instanceConfig = await getVoiceRuntimeConfig(resolvedInstanceId);
     const useNoiseReduction = rnnoiseAvailable && instanceConfig.audio?.enableNoiseReduction !== false;
 
     silenceMonitor = new SilenceMonitor({

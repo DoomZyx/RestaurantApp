@@ -2,7 +2,7 @@ import PricingModel from "../../models/pricing.js";
 
 /**
  * Même format que getPricingForGPT mais à partir d'un document pricing (ex. déjà filtré par instanceId).
- * Exporté pour usage par instanceConfigLoader.
+ * Exporté pour usage par voiceRuntimeConfig (prompt enrichi).
  */
 export function buildGptPricingFromDoc(pricing) {
   if (!pricing) return null;
@@ -44,7 +44,7 @@ export async function getPricingForGPT(instanceId) {
 
 /**
  * Génère le prompt enrichi à partir d'un objet pricing déjà au format GPT (restaurantInfo + menu).
- * Utilisé par instanceConfigLoader pour éviter un second accès BDD.
+ * Utilisé pour éviter un second accès BDD sur le document pricing.
  */
 export function generateEnrichedPromptWithPricing(basePrompt, pricing) {
   if (!pricing) return basePrompt;

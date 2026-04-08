@@ -141,7 +141,7 @@ function resolveRealtimeModel(rawModel) {
 
 /**
  * Construit l'objet session pour session.update (sans type ni wrapper).
- * Utilisé par instanceConfigLoader pour construire sessionUpdatePayload.
+ * Utilisé par voiceRuntimeConfig pour construire session.update (session Realtime).
  */
 export function getSessionUpdatePayload(voice = "ballad", instructions = "") {
   const transcriptionPrompt =
@@ -176,7 +176,7 @@ export function getSessionUpdatePayload(voice = "ballad", instructions = "") {
 
 /**
  * Crée une session WebSocket OpenAI Realtime.
- * @param {Object} instanceConfig - Config retournée par instanceConfigLoader.getConfigByInstanceId (openAi.apiKey, openAi.model, openAi.sessionUpdatePayload)
+ * @param {Object} instanceConfig - openAi.apiKey, openAi.model, openAi.sessionUpdatePayload (voir voiceRuntimeConfig)
  */
 export function createOpenAiSession(instanceConfig) {
   const apiKey = instanceConfig?.openAi?.apiKey;
