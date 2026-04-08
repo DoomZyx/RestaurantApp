@@ -17,9 +17,9 @@ COPY . .
 RUN addgroup -g 1001 -S appgroup && adduser -u 1001 -S appuser -G appgroup
 USER 1001
 
-EXPOSE 3000
+EXPOSE 8080
 
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=8080
 
 CMD ["node", "server.js"]

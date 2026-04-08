@@ -6,19 +6,26 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: hh-backend
-    restart: unless-stopped               # relance auto si crash
-    volumes:
-      - ./:/app                           # code monté en direct pour nodemon
-      - /app/node_modules                # protège node_modules du host
-    ports:
-      - "8080:8080"                      # mapping port
+    restart: unless-stopped
+    env_file:
+      - ./.env
     environment:
-      - NODE_ENV=development             # ou via env_file
-    command: ["npm","run","dev"]        # nodemon en dev
- env_file:
-   - ./.env
- healthcheck:
-   test: ["CMD-SHELL","curl -f http://localhost:8080/health || exit 1"]
-   interval: 30s
-   timeout: 10s
-   retries: 3
+      - NODE_ENV=production
+      - PORT=8080
+      - VIRTUAL_HOST=app.api.mysmartfood.fr
+      - VIRTUAL_PORT=8080
+      - LETSENCRYPT_HOST=app.api.mysmartfood.fr
+      - LETSENCRYPT_EMAIL=tech@mysmartfood.fr
+    expose:
+      - "8080"
+    networks:
+      - nginx-proxy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/api/ping || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  nginx-proxy:
+    external: true

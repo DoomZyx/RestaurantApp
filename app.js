@@ -67,21 +67,34 @@ const fastify = Fastify();
  * Si CORS_ORIGINS est défini sans le dashboard, le login cross-domain échoue silencieusement.
  * On fusionne par défaut les origines dashboard mysmartfood (désactivable avec CORS_STRICT_ORIGINS=true).
  */
+function normalizeOrigin(origin) {
+  if (!origin || typeof origin !== "string") {
+    return "";
+  }
+  return origin.trim().replace(/\/+$/, "");
+}
+
 const corsOriginsFromEnv = process.env.CORS_ORIGINS
-  ? process.env.CORS_ORIGINS.split(",").map((o) => o.trim()).filter(Boolean)
+  ? process.env.CORS_ORIGINS.split(",").map((o) => normalizeOrigin(o)).filter(Boolean)
   : [];
 
 const DASHBOARD_ORIGINS_DEFAULT = [
   "https://www.dashboard.mysmartfood.fr",
   "https://dashboard.mysmartfood.fr"
 ];
-const ALWAYS_ALLOWED_ORIGINS = new Set(DASHBOARD_ORIGINS_DEFAULT);
+const FRONTEND_ORIGINS_DEFAULT = [
+  "https://www.mysmartfood.fr",
+  "https://mysmartfood.fr"
+];
+const ALWAYS_ALLOWED_ORIGINS = new Set(
+  [...DASHBOARD_ORIGINS_DEFAULT, ...FRONTEND_ORIGINS_DEFAULT].map((origin) => normalizeOrigin(origin))
+);
 
 const corsStrict = process.env.CORS_STRICT_ORIGINS === "true";
 const corsAllowList = corsStrict
   ? corsOriginsFromEnv
   : corsOriginsFromEnv.length > 0
-    ? [...new Set([...corsOriginsFromEnv, ...DASHBOARD_ORIGINS_DEFAULT])]
+    ? [...new Set([...corsOriginsFromEnv, ...DASHBOARD_ORIGINS_DEFAULT].map((origin) => normalizeOrigin(origin)))]
     : [];
 
 /** Vide = désactivé ; non défini = .mysmartfood.fr */
@@ -95,24 +108,25 @@ function buildCorsOrigin() {
     return true;
   }
   return (origin, callback) => {
-    if (!origin) {
+    const normalizedOrigin = normalizeOrigin(origin);
+    if (!normalizedOrigin) {
       callback(null, true);
       return;
     }
-    if (ALWAYS_ALLOWED_ORIGINS.has(origin)) {
-      callback(null, origin);
+    if (ALWAYS_ALLOWED_ORIGINS.has(normalizedOrigin)) {
+      callback(null, normalizedOrigin);
       return;
     }
-    if (corsAllowList.includes(origin)) {
-      callback(null, origin);
+    if (corsAllowList.includes(normalizedOrigin)) {
+      callback(null, normalizedOrigin);
       return;
     }
     if (corsSuffix.length > 0) {
       try {
-        const host = new URL(origin).hostname;
+        const host = new URL(normalizedOrigin).hostname;
         const root = corsSuffix.replace(/^\./, "");
         if (root && (host === root || host.endsWith(`.${root}`))) {
-          callback(null, origin);
+          callback(null, normalizedOrigin);
           return;
         }
       } catch (_) {
