@@ -57,9 +57,23 @@ class InstanceConfigLoader {
     const cached = this._getCached(id);
     if (cached) return cached;
 
-    const instance = await InstanceModel.findOne({ instanceId: id, status: "active" }).lean();
+    let instance = await InstanceModel.findOne({ instanceId: id, status: "active" }).lean();
     if (!instance) {
-      throw new Error(`Instance non trouvée ou inactive: ${id}`);
+      // Fallback temporaire "single-instance": permet de tourner avec la config source/.env
+      // tant que les données d'instance ne sont pas provisionnées en base.
+      callLogger.info(null, `Instance absente en base, fallback config source: ${id}`);
+      instance = {
+        instanceId: id,
+        status: "active",
+        openAi: {
+          model: process.env.OPENAI_MODEL || "gpt-4o-realtime-preview-2024-12-17",
+          voice: process.env.OPENAI_VOICE || "ballad",
+          apiKey: null
+        },
+        audio: {
+          enableNoiseReduction: process.env.ENABLE_NOISE_REDUCTION !== "false"
+        }
+      };
     }
 
     const pricingDoc = await PricingModel.findOne({ instanceId: id });
