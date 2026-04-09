@@ -125,19 +125,8 @@ export class AuthService {
     }
 
     const emailNorm = email.trim().toLowerCase();
-    const filter = { email: emailNorm };
-    if (instanceId && instanceId !== "inst_default") {
-      filter.instanceId = instanceId;
-    } else {
-      filter.$or = [
-        { instanceId: null },
-        { instanceId: "" },
-        { instanceId: "inst_default" },
-        { instanceId: { $exists: false } },
-      ];
-    }
-
-    const user = await User.findOne(filter);
+    // Mode global: authentification basée uniquement sur l'email (sans scope instanceId).
+    const user = await User.findOne({ email: emailNorm });
 
     if (!user) {
       throw new Error("Email ou mot de passe incorrect");
