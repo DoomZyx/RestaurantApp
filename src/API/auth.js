@@ -17,12 +17,10 @@ function websiteUserToAppUser(w) {
 
 // Connexion utilisateur
 export async function loginUser(email, password) {
-  const tenantKey = getApiKey();
   const res = await fetch(`${VITE_API_URL}api/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(tenantKey ? { "x-api-key": tenantKey } : {}),
     },
     body: JSON.stringify({ email, password }),
   });
