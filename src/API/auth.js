@@ -114,19 +114,16 @@ export function isAdmin() {
 function getAuthHeaders(extra = {}) {
   const headers = { "x-api-key": getApiKey(), ...extra };
   const token = getToken();
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  } else {
-    const w = getStoredWebsiteUser();
-    if (w?.email) headers["x-website-user-email"] = w.email;
+  if (!token || token === "null" || token === "undefined") {
+    throw new Error("Session expirée, veuillez vous reconnecter");
   }
+  headers.Authorization = `Bearer ${token}`;
   return headers;
 }
 
 function requireAuth() {
-  if (getToken()) return;
-  const w = getStoredWebsiteUser();
-  if (w?.email) return;
+  const token = getToken();
+  if (token && token !== "null" && token !== "undefined") return;
   throw new Error("Non authentifié");
 }
 
